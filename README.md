@@ -5,6 +5,13 @@ Machine-checked mathematics: each proven result ships as a **paper preprint**
 (machine-checked proof). One directory per result under `papers/`; the Lean
 project lives at the repo root.
 
+- **Manuscript map:** [CONTENTS.md](CONTENTS.md) — results organized into
+  families, with paper PDFs, sources, build instructions, and citations.
+- **Formalization catalogue:** [FORMALIZATION_CATALOGUE.md](FORMALIZATION_CATALOGUE.md) —
+  per-theorem verification status and axiom dependencies.
+- **Changelog:** [CHANGELOG.md](CHANGELOG.md) — version history; corrections
+  are disclosed, not buried.
+
 Built with **Lean 4.34.1** + **Mathlib v4.34.1**. Every theorem typechecks with
 `lake build`; each file lists its axiom dependencies explicitly.
 
@@ -63,6 +70,8 @@ CI (`.github/workflows/lean_action_ci.yml`) builds on every push via
 ## Adding a result
 
 New results follow the same structure: `papers/<slug>/` gets the preprint
-(`.tex` + compiled `.pdf`), `Mathproofs/<Name>.lean` gets the formalization
-(imported from `Mathproofs.lean`), and this index gets a row. A result is only
+(`.tex` + compiled `.pdf` + `BUILD.md` + `CITATION.bib`), `Mathproofs/<Name>.lean`
+gets the formalization (imported from `Mathproofs.lean`), and the new result gets
+a row in [CONTENTS.md](CONTENTS.md) and
+[FORMALIZATION_CATALOGUE.md](FORMALIZATION_CATALOGUE.md). A result is only
 promoted from [PROVED*] to [PROVED] when Lean checks it end to end.
