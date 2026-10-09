@@ -13,7 +13,7 @@ import Mathlib.Algebra.Divisibility.Units
 # Round 16 barrier theorem — Erdős–Straus finite-identity barrier
 
 Source: `~/workspace/math-unsolved/ROUND16_DOSSIER.md`
-Preprint: `~/workspace/math-unsolved/preprints/erdos-straus-finite-identity-barrier.tex`
+Preprint: `papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.tex`
 (Theorem 1 there).
 
 **Theorem (R16).** Let `S = {(Aᵢ,Bᵢ)}` be progressions arising from a finite family

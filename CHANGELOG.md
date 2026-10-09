@@ -19,7 +19,7 @@ rather than buried.
 - New manuscript families in `CONTENTS.md`: 002 (Collatz convergent
   control), 003 (ES witness-complex/QR-core), 004 (girth-5), 005 (q-adic),
   006 (saturated Sidon).
-- New preprint: `papers/r47-sat184/` (saturated 9-element Sidon set in
+- New preprint: `papers/r47-sat184-October-7-2026/` (saturated 9-element Sidon set in
   [1,184]).
 - `FORMALIZATION_CATALOGUE.md` now lists every published theorem with its
   axiom status.

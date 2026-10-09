@@ -5,7 +5,7 @@ import Mathlib.Algebra.Field.Basic
 Round 7 identity — Erdős–Straus covering identity for n ≡ 217 (mod 264).
 
 Source: ~/workspace/math-unsolved/ROUND7_DOSSIER.md
-Preprint: ~/workspace/math-unsolved/preprints/erdos-straus-identity-217mod264.tex
+Preprint: `papers/erdos-straus-identity-217mod264-October-3-2026/erdos-straus-identity-217mod264-October-3-2026.tex`
 (Theorem 1 there). The identity was discovered by exhaustive search over
 12,827 candidate families in Mordell's splitting-lemma framework; it covers
 1009, the smallest prime missed by the published Mordell/Yamamoto/Rosati

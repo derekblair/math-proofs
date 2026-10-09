@@ -1,0 +1,161 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[T1]{fontenc}
+
+\title{Overview of the math-proofs Collection}
+\author{Derek Blair}
+\date{October 2026}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{conjecture}{Conjecture}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document describes the result families in the \texttt{math-proofs}
+collection: machine-checked mathematics in which every proven result ships as
+a paper preprint (human-readable argument) paired with its Lean~4
+formalization (machine-checked proof). Manuscripts are organized into
+families; each family groups a principal result with companion arguments,
+consequences, or alternative proofs. All formalizations typecheck with
+\texttt{lake build} under Lean~4.34.1 + Mathlib~v4.34.1. The per-theorem
+verification status and axiom dependencies are recorded in
+\texttt{formalization.yaml} (machine-readable) and
+\texttt{FORMALIZATION\_CATALOGUE.md} (human-readable).
+\end{abstract}
+
+\section{Labeling convention}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+Label & Meaning \\
+\midrule
+\texttt{[PROVED]} & Machine-checked by Lean; no axioms beyond Lean's standard ones. \\
+\texttt{[PROVED*]} & Typechecks cleanly but depends on explicitly labeled classical-input axioms. \\
+\texttt{[SOLVED]} & Computationally established on independent code paths (no Lean proof yet). \\
+\bottomrule
+\end{tabular}
+\caption{Status labels used throughout the collection.}
+\end{table}
+
+Nothing in this collection is claimed on the basis of a \texttt{sorry}.
+
+\section{Family 001 --- Erd\H{o}s--Straus identities and obstructions}
+
+Results on representing $4/n$ as a sum of three unit fractions.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+ID & Result & Status & Lean module \\
+\midrule
+ES-001 & New covering identity for $n \equiv 217 \pmod{264}$ & \texttt{[PROVED]} & \texttt{ESIdentity.lean} \\
+ES-002 & Finite-identity barrier on square classes mod~840 & \texttt{[PROVED*]} & \texttt{ESBarrier.lean} \\
+\bottomrule
+\end{tabular}
+\caption{Family 001 manuscripts.}
+\end{table}
+
+\textbf{ES-001} gives a new covering identity
+\[
+\frac{4}{n} = \frac{1}{(n+3)/4} + \frac{1}{n(n+3)} + \frac{11}{n(n+3)},
+\qquad n \equiv 217 \pmod{264},
+\]
+covering the prime $1009$ --- the smallest prime missed by the published
+Mordell/Yamamoto/Rosati identities. The formalized theorem is
+\texttt{es\_identity\_217mod264}, depending only on Lean's standard axioms
+(\texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}).
+
+\textbf{ES-002} proves that no finite system of polynomial identities
+$4/(A_i t + B_i) = \sum 1/F_{ij}(t)$ with positive leading coefficients can
+cover a full square class mod~840: infinitely many primes escape every such
+system. Witness: $p = 77{,}598{,}049 \equiv 529 \pmod{840}$. The
+formalization carries two explicitly labeled classical-input axioms:
+\texttt{schinzel\_mordell} and \texttt{dirichlet\_arith\_prog}.
+
+\section{Family 002 --- Collatz convergent control (gap-factor theory)}
+
+A machine-checked theory of the gap factor $G(t)$ on from-above blocks of
+$\log_2 3$'s continued fraction, developed across thirteen Lean modules:
+the complete-quotient API for irrationals (\texttt{CollatzGapCF}),
+the C24 tail-mirror selector and strict dichotomy (\texttt{CollatzGapC24},
+\texttt{CollatzGapC24Lemma3}), C23 sinh estimates
+(\texttt{CollatzGapC23}, \texttt{CollatzGapSinh}), the C22/C25/C26 assembly
+(\texttt{CollatzGapC22C25}), C18b convexity and the C26 margin-duality
+trichotomy (\texttt{CollatzGapConvex}), C29 discrepancy dominance and its
+from-below mirror (\texttt{CollatzGapC29}, \texttt{CollatzGapC29Mirror}),
+and the C64/C64b hump-law identity kernel (\texttt{CollatzGapHump}).
+All modules are \texttt{[PROVED]} with standard axioms only; preprints are in
+preparation.
+
+\section{Family 003 --- Erd\H{o}s--Straus witness-complex and QR-core theory}
+
+A machine-checked theory of Erd\H{o}s--Straus covering families on refined
+moduli: the witness complex $W(M)$ (\texttt{WitnessComplexThm2},
+\texttt{WitnessComplexThm13}), the T2 prime-square obstruction
+(\texttt{ESPrimeSquareT2}), the T1 two-case theorem (\texttt{EST1TwoCase}),
+and the QR-core --- the set of quadratic-residue classes missed by both
+covering systems --- with its exact count $|Q| = |S|/2^k$
+(\texttt{ESQRCore}, \texttt{ESQRCoreCount}), the 5/7-forcing lemma
+(\texttt{ESFiveSevenForcing}), the mod-7 universal families and
+fiber-pinning lemma (\texttt{ESMod7UniversalFamilies}), the X0/S1S3 descent
+core (\texttt{ESX0S1S3}), general descent transfer
+(\texttt{ESDescentTransfer}), and the pair-specific conditional SDR endgame
+(\texttt{ESBranchSDREndgame}). All modules are \texttt{[PROVED]} with
+standard axioms only; preprints are in preparation.
+
+\section{Family 004 --- Girth-5 extremal graphs}
+
+\textbf{G5-001} is the 3v floor theorem for girth-5 graphs
+(\texttt{Girth5Floor3v.lean}, \texttt{[PROVED]}): the emitted-graph
+re-attachment model and cross-edge harmlessness argument, showing that no
+improving 3v move exists on the extremal graphs. Preprint in preparation.
+
+\section{Family 005 --- q-adic classification of Erd\H{o}s--Straus witnesses}
+
+\textbf{QA-001} is the branch-1 q-adic type theorem
+(\texttt{ESQadicBranch1.lean}, \texttt{[PROVED]}): $v_q(r) \le v_q(A)$ on
+refined targets, the first classification theorem for the q-adic types of
+Erd\H{o}s--Straus witnesses. Preprint in preparation.
+
+\section{Family 006 --- Saturated Sidon sets}
+
+\textbf{SS-001} (\texttt{[SOLVED]}): the set
+$\{16, 62, 66, 74, 88, 104, 117, 122, 123\}$ is Sidon and saturated in
+$[1,184]$, verified on three independent code paths. Paper:
+\texttt{papers/r47-sat184-October-7-2026/}.
+
+\section{Summary of families}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+Family & Subject & Modules \\
+\midrule
+001 & Erd\H{o}s--Straus identities and obstructions & 2 \\
+002 & Collatz convergent control (gap-factor theory) & 13 \\
+003 & Erd\H{o}s--Straus witness-complex and QR-core theory & 11 \\
+004 & Girth-5 extremal graphs & 1 \\
+005 & q-adic classification of ES witnesses & 1 \\
+006 & Saturated Sidon sets & 0 (computational) \\
+\bottomrule
+\end{tabular}
+\caption{The six result families and their formalization footprint.}
+\end{table}
+
+\section*{Versions and citations}
+
+Corrections and revisions are recorded as new versions in
+\texttt{CHANGELOG.md}, with previously released versions remaining
+accessible in git history. To cite an individual manuscript, use the BibTeX
+block in its \texttt{papers/<slug>/CITATION.bib}.
+
+\end{document}

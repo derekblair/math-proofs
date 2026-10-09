@@ -1,0 +1,264 @@
+# Catalog of papers with a formalized main result. Paths are relative to the repo root.
+# Mirrors the OpenAI math repository's formalization.yaml schema style, with
+# extensions: lean_module, theorems, status, axioms.
+version: "v0.1"
+
+project:
+  name: "math-proofs"
+  description: "Lean formalizations accompanying a machine-checked mathematics manuscript collection."
+  authors: ["Derek Blair"]
+  license: "not specified"
+  lean_version: "4.34.1"
+  mathlib_version: "v4.34.1"
+
+sources:
+  - title: "A new Erdős–Straus covering identity"
+    authors: ["Derek Blair"]
+    id: papers/erdos-straus-identity-217mod264-October-3-2026/erdos-straus-identity-217mod264-October-3-2026.pdf
+    type: article
+    lean_module: Mathproofs/ESIdentity.lean
+    theorems: [es_identity_217mod264]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "A finite-identity barrier for Erdős–Straus on square classes mod 840"
+    authors: ["Derek Blair"]
+    id: papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.pdf
+    type: article
+    lean_module: Mathproofs/ESBarrier.lean
+    theorems: [es_barrier]
+    status: "[PROVED*]"
+    axioms: [schinzel_mordell, dirichlet_arith_prog]
+
+  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/CollatzGapSinh.lean
+    theorems: [gap_sinh_superlinear, gap_sinh_le_mul_exp, gap_log_one_add_ge, six_pow_mul_factorial_le]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/CollatzGapDelta.lean
+    theorems: []
+    status: "supporting definitions"
+    axioms: []
+    note: "Structural definitions and lemmas for the C22/C23/C25/C26 batch; a build dependency of CollatzGapConvex."
+
+  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/CollatzGapConvex.lean
+    theorems: [gapT_seconddiff_pos, gapS_seconddiff_pos, gapDelta_strictly_increasing, gap_margin_duality]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/CollatzGapCF.lean
+    theorems: [cf_error_formula, cf_ratio_formula, cf_det_identity]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/CollatzGapC24.lean
+    theorems: [cf_selector_le, cf_selector_lt, cf_selector_eq, cf_selector_ne]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/CollatzGapC24Lemma3.lean
+    theorems: [cf_firstdiff_decide, cf_firstdiff, cf_firstdiff_term]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/CollatzGapC23.lean
+    theorems: [strictConvexOn_sinh_Ici, sinh_scaling_gt, c23a]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/CollatzGapC22C25.lean
+    theorems: [c26a, c26b, c26c, c22_delta_pos_at, log_one_add_div_one_sub_ge]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/CollatzGapC29.lean
+    theorems: [c29, lemmaA_coprime, lemmaB_nowrap, yfrac_formula, count_le]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/CollatzGapC29Mirror.lean
+    theorems: [beta_pos, beta_irr, isStrictRecord_beta]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/CollatzGapHump.lean
+    theorems: []
+    status: "[PROVED]"
+    axioms: []
+    note: "C64/C64b hump-law identity kernel + arithmetic closures (22 theorems)."
+
+  - title: "The witness complex, square obstructions, and the QR-core"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/ESX0S1S3.lean
+    theorems: [lemma_X0, lemma_S1S3]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The witness complex, square obstructions, and the QR-core"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/ESDescentTransfer.lean
+    theorems: [mu_valuation_of_S3, transfer_key_00, transfer_qcancel]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The witness complex, square obstructions, and the QR-core"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/WitnessComplexThm2.lean
+    theorems: [b0_vacuity, fiber_collision_law]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The witness complex, square obstructions, and the QR-core"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/WitnessComplexThm13.lean
+    theorems: [t2_integrality_iff, t3_full_class]
+    status: "[PROVED]"
+    axioms: []
+    note: "W(M) Thm 1(a) + Thm 3 (7 theorems total)."
+
+  - title: "The witness complex, square obstructions, and the QR-core"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/ESPrimeSquareT2.lean
+    theorems: [t2_jacobi_neg_one, t2_class_nonsquare]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The witness complex, square obstructions, and the QR-core"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/EST1TwoCase.lean
+    theorems: [t1_two_case]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The witness complex, square obstructions, and the QR-core"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/ESQRCore.lean
+    theorems: [qr_core_t2_misses, qr_core_t1_misses]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The witness complex, square obstructions, and the QR-core"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/ESQRCoreCount.lean
+    theorems: []
+    status: "[PROVED]"
+    axioms: []
+    note: "QR-core exact count |Q| = |S|/2^k via CRT."
+
+  - title: "The witness complex, square obstructions, and the QR-core"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/ESFiveSevenForcing.lean
+    theorems: []
+    status: "[PROVED]"
+    axioms: []
+    note: "5/7-forcing lemma."
+
+  - title: "The witness complex, square obstructions, and the QR-core"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/ESBranchSDREndgame.lean
+    theorems: [branch_sdr_endgame, branch_sdr_endgame_clique_bound]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: "The witness complex, square obstructions, and the QR-core"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/ESMod7UniversalFamilies.lean
+    theorems: []
+    status: "[PROVED]"
+    axioms: []
+    note: "18 theorems: three mod-7 universal families + fiber-pinning lemma."
+
+  - title: "The 3v floor theorem for girth-5 graphs"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/Girth5Floor3v.lean
+    theorems: []
+    status: "[PROVED]"
+    axioms: []
+    note: "9 theorems: re-attachment model + cross-edge harmlessness."
+
+  - title: "Branch-1 q-adic type theorem"
+    authors: ["Derek Blair"]
+    id: null
+    type: article
+    lean_module: Mathproofs/ESQadicBranch1.lean
+    theorems: [kill_02, kill_12, descent_01]
+    status: "[PROVED]"
+    axioms: []
+
+  - title: null
+    authors: ["Derek Blair"]
+    id: null
+    type: library
+    lean_module: Mathproofs/Basic.lean
+    theorems: []
+    status: "supporting definitions"
+    axioms: []
+    note: "Shared definitions imported by the formalization modules; no flagship theorems."

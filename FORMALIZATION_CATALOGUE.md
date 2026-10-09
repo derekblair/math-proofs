@@ -54,6 +54,5 @@ The following local formalizations are still being worked through the
 publication pipeline — they are **not** part of this release:
 
 - `ESCubicClassify.lean` (R89, quarantined — known `Int.Coprime` breakage, not registered)
-- `CollatzGapDelta.lean` (threshold-function definitions; no [PROVED] flagship yet)
 - `DonorKernel.lean`, `ESRefinedSieveInverse.lean`, `ESUBBranchIsolation.lean`
   (verification status ambiguous or in flight — excluded pending confirmation)

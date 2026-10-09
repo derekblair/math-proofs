@@ -26,7 +26,7 @@ For `n ≡ 217 (mod 264)`:
 Covers the prime **1009**, the smallest prime missed by the published
 Mordell/Yamamoto/Rosati identities.
 
-- Paper: [`papers/erdos-straus-identity-217mod264/`](papers/erdos-straus-identity-217mod264/) ([PDF](papers/erdos-straus-identity-217mod264/erdos-straus-identity-217mod264.pdf), [source](papers/erdos-straus-identity-217mod264/erdos-straus-identity-217mod264.tex))
+- Paper: [`papers/erdos-straus-identity-217mod264-October-3-2026/`](papers/erdos-straus-identity-217mod264-October-3-2026/) ([PDF](papers/erdos-straus-identity-217mod264-October-3-2026/erdos-straus-identity-217mod264-October-3-2026.pdf), [source](papers/erdos-straus-identity-217mod264-October-3-2026/erdos-straus-identity-217mod264-October-3-2026.tex))
 - Lean: [`Mathproofs/ESIdentity.lean`](Mathproofs/ESIdentity.lean), theorem `es_identity_217mod264`
 - Verification: typechecks cleanly, zero sorrys; `#print axioms` shows **only
   standard Lean axioms** (`propext`, `Classical.choice`, `Quot.sound`) — no
@@ -40,7 +40,7 @@ leading coefficients) can cover a full square class mod 840 — infinitely many
 primes escape every such system. Witness: `p = 77,598,049 ≡ 529 (mod 840)`
 lies in 0 of 30 candidate progressions.
 
-- Paper: [`papers/erdos-straus-finite-identity-barrier/`](papers/erdos-straus-finite-identity-barrier/) ([PDF](papers/erdos-straus-finite-identity-barrier/erdos-straus-finite-identity-barrier.pdf), [source](papers/erdos-straus-finite-identity-barrier/erdos-straus-finite-identity-barrier.tex))
+- Paper: [`papers/erdos-straus-finite-identity-barrier-October-4-2026/`](papers/erdos-straus-finite-identity-barrier-October-4-2026/) ([PDF](papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.pdf), [source](papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.tex))
 - Lean: [`Mathproofs/ESBarrier.lean`](Mathproofs/ESBarrier.lean), theorem `es_barrier`
 - Verification: typechecks cleanly, zero sorrys, modulo **two labeled classical
   axioms**: `schinzel_mordell` (Schinzel 1956 / Mordell 1967 obstruction) and
