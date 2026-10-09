@@ -9,6 +9,7 @@ axiom dependencies. Statuses mirror the labeling convention in
 | `es_identity_217mod264` | [Mathproofs/ESIdentity.lean](Mathproofs/ESIdentity.lean) | [PROVED] | none | [ES-001](CONTENTS.md#es-001) |
 | `es_barrier` | [Mathproofs/ESBarrier.lean](Mathproofs/ESBarrier.lean) | [PROVED*] | `schinzel_mordell`, `dirichlet_arith_prog` | [ES-002](CONTENTS.md#es-002) |
 | `gap_sinh_superlinear`, `gap_sinh_le_mul_exp`, `gap_log_one_add_ge`, `six_pow_mul_factorial_le` | [Mathproofs/CollatzGapSinh.lean](Mathproofs/CollatzGapSinh.lean) | [PROVED] | none | preprint in preparation |
+| Δ-sign machinery for the Collatz gap-factor argmin theorems (C22/C23/C25/C26) — structural definitions and lemmas, a build dependency of `CollatzGapConvex` | [Mathproofs/CollatzGapDelta.lean](Mathproofs/CollatzGapDelta.lean) | supporting definitions | none | preprint in preparation |
 | `gapT_seconddiff_pos`, `gapS_seconddiff_pos`, `gapDelta_strictly_increasing`, `gap_margin_duality` (C18b convexity + C26 margin-duality trichotomy) | [Mathproofs/CollatzGapConvex.lean](Mathproofs/CollatzGapConvex.lean) | [PROVED] | none | preprint in preparation |
 | `cf_error_formula`, `cf_ratio_formula`, `cf_det_identity` (complete-quotient API for irrationals) | [Mathproofs/CollatzGapCF.lean](Mathproofs/CollatzGapCF.lean) | [PROVED] | none | preprint in preparation |
 | `cf_selector_le`, `cf_selector_lt`, `cf_selector_eq`, `cf_selector_ne` (C24 tail-mirror selector + strict dichotomy) | [Mathproofs/CollatzGapC24.lean](Mathproofs/CollatzGapC24.lean) | [PROVED] | none | preprint in preparation |

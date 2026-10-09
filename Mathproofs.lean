@@ -4,6 +4,7 @@ import Mathproofs.Basic
 import Mathproofs.ESIdentity
 import Mathproofs.ESBarrier
 import Mathproofs.CollatzGapSinh
+import Mathproofs.CollatzGapDelta
 import Mathproofs.CollatzGapConvex
 import Mathproofs.CollatzGapCF
 import Mathproofs.CollatzGapC24
