@@ -5,8 +5,8 @@ external image files or non-CTAN packages are needed (all figures/tables are
 native TikZ/pgfplots/booktabs).
 
 ```bash
-cd papers/erdos-straus-finite-identity-barrier
-latexmk -pdf -interaction=nonstopmode erdos-straus-finite-identity-barrier.tex
+cd papers/erdos-straus-finite-identity-barrier-October-4-2026
+latexmk -pdf -interaction=nonstopmode erdos-straus-finite-identity-barrier-October-4-2026.tex
 ```
 
 The committed `.pdf` in this directory was built with the command above and

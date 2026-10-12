@@ -1,0 +1,20 @@
+@misc{blair2026sieveinversion,
+  author       = {Derek Blair},
+  title        = {Sieve Inversion and Branch Isolation},
+  year         = {2026},
+  month        = oct,
+  note         = {Preprint. The 44-CRT lemma
+                  ($s\equiv1\pmod{24}\Rightarrow
+                  (s\equiv7\pmod{11}\iff s\equiv29\pmod{44})$)
+                  is machine-checked in Lean~4.34.1 ([PROVED], axioms
+                  $[\text{propext},\text{Quot.sound}]$); the six-class
+                  support inverse-closure theorems are Lean-checked
+                  with zero sorrys but carry per-theorem
+                  \texttt{native\_decide} certificate axioms
+                  ([PROVED*] staged). The u-branch isolation lemma and
+                  u-side degree bound $|Z_0^{\mathrm{close}}|
+                  +|Z_0^{\mathrm{mid}}|\le d(u)-1=5<6=d(v)-1$ are
+                  [PROVED] on standard axioms. Full \texttt{lake build}
+                  exit~0, zero sorrys, on bakkie.},
+  email        = {derekjblair@gmail.com}
+}

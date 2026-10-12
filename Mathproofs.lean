@@ -27,3 +27,39 @@ import Mathproofs.ESQRCoreCount
 import Mathproofs.ESFiveSevenForcing
 import Mathproofs.ESBranchSDREndgame
 import Mathproofs.ESMod7UniversalFamilies
+-- 2026-10-11 weekly sweep: ES fiber-compatibility / suppression family
+import Mathproofs.ESFiberCompat
+import Mathproofs.ESFiberCompatComposite
+import Mathproofs.ESFiberTiling
+import Mathproofs.CompositeSuppression
+import Mathproofs.ESBranchTwo
+import Mathproofs.ESRefinedSieveInverse
+import Mathproofs.ESUBranchIsolation
+-- 2026-10-11 weekly sweep: Sidon hole-suppression / absorption family
+import Mathproofs.HoleSuppression
+import Mathproofs.AbsorbedRegime
+import Mathproofs.AbsorbedBound
+-- 2026-10-11 weekly sweep: translation-march / dip family
+import Mathproofs.TranslationMarch
+import Mathproofs.CorrectedMarch
+import Mathproofs.TranslationMarchUnsat
+import Mathproofs.HoleTwinDip
+import Mathproofs.DipMarch
+-- 2026-10-11 weekly sweep: sub-family / ladder / transfer family
+import Mathproofs.ESSubfamilyExtended
+import Mathproofs.MarchLadderCeiling
+import Mathproofs.SigmaTrans
+import Mathproofs.FiberOverlap
+-- 2026-10-11 weekly sweep: abstract locks / transition DAGs
+import Mathproofs.AbstractLock
+import Mathproofs.TransDAG
+-- 2026-10-11 weekly sweep: void-frame / defect family
+import Mathproofs.VoidUnion
+import Mathproofs.VoidLock
+import Mathproofs.VoidMonoidParam
+import Mathproofs.VoidMonoid
+import Mathproofs.VoidDefectHom
+-- 2026-10-11 weekly sweep: ES absorption-order / forcing-spectrum family
+import Mathproofs.ESAbsorptionOrder
+import Mathproofs.ESForcingSpectrum
+import Mathproofs.ESForcingDecomp

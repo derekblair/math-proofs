@@ -5,8 +5,8 @@ external image files or non-CTAN packages are needed (all figures/tables are
 native TikZ/pgfplots/booktabs).
 
 ```bash
-cd papers/r47-sat184
-latexmk -pdf -interaction=nonstopmode sat184.tex
+cd papers/r47-sat184-October-7-2026
+latexmk -pdf -interaction=nonstopmode r47-sat184-October-7-2026.tex
 ```
 
 The committed `.pdf` in this directory was built with the command above and

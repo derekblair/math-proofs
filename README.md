@@ -75,3 +75,16 @@ gets the formalization (imported from `Mathproofs.lean`), and the new result get
 a row in [CONTENTS.md](CONTENTS.md) and
 [FORMALIZATION_CATALOGUE.md](FORMALIZATION_CATALOGUE.md). A result is only
 promoted from [PROVED*] to [PROVED] when Lean checks it end to end.
+
+## Verification status (staged)
+
+Every `[PROVED]` module is machine-checked in Lean 4.34.1 + Mathlib
+v4.34.1 (pinned by `lean-toolchain` / `lake-manifest.json`): `lake build`
+exit 0, zero `sorry`s, standard Lean axioms only unless the catalogue says
+otherwise. `[PROVED*]` marks staged verification — the file typechecks
+cleanly (often with a hostile-review SURVIVES behind it) but its final
+promotion gate is still pending; such results are published as manuscripts
+with staged-verification language, never as machine-checked proofs. Not
+everything in `papers/` has an accompanying Lean formalization, and
+unformalized results could have issues — the catalogue and each paper's
+Formalization note say exactly what is checked.

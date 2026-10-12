@@ -17,7 +17,7 @@ sources:
     id: papers/erdos-straus-identity-217mod264-October-3-2026/erdos-straus-identity-217mod264-October-3-2026.pdf
     type: article
     lean_module: Mathproofs/ESIdentity.lean
-    theorems: [es_identity_217mod264]
+    theorems: ["es_identity_217mod264"]
     status: "[PROVED]"
     axioms: []
 
@@ -26,7 +26,7 @@ sources:
     id: papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.pdf
     type: article
     lean_module: Mathproofs/ESBarrier.lean
-    theorems: [es_barrier]
+    theorems: ["es_barrier"]
     status: "[PROVED*]"
     axioms: [schinzel_mordell, dirichlet_arith_prog]
 
@@ -35,7 +35,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/CollatzGapSinh.lean
-    theorems: [gap_sinh_superlinear, gap_sinh_le_mul_exp, gap_log_one_add_ge, six_pow_mul_factorial_le]
+    theorems: ["gap_sinh_superlinear", "gap_sinh_le_mul_exp", "gap_log_one_add_ge", "six_pow_mul_factorial_le"]
     status: "[PROVED]"
     axioms: []
 
@@ -44,7 +44,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/CollatzGapDelta.lean
-    theorems: []
+    theorems: [""]
     status: "supporting definitions"
     axioms: []
     note: "Structural definitions and lemmas for the C22/C23/C25/C26 batch; a build dependency of CollatzGapConvex."
@@ -54,7 +54,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/CollatzGapConvex.lean
-    theorems: [gapT_seconddiff_pos, gapS_seconddiff_pos, gapDelta_strictly_increasing, gap_margin_duality]
+    theorems: ["gapT_seconddiff_pos", "gapS_seconddiff_pos", "gapDelta_strictly_increasing", "gap_margin_duality"]
     status: "[PROVED]"
     axioms: []
 
@@ -63,7 +63,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/CollatzGapCF.lean
-    theorems: [cf_error_formula, cf_ratio_formula, cf_det_identity]
+    theorems: ["cf_error_formula", "cf_ratio_formula", "cf_det_identity"]
     status: "[PROVED]"
     axioms: []
 
@@ -72,7 +72,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/CollatzGapC24.lean
-    theorems: [cf_selector_le, cf_selector_lt, cf_selector_eq, cf_selector_ne]
+    theorems: ["cf_selector_le", "cf_selector_lt", "cf_selector_eq", "cf_selector_ne"]
     status: "[PROVED]"
     axioms: []
 
@@ -81,7 +81,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/CollatzGapC24Lemma3.lean
-    theorems: [cf_firstdiff_decide, cf_firstdiff, cf_firstdiff_term]
+    theorems: ["cf_firstdiff_decide", "cf_firstdiff", "cf_firstdiff_term"]
     status: "[PROVED]"
     axioms: []
 
@@ -90,7 +90,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/CollatzGapC23.lean
-    theorems: [strictConvexOn_sinh_Ici, sinh_scaling_gt, c23a]
+    theorems: ["strictConvexOn_sinh_Ici", "sinh_scaling_gt", "c23a"]
     status: "[PROVED]"
     axioms: []
 
@@ -99,7 +99,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/CollatzGapC22C25.lean
-    theorems: [c26a, c26b, c26c, c22_delta_pos_at, log_one_add_div_one_sub_ge]
+    theorems: ["c26a", "c26b", "c26c", "c22_delta_pos_at", "log_one_add_div_one_sub_ge"]
     status: "[PROVED]"
     axioms: []
 
@@ -108,7 +108,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/CollatzGapC29.lean
-    theorems: [c29, lemmaA_coprime, lemmaB_nowrap, yfrac_formula, count_le]
+    theorems: ["c29", "lemmaA_coprime", "lemmaB_nowrap", "yfrac_formula", "count_le"]
     status: "[PROVED]"
     axioms: []
 
@@ -117,7 +117,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/CollatzGapC29Mirror.lean
-    theorems: [beta_pos, beta_irr, isStrictRecord_beta]
+    theorems: ["beta_pos", "beta_irr", "isStrictRecord_beta"]
     status: "[PROVED]"
     axioms: []
 
@@ -126,7 +126,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/CollatzGapHump.lean
-    theorems: []
+    theorems: [""]
     status: "[PROVED]"
     axioms: []
     note: "C64/C64b hump-law identity kernel + arithmetic closures (22 theorems)."
@@ -136,7 +136,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/ESX0S1S3.lean
-    theorems: [lemma_X0, lemma_S1S3]
+    theorems: ["lemma_X0", "lemma_S1S3"]
     status: "[PROVED]"
     axioms: []
 
@@ -145,7 +145,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/ESDescentTransfer.lean
-    theorems: [mu_valuation_of_S3, transfer_key_00, transfer_qcancel]
+    theorems: ["mu_valuation_of_S3", "transfer_key_00", "transfer_qcancel"]
     status: "[PROVED]"
     axioms: []
 
@@ -154,7 +154,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/WitnessComplexThm2.lean
-    theorems: [b0_vacuity, fiber_collision_law]
+    theorems: ["b0_vacuity", "fiber_collision_law"]
     status: "[PROVED]"
     axioms: []
 
@@ -163,7 +163,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/WitnessComplexThm13.lean
-    theorems: [t2_integrality_iff, t3_full_class]
+    theorems: ["t2_integrality_iff", "t3_full_class"]
     status: "[PROVED]"
     axioms: []
     note: "W(M) Thm 1(a) + Thm 3 (7 theorems total)."
@@ -173,7 +173,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/ESPrimeSquareT2.lean
-    theorems: [t2_jacobi_neg_one, t2_class_nonsquare]
+    theorems: ["t2_jacobi_neg_one", "t2_class_nonsquare"]
     status: "[PROVED]"
     axioms: []
 
@@ -182,7 +182,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/EST1TwoCase.lean
-    theorems: [t1_two_case]
+    theorems: ["t1_two_case"]
     status: "[PROVED]"
     axioms: []
 
@@ -191,7 +191,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/ESQRCore.lean
-    theorems: [qr_core_t2_misses, qr_core_t1_misses]
+    theorems: ["qr_core_t2_misses", "qr_core_t1_misses"]
     status: "[PROVED]"
     axioms: []
 
@@ -200,7 +200,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/ESQRCoreCount.lean
-    theorems: []
+    theorems: [""]
     status: "[PROVED]"
     axioms: []
     note: "QR-core exact count |Q| = |S|/2^k via CRT."
@@ -210,7 +210,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/ESFiveSevenForcing.lean
-    theorems: []
+    theorems: [""]
     status: "[PROVED]"
     axioms: []
     note: "5/7-forcing lemma."
@@ -220,7 +220,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/ESBranchSDREndgame.lean
-    theorems: [branch_sdr_endgame, branch_sdr_endgame_clique_bound]
+    theorems: ["branch_sdr_endgame", "branch_sdr_endgame_clique_bound"]
     status: "[PROVED]"
     axioms: []
 
@@ -229,7 +229,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/ESMod7UniversalFamilies.lean
-    theorems: []
+    theorems: [""]
     status: "[PROVED]"
     axioms: []
     note: "18 theorems: three mod-7 universal families + fiber-pinning lemma."
@@ -239,7 +239,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/Girth5Floor3v.lean
-    theorems: []
+    theorems: [""]
     status: "[PROVED]"
     axioms: []
     note: "9 theorems: re-attachment model + cross-edge harmlessness."
@@ -249,7 +249,7 @@ sources:
     id: null
     type: article
     lean_module: Mathproofs/ESQadicBranch1.lean
-    theorems: [kill_02, kill_12, descent_01]
+    theorems: ["kill_02", "kill_12", "descent_01"]
     status: "[PROVED]"
     axioms: []
 
@@ -258,7 +258,297 @@ sources:
     id: null
     type: library
     lean_module: Mathproofs/Basic.lean
-    theorems: []
+    theorems: [""]
     status: "supporting definitions"
     axioms: []
     note: "Shared definitions imported by the formalization modules; no flagship theorems."
+
+  - title: "Fiber-compatibility and composite suppression"
+    authors: ["Derek Blair"]
+    id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/ESFiberCompat.lean
+    theorems: ["fiber_compat_pair_iff", "fiber_compat_saturated", "fiber_compat_card", "forced_digit"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209 fiber-compatibility kernel, composite theorem, thi...)."
+
+  - title: "Fiber-compatibility and composite suppression"
+    authors: ["Derek Blair"]
+    id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/ESFiberCompatComposite.lean
+    theorems: ["fiber_compat_iffC", "forced_digit_of_memC"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209 fiber-compatibility kernel, composite theorem, thi...)."
+
+  - title: "Fiber-compatibility and composite suppression"
+    authors: ["Derek Blair"]
+    id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/ESFiberTiling.lean
+    theorems: ["masks_match_boxes", "liveUnion_bound_6", "liveUnion_bound_11", "shape0_fiber6_blocked", "shape0_fiber11_blocked", "cover2_fiber6_blocked", "cover2_fiber11_blocked", "unique_2cover", "seven_minimal_3covers", "no_tiling_fiber6", "no_tiling_fiber11"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209 fiber-compatibility kernel, composite theorem, thi...)."
+
+  - title: "Fiber-compatibility and composite suppression"
+    authors: ["Derek Blair"]
+    id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/CompositeSuppression.lean
+    theorems: ["demands_descend", "capability_descend", "degeneracy_lemma"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209 fiber-compatibility kernel, composite theorem, thi...)."
+
+  - title: "Fiber-compatibility and composite suppression"
+    authors: ["Derek Blair"]
+    id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/ESBranchTwo.lean
+    theorems: ["branch2_collapse", "family_identity", "branch2_m_mod8_refuted"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209 fiber-compatibility kernel, composite theorem, thi...)."
+
+  - title: "Sieve inversion and branch isolation"
+    authors: ["Derek Blair"]
+    id: papers/sieve-inverse-branch-isolation-October-11-2026/sieve-inverse-branch-isolation-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/ESRefinedSieveInverse.lean
+    theorems: ["crt44_forward", "crt44_backward", "crt44_iff", "sixClasses_inv_closed", "crt_inv_compose", "S1_subset"]
+    status: "[PROVED] / [PROVED*]"
+    axioms: ["propext", "Quot.sound", "native_decide certs (on the three [PROVED*] theorems)"]
+    note: "Paper: papers/sieve-inverse-branch-isolation-October-11-2026/ (R169/R178 44-CRT sieve inversion and R163/R174 u-branch isolation...)."
+
+  - title: "Sieve inversion and branch isolation"
+    authors: ["Derek Blair"]
+    id: papers/sieve-inverse-branch-isolation-October-11-2026/sieve-inverse-branch-isolation-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/ESUBranchIsolation.lean
+    theorems: ["uBranch_isolation", "closeImage_disjoint_of_subset", "uSide_degree_bound", "r163_uSideBound_inHclique"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/sieve-inverse-branch-isolation-October-11-2026/ (R169/R178 44-CRT sieve inversion and R163/R174 u-branch isolation...)."
+
+  - title: "Hole suppression and absorption"
+    authors: ["Derek Blair"]
+    id: papers/hole-suppression-absorption-October-11-2026/hole-suppression-absorption-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/HoleSuppression.lean
+    theorems: ["t2_iff", "t5_saturation", "t5_double_saturation", "dichotomy_two_margins"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/hole-suppression-absorption-October-11-2026/ (R199/R200 hole-suppression finite-set lemmas, absorbed-regime arithmetic, and th...)."
+
+  - title: "Hole suppression and absorption"
+    authors: ["Derek Blair"]
+    id: papers/hole-suppression-absorption-October-11-2026/hole-suppression-absorption-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/AbsorbedRegime.lean
+    theorems: ["t5prime_combined"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/hole-suppression-absorption-October-11-2026/ (R199/R200 hole-suppression finite-set lemmas, absorbed-regime arithmetic, and th...)."
+
+  - title: "Hole suppression and absorption"
+    authors: ["Derek Blair"]
+    id: papers/hole-suppression-absorption-October-11-2026/hole-suppression-absorption-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/AbsorbedBound.lean
+    theorems: ["t4_self_bound"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/hole-suppression-absorption-October-11-2026/ (R199/R200 hole-suppression finite-set lemmas, absorbed-regime arithmetic, and th...)."
+
+  - title: "Translation marches and dip mechanics"
+    authors: ["Derek Blair"]
+    id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/TranslationMarch.lean
+    theorems: ["rawBlocked_translate", "rigidity", "march", "march_neg", "march_saturated_iff_shadow", "plateau_downward"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core, corrected ψ-translate and unsat...)."
+
+  - title: "Translation marches and dip mechanics"
+    authors: ["Derek Blair"]
+    id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/CorrectedMarch.lean
+    theorems: ["psi_as_phi_translate", "feas_iff", "chain_bounds", "chain_width"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core, corrected ψ-translate and unsat...)."
+
+  - title: "Translation marches and dip mechanics"
+    authors: ["Derek Blair"]
+    id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/TranslationMarchUnsat.lean
+    theorems: ["propagation_subset"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core, corrected ψ-translate and unsat...)."
+
+  - title: "Translation marches and dip mechanics"
+    authors: ["Derek Blair"]
+    id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/HoleTwinDip.lean
+    theorems: ["hole_twin_of_dip", "chain_dip", "s1_instance"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core, corrected ψ-translate and unsat...)."
+
+  - title: "Translation marches and dip mechanics"
+    authors: ["Derek Blair"]
+    id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/DipMarch.lean
+    theorems: ["continuation_iff", "break_case", "reset_case", "perfect_case", "phi_duality"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core, corrected ψ-translate and unsat...)."
+
+  - title: "Sub-family dichotomy and ladder ceilings"
+    authors: ["Derek Blair"]
+    id: papers/subfamily-ladder-ceiling-October-11-2026/subfamily-ladder-ceiling-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/ESSubfamilyExtended.lean
+    theorems: ["generalized_subfamily_identity", "admission_criterion", "a0_constancy", "u_eq_Aqe_div_f", "excess_prime_dvd_u", "M_const", "split_layered_repaired"]
+    status: "[PROVED] / [PROVED*]"
+    axioms: []
+    note: "Paper: papers/subfamily-ladder-ceiling-October-11-2026/ (R245 generalized sub-family theorem (+ staged R253/R261/R265 extensions) and the...)."
+
+  - title: "Sub-family dichotomy and ladder ceilings"
+    authors: ["Derek Blair"]
+    id: papers/subfamily-ladder-ceiling-October-11-2026/subfamily-ladder-ceiling-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/MarchLadderCeiling.lean
+    theorems: ["theorem6", "catalog_ceiling"]
+    status: "[PROVED]"
+    axioms: [propext, Quot.sound]
+    note: "Paper: papers/subfamily-ladder-ceiling-October-11-2026/ (R245 generalized sub-family theorem (+ staged R253/R261/R265 extensions) and the...)."
+
+  - title: "Sigma transfer and fiber overlap"
+    authors: ["Derek Blair"]
+    id: papers/sigma-transfer-fiber-overlap-October-11-2026/sigma-transfer-fiber-overlap-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/SigmaTrans.lean
+    theorems: ["A3_holds"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/sigma-transfer-fiber-overlap-October-11-2026/ (R275 σ-transfer ascent machinery and R277 fiber-overlap lemmas...)."
+
+  - title: "Sigma transfer and fiber overlap"
+    authors: ["Derek Blair"]
+    id: papers/sigma-transfer-fiber-overlap-October-11-2026/sigma-transfer-fiber-overlap-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/FiberOverlap.lean
+    theorems: ["fiber_overlap", "fiber_overlap_identity", "autocorr_le_one", "top_interval_sparsity"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/sigma-transfer-fiber-overlap-October-11-2026/ (R275 σ-transfer ascent machinery and R277 fiber-overlap lemmas...)."
+
+  - title: "Abstract locks and transition DAGs"
+    authors: ["Derek Blair"]
+    id: papers/abstract-lock-transdag-October-11-2026/abstract-lock-transdag-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/AbstractLock.lean
+    theorems: ["consecT_gives_consec_fire", "no_consecT_scattered", "consec_window_no_consecT_not_full", "full_no_consecT_gap_window", "sharpness_witness"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/abstract-lock-transdag-October-11-2026/ (R280/R287 abstract lock theory (repaired) and R279/R288/R292 dual-ascent barrier...)."
+
+  - title: "Abstract locks and transition DAGs"
+    authors: ["Derek Blair"]
+    id: papers/abstract-lock-transdag-October-11-2026/abstract-lock-transdag-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/TransDAG.lean
+    theorems: ["no_dual_target_demote", "no_dual_source_promote", "dual_preserves_s_card"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/abstract-lock-transdag-October-11-2026/ (R280/R287 abstract lock theory (repaired) and R279/R288/R292 dual-ascent barrier...)."
+
+  - title: "Void frames and defect calculus"
+    authors: ["Derek Blair"]
+    id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/VoidUnion.lean
+    theorems: ["V1_void_iff_zero", "V8_forced_split", "k0_zero_impossible"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under union, void locks, the N′_W...)."
+
+  - title: "Void frames and defect calculus"
+    authors: ["Derek Blair"]
+    id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/VoidLock.lean
+    theorems: ["forced_cell_in_window", "void_exclusion"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under union, void locks, the N′_W...)."
+
+  - title: "Void frames and defect calculus"
+    authors: ["Derek Blair"]
+    id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/VoidMonoidParam.lean
+    theorems: ["additive_iff_disjoint", "defect_core", "fully_additive_submonoid", "disjoint_footprint_submonoid", "prod_additive_iff"]
+    status: "[PROVED*] (staged, build-clean)"
+    axioms: []
+    note: "Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under union, void locks, the N′_W...)."
+
+  - title: "Void frames and defect calculus"
+    authors: ["Derek Blair"]
+    id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/VoidMonoid.lean
+    theorems: ["d2c_not_closed", "d2c_generated_loses_disjoint", "maximal_family_tiles"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under union, void locks, the N′_W...)."
+
+  - title: "Void frames and defect calculus"
+    authors: ["Derek Blair"]
+    id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/VoidDefectHom.lean
+    theorems: ["defect_hom_rigidity", "literal_product_never", "split_boundary_witness", "mixed_count"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under union, void locks, the N′_W...)."
+
+  - title: "Absorption order and forcing spectrum"
+    authors: ["Derek Blair"]
+    id: papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/ESAbsorptionOrder.lean
+    theorems: ["absorp_datum_iff", "overlap_deficit_bound", "rho_absorption_collapse", "absorption_collapse_unique_core", "singleton_factorization"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/es-absorption-forcing-October-11-2026/ (ES absorption poset + redundancy rank, forcing spectrum partition, and forcing d...)."
+
+  - title: "Absorption order and forcing spectrum"
+    authors: ["Derek Blair"]
+    id: papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/ESForcingSpectrum.lean
+    theorems: ["s2a'_forced", "s2b_pc", "s2c_void", "s2d_split", "spectrum_partition", "psi_union_max"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/es-absorption-forcing-October-11-2026/ (ES absorption poset + redundancy rank, forcing spectrum partition, and forcing d...)."
+
+  - title: "Absorption order and forcing spectrum"
+    authors: ["Derek Blair"]
+    id: papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf
+    type: article
+    lean_module: Mathproofs/ESForcingDecomp.lean
+    theorems: ["theoremA_crt", "theoremB_scaling", "theoremC_filter", "theoremD_card"]
+    status: "[PROVED]"
+    axioms: []
+    note: "Paper: papers/es-absorption-forcing-October-11-2026/ (ES absorption poset + redundancy rank, forcing spectrum partition, and forcing d...)."

@@ -1,0 +1,26 @@
+@misc{blair2026abstractlocktransdag,
+  author       = {Derek Blair},
+  title        = {Abstract Locks and Transition DAGs:
+                  Repaired Consecutive-Firing Laws,
+                  the Dual-Ascent Barrier, and Ascent-Depth Bounds},
+  year         = {2026},
+  month        = oct,
+  note         = {Preprint. Formalizations in
+                  \texttt{Mathproofs/AbstractLock.lean} and
+                  \texttt{Mathproofs/TransDAG.lean} of the
+                  derekblair/math-proofs repository, Lean~4.34.1 with
+                  Mathlib pinned at commit \texttt{d13f23b}.
+                  All theorems are \texttt{[PROVED]}: full-library
+                  \texttt{lake build} on the bakkie fleet machine,
+                  exit~0, zero \texttt{sorry}s; the two dual-ascent
+                  barrier theorems are axiom-free ($0$ axioms), all
+                  others use \texttt{[propext, Classical.choice,
+                  Quot.sound]} (rule-9 reviews Q-32, Q-33, Q-36
+                  SURVIVES, scoped as stated). The original
+                  T3(iii) clause is recorded as REFUTED
+                  (counterexample $W=\{0,2\}$) and the original D7
+                  barrier as DEMOTED to \texttt{[OPEN]} by an explicit
+                  abstract non-entailment model; only the repaired
+                  statements are claimed.},
+  url          = {[PLACEHOLDER: repository URL for this paper slug]}
+}

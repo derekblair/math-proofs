@@ -20,6 +20,15 @@ verification status and axiom dependencies.
 | 004 | Girth-5 extremal graphs | [G5-001](#g5-001) |
 | 005 | q-adic classification of Erdős–Straus witnesses | [QA-001](#qa-001) |
 | 006 | Saturated Sidon sets | [SS-001](#ss-001) |
+| 007 | Erdős–Straus fiber compatibility and suppression | [ES-004](#es-004) |
+| 008 | Sidon hole suppression and absorption | [SS-002](#ss-002) |
+| 009 | Translation marches and dip mechanics | [SS-003](#ss-003) |
+| 010 | Sub-family dichotomy and ladder ceilings | [SS-004](#ss-004) |
+| 011 | Sigma transfer and fiber overlap | [SS-005](#ss-005) |
+| 012 | Abstract locks and transition DAGs | [SS-006](#ss-006) |
+| 013 | Void frames and defect calculus | [SS-007](#ss-007) |
+| 014 | ES absorption order and forcing spectrum | [ES-005](#es-005) |
+| 015 | Sieve inversion and branch isolation | [ES-006](#es-006) |
 
 ## Family 001 — Erdős–Straus identities and obstructions
 
@@ -152,10 +161,156 @@ The set {16, 62, 66, 74, 88, 104, 117, 122, 123} is Sidon and saturated in
 [1,184] (verified on three independent code paths).
 
 - Paper: [`papers/r47-sat184-October-7-2026/`](papers/r47-sat184-October-7-2026/)
-  ([PDF](papers/r47-sat184-October-7-2026/sat184.pdf),
-  [source](papers/r47-sat184-October-7-2026/sat184.tex),
+  ([PDF](papers/r47-sat184-October-7-2026/r47-sat184-October-7-2026.pdf),
+  [source](papers/r47-sat184-October-7-2026/r47-sat184-October-7-2026.tex),
   [build](papers/r47-sat184-October-7-2026/BUILD.md),
   [citation](papers/r47-sat184-October-7-2026/CITATION.bib))
+
+## Family 007 — Erdős–Straus fiber compatibility and suppression
+
+### <a id="es-004"></a>ES-004 — Fiber-compatibility and composite suppression — [PROVED]
+
+R185/R192/R193/R205/R207/R209 fiber-compatibility kernel, composite theorem, thinned-tiling catalogue, suppression theory, and branch-2 degeneracy.
+
+- Paper: [`papers/fiber-compatibility-composite-suppression-October-11-2026/`](papers/fiber-compatibility-composite-suppression-October-11-2026/)
+  ([PDF](papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf),
+  [source](papers/fiber-compatibility-composite-suppression-October-11-2026/build/fiber-compatibility-composite-suppression-October-11-2026.tex),
+  [build](papers/fiber-compatibility-composite-suppression-October-11-2026/BUILD.md),
+  [citation](papers/fiber-compatibility-composite-suppression-October-11-2026/CITATION.bib))
+- Lean modules:
+  [`Mathproofs/ESFiberCompat.lean`](Mathproofs/ESFiberCompat.lean)
+  [`Mathproofs/ESFiberCompatComposite.lean`](Mathproofs/ESFiberCompatComposite.lean)
+  [`Mathproofs/ESFiberTiling.lean`](Mathproofs/ESFiberTiling.lean)
+  [`Mathproofs/CompositeSuppression.lean`](Mathproofs/CompositeSuppression.lean)
+  [`Mathproofs/ESBranchTwo.lean`](Mathproofs/ESBranchTwo.lean)
+
+## Family 008 — Sidon hole suppression and absorption
+
+### <a id="ss-002"></a>SS-002 — Hole suppression and absorption — [PROVED]
+
+R199/R200 hole-suppression finite-set lemmas, absorbed-regime arithmetic, and the corrected T4 absorbed bound.
+
+- Paper: [`papers/hole-suppression-absorption-October-11-2026/`](papers/hole-suppression-absorption-October-11-2026/)
+  ([PDF](papers/hole-suppression-absorption-October-11-2026/hole-suppression-absorption-October-11-2026.pdf),
+  [source](papers/hole-suppression-absorption-October-11-2026/build/hole-suppression-absorption-October-11-2026.tex),
+  [build](papers/hole-suppression-absorption-October-11-2026/BUILD.md),
+  [citation](papers/hole-suppression-absorption-October-11-2026/CITATION.bib))
+- Lean modules:
+  [`Mathproofs/HoleSuppression.lean`](Mathproofs/HoleSuppression.lean)
+  [`Mathproofs/AbsorbedRegime.lean`](Mathproofs/AbsorbedRegime.lean)
+  [`Mathproofs/AbsorbedBound.lean`](Mathproofs/AbsorbedBound.lean)
+
+## Family 009 — Translation marches and dip mechanics
+
+### <a id="ss-003"></a>SS-003 — Translation marches and dip mechanics — [PROVED]
+
+R227/R231/R233/R235/R247 translation-march core, corrected ψ-translate and unsaturated march, hole-twin dip theorem, and dip-march sliding-window mechanics.
+
+- Paper: [`papers/translation-march-dip-October-11-2026/`](papers/translation-march-dip-October-11-2026/)
+  ([PDF](papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf),
+  [source](papers/translation-march-dip-October-11-2026/build/translation-march-dip-October-11-2026.tex),
+  [build](papers/translation-march-dip-October-11-2026/BUILD.md),
+  [citation](papers/translation-march-dip-October-11-2026/CITATION.bib))
+- Lean modules:
+  [`Mathproofs/TranslationMarch.lean`](Mathproofs/TranslationMarch.lean)
+  [`Mathproofs/CorrectedMarch.lean`](Mathproofs/CorrectedMarch.lean)
+  [`Mathproofs/TranslationMarchUnsat.lean`](Mathproofs/TranslationMarchUnsat.lean)
+  [`Mathproofs/HoleTwinDip.lean`](Mathproofs/HoleTwinDip.lean)
+  [`Mathproofs/DipMarch.lean`](Mathproofs/DipMarch.lean)
+
+## Family 010 — Sub-family dichotomy and ladder ceilings
+
+### <a id="ss-004"></a>SS-004 — Sub-family dichotomy and ladder ceilings — [PROVED]
+
+R245 generalized sub-family theorem (+ staged R253/R261/R265 extensions) and the R259/R263 ladder-length ceiling.
+
+- Paper: [`papers/subfamily-ladder-ceiling-October-11-2026/`](papers/subfamily-ladder-ceiling-October-11-2026/)
+  ([PDF](papers/subfamily-ladder-ceiling-October-11-2026/subfamily-ladder-ceiling-October-11-2026.pdf),
+  [source](papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex),
+  [build](papers/subfamily-ladder-ceiling-October-11-2026/BUILD.md),
+  [citation](papers/subfamily-ladder-ceiling-October-11-2026/CITATION.bib))
+- Lean modules:
+  [`Mathproofs/ESSubfamilyExtended.lean`](Mathproofs/ESSubfamilyExtended.lean)
+  [`Mathproofs/MarchLadderCeiling.lean`](Mathproofs/MarchLadderCeiling.lean)
+
+## Family 011 — Sigma transfer and fiber overlap
+
+### <a id="ss-005"></a>SS-005 — Sigma transfer and fiber overlap — [PROVED]
+
+R275 σ-transfer ascent machinery and R277 fiber-overlap lemmas.
+
+- Paper: [`papers/sigma-transfer-fiber-overlap-October-11-2026/`](papers/sigma-transfer-fiber-overlap-October-11-2026/)
+  ([PDF](papers/sigma-transfer-fiber-overlap-October-11-2026/sigma-transfer-fiber-overlap-October-11-2026.pdf),
+  [source](papers/sigma-transfer-fiber-overlap-October-11-2026/build/sigma-transfer-fiber-overlap-October-11-2026.tex),
+  [build](papers/sigma-transfer-fiber-overlap-October-11-2026/BUILD.md),
+  [citation](papers/sigma-transfer-fiber-overlap-October-11-2026/CITATION.bib))
+- Lean modules:
+  [`Mathproofs/SigmaTrans.lean`](Mathproofs/SigmaTrans.lean)
+  [`Mathproofs/FiberOverlap.lean`](Mathproofs/FiberOverlap.lean)
+
+## Family 012 — Abstract locks and transition DAGs
+
+### <a id="ss-006"></a>SS-006 — Abstract locks and transition DAGs — [PROVED]
+
+R280/R287 abstract lock theory (repaired) and R279/R288/R292 dual-ascent barrier + ascent-depth.
+
+- Paper: [`papers/abstract-lock-transdag-October-11-2026/`](papers/abstract-lock-transdag-October-11-2026/)
+  ([PDF](papers/abstract-lock-transdag-October-11-2026/abstract-lock-transdag-October-11-2026.pdf),
+  [source](papers/abstract-lock-transdag-October-11-2026/build/abstract-lock-transdag-October-11-2026.tex),
+  [build](papers/abstract-lock-transdag-October-11-2026/BUILD.md),
+  [citation](papers/abstract-lock-transdag-October-11-2026/CITATION.bib))
+- Lean modules:
+  [`Mathproofs/AbstractLock.lean`](Mathproofs/AbstractLock.lean)
+  [`Mathproofs/TransDAG.lean`](Mathproofs/TransDAG.lean)
+
+## Family 013 — Void frames and defect calculus
+
+### <a id="ss-007"></a>SS-007 — Void frames and defect calculus — [PROVED] (VoidMonoidParam [PROVED*] staged)
+
+R283/R289/R291/R296/R299/R300/R303 void frames under union, void locks, the N′_W defect monoid, and defect homomorphisms.
+
+- Paper: [`papers/void-frames-defect-October-11-2026/`](papers/void-frames-defect-October-11-2026/)
+  ([PDF](papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf),
+  [source](papers/void-frames-defect-October-11-2026/build/void-frames-defect-October-11-2026.tex),
+  [build](papers/void-frames-defect-October-11-2026/BUILD.md),
+  [citation](papers/void-frames-defect-October-11-2026/CITATION.bib))
+- Lean modules:
+  [`Mathproofs/VoidUnion.lean`](Mathproofs/VoidUnion.lean)
+  [`Mathproofs/VoidLock.lean`](Mathproofs/VoidLock.lean)
+  [`Mathproofs/VoidMonoidParam.lean`](Mathproofs/VoidMonoidParam.lean)
+  [`Mathproofs/VoidMonoid.lean`](Mathproofs/VoidMonoid.lean)
+  [`Mathproofs/VoidDefectHom.lean`](Mathproofs/VoidDefectHom.lean)
+
+## Family 014 — ES absorption order and forcing spectrum
+
+### <a id="es-005"></a>ES-005 — Absorption order and forcing spectrum — [PROVED]
+
+ES absorption poset + redundancy rank, forcing spectrum partition, and forcing decomposition theorems A–D.
+
+- Paper: [`papers/es-absorption-forcing-October-11-2026/`](papers/es-absorption-forcing-October-11-2026/)
+  ([PDF](papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf),
+  [source](papers/es-absorption-forcing-October-11-2026/build/es-absorption-forcing-October-11-2026.tex),
+  [build](papers/es-absorption-forcing-October-11-2026/BUILD.md),
+  [citation](papers/es-absorption-forcing-October-11-2026/CITATION.bib))
+- Lean modules:
+  [`Mathproofs/ESAbsorptionOrder.lean`](Mathproofs/ESAbsorptionOrder.lean)
+  [`Mathproofs/ESForcingSpectrum.lean`](Mathproofs/ESForcingSpectrum.lean)
+  [`Mathproofs/ESForcingDecomp.lean`](Mathproofs/ESForcingDecomp.lean)
+
+## Family 015 — Sieve inversion and branch isolation
+
+### <a id="es-006"></a>ES-006 — Sieve inversion and branch isolation — [PROVED]
+
+R169/R178 44-CRT sieve inversion and R163/R174 u-branch isolation.
+
+- Paper: [`papers/sieve-inverse-branch-isolation-October-11-2026/`](papers/sieve-inverse-branch-isolation-October-11-2026/)
+  ([PDF](papers/sieve-inverse-branch-isolation-October-11-2026/sieve-inverse-branch-isolation-October-11-2026.pdf),
+  [source](papers/sieve-inverse-branch-isolation-October-11-2026/build/sieve-inverse-branch-isolation-October-11-2026.tex),
+  [build](papers/sieve-inverse-branch-isolation-October-11-2026/BUILD.md),
+  [citation](papers/sieve-inverse-branch-isolation-October-11-2026/CITATION.bib))
+- Lean modules:
+  [`Mathproofs/ESRefinedSieveInverse.lean`](Mathproofs/ESRefinedSieveInverse.lean)
+  [`Mathproofs/ESUBranchIsolation.lean`](Mathproofs/ESUBranchIsolation.lean)
 
 ## Versions and citations
 

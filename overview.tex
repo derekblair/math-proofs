@@ -132,6 +132,98 @@ $\{16, 62, 66, 74, 88, 104, 117, 122, 123\}$ is Sidon and saturated in
 $[1,184]$, verified on three independent code paths. Paper:
 \texttt{papers/r47-sat184-October-7-2026/}.
 
+\section{Family 007 --- Erd\H{o}s--Straus fiber compatibility and suppression}
+
+\textbf{ES-004} (\texttt{[PROVED]}): the R185 fiber-compatibility kernel
+(sharp inverse-closure characterization for prime-power projections:
+\texttt{ESFiberCompat.lean}), its composite-modulus extension
+(\texttt{ESFiberCompatComposite.lean}), the fiber-$\{6,11\}$ thinned-tiling
+catalogue (\texttt{ESFiberTiling.lean}), the composite suppression theory
+(suppression coefficient $\kappa$, persistence rate $\Pi$, the T4--T8
+R-operator section: \texttt{CompositeSuppression.lean}), and the branch-2
+degeneracy + divisor-closed family theorem (\texttt{ESBranchTwo.lean},
+including the honest mod-8 refutation of the naive form). All five modules
+are machine-checked with standard axioms only. Paper:
+\url{papers/fiber-compatibility-composite-suppression-October-11-2026/}.
+
+\section{Family 008 --- Sidon hole suppression and absorption}
+
+\textbf{SS-002} (\texttt{[PROVED]}): R199/R200 hole-suppression finite-set
+lemmas and T5 saturation theorems (\texttt{HoleSuppression.lean}), the
+absorbed-regime arithmetic T5$'$ (\texttt{AbsorbedRegime.lean}), and the
+corrected T4 absorbed bound $c \le 320$
+(\texttt{AbsorbedBound.lean}). Paper:
+\url{papers/hole-suppression-absorption-October-11-2026/}.
+
+\section{Family 009 --- Translation marches and dip mechanics}
+
+\textbf{SS-003} (\texttt{[PROVED]}): the surviving core of R227's
+translation march (rigid translation of blocked sets:
+\texttt{TranslationMarch.lean}), the corrected $\psi$-translate identities
+and chain/width bounds (\texttt{CorrectedMarch.lean}), the corrected
+unsaturated march with its additive bound
+(\texttt{TranslationMarchUnsat.lean}), the generalized hole-twin dip
+theorem (\texttt{HoleTwinDip.lean}), and the R247 dip-march sliding-window
+mechanics with $\varphi$-duality (\texttt{DipMarch.lean}). Paper:
+\url{papers/translation-march-dip-October-11-2026/}.
+
+\section{Family 010 --- Sub-family dichotomy and ladder ceilings}
+
+\textbf{SS-004}: the R245 generalized sub-family theorem
+(\texttt{generalized\_subfamily\_identity} in
+\texttt{ESSubfamilyExtended.lean}, \texttt{[PROVED]}) with staged
+\texttt{[PROVED*]} extensions (R253 admission criterion, R261
+$A_0$-constancy, R265 repaired split/layered), and the R259/R263
+ladder-length ceiling (\texttt{theorem6}, \texttt{catalog\_ceiling} in
+\texttt{MarchLadderCeiling.lean}, \texttt{[PROVED]}). Paper:
+\url{papers/subfamily-ladder-ceiling-October-11-2026/}.
+
+\section{Family 011 --- Sigma transfer and fiber overlap}
+
+\textbf{SS-005} (\texttt{[PROVED]}): R275 $\sigma$-transfer ascent-transfer
+machinery (\texttt{SigmaTrans.lean}) and the R277 fiber-overlap lemmas
+(\texttt{FiberOverlap.lean}). Paper:
+\url{papers/sigma-transfer-fiber-overlap-October-11-2026/}.
+
+\section{Family 012 --- Abstract locks and transition DAGs}
+
+\textbf{SS-006} (\texttt{[PROVED]}): the repaired abstract lock theory
+(consecutive-firing characterization with the $W=\{0,2\}$ sharpness
+witness: \texttt{AbstractLock.lean}) and the D7$'$ dual-ascent barrier plus
+$L_s$/C3 ascent-depth machinery (\texttt{TransDAG.lean}). Paper:
+\url{papers/abstract-lock-transdag-October-11-2026/}.
+
+\section{Family 013 --- Void frames and defect calculus}
+
+\textbf{SS-007}: void frames under union forcing, V1--V8
+(\texttt{VoidUnion.lean}, \texttt{[PROVED]}), void locks
+(\texttt{VoidLock.lean}, \texttt{[PROVED]}), the parameterized void-frame
+monoid $N'_W$ (\texttt{VoidMonoidParam.lean}, \texttt{[PROVED*]} staged
+verification, build-clean --- a required build dependency), the D2(c)
+repair + D3 tiling (\texttt{VoidMonoid.lean}, \texttt{[PROVED]}), and the
+defect-homomorphism rigidity/counts (\texttt{VoidDefectHom.lean},
+\texttt{[PROVED]}). Paper:
+\url{papers/void-frames-defect-October-11-2026/}.
+
+\section{Family 014 --- ES absorption order and forcing spectrum}
+
+\textbf{ES-005} (\texttt{[PROVED]}): the ES absorption poset and
+redundancy rank --- A1--A3, $\rho$/R3$'$/R3$''$/T/R4$'$ superadditivity,
+singleton factorization (\texttt{ESAbsorptionOrder.lean}); the forcing
+spectrum partition S2(a)$'$/S2(b--d)/S3/S4
+(\texttt{ESForcingSpectrum.lean}); and the forcing decomposition theorems
+A--D (\texttt{ESForcingDecomp.lean}). Paper:
+\url{papers/es-absorption-forcing-October-11-2026/}.
+
+\section{Family 015 --- Sieve inversion and branch isolation}
+
+\textbf{ES-006}: the 44-CRT sieve inversion
+(\texttt{crt44\_forward/backward/iff} in \texttt{ESRefinedSieveInverse.lean},
+\texttt{[PROVED]} with narrower-than-standard axioms; three
+\texttt{native\_decide} theorems \texttt{[PROVED*]}) and u-branch isolation
+(\texttt{ESUBranchIsolation.lean}, \texttt{[PROVED]}, standard axioms).
+Paper: \url{papers/sieve-inverse-branch-isolation-October-11-2026/}.
+
 \section{Summary of families}
 
 \begin{table}[h]
@@ -146,9 +238,18 @@ Family & Subject & Modules \\
 004 & Girth-5 extremal graphs & 1 \\
 005 & q-adic classification of ES witnesses & 1 \\
 006 & Saturated Sidon sets & 0 (computational) \\
+007 & ES fiber compatibility and suppression & 5 \\
+008 & Sidon hole suppression and absorption & 3 \\
+009 & Translation marches and dip mechanics & 5 \\
+010 & Sub-family dichotomy and ladder ceilings & 2 \\
+011 & Sigma transfer and fiber overlap & 2 \\
+012 & Abstract locks and transition DAGs & 2 \\
+013 & Void frames and defect calculus & 5 \\
+014 & ES absorption order and forcing spectrum & 3 \\
+015 & Sieve inversion and branch isolation & 2 \\
 \bottomrule
 \end{tabular}
-\caption{The six result families and their formalization footprint.}
+\caption{The fifteen result families and their formalization footprint.}
 \end{table}
 
 \section*{Versions and citations}

@@ -33,6 +33,36 @@ axiom dependencies. Statuses mirror the labeling convention in
 | `branch_sdr_endgame`, `branch_sdr_endgame_clique_bound` (SDR endgame, pair-specific conditional) | [Mathproofs/ESBranchSDREndgame.lean](Mathproofs/ESBranchSDREndgame.lean) | [PROVED] | none | preprint in preparation |
 | 18 theorems: three mod-7 universal families + fiber-pinning lemma | [Mathproofs/ESMod7UniversalFamilies.lean](Mathproofs/ESMod7UniversalFamilies.lean) | [PROVED] | none | preprint in preparation |
 
+| `fiber_compat_pair_iff`, `fiber_compat_saturated`, `fiber_compat_card`, `forced_digit` (+ unit/digit API) | [Mathproofs/ESFiberCompat.lean](Mathproofs/ESFiberCompat.lean) | [PROVED] | none | [ES-004](CONTENTS.md#es-004) |
+| `fiber_compat_iffC`, `forced_digit_of_memC` (+ composite digit/projection API) | [Mathproofs/ESFiberCompatComposite.lean](Mathproofs/ESFiberCompatComposite.lean) | [PROVED] | none | [ES-004](CONTENTS.md#es-004) |
+| `liveUnion_bound_6`, `liveUnion_bound_11`, 16 BLOCKED-shape `decide` theorems | [Mathproofs/ESFiberTiling.lean](Mathproofs/ESFiberTiling.lean) | [PROVED] | none | [ES-004](CONTENTS.md#es-004) |
+| `demands_descend`, `capability_descend`, `kappa_*`, `digitMap_*`, `degeneracy_lemma` | [Mathproofs/CompositeSuppression.lean](Mathproofs/CompositeSuppression.lean) | [PROVED] | none | [ES-004](CONTENTS.md#es-004) |
+| `branch2_collapse`, `family_identity`, `branch2_m_mod8_refuted` | [Mathproofs/ESBranchTwo.lean](Mathproofs/ESBranchTwo.lean) | [PROVED] | none | [ES-004](CONTENTS.md#es-004) |
+| `crt44_forward`, `crt44_backward`, `crt44_iff` [PROVED]; `sixClasses_inv_closed`, `crt_inv_compose`, `S1_subset` [PROVED*] | [Mathproofs/ESRefinedSieveInverse.lean](Mathproofs/ESRefinedSieveInverse.lean) | [PROVED] / [PROVED*] | `propext`, `Quot.sound` on crt44_*; +`native_decide` certs on the three [PROVED*] | [ES-006](CONTENTS.md#es-006) |
+| `uBranch_isolation`, `closeImage_disjoint_of_subset`, `uSide_degree_bound`, `r163_uSideBound_inHclique` | [Mathproofs/ESUBranchIsolation.lean](Mathproofs/ESUBranchIsolation.lean) | [PROVED] | none | [ES-006](CONTENTS.md#es-006) |
+| `t2_iff`, `t5_saturation`, `t5_double_saturation`, `dichotomy_two_margins` | [Mathproofs/HoleSuppression.lean](Mathproofs/HoleSuppression.lean) | [PROVED] | none | [SS-002](CONTENTS.md#ss-002) |
+| `t5prime_R1/R2/R3/R6`, `t5prime_combined` | [Mathproofs/AbsorbedRegime.lean](Mathproofs/AbsorbedRegime.lean) | [PROVED] | none | [SS-002](CONTENTS.md#ss-002) |
+| `t4_self_bound` (corrected R200 T4) | [Mathproofs/AbsorbedBound.lean](Mathproofs/AbsorbedBound.lean) | [PROVED] | none | [SS-002](CONTENTS.md#ss-002) |
+| `rawBlocked_translate`, `rigidity`, `march`, `march_neg`, `march_saturated_iff_shadow`, `plateau_downward` | [Mathproofs/TranslationMarch.lean](Mathproofs/TranslationMarch.lean) | [PROVED] | none | [SS-003](CONTENTS.md#ss-003) |
+| `psi_as_phi_translate`, `feas_iff`, `chain_bounds`, `chain_width` | [Mathproofs/CorrectedMarch.lean](Mathproofs/CorrectedMarch.lean) | [PROVED] | none | [SS-003](CONTENTS.md#ss-003) |
+| `march_unsat_pos/neg`, `propagation_subset`, `rescue_threshold_pos/neg`, `additive_bound_pos/neg` | [Mathproofs/TranslationMarchUnsat.lean](Mathproofs/TranslationMarchUnsat.lean) | [PROVED] | none | [SS-003](CONTENTS.md#ss-003) |
+| `hole_twin_of_dip`, `chain_dip`, `s1_instance` | [Mathproofs/HoleTwinDip.lean](Mathproofs/HoleTwinDip.lean) | [PROVED] | none | [SS-003](CONTENTS.md#ss-003) |
+| `sliding_window_up/down`, `continuation_iff`, `break_case`, `reset_case`, `perfect_case`, `phi_duality` | [Mathproofs/DipMarch.lean](Mathproofs/DipMarch.lean) | [PROVED] | none | [SS-003](CONTENTS.md#ss-003) |
+| `generalized_subfamily_identity` [PROVED]; `admission_criterion`, `a0_constancy`, `u_eq_Aqe_div_f`, `excess_prime_dvd_u`, `M_const`, `split_layered_repaired` [PROVED*] | [Mathproofs/ESSubfamilyExtended.lean](Mathproofs/ESSubfamilyExtended.lean) | [PROVED] / [PROVED*] | none | [SS-004](CONTENTS.md#ss-004) |
+| `theorem6`, `catalog_ceiling` (+ one-sided/binding variants) | [Mathproofs/MarchLadderCeiling.lean](Mathproofs/MarchLadderCeiling.lean) | [PROVED] | `propext`, `Quot.sound` | [SS-004](CONTENTS.md#ss-004) |
+| `A3_holds`, `no_forcing_equality/disjoint/sharing` (+ transfer API) | [Mathproofs/SigmaTrans.lean](Mathproofs/SigmaTrans.lean) | [PROVED] | none | [SS-005](CONTENTS.md#ss-005) |
+| `fiber_overlap`, `fiber_overlap_identity`, `autocorr_le_one`, `top_interval_sparsity` | [Mathproofs/FiberOverlap.lean](Mathproofs/FiberOverlap.lean) | [PROVED] | none | [SS-005](CONTENTS.md#ss-005) |
+| `consecT_gives_consec_fire`, `no_consecT_scattered`, `consec_window_no_consecT_not_full`, `full_no_consecT_gap_window`, `sharpness_witness` | [Mathproofs/AbstractLock.lean](Mathproofs/AbstractLock.lean) | [PROVED] | none | [SS-006](CONTENTS.md#ss-006) |
+| `no_dual_target_demote`, `no_dual_source_promote`, `dual_preserves_s_card`, `ascentDepth_*` | [Mathproofs/TransDAG.lean](Mathproofs/TransDAG.lean) | [PROVED] | none | [SS-006](CONTENTS.md#ss-006) |
+| `V1_void_iff_zero` … `V8_forced_split`, `k0_zero_impossible` | [Mathproofs/VoidUnion.lean](Mathproofs/VoidUnion.lean) | [PROVED] | none | [SS-007](CONTENTS.md#ss-007) |
+| `forced_cell_in_window`, `void_exclusion` | [Mathproofs/VoidLock.lean](Mathproofs/VoidLock.lean) | [PROVED] | none | [SS-007](CONTENTS.md#ss-007) |
+| `additive_iff_disjoint` (P1), `defect_core` (P2i), `fully_additive_submonoid` (P2ii), `disjoint_footprint_submonoid` (P2iii-a), `Phi_*`/`Rho_*` (T1/T1′), `prod_additive_iff` (T2) — build dependency of VoidMonoid/VoidDefectHom | [Mathproofs/VoidMonoidParam.lean](Mathproofs/VoidMonoidParam.lean) | [PROVED*] (staged, build-clean) | none | [SS-007](CONTENTS.md#ss-007) |
+| `d2c_not_closed`, `d2c_generated_loses_disjoint`, `maximal_family_tiles` | [Mathproofs/VoidMonoid.lean](Mathproofs/VoidMonoid.lean) | [PROVED] | none | [SS-007](CONTENTS.md#ss-007) |
+| `defect_hom_rigidity` (H1), `literal_product_never` (C1), `split_boundary_witness` (C2), `mixed_count` (C4) | [Mathproofs/VoidDefectHom.lean](Mathproofs/VoidDefectHom.lean) | [PROVED] | none | [SS-007](CONTENTS.md#ss-007) |
+| `absorp_refl/trans/antisymm`, `absorp_datum_iff`, `rho_superadd_disjoint/general`, `overlap_deficit_bound`, `rho_absorption_collapse`, `absorption_collapse_unique_core`, `singleton_factorization` | [Mathproofs/ESAbsorptionOrder.lean](Mathproofs/ESAbsorptionOrder.lean) | [PROVED] | none | [ES-005](CONTENTS.md#es-005) |
+| `s2a'_forced`, `s2b_pc`, `s2c_void`, `s2d_split`, `spectrum_partition`, `psi_union_max` | [Mathproofs/ESForcingSpectrum.lean](Mathproofs/ESForcingSpectrum.lean) | [PROVED] | none | [ES-005](CONTENTS.md#es-005) |
+| `theoremA_crt`, `theoremB_scaling`, `theoremC_filter`, `theoremD_card` | [Mathproofs/ESForcingDecomp.lean](Mathproofs/ESForcingDecomp.lean) | [PROVED] | none | [ES-005](CONTENTS.md#es-005) |
+
 ## Checking instructions
 
 Requires [elan](https://github.com/leanprover/elan) (the Lean toolchain manager)

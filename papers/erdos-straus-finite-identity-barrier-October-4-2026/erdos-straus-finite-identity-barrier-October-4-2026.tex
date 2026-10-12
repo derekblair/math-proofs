@@ -175,6 +175,21 @@ $30$-identity system in Section~\ref{sec:witness}.
 \section{Results}
 %======================================================================
 
+\subsection{Formalization note}
+
+The barrier argument is formalized in Lean~4.34.1 with
+Mathlib~v4.34.1 (pinned commit \texttt{d13f23b}):
+\texttt{Mathproofs/ESBarrier.lean}, theorem \texttt{es\_barrier}, in the
+\texttt{derekblair/math-proofs} repository. Verification config:
+\texttt{lake build} exit~0, zero \texttt{sorry}s. Status [PROVED*]:
+the formalization depends on two explicitly labeled classical-input
+axioms beyond Lean's standard ones — \texttt{schinzel\_mordell}
+(Schinzel~1956 / Mordell~1967 obstruction, Lemma~\ref{lem:schinzel})
+and \texttt{dirichlet\_arith\_prog} (Dirichlet's theorem on arithmetic
+progressions; Mathlib~4.34.1 proves only the $\equiv 1 \pmod{k}$ case).
+The Lean module header points at this paper, and this paper points at
+the module and theorem name.
+
 \subsection{The barrier theorem}
 
 \begin{lemma}[Schinzel 1956 / Mordell 1967; cited classical]
