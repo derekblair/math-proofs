@@ -7,15 +7,16 @@ Round 7 identity — Erdős–Straus covering identity for n ≡ 217 (mod 264).
 Source: ~/workspace/math-unsolved/ROUND7_DOSSIER.md
 Preprint: `papers/erdos-straus-identity-217mod264-October-3-2026/erdos-straus-identity-217mod264-October-3-2026.tex`
 (Theorem 1 there). The source reports discovery by a search over 12,827
-candidate families and a historical comparison at 1009; those claims are
-not verified by this module. The covering identity is proved below.
+candidate families; those search counts are not verified by this module.
+The former novelty claim is withdrawn: see Lopez (2024), arXiv:2206.10319v4,
+and the manuscript's prior-art correction. The covering identity is proved below.
 `ESIdentityCRT` separately proves the six residue subclasses and their
 one-out-of-eleven count modulo 9240.
 
 Checked with Lean 4.34.1 (leanprover/lean4:stable) + Mathlib.
 -/
 
-/-- The new Erdős–Straus covering identity: for n ≡ 217 (mod 264),
+/-- The Erdős–Straus covering identity: for n ≡ 217 (mod 264),
     4/n = 1/((n+3)/4) + 1/(n(n+3)) + 1/(n(n+3)/11), where the third term
     is the unit fraction 1/(n(n+3)/11) since 11 ∣ n(n+3). -/
 theorem es_identity_217mod264 (n : ℕ) (h : n % 264 = 217) :

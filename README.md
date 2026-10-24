@@ -20,6 +20,11 @@ denominators `x,y,z` satisfying `4x=n+3`, `y=n(n+3)`, `11z=n(n+3)` and
 proves the six covered subclasses modulo 9240 and the exact one-out-of-eleven
 residue count for each parent class. These use only standard Lean axioms.
 
+The identity's former novelty claim is withdrawn. Miguel Angel Lopez (2024),
+[arXiv:2206.10319v4](https://arxiv.org/html/2206.10319v4), already gives the
+same solution at 1009; the prime-progression identity specializes his construction.
+The corrected manuscript explains the specialization. No priority is claimed.
+
 `SidonSat184.r47_sat184` in [SidonSat184.lean](Mathproofs/SidonSat184.lean)
 proves that `{16,62,66,74,88,104,117,122,123}` has nine elements and is a
 Sidon subset of `[1,184]` with no admissible extension in that interval.

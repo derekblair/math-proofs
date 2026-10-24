@@ -31,7 +31,7 @@ artifact_policy:
   note: Affected PDFs were not regenerated because no TeX toolchain is installed in this lane. Corrected TeX sources
     and current catalogues are authoritative.
 sources:
-- title: A new Erdős–Straus covering identity
+- title: An Erdős–Straus covering identity
   authors:
   - Derek Blair
   id: papers/erdos-straus-identity-217mod264-October-3-2026/erdos-straus-identity-217mod264-October-3-2026.pdf

@@ -2,8 +2,10 @@
 
 The authoritative current manuscript is `erdos-straus-identity-217mod264-October-3-2026.tex`. Its 2026-10-23 correction
 records the positive-natural-denominator covering theorem and the exact remaining scope limits.
+The 2026-10-24 correction also retracts the novelty claim and cites Lopez (2024),
+[arXiv:2206.10319v4](https://arxiv.org/html/2206.10319v4), as prior art.
 
-**The committed PDF is historical and predates these corrections.** It must not
+**The committed PDF is historical and contains the retracted novelty claims.** It must not
 be used as the current verification-status record. No TeX toolchain was available
 in the correction environment, so this revision has not been compiled to PDF or
 checked for layout and reference warnings. No toolchain was installed.

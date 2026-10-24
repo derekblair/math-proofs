@@ -4,6 +4,18 @@ Corrections and revisions are recorded as new versions; previously released
 versions remain accessible in git history. Corrections are disclosed here
 rather than buried.
 
+## 2026-10-24 — ES identity novelty retraction
+
+- Withdrew the claim that ES-001 is a new covering identity or that 1009 was
+  missed by all previously published identities. Lopez (2024),
+  [arXiv:2206.10319v4](https://arxiv.org/html/2206.10319v4), is prior art.
+- Corrected the manuscript's title, abstract, literature discussion, example,
+  conclusion, and bibliography, plus the README, catalogues, overview, citation
+  metadata, and Lean commentary. The manuscript explains the specialization
+  of Lopez's construction; the formal theorem statements are unchanged.
+- The existing PDF remains a historical artifact containing the retracted
+  claims. The corrected TeX source governs pending PDF regeneration.
+
 ## 2026-10-23 — Wave 2: constructive bridges and finite census proofs
 
 This entry supersedes the remaining-boundary statements in the first-wave

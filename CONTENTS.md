@@ -35,14 +35,15 @@ artifacts pending regeneration; see their BUILD notes.
 
 ## Family 001 — Erdős–Straus identities and obstructions
 
-### <a id="es-001"></a>ES-001 — A new Erdős–Straus covering identity — [PROVED]
+### <a id="es-001"></a>ES-001 — An Erdős–Straus covering identity — [PROVED]
 
 For `n ≡ 217 (mod 264)`:
 
 > `4/n = 1/((n+3)/4) + 1/(n(n+3)) + 1/(n(n+3)/11)`
 
-Covers the prime **1009**. The paper's historical comparison with earlier
-identity families remains separate from the formal statements. The exact six
+Covers the prime **1009**. The novelty claim is withdrawn in light of
+[Lopez (2024), arXiv:2206.10319v4](https://arxiv.org/html/2206.10319v4);
+see the manuscript's prior-art correction. The exact six
 covered subclasses modulo 9240 and the one-out-of-eleven residue count are
 proved in [ESIdentityCRT.lean](Mathproofs/ESIdentityCRT.lean).
 
