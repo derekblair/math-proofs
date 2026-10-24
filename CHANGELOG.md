@@ -4,6 +4,20 @@ Corrections and revisions are recorded as new versions; previously released
 versions remain accessible in git history. Corrections are disclosed here
 rather than buried.
 
+## 2026-10-24 — Absorption hypothesis repair
+
+- Repaired the vacuous global nonemptiness premise in `ESAbsorptionOrder`:
+  `absorp_datum_iff` now assumes only `G.C.Nonempty`, while
+  `rho_absorption_collapse` and `absorption_collapse_unique_core` assume
+  only `H.C.Nonempty`. The new `datum_eq_of_absorpLE` proves the
+  absorption-to-datum-equality direction without a nonemptiness premise.
+- Repaired `singleton_factorization` by taking a finite ambient family
+  `𝒢` with `S ⊆ 𝒢` and excluding singleton groups on `S0` only within
+  `𝒢`. The former exclusion over every possible group forced `S0 = ∅`;
+  the repaired hypothesis permits the census's nonempty set of cells.
+- Updated the absorption manuscript and catalogue descriptions to state
+  these hypotheses. The repaired statements retain `[PROVED]` status.
+
 ## 2026-10-24 — ES identity novelty retraction
 
 - Withdrew the claim that ES-001 is a new covering identity or that 1009 was

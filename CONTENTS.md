@@ -319,6 +319,9 @@ R283/R289/R291/R296/R299/R300/R303 void frames under union, void locks, the N′
 ### <a id="es-005"></a>ES-005 — Absorption order and forcing spectrum — [PROVED]
 
 ES absorption poset + redundancy rank, forcing spectrum partition, and forcing decomposition theorems A–D.
+The datum equivalence assumes `G.C.Nonempty`; absorption collapse and its
+unique core assume `H.C.Nonempty`. Singleton factorization takes a finite
+ambient family `𝒢 ⊇ S`, with no singleton group on a cell of `S0` within `𝒢`.
 
 - Paper: [`papers/es-absorption-forcing-October-11-2026/`](papers/es-absorption-forcing-October-11-2026/)
   ([PDF](papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf),

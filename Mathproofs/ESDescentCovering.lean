@@ -16,8 +16,9 @@ Their rational identity is proved, not assumed.
 
 `transfer_00_covering` composes the existing (0,0) key transfer with an
 intercept shift x₀′ = X₀j+x₀, deriving the parent S3 condition by subtraction.
-`transfer_11_covering` cancels q from both the slope and intercept when
-A=qA₀, r=qr₀, X′=qX₀, and x₀′=qx₀ are supplied explicitly.
+`transfer_11_covering` cancels q in the slope and S3 divisibilities when
+A=qA₀, r=qr₀, and X′=qX₀ are supplied explicitly, then uses the same
+intercept shift x₀′ = X₀j+x₀ to derive the parent S3 condition.
 
 These are conditional coverage results for the stated positive parameters.
 They do not prove that every external branch-2 identity has the required
@@ -99,18 +100,25 @@ theorem transfer_00_covering
   exact branch2_covering_of_divisibility X₀ s m A r x₀ hs hmpos hApos hrpos hfirst
     hk (descend_intercept hk hS3 hshift)
 
-/-- A genuine (1,1) arithmetic-to-identity descent with an explicitly scaled
-intercept. Both slope and S3 divisibilities follow by exact q-cancellation. -/
-theorem transfer_11_covering {q m A₀ r₀ A r X' X₀ x₀' x₀ s : ℕ}
+/-- A genuine (1,1) arithmetic-to-identity descent with an explicitly shifted
+intercept. After q-cancellation, the descended key shifts the S3 divisibility
+to the parent, giving positive denominators throughout the parent progression. -/
+theorem transfer_11_covering {q m A₀ r₀ A r X' X₀ x₀' x₀ s j : ℕ}
     (hq : 0 < q) (hA : A = q*A₀) (hr : r = q*r₀)
-    (hX : X' = q*X₀) (hx : x₀' = q*x₀)
+    (hX : X' = q*X₀) (hshift : x₀' = X₀*j + x₀)
     (hkey : m*(A*r) ∣ X'*(A+r))
     (hS3 : m*(A*r) ∣ x₀'*(A+r))
     (hs : 0 < s) (hm : 0 < m) (hApos : 0 < A₀) (hrpos : 0 < r₀)
     (hfirst : 4*x₀ = s+m) :
     ESCovering.CoversClass (4*X₀) s := by
   have hk := (ESDescentTransfer.transfer_qcancel hq hA hr hX).mpr hkey
-  have hc := (ESDescentTransfer.transfer_qcancel hq hA hr hx).mpr hS3
-  exact branch2_covering_of_divisibility X₀ s m A₀ r₀ x₀ hs hm hApos hrpos hfirst hk hc
+  have hS3' : m*(A₀*r₀) ∣ x₀'*(A₀+r₀) := by
+    rw [hA, hr] at hS3
+    have h1 : m*(q*A₀*(q*r₀)) = q * (q * (m*(A₀*r₀))) := by ring
+    have h2 : x₀'*(q*A₀+q*r₀) = q * (x₀'*(A₀+r₀)) := by ring
+    rw [h1, h2] at hS3
+    exact dvd_trans (dvd_mul_left _ _) ((Nat.mul_dvd_mul_iff_left hq).mp hS3)
+  exact branch2_covering_of_divisibility X₀ s m A₀ r₀ x₀ hs hm hApos hrpos hfirst hk
+    (descend_intercept hk hS3' hshift)
 
 end ESDescentCovering

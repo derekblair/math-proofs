@@ -3,6 +3,7 @@
 
   Paper: papers/es-absorption-forcing-October-11-2026/
   Status: [PROVED] — absorp_refl/trans/antisymm, absorp_datum_iff, rho_superadd_disjoint/general, overlap_deficit_bound, rho_absorption_collapse, absorption_collapse_unique_core, singleton_factorization
+  Scope: A2 needs G.C.Nonempty; collapse and uniqueness need H.C.Nonempty; singleton factorization uses an ambient family 𝒢 containing S.
   Verification: Lean 4.34.1 + Mathlib v4.34.1 (pinned d13f23b); R322: 34-theorem batch, bakkie exit 0, zero sorrys, axioms standard-only.
 -/
 
@@ -32,15 +33,18 @@ Paper trail:
 
 Formalized here ([PROVED*]-grade, Lean-checked):
 - `absorp_refl` / `absorp_trans` / `absorp_antisymm` (A1)
-- `absorp_datum_iff` (A2)
+- `datum_eq_of_absorpLE` (A2 reverse direction, no nonemptiness hypothesis)
+- `absorp_datum_iff` (A2, assuming `G.C.Nonempty`)
 - `dominance_prune` (A3), `minimal_pcov_antichain` (A3 corollary, minimal-cover
   normal form)
 - `redundant_mono` (R2)
 - `rho_superadd_disjoint` (R3′), `rho_superadd_general` (R3′′),
   `overlap_deficit_bound` (T(iii)), `rho_absorption_collapse` (R4′, A1-free),
-  `absorption_collapse_unique_core` (R4′ uniqueness add-on, uses A1)
+  `absorption_collapse_unique_core` (R4′ uniqueness add-on, uses A1); both R4′
+  results assume `H.C.Nonempty`
 - `ucover_minimal_iff_private_cells`, `singleton_factorization`,
-  `singleton_factorization_converse` (Q-52)
+  `singleton_factorization_converse` (Q-52); the forward theorem takes an ambient
+  family `𝒢 ⊇ S`, with no singleton footprint `{c}` in `𝒢` for `c ∈ S0`
 
 Census instances (78 groups, ⊤ = 3, 303 strict pairs, 36 equal-cell pairs) and the
 7,052,450-cover census stay [COMPUTED]×2 — cited, not formalized (no half-formalization).
@@ -156,9 +160,45 @@ theorem unionDatum_snd_union (S T : Finset (Group Cell)) :
     (unionDatum (S ∪ T)).2 = (unionDatum S).2 ∪ (unionDatum T).2 :=
   biUnion_union_general S T fun G => if G.p then G.C else ∅
 
+/-- The reverse direction of A2: absorption preserves the datum, without a
+    nonemptiness hypothesis. -/
+theorem datum_eq_of_absorpLE {G H : Group Cell} (hle : absorpLE G H) :
+    unionDatum ({G, H} : Finset (Group Cell)) = unionDatum {H} := by
+  obtain ⟨hsub, himp⟩ := hle
+  have eU2 : (unionDatum ({G, H} : Finset (Group Cell))).1 = G.C ∪ H.C :=
+    biUnion_pair_general G H Group.C
+  have eU1 : (unionDatum ({H} : Finset (Group Cell))).1 = H.C :=
+    biUnion_singleton_general H Group.C
+  have eP2 : (unionDatum ({G, H} : Finset (Group Cell))).2
+      = (if G.p then G.C else ∅) ∪ (if H.p then H.C else ∅) :=
+    biUnion_pair_general G H fun G => if G.p then G.C else ∅
+  have eP1 : (unionDatum ({H} : Finset (Group Cell))).2 = (if H.p then H.C else ∅) :=
+    biUnion_singleton_general H fun G => if G.p then G.C else ∅
+  have hu : G.C ∪ H.C = H.C := Finset.union_eq_right.mpr hsub
+  have hpc : (if G.p then G.C else ∅) ∪ (if H.p then H.C else ∅)
+      = (if H.p then H.C else ∅) := by
+    cases hpH : H.p with
+    | false =>
+      have hpG : G.p = false := by
+        cases hpG : G.p with
+        | false => rfl
+        | true => simp_all
+      simp [hpG, hpH]
+    | true =>
+      cases hpG : G.p with
+      | false => simp [hpG, hpH]
+      | true => simp [hpG, hpH, hu]
+  have e1 : (unionDatum ({G, H} : Finset (Group Cell))).1
+      = (unionDatum ({H} : Finset (Group Cell))).1 := by
+    rw [eU2, eU1, hu]
+  have e2 : (unionDatum ({G, H} : Finset (Group Cell))).2
+      = (unionDatum ({H} : Finset (Group Cell))).2 := by
+    rw [eP2, eP1, hpc]
+  exact Prod.ext e1 e2
+
 /-- A2: absorption characterization — datum({G,H}) = datum({H}) ⟺ G ≼ H.
-    Needs the census working convention that cells are nonempty (Q-48/Q-55). -/
-theorem absorp_datum_iff {G H : Group Cell} (hcell : ∀ g : Group Cell, g.C.Nonempty) :
+    Only G's footprint must be nonempty; the reverse direction needs no hypothesis. -/
+theorem absorp_datum_iff {G H : Group Cell} (hG : G.C.Nonempty) :
     unionDatum ({G, H} : Finset (Group Cell)) = unionDatum {H} ↔ absorpLE G H := by
   have eU2 : (unionDatum ({G, H} : Finset (Group Cell))).1 = G.C ∪ H.C :=
     biUnion_pair_general G H Group.C
@@ -187,29 +227,8 @@ theorem absorp_datum_iff {G H : Group Cell} (hcell : ∀ g : Group Cell, g.C.Non
       | false =>
         exfalso
         have hGe : G.C = ∅ := by simpa [hpG, hpH] using hpc
-        exact (hcell G).ne_empty hGe
-  · rintro ⟨hsub, himp⟩
-    have hu : G.C ∪ H.C = H.C := Finset.union_eq_right.mpr hsub
-    have hpc : (if G.p then G.C else ∅) ∪ (if H.p then H.C else ∅)
-        = (if H.p then H.C else ∅) := by
-      cases hpH : H.p with
-      | false =>
-        have hpG : G.p = false := by
-          cases hpG : G.p with
-          | false => rfl
-          | true => simp_all
-        simp [hpG, hpH]
-      | true =>
-        cases hpG : G.p with
-        | false => simp [hpG, hpH]
-        | true => simp [hpG, hpH, hu]
-    have e1 : (unionDatum ({G, H} : Finset (Group Cell))).1
-        = (unionDatum ({H} : Finset (Group Cell))).1 := by
-      rw [eU2, eU1, hu]
-    have e2 : (unionDatum ({G, H} : Finset (Group Cell))).2
-        = (unionDatum ({H} : Finset (Group Cell))).2 := by
-      rw [eP2, eP1, hpc]
-    exact Prod.ext e1 e2
+        exact hG.ne_empty hGe
+  · exact datum_eq_of_absorpLE
 
 /-- A3: dominance pruning — removing a dominated member preserves the datum. -/
 theorem dominance_prune {S : Finset (Group Cell)} {G H : Group Cell}
@@ -375,14 +394,14 @@ theorem overlap_deficit_bound (S T : Finset (Group Cell)) :
   omega
 
 /-- R4′: absorption collapse, A1-free (Q-55 SURVIVES; reviewer nit 5 — no A1,
-    no case split: A2 gives the collapse directly). -/
+    no case split: A2 gives the collapse directly), assuming H.C.Nonempty. -/
 theorem rho_absorption_collapse {G H : Group Cell} (hle : absorpLE G H) (hne : G ≠ H)
-    (hcell : ∀ g : Group Cell, g.C.Nonempty) :
+    (hH : H.C.Nonempty) :
     rho ({G, H} : Finset (Group Cell)) = 1 := by
   have hcard : ({G, H} : Finset (Group Cell)).card = 2 := Finset.card_pair hne
   have hHcore : IsCore ({G, H} : Finset (Group Cell)) {H} := by
     refine ⟨by simp, ?_⟩
-    exact ((absorp_datum_iff hcell).mpr hle).symm
+    exact (datum_eq_of_absorpLE hle).symm
   have hle1 : minCoreSize ({G, H} : Finset (Group Cell)) ≤ 1 :=
     Nat.sInf_le ⟨{H}, hHcore, by simp⟩
   have hge1 : 1 ≤ minCoreSize ({G, H} : Finset (Group Cell)) := by
@@ -398,15 +417,15 @@ theorem rho_absorption_collapse {G H : Group Cell} (hle : absorpLE G H) (hne : G
     have hmem : H ∈ ({G, H} : Finset (Group Cell)) := by simp
     have hsub : H.C ⊆ (∅ : Finset Cell) := by
       rw [hfst]; exact Finset.subset_biUnion_of_mem Group.C hmem
-    exact (hcell H).ne_empty (Finset.subset_empty.mp hsub)
+    exact hH.ne_empty (Finset.subset_empty.mp hsub)
   have hmin : minCoreSize ({G, H} : Finset (Group Cell)) = 1 := by omega
   unfold rho
   rw [hcard, hmin]
 
 /-- R4′ uniqueness add-on (uses A1; reviewer nit 5): the only singleton core
-    of {G, H} is {H}. -/
+    of {G, H} is {H}, assuming H.C.Nonempty. -/
 theorem absorption_collapse_unique_core {G H : Group Cell} (hle : absorpLE G H)
-    (hne : G ≠ H) (hcell : ∀ g : Group Cell, g.C.Nonempty)
+    (hne : G ≠ H) (hH : H.C.Nonempty)
     {C : Finset (Group Cell)}
     (hcore : IsCore ({G, H} : Finset (Group Cell)) C) (hcard : C.card = 1) :
     C = {H} := by
@@ -418,11 +437,11 @@ theorem absorption_collapse_unique_core {G H : Group Cell} (hle : absorpLE G H)
     have hdat : unionDatum ({G} : Finset (Group Cell)) = unionDatum ({H} : Finset (Group Cell)) := by
       have h1 := hcore.2
       rw [hAG] at h1
-      exact h1.trans ((absorp_datum_iff hcell).mpr hle)
+      exact h1.trans (datum_eq_of_absorpLE hle)
     have hle2 : absorpLE H G := by
-      apply (absorp_datum_iff (G := H) (H := G) hcell).mp
+      apply (absorp_datum_iff (G := H) (H := G) hH).mp
       rw [Finset.pair_comm]
-      exact ((absorp_datum_iff hcell).mpr hle).trans hdat.symm
+      exact (datum_eq_of_absorpLE hle).trans hdat.symm
     exact hne (absorp_antisymm hle hle2)
   · rw [hAH]
 
@@ -494,10 +513,11 @@ theorem minimal_ucov_antichain {S : Finset (Group Cell)} (hmin : IsMinimalUCover
 
 /-- The Singleton-Factorization Theorem (R312 §1, Q-52 SURVIVES): every minimal
     u-cover splits as non-singleton core T plus exactly one singleton group per
-    cell outside F(T); S0 (cells with no singleton group) is covered by T. -/
+    cell outside F(T); S0 (cells with no singleton group in an ambient family
+    𝒢 containing S) is covered by T. -/
 theorem singleton_factorization
-    (hS0 : ∀ c ∈ S0, ∀ g : Group Cell, g.C = {c} → False)
-    {S : Finset (Group Cell)} (hmin : IsMinimalUCover S) :
+    (𝒢 : Finset (Group Cell)) (hS0 : ∀ c ∈ S0, ∀ g ∈ 𝒢, g.C ≠ {c})
+    {S : Finset (Group Cell)} (hS𝒢 : S ⊆ 𝒢) (hmin : IsMinimalUCover S) :
     let T := S.filter (fun g => g.C.card ≠ 1)
     let U := S.filter (fun g => g.C.card = 1)
     S = T ∪ U ∧ Disjoint T U ∧
@@ -578,7 +598,7 @@ theorem singleton_factorization
     · obtain ⟨c', hc'⟩ := Finset.card_eq_one.mp hcard
       have hcc : c = c' := Finset.mem_singleton.mp (hc' ▸ hcG)
       exfalso
-      exact hS0 c hc G (by rw [hc', hcc])
+      exact hS0 c hc G (hS𝒢 hGS) (by rw [hc', hcc])
     · have hGT : G ∈ T := by
         rw [hTdef]; exact Finset.mem_filter.mpr ⟨hGS, hcard⟩
       exact Finset.mem_biUnion.mpr ⟨G, hGT, hcG⟩
