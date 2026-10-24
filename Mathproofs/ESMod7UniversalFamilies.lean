@@ -14,14 +14,15 @@
       with R55's two instances (2,2,1,13) → k₀≡4 → s≡6 and
       (4,1,2,13) → k₀≡8 → s≡11.
 
-  Honest scope: R38's framework theorem (these premises ⟹ a valid Erdős–Straus
-  identity 4/(9240t+s) = Σ1/(·) for all t≥0 on the fiber) is CITED, not
-  re-formalized here. The 165-class coverage sweep and the 11/11 fiber tables
+  The constructive bridge `ESCovering.splitting_family` now derives positive
+  natural denominators and the identity 4/(9240t+s) = Σ1/(·) from these
+  premises. `fam1_covers`, `fam2_covers`, and `fam3_covers` export coverage
+  for every natural t, including t=0. The 165-class coverage sweep and the 11/11 fiber tables
   stay [COMPUTED] (r176_qr7c.py / r176_mod13.py). The one-j-per-r-class count
   stays [PROVED*] (algebraic + JSON cross-check in the dossier).
 -/
 
-import Mathlib
+import Mathproofs.ESCovering
 
 namespace ESMod7UniversalFamilies
 
@@ -119,6 +120,25 @@ theorem fam3_ab_mh : 1+14 = 15*1 := by decide
 theorem fam3_universal (k₀ : ℕ) (hs : (24*k₀+1) % 7 = 6) :
     k₀ % 7 = 4 ∧ 1*14 ∣ 1 * Nat.gcd 2310 (6*k₀+4) ∧ 1+14 = 15*1 :=
   ⟨fiber_dir_6 k₀ hs, fam3_premise k₀ (fiber_dir_6 k₀ hs), fam3_ab_mh⟩
+
+/-- Family (3,2,1,21) supplies positive natural Egyptian-fraction witnesses
+for every n = 9240t + 24k₀ + 1 on its mod-7 fiber. -/
+theorem fam1_covers (k₀ : ℕ) (hs : (24*k₀+1) % 7 = 3) :
+    ESCovering.CoversClass 9240 (24*k₀+1) :=
+  ESCovering.splitting_family k₀ 3 2 1 21 (by decide) (by decide) (by decide)
+    (by decide) (by decide) (fam1_universal k₀ hs).2.1
+
+/-- Family (6,1,2,21) supplies positive natural witnesses on its whole fiber. -/
+theorem fam2_covers (k₀ : ℕ) (hs : (24*k₀+1) % 7 = 5) :
+    ESCovering.CoversClass 9240 (24*k₀+1) :=
+  ESCovering.splitting_family k₀ 6 1 2 21 (by decide) (by decide) (by decide)
+    (by decide) (by decide) (fam2_universal k₀ hs).2.1
+
+/-- Family (4,1,1,14) supplies positive natural witnesses on its whole fiber. -/
+theorem fam3_covers (k₀ : ℕ) (hs : (24*k₀+1) % 7 = 6) :
+    ESCovering.CoversClass 9240 (24*k₀+1) :=
+  ESCovering.splitting_family k₀ 4 1 1 14 (by decide) (by decide) (by decide)
+    (by decide) (by decide) (fam3_universal k₀ hs).2.1
 
 /-! ## Mod-13 fiber-pinning lemma (R176 §2a)
 

@@ -6,10 +6,11 @@ Round 7 identity — Erdős–Straus covering identity for n ≡ 217 (mod 264).
 
 Source: ~/workspace/math-unsolved/ROUND7_DOSSIER.md
 Preprint: `papers/erdos-straus-identity-217mod264-October-3-2026/erdos-straus-identity-217mod264-October-3-2026.tex`
-(Theorem 1 there). The identity was discovered by exhaustive search over
-12,827 candidate families in Mordell's splitting-lemma framework; it covers
-1009, the smallest prime missed by the published Mordell/Yamamoto/Rosati
-identities, and 1/11 of each of the six hard residue classes mod 840.
+(Theorem 1 there). The source reports discovery by a search over 12,827
+candidate families and a historical comparison at 1009; those claims are
+not verified by this module. The covering identity is proved below.
+`ESIdentityCRT` separately proves the six residue subclasses and their
+one-out-of-eleven count modulo 9240.
 
 Checked with Lean 4.34.1 (leanprover/lean4:stable) + Mathlib.
 -/
@@ -74,8 +75,37 @@ theorem es_identity_217mod264 (n : ℕ) (h : n % 264 = 217) :
   rw [h4n, key3, ← key2]
   ring
 
+/-- The covering statement: the three displayed denominators are positive
+natural numbers, with their exact defining equations and unit-fraction identity.
+`es_identity_217mod264` remains the compatible rational-equality lemma. -/
+theorem es_covering_217mod264 (n : ℕ) (h : n % 264 = 217) :
+    ∃ x y z : ℕ, 0 < x ∧ 0 < y ∧ 0 < z ∧
+      4 * x = n + 3 ∧ y = n * (n + 3) ∧ 11 * z = n * (n + 3) ∧
+      (4 : ℚ) / (n : ℚ) = 1 / (x : ℚ) + 1 / (y : ℚ) + 1 / (z : ℚ) := by
+  obtain ⟨k, hk⟩ : ∃ k, n = 264 * k + 217 := ⟨n / 264, by omega⟩
+  have hn : 0 < n := by omega
+  refine ⟨66 * k + 55, n * (n + 3), n * (24 * k + 20),
+    by omega, by positivity, by positivity, by omega, rfl, ?_, ?_⟩
+  · rw [hk]
+    ring
+  · have hx : (((n : ℚ) + 3) / 4) = ((66 * k + 55 : ℕ) : ℚ) := by
+      rw [hk]
+      push_cast
+      ring
+    have hy : (n : ℚ) * ((n : ℚ) + 3) = ((n * (n + 3) : ℕ) : ℚ) := by
+      push_cast
+      rfl
+    have hz : ((n : ℚ) * ((n : ℚ) + 3)) / 11 =
+        ((n * (24 * k + 20) : ℕ) : ℚ) := by
+      rw [hk]
+      push_cast
+      ring
+    have hid := es_identity_217mod264 n h
+    rw [hx, hz, hy] at hid
+    exact hid
+
 /-- Worked example from the preprint: the identity at n = 1009,
-    the smallest prime missed by all previously published identities.
+    with the arithmetic denominators checked explicitly.
     (n+3)/4 = 253, n(n+3) = 1021108, n(n+3)/11 = 92828. -/
 example : (1 : ℚ) / 253 + 1 / 1021108 + 1 / 92828 = 4 / 1009 := by
   norm_num

@@ -22,7 +22,7 @@
 \newtheorem{assumption}{Assumption}
 
 \title{A Saturated $9$-Element Sidon Set in $[1,184]$:\\
-  First Datum Past the OEIS A382397 Frontier}
+  A Kernel-Checked Finite Witness}
 \author{Derek Blair \\ \texttt{derekjblair@gmail.com}}
 \date{October 2026}
 
@@ -33,7 +33,7 @@
 \section{Abstract}
 %======================================================================
 
-A set $A\subset\mathbb{N}$ is \emph{Sidon} if all $45$ pairwise sums
+A nine-element set $A\subset\mathbb{N}$ is \emph{Sidon} if all $45$ pairwise sums
 $a_i+a_j$ ($i\le j$) are distinct, and \emph{saturated} (maximal) in
 $[1,N]$ if $A\cup\{x\}$ fails the Sidon condition for every
 $x\in[1,N]\setminus A$. We exhibit
@@ -43,9 +43,11 @@ $x\in[1,N]\setminus A$. We exhibit
 \end{equation}
 a $9$-element Sidon set with blocked coverage $184$
 (Theorem~\ref{thm:main}): all $175$ positions outside $A^\star$ are
-blocked, so no element of $[1,184]$ can be adjoined. The claim is
-[COMPUTED]: five mutually independent code paths agree on $45/45$
-distinct pair sums (Table~\ref{tab:pairsums}) and empty addable set
+blocked, so no element of $[1,184]$ can be adjoined. This finite witness
+claim is [PROVED] by Lean's kernel, including cardinality, interval
+membership, the Sidon property, and nonextendibility. The original
+computational checks agree on $45/45$ distinct pair sums
+(Table~\ref{tab:pairsums}) and empty addable set
 (Figure~\ref{fig:strip}). The witness was found by chained
 swap-distance $d=1,\dots,4$ shell enumeration around six $183$-coverage
 $9$-sets, at exact swap distance $4$ from seed $\#10$
@@ -56,11 +58,11 @@ We also refute the $121/123$-gate conjecture C28
 $121$ nor $123$. A census of $21$ distinct $183$-coverage $9$-sets is
 reported (Table~\ref{tab:census}); in re-verifying it we correct seven
 addable-position entries of the source dossier. The OEIS A382397 b-file,
-which tabulates maximal-Sidon data through $n=183$ only (fetched live
-2026-10-07, ending ``183 9''), has no $n=184$ entry; $A^\star$ is the
-first unpublished datum past that frontier. Novelty checked
-2026-10-07 against OEIS, erdosproblems, formal-conjectures, the OpenAI
-math catalogue, and web search: clean.
+which the original dossier reports fetching on 2026-10-07 through
+``183 9'', motivated the search. The kernel theorem is an upper-bound
+witness; it establishes neither minimality nor literature priority.
+The shell-search data below remain external computations under their
+stated exhaustiveness assumption.
 
 %======================================================================
 \section{Introduction}
@@ -110,11 +112,12 @@ note: Daza et al.~\cite{Daz18} use ``saturated'' for $C_4$-saturated sum
 graphs of Sidon sets, a different notion; our usage follows the
 maximal-set sense of~\eqref{eq:saturated}.)
 
-Our contributions, all [COMPUTED]:
+The finite witness is [PROVED]; the additional search and census data
+are [COMPUTED]:
 \begin{enumerate}
-\item The first saturated $9$-element Sidon set in $[1,184]$,
-  $A^\star$ of~\eqref{eq:witness}, verified on five independent code
-  paths (Theorem~\ref{thm:main}, Table~\ref{tab:pairsums},
+\item A saturated $9$-element Sidon set in $[1,184]$,
+  $A^\star$ of~\eqref{eq:witness}, proved in Lean and also checked
+  computationally (Theorem~\ref{thm:main}, Table~\ref{tab:pairsums},
   Figure~\ref{fig:strip}).
 \item Exhaustive swap-distance certificates for the search that found it
   (Table~\ref{tab:shells}, Figure~\ref{fig:shellbars}).
@@ -124,8 +127,27 @@ Our contributions, all [COMPUTED]:
   re-verified addable positions (Table~\ref{tab:census}), correcting
   seven entries of the source dossier.
 \end{enumerate}
-Per the program's honesty discipline, finite verification is never called
-a proof: the main result is a computational witness, labeled [COMPUTED].
+The main theorem uses finite decision procedures whose proof terms are
+checked by Lean's kernel. External computations, including the shell
+enumerator's claimed exhaustiveness, are not thereby promoted to proofs.
+
+\paragraph{Formalization (2026-10-23 correction).}
+\texttt{Mathproofs/SidonSat184.lean} defines unordered-pair-sum uniqueness
+(including diagonal pairs) and saturation in the inclusive interval.
+\texttt{SidonSat184.r47\_sat184} proves that $A^\star$ has nine elements
+and is a saturated Sidon subset of $[1,184]$. It uses ordinary kernel
+\texttt{decide}, with no native certificate, custom axiom, or proof hole.
+\texttt{SidonSat184.unique\_extension\_saturated} proves the general
+unique-extension fact used to correct the discussion below.
+\texttt{Mathproofs/SidonSat184Census.lean} kernel-checks every displayed
+row $\#13$--$\#21$, its unique hole, its 183 blocked positions, and the
+saturated ten-element extension. Its
+\texttt{census\_gate\_counterexamples} proves both C28 witnesses.
+The supplied
+\texttt{verify\_witness.py} independently checks the witness and all nine
+displayed one-hole extensions and regenerates \texttt{strip.inc}.
+The committed PDF predates these corrections; this source is authoritative
+until the PDF is regenerated as described in \texttt{BUILD.md}.
 
 %======================================================================
 \section{Methods}
@@ -170,9 +192,10 @@ completions (supplied datum, source dossier).
 \section{Results}
 %======================================================================
 
-\begin{theorem}[Saturated 9-set in {[1,184]}; COMPUTED]
+\begin{theorem}[Saturated 9-set in {[1,184]}; PROVED]
   \label{thm:main}
-  The set $A^\star$ of~\eqref{eq:witness} is a Sidon set, and
+  The set $A^\star$ of~\eqref{eq:witness} has nine elements, is a
+  Sidon subset of $[1,184]$, and
   $c(A^\star)=184$: it is saturated in $[1,184]$.
 \end{theorem}
 
@@ -289,7 +312,7 @@ Assumption~\ref{asm:enum}].
   \label{fig:shellbars}
 \end{figure}
 
-\begin{proposition}[C28 refuted; COMPUTED]
+\begin{proposition}[C28 refuted; PROVED]
   \label{prop:c28}
   The $121/123$-gate conjecture is false. The sets
   \begin{equation}
@@ -311,7 +334,8 @@ around $121$-bearing seeds. It is a strong tendency, not a gate.
 The census now stands at $21$ distinct $183$-coverage $9$-sets: twelve
 from the earlier wave (supplied datum, source dossier) and nine new
 ones. Table~\ref{tab:census} lists the nine new sets with their unique
-uncovered positions, re-verified by this preprint's recompute. In doing
+uncovered positions, re-verified by this preprint's recompute and now checked by
+\texttt{census\_unique\_hole} and \texttt{census\_blocked\_card}. In doing
 so we found that the addable column of the source dossier is wrong for
 seven of the nine sets ($\#15$--$\#21$ except $\#14$); the corrected
 values below are confirmed by two independent code paths.
@@ -345,16 +369,12 @@ values below are confirmed by two independent code paths.
 \section{Discussion}
 %======================================================================
 
-\paragraph{Significance.} The OEIS A382397 b-file is the public record of
-minimal maximal-Sidon data; its last entry ``183 9'' marks the frontier
-of published computation. $A^\star$ supplies the first datum past it. We
-stress the precise sense of novelty: $A^\star$ is a new \emph{upper-bound
-datum} of the form ``184 9'' consistent with the b-file's format, not a
-proof that $9$ is minimal at $n=184$ --- minimality would require an
-exhaustive nonexistence certificate for $8$-sets, which we do not claim.
-The witness also feeds the saturated-Sidon asymptotics thread: the ratio
-$f(9)/((9^3+9)/2)$ with $f(9)\le184$ is a new data point for the program's
-$f(k)$ computations.
+\paragraph{Significance.} $A^\star$ supplies a checked \emph{upper-bound
+datum}: the minimum cardinality of a maximal Sidon subset of $[1,184]$
+is at most $9$. It does not prove that $9$ is minimal; that would require
+excluding smaller maximal sets. The original dossier's historical OEIS
+comparison is not a literature-priority theorem and was not rechecked as
+part of this formalization correction.
 
 \paragraph{Structure of the witness.} $A^\star$ sits at exact swap
 distance $4$ from seed $\#10$, sharing the five-element core
@@ -364,15 +384,22 @@ that no $184$-set lies within distance $4$ of their seeds, so $A^\star$
 is not an artifact of one lucky neighborhood --- five of six
 neighborhoods were certified empty. The $121/123$ tendency ($19/21$ of
 the census) survives the C28 refutation as a distributional fact worth a
-future explanation; $A^\star$ itself contains neither $121$ nor $123$.
+future explanation; $A^\star$ contains $123$ and does not contain $121$.
 
 \paragraph{Limitations.} (i) The search is \emph{not} exhaustive over
 $[1,184]$: the certificates of Table~\ref{tab:shells} are shell-local,
-conditional on Assumption~\ref{asm:enum}. Uniqueness of the saturated
-$184$-set is open, as is the swap-distance $\ge5$ region around
-$A^\star$. (ii) No $10$-set extension of any $183$-set reaches coverage
-$184$ (each $183$-set has exactly one Sidon-preserving extension, none
-saturating) --- a computed datum, not a theorem. (iii) The ``approximately
+conditional on Assumption~\ref{asm:enum}. No exhaustive census of saturated
+nine-element sets in $[1,184]$ or of the swap-distance $\ge5$ region around
+$A^\star$ is supplied. (ii) Each of the nine displayed $183$-coverage sets has a
+unique Sidon-preserving extension, and \emph{all nine extensions saturate}
+$[1,184]$. The previous contrary claim was false. For example, adding
+$86$ to row $\#13$ yields a saturated $10$-set. In general, if $x$ is the
+unique addable point of $A$, then any further addable point of
+$A\cup\{x\}$ would also have been addable to $A$, contradicting
+uniqueness. This hereditary argument is formalized by
+\texttt{unique\_extension\_saturated}; every displayed instance is
+kernel-checked by \texttt{census\_extensions\_saturated} and also checked
+by \texttt{verify\_witness.py}. (iii) The ``approximately
 $1.74\times10^9$ completions'' budget and the twelve earlier $183$-sets
 are supplied datums from the source dossiers, not re-derived here.
 (iv) The blocking-multiplicity census ($84/57/29/5$) is descriptive;
@@ -383,17 +410,16 @@ proximity to $183$-sets is [OPEN].
 \section{Conclusion}
 %======================================================================
 
-We have exhibited $A^\star=\{16,62,66,74,88,104,117,122,123\}$, the first
-known saturated $9$-element Sidon set in $[1,184]$ [COMPUTED], verified on
-five independent code paths with a mechanically checkable pair-sum table
-(Table~\ref{tab:pairsums}) and a complete coverage diagram
-(Figure~\ref{fig:strip}). Along the way we certified the swap-distance
-search that found it, refuted the $121/123$-gate conjecture C28 with two
-explicit counterexamples, and published a corrected census of $21$
-$183$-coverage $9$-sets. The result is computational, not deductive:
-finite verification is never called a proof. The natural next steps are a
-uniqueness census of saturated $184$-sets and the swap-distance $\ge5$
-region around $A^\star$.
+We have proved in Lean that
+$A^\star=\{16,62,66,74,88,104,117,122,123\}$ is a saturated nine-element
+Sidon subset of $[1,184]$. The pair-sum table and coverage diagram are
+supplementary reproducibility aids. The nine displayed census rows,
+their unique holes and saturated extensions, and both C28 counterexamples
+are also kernel-checked. The shell-search reports and twelve earlier
+census rows remain external computations; these theorems do not certify
+the external enumerator or priority claims. The corrected one-hole-extension claim follows from the general
+hereditary argument above. Minimality and an exhaustive witness census remain
+outside the present theorem.
 
 %======================================================================
 \section{References}

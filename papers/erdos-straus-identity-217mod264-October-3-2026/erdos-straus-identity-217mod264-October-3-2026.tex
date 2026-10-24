@@ -1,4 +1,5 @@
-% Preprint — compiled to zero errors on xanthe (TeX Live, latexmk 4.87), 2026-10-04.
+% Corrected source, 2026-10-23. Existing PDF is the historical 2026-10-04 version.
+% This revision has not been rebuilt with TeX; see BUILD.md.
 % Author: Derek Blair <derekjblair@gmail.com>
 % Source data: ~/workspace/math-unsolved/ROUND7_DOSSIER.md (2026-10-03),
 %              novelty confirmation ~/workspace/math-unsolved/ROUND16_DOSSIER.md (2026-10-04).
@@ -68,7 +69,8 @@ classes}
   \label{eq:squareclasses}
   n \equiv 1, 121, 169, 289, 361, 529 \pmod{840},
 \end{equation}
-the quadratic residues modulo $840$. Subsequent work has chipped away at
+the invertible quadratic residue classes modulo $840$. Subsequent work has
+chipped away at
 these classes with identities on sub-progressions, but the smallest prime
 left uncovered by every published identity is $1009 \equiv 169 \pmod{840}$
 \cite{wiki-es,opentorus2026} (Assumption~\ref{ass:literature}).
@@ -120,11 +122,13 @@ class is proved by a finite check: for each prime power $p^e \parallel ab$
 (resp.\ $d$), the divisibility condition is a polynomial in the class
 parameter $t$, so checking $t \in [0, p^e)$ proves it for the whole class.
 
-A family is \emph{prime-covering} only if the divisibility goes through the
-$xh$ factor alone rather than the $n$ factor; families needing $p \mid n$
-cover only composites (scaling handles those) and were discarded ---
-$8{,}965$ such redundant families were found (supplied datum from the
-discovery script \url{erdos_straus_r7.py}).
+The search calls a family \emph{prime-covering} when its divisibility goes
+through the $xh$ factor alone rather than requiring a fixed prime divisor
+$p\mid n$. Such a fixed divisor excludes prime values of $n$ except
+possibly $n=p$; it does not by itself prove that every covered $n$ is
+composite. The search discarded $8{,}965$ families using the $n$ factor
+(supplied classification datum from \url{erdos_straus_r7.py}); that search
+classification is separate from the Lean theorem below.
 
 \subsection{Search parameters and verification}
 
@@ -170,20 +174,38 @@ a prime $n$ (non-vacuous). The full family lists are stored in
 
 \subsection{Formalization note}
 
-Theorem~\ref{thm:main} is machine-checked in Lean~4.34.1 with
-Mathlib~v4.34.1 (pinned commit \texttt{d13f23b}):
-\texttt{Mathproofs/ESIdentity.lean}, theorem \texttt{es\_identity\_217mod264},
-in the \texttt{derekblair/math-proofs} repository. Verification config:
-\texttt{lake build} exit~0, zero \texttt{sorry}s, axioms standard-only
-(\texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}).
-The Lean module header points at this paper, and this paper points at the
-module and theorem name.
+The complete covering statement in Theorem~\ref{thm:main} is exported
+by \texttt{es\_covering\_217mod264} in
+\texttt{Mathproofs/ESIdentity.lean}, using Lean~4.34.1 and
+Mathlib~v4.34.1 (pinned commit \texttt{d13f23b}). For every natural
+$n\equiv217\pmod{264}$, it supplies $x,y,z\in\mathbb{N}$ with
+$x,y,z>0$, the equations
+\[
+4x=n+3,\qquad y=n(n+3),\qquad 11z=n(n+3),
+\]
+and $4/n=1/x+1/y+1/z$ in $\mathbb{Q}$. Thus the integer-denominator
+and positivity clauses are part of the theorem type, not merely facts
+inside its proof. When $n=264k+217$, the witnesses are
+$x=66k+55$, $y=n(n+3)$, and $z=n(24k+20)$.
+
+The earlier \texttt{es\_identity\_217mod264} remains available as the
+rational-equality lemma. The targeted build of this module succeeds,
+with no sorrys. Both exported theorems have exactly the standard axiom
+dependencies \texttt{propext}, \texttt{Classical.choice}, and
+\texttt{Quot.sound}. The worked example at $1009$ is also checked.
+\texttt{Mathproofs/ESIdentityCRT.lean} additionally proves the exact six
+subclasses listed in the residue-class table, their positive-natural covering witnesses,
+and the one-out-of-eleven residue count for each parent class. This count
+does not assert a density theorem for primes.
+The discovery census, literature priority, and completeness of the
+historical identity comparison are not asserted by these Lean statements.
+The committed PDF predates this correction; see \texttt{BUILD.md}.
 
 \subsection{The identity}
 
 \begin{theorem}
   \label{thm:main}
-  For $n \equiv 217 \pmod{264}$,
+  For a natural number $n \equiv 217 \pmod{264}$,
   \begin{equation}
     \label{eq:thm}
     \frac{4}{n} = \frac{1}{(n+3)/4} + \frac{1}{n(n+3)}
@@ -324,13 +346,14 @@ $n \equiv 241 \pmod{264}$ via $x = 6k+3$, and $n = 24k+1$, $k \equiv 4
 \url{erdos_straus_r7_ranked.json}). Together they shrink, but do not
 close, the open set inside the six classes.
 
-A natural hope --- covering one full hard class by a finite union of such
-sub-progressions --- is now known to be impossible for polynomial
-identities: a companion result proves that no finite system of polynomial
-identities $4/(A_it+B_i) = \sum_j 1/F_{ij}(t)$ can cover all primes of any
-square class modulo $840$ (supplied datum; separate note in preparation).
-The live angles for a full proof are therefore per-prime infinite
-constructions rather than finite covering systems.
+The companion CRT escape result proves that finitely many progressions
+with $8\mid A_i$ and the specified local quadratic obstructions leave
+infinitely many primes uncovered in each listed square class modulo $840$.
+Applying this to arbitrary integer-polynomial identity families requires
+the integer-polynomial-to-obstruction implication and any needed modulus
+normalization. Those steps remain unformalized. The checked escape theorem
+therefore does not establish a general finite-polynomial-identity barrier
+or exclude all other finite covering approaches.
 
 The main weakness of the present identity is quantitative: $1/11$ of each
 class is a thin slice, and the search bounds ($c \leq 40$, $ab \leq 2000$)

@@ -22,7 +22,7 @@ i.e. v_q(r) ≤ v_q(A). Three kills:
 - `kill_12`: type (1,2) dies via the q-adic expansion of R67's original
   condition (iii): with A = q·A₀, r = q²·r₀, XSTEP′ = q·X₀ and
   q | (s′+m) (Lemma M23′), the numerator r·x₀ + A·s′·XSTEP′ equals
-  q²·w with q | w, while the denominator is q³·v₀; integrality of QQ
+  q²·w, while the denominator is q³·v₀; integrality of QQ
   (hQQ) forces q | w, and then q | A₀·s′·X₀, contradicting q ∤ A₀, s′, X₀.
 - `descent_01`: type (0,1) descends — with A = A₀, r = q·r₀, the exact
   q-cancellation P′ = q·P₀ plus m | P₀ (coprime to q) and the congruence

@@ -1,14 +1,17 @@
 # Contents
 
-Machine-checked mathematics: every result ships as a **paper preprint**
-(human-readable argument) paired with its **Lean 4 formalization**
-(machine-checked proof). Manuscripts are organized into families — each family
+Lean formalizations and research manuscripts. Named Lean statements are checked;
+not every manuscript claim has an end-to-end formalization. Manuscripts are organized into families — each family
 groups a principal result with companion arguments, consequences, or
 alternative proofs.
 
 Built with **Lean 4.34.1** + **Mathlib v4.34.1**. See
 [FORMALIZATION_CATALOGUE.md](FORMALIZATION_CATALOGUE.md) for the per-theorem
 verification status and axiom dependencies.
+
+The corrected `.tex` sources govern the October 23 changes. The overview and
+ES identity/barrier, r47, and sieve-inverse PDFs are historical pre-correction
+artifacts pending regeneration; see their BUILD notes.
 
 ## Manuscript map
 
@@ -38,8 +41,10 @@ For `n ≡ 217 (mod 264)`:
 
 > `4/n = 1/((n+3)/4) + 1/(n(n+3)) + 1/(n(n+3)/11)`
 
-Covers the prime **1009**, the smallest prime missed by the published
-Mordell/Yamamoto/Rosati identities.
+Covers the prime **1009**. The paper's historical comparison with earlier
+identity families remains separate from the formal statements. The exact six
+covered subclasses modulo 9240 and the one-out-of-eleven residue count are
+proved in [ESIdentityCRT.lean](Mathproofs/ESIdentityCRT.lean).
 
 - Paper: [`papers/erdos-straus-identity-217mod264-October-3-2026/`](papers/erdos-straus-identity-217mod264-October-3-2026/)
   ([PDF](papers/erdos-straus-identity-217mod264-October-3-2026/erdos-straus-identity-217mod264-October-3-2026.pdf),
@@ -47,41 +52,41 @@ Mordell/Yamamoto/Rosati identities.
   [build](papers/erdos-straus-identity-217mod264-October-3-2026/BUILD.md),
   [citation](papers/erdos-straus-identity-217mod264-October-3-2026/CITATION.bib))
 - Lean: [`Mathproofs/ESIdentity.lean`](Mathproofs/ESIdentity.lean), theorem
-  `es_identity_217mod264` — typechecks cleanly, zero sorrys, standard Lean
+  `es_covering_217mod264` — exports positive natural denominators and the
+  identity; `es_identity_217mod264` retains the rational equality. Standard Lean
   axioms only (`propext`, `Classical.choice`, `Quot.sound`).
 
-### <a id="es-002"></a>ES-002 — A finite-identity barrier for Erdős–Straus on square classes mod 840 — [PROVED*]
+### <a id="es-002"></a>ES-002 — CRT escape from local quadratic obstructions modulo 840 — [PROVED]
 
-No finite system of polynomial identities `4/(Aᵢt+Bᵢ) = Σ 1/Fᵢⱼ(t)`
-(positive leading coefficients) can cover a full square class mod 840 —
-infinitely many primes escape every such system. Witness:
-`p = 77,598,049 ≡ 529 (mod 840)` lies in 0 of 30 candidate progressions.
+The checked result is `es_crt_escape`: for progressions with `8∣Aᵢ`
+and explicit odd-prime nonsquare or 2-adic residue obstructions, infinitely
+many primes in each listed square class modulo 840 avoid every progression.
+It uses the general Dirichlet theorem already proved in Mathlib, with no
+custom axioms. The implication from integer polynomial identities to those
+local obstructions remains unformalized; the full polynomial-identity barrier
+is not claimed as a Lean theorem.
 
-- Paper: [`papers/erdos-straus-finite-identity-barrier-October-4-2026/`](papers/erdos-straus-finite-identity-barrier-October-4-2026/)
-  ([PDF](papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.pdf),
-  [source](papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.tex),
-  [build](papers/erdos-straus-finite-identity-barrier-October-4-2026/BUILD.md),
-  [citation](papers/erdos-straus-finite-identity-barrier-October-4-2026/CITATION.bib))
-- Lean: [`Mathproofs/ESBarrier.lean`](Mathproofs/ESBarrier.lean), theorem
-  `es_barrier` — typechecks cleanly, zero sorrys, modulo two explicitly
-  labeled classical-input axioms: `schinzel_mordell` (Schinzel 1956 /
-  Mordell 1967 obstruction) and `dirichlet_arith_prog` (Dirichlet's theorem
-  on arithmetic progressions — Mathlib 4.34.1 proves only the ≡1 mod k case).
+- Corrected paper source: [ES barrier](papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.tex).
+- Lean: [ESBarrier.lean](Mathproofs/ESBarrier.lean), theorem `es_crt_escape`.
 
 ## Labeling convention
 
 - **[PROVED]** — machine-checked by Lean, no extra axioms beyond Lean's standard ones.
-- **[PROVED*]** — typechecks cleanly but depends on explicitly labeled
-  classical-input axioms (named in the file and above); the labels say exactly
-  what is assumed.
+- **[CONDITIONAL]** — the larger interpretation has explicit, unformalized inputs.
+- **[PROVED*]** — staged publication status; the catalogue states the checked scope.
 - Nothing here is claimed on the basis of a `sorry`.
 
 ## Family 002 — Collatz convergent control (gap-factor theory)
 
-### <a id="cc-001"></a>CC-001 — The Collatz gap-factor theory: selector, duality, and hump laws — [PROVED]
+### <a id="cc-001"></a>CC-001 — Analytic/continued-fraction kernels and conditional gap selectors — [CONDITIONAL]
 
-A machine-checked theory of the gap factor G(t) on from-above blocks of
-log₂3's continued fraction, developed across thirteen Lean modules:
+The Lean modules prove analytic and continued-fraction identities plus
+conditional argmin assemblies. [CollatzGapFactor.lean](Mathproofs/CollatzGapFactor.lean)
+now defines the explicit Q-ratio times power-of-two-ratio and proves its
+logarithm and difference identities. Its unique odd-block minimum theorem
+supplies the objective bridge and minimizer existence, retaining C22's
+quantitative hypotheses. The log₂3/Collatz-dynamics specialization remains
+unassembled:
 
 - Complete-quotient API for irrationals (`CollatzGapCF.lean`): error formula,
   ratio identity, determinant identity.
@@ -91,6 +96,7 @@ log₂3's continued fraction, developed across thirteen Lean modules:
 - C18b convexity and C26 margin-duality trichotomy
   (`CollatzGapConvex.lean`); C29 discrepancy dominance and its from-below
   mirror (`CollatzGapC29.lean`, `CollatzGapC29Mirror.lean`).
+- Adjacent-difference and interval-argmin criteria (`CollatzGapDelta.lean`).
 - C64/C64b hump-law identity kernel (`CollatzGapHump.lean`).
 
 - Lean: [`Mathproofs/CollatzGapCF.lean`](Mathproofs/CollatzGapCF.lean),
@@ -98,6 +104,7 @@ log₂3's continued fraction, developed across thirteen Lean modules:
   [`Mathproofs/CollatzGapC24Lemma3.lean`](Mathproofs/CollatzGapC24Lemma3.lean),
   [`Mathproofs/CollatzGapC23.lean`](Mathproofs/CollatzGapC23.lean),
   [`Mathproofs/CollatzGapC22C25.lean`](Mathproofs/CollatzGapC22C25.lean),
+  [`Mathproofs/CollatzGapDelta.lean`](Mathproofs/CollatzGapDelta.lean),
   [`Mathproofs/CollatzGapConvex.lean`](Mathproofs/CollatzGapConvex.lean),
   [`Mathproofs/CollatzGapSinh.lean`](Mathproofs/CollatzGapSinh.lean),
   [`Mathproofs/CollatzGapC29.lean`](Mathproofs/CollatzGapC29.lean),
@@ -108,12 +115,20 @@ log₂3's continued fraction, developed across thirteen Lean modules:
 
 ## Family 003 — Erdős–Straus witness-complex and QR-core theory
 
-### <a id="es-003"></a>ES-003 — The witness complex, square obstructions, and the QR-core — [PROVED]
+### <a id="es-003"></a>ES-003 — Witness-complex and QR arithmetic kernels — [PROVED]
 
-A machine-checked theory of Erdős–Straus covering families on refined
-moduli: the witness complex W(M), T2 prime-square obstruction, T1 two-case
-theorem, and the QR-core (the set of quadratic-residue classes missed by
-both covering systems) with its exact count and the 5/7-forcing lemma:
+Checked witness-complex arithmetic, reciprocity obstructions, and residue-class
+exclusions. The CRT construction now proves the QR ratio for actual unit residues
+congruent to 1 modulo 24 and their square subset modulo `24*∏p`. It does not
+identify a separately filtered external frontier. The three mod-7 families,
+T1 w=20 classes, and T2 q=7 fibers now provide positive natural covering
+witnesses via [ESCovering.lean](Mathproofs/ESCovering.lean). Cubic exclusion,
+external coverage tables, and the R74 sweep are not proved.
+[ESDescentCovering.lean](Mathproofs/ESDescentCovering.lean) supplies the remaining
+branch-2 denominator algebra and constructs full parent-progression covering
+from the (0,0) and (1,1) arithmetic transfer hypotheses. It does not derive
+those normalizations for every externally classified identity:
+
 
 - [`Mathproofs/WitnessComplexThm2.lean`](Mathproofs/WitnessComplexThm2.lean)
   (`b0_vacuity`, `fiber_collision_law`),
@@ -135,19 +150,30 @@ both covering systems) with its exact count and the 5/7-forcing lemma:
 
 ### <a id="g5-001"></a>G5-001 — The 3v floor theorem for girth-5 graphs — [PROVED]
 
-The emitted-graph re-attachment model and cross-edge harmlessness argument:
-no improving 3v move on the extremal graphs.
+Corrected local reattachment feasibility and the identity-score floor.
+`emittedGraph` proves that every feasible move on a distinct triple emits a
+simple graph with no triangle or four-cycle. The new
+[Girth5Extremal.lean](Mathproofs/Girth5Extremal.lean) proves exact unordered-edge
+accounting and derives the score ceiling from global edge maximality. It then
+proves maximum feasible score equals D and the three-vertex gap equals −1.
 
 - Lean: [`Mathproofs/Girth5Floor3v.lean`](Mathproofs/Girth5Floor3v.lean) —
   typechecks cleanly, zero sorrys, standard Lean axioms only.
+- Regressions: [`Mathproofs/Girth5Floor3vRegression.lean`](Mathproofs/Girth5Floor3vRegression.lean),
+  five invalid moves rejected and two identity moves accepted.
 - Paper: preprint in preparation.
 
 ## Family 005 — q-adic classification of Erdős–Straus witnesses
 
-### <a id="qa-001"></a>QA-001 — Branch-1 q-adic type theorem — [PROVED]
+### <a id="qa-001"></a>QA-001 — Conditional branch-1 q-adic type theorem — [CONDITIONAL]
 
-v_q(r) ≤ v_q(A) on refined targets: the first classification theorem for
-the q-adic types of Erdős–Straus witnesses.
+The arithmetic classification kernel proves v_q(r) ≤ v_q(A) assuming the
+explicit QQ/M23 inputs and R74 exclusion of descended bundles. Those inputs
+are not discharged for refined targets in this repository.
+[ESQadicBoundary.lean](Mathproofs/ESQadicBoundary.lean) separately proves
+α≤1 and ρ≤1 without R74, derives q∤m from the M23 divisibility premise,
+and verifies a generic type-(0,1) counterexample to removing R74. That
+example is not a counterexample to the fixed refined-target claim.
 
 - Lean: [`Mathproofs/ESQadicBranch1.lean`](Mathproofs/ESQadicBranch1.lean) —
   typechecks cleanly, zero sorrys, standard Lean axioms only.
@@ -155,10 +181,16 @@ the q-adic types of Erdős–Straus witnesses.
 
 ## Family 006 — Saturated Sidon sets
 
-### <a id="ss-001"></a>SS-001 — A saturated 9-element Sidon set in [1,184] — [SOLVED]
+### <a id="ss-001"></a>SS-001 — A saturated 9-element Sidon set in [1,184] — [PROVED]
 
 The set {16, 62, 66, 74, 88, 104, 117, 122, 123} is Sidon and saturated in
-[1,184] (verified on three independent code paths).
+[1,184], including cardinality, containment, unique unordered sums, and
+nonextendibility: `SidonSat184.r47_sat184` in
+[Mathproofs/SidonSat184.lean](Mathproofs/SidonSat184.lean), checked by Lean
+using standard axioms only. [SidonSat184Census.lean](Mathproofs/SidonSat184Census.lean)
+also verifies all nine displayed one-hole rows, their 183 blocked positions,
+the saturated ten-element extensions, and the two C28 gate counterexamples.
+Search exhaustiveness and minimality are not claimed.
 
 - Paper: [`papers/r47-sat184-October-7-2026/`](papers/r47-sat184-October-7-2026/)
   ([PDF](papers/r47-sat184-October-7-2026/r47-sat184-October-7-2026.pdf),
@@ -301,7 +333,10 @@ ES absorption poset + redundancy rank, forcing spectrum partition, and forcing d
 
 ### <a id="es-006"></a>ES-006 — Sieve inversion and branch isolation — [PROVED]
 
-R169/R178 44-CRT sieve inversion and R163/R174 u-branch isolation.
+R169/R178 residue-algebra and finite mod-3960 inverse-closure proofs, and
+R163/R174 conditional u-branch isolation. All refined-sieve finite checks
+now use kernel proofs. General lift-fiber claims and external data provenance
+are outside these theorem types; see the corrected manuscript's scope note.
 
 - Paper: [`papers/sieve-inverse-branch-isolation-October-11-2026/`](papers/sieve-inverse-branch-isolation-October-11-2026/)
   ([PDF](papers/sieve-inverse-branch-isolation-October-11-2026/sieve-inverse-branch-isolation-October-11-2026.pdf),

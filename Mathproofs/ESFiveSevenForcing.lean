@@ -1,4 +1,4 @@
-import Mathlib
+import Mathproofs.ESCovering
 
 /-!
 # R140 5/7-forcing lemma (Round 162, Lean formalization lane)
@@ -15,10 +15,12 @@ R140 §4 (dossier): the 5/7-forcing lemma.
     4acd−1 = 7) give Γ_7 = {−a·c⁻¹ mod 7} = {6,3,5}, exactly the QNRs
     mod 7.
 
-This module formalizes the arithmetic kernel in standalone form (imports
-only Mathlib). The W(M) framework link — class membership ⟹ T1/T2
-coverage via R126 Thm 1(b)/Thm 3 and R131's b(0)-vacuity — is cited, not
-re-formalized (per the R154/R158 precedent).
+The arithmetic kernels are followed by constructive covering exports in
+`ESCovering.Covered`: positive natural denominators and their rational identity.
+The T1 w=20 residue classes are covered by explicit splitting identities.
+The T2 q=7 fibers construct their positive quotient and use the checked
+`WitnessComplexThm13.t3_full_class` identity. Both full-progression exports
+include t=0; they need no cited b(0)-vacuity assertion.
 
 1. `qnr5_char` / `qnr7_char`: QNRs mod 5 are {2,3}; mod 7 are {3,5,6}
    (both by `decide`).
@@ -35,7 +37,8 @@ re-formalized (per the R154/R158 precedent).
 8. `gamma7_eq_qnr`: Γ_7 equals the QNR set mod 7.
 9. `t2_seven_forcing`: packaged part (b) — (s/7) = −1 puts s mod 7 in Γ_7.
 
-Consequence (framework, cited): H ∖ Q is QNR only at primes ≥ 11.
+The global interpretation of the named sets H and Q remains outside this
+module. The local 5/7 coverage claims themselves are proved here.
 -/
 
 namespace ESFiveSevenForcing
@@ -116,8 +119,8 @@ theorem w20_covered_classes (f : ℕ) (hf : f ∣ 21) :
   rw [w20_divisors] at hmem
   fin_cases hmem <;> decide
 
-/-- Part (a), packaged: the forced class is a T1 divisor class at w = 20
-    (the class ⟹ T1-coverage step is R126 Thm 1(b) + R131 vacuity, cited). -/
+/-- Part (a), residue kernel: the forced class is a T1 divisor class at w = 20.
+    `t1_five_covered` below completes the positive-natural covering statement. -/
 theorem t1_five_forcing_full (s : ℕ) (h4 : s % 4 = 1)
     (hleg : legendreSym 5 (s : ℤ) = -1) :
     ∃ f : ℕ, f ∣ 21 ∧ s % 20 = (20 - f % 20) % 20 := by
@@ -162,8 +165,8 @@ theorem gamma7_eq_qnr : ∀ x : ZMod 7,
     rcases h with rfl | rfl | rfl <;> decide
   · rintro (rfl | rfl | rfl) <;> decide
 
-/-- Part (b), packaged: (s/7) = −1 puts s mod 7 in Γ_7
-    (T2 coverage via q = 7 is R126 Thm 3, cited). -/
+/-- Part (b), residue kernel: (s/7) = −1 puts s mod 7 in Γ_7.
+    `t2_seven_covered` below constructs the positive-natural witnesses. -/
 theorem t2_seven_forcing (s : ℕ) (hleg : legendreSym 7 (s : ℤ) = -1) :
     (s : ZMod 7) = (-(1 : ZMod 7)) * (1 : ZMod 7)⁻¹ ∨
     (s : ZMod 7) = (-(1 : ZMod 7)) * (2 : ZMod 7)⁻¹ ∨
@@ -177,5 +180,84 @@ theorem t2_seven_forcing (s : ℕ) (hleg : legendreSym 7 (s : ℤ) = -1) :
   · rw [hmod, h]; decide
   · rw [hmod, h]; decide
   · rw [hmod, h]; decide
+
+/-! ## Positive natural covering witnesses -/
+
+/-- The class 13 modulo 20 is covered, including its first member.
+The parity split chooses an integral two-fraction split in each case. -/
+theorem class13_covered (n : ℕ) (hn : n % 20 = 13) : ESCovering.Covered n := by
+  obtain ⟨k, rfl⟩ : ∃ k, n = 20*k+13 := ⟨n/20, by omega⟩
+  by_cases hk : k % 2 = 0
+  · exact ESCovering.of_split (20*k+13) (5*k+4) 3 1 1 2
+      (by omega) (by omega) (by decide) (by decide) (by decide)
+      (by omega) (by decide) (by omega)
+  · exact ESCovering.of_split (20*k+13) (5*k+5) 7 1 2 5
+      (by omega) (by omega) (by decide) (by decide) (by decide)
+      (by omega) (by decide) (by omega)
+
+/-- The class 17 modulo 20 is covered by the split 3·2 = 1+5. -/
+theorem class17_covered (n : ℕ) (hn : n % 20 = 17) : ESCovering.Covered n := by
+  obtain ⟨k, rfl⟩ : ∃ k, n = 20*k+17 := ⟨n/20, by omega⟩
+  exact ESCovering.of_split (20*k+17) (5*k+5) 3 2 1 5
+    (by omega) (by omega) (by decide) (by decide) (by decide)
+    (by omega) (by decide) (by omega)
+
+/-- The remaining w=20 divisor class is covered by the split 1·2 = 1+1. -/
+theorem class19_covered (n : ℕ) (hn : n % 20 = 19) : ESCovering.Covered n := by
+  obtain ⟨k, rfl⟩ : ∃ k, n = 20*k+19 := ⟨n/20, by omega⟩
+  exact ESCovering.of_split (20*k+19) (5*k+5) 1 2 1 1
+    (by omega) (by omega) (by decide) (by decide) (by decide)
+    (by omega) (by decide) (by omega)
+
+/-- Every T1 divisor class at w=20 yields positive integral Egyptian-fraction
+witnesses. The construction uses the explicit residue splits above. -/
+theorem t1_w20_class_covered (n f : ℕ) (hf : f ∣ 21)
+    (hclass : n % 20 = (20-f%20)%20) : ESCovering.Covered n := by
+  rcases w20_covered_classes f hf with h | h | h
+  · exact class19_covered n (hclass.trans h)
+  · exact class17_covered n (hclass.trans h)
+  · exact class13_covered n (hclass.trans h)
+
+/-- The 5-forcing hypotheses produce actual positive natural denominators. -/
+theorem t1_five_covered (s : ℕ) (h4 : s % 4 = 1)
+    (hleg : legendreSym 5 (s : ℤ) = -1) : ESCovering.Covered s := by
+  obtain ⟨f, hf, hclass⟩ := t1_five_forcing_full s h4 hleg
+  exact t1_w20_class_covered s f hf hclass
+
+/-- Each of the three q=7 T2 fibers gives positive natural denominators,
+using its genuine (a,c,d) parameters and a quotient constructed by divisibility. -/
+theorem qnr7_covered (n : ℕ) (hn : n%7 = 3 ∨ n%7 = 5 ∨ n%7 = 6) :
+    ESCovering.Covered n := by
+  rcases hn with hn | hn | hn
+  · exact ESCovering.of_t2 1 2 1 n 7 (by decide) (by decide) (by decide)
+      (by omega) (by decide) (by omega)
+  · exact ESCovering.of_t2 2 1 1 n 7 (by decide) (by decide) (by decide)
+      (by omega) (by decide) (by omega)
+  · exact ESCovering.of_t2 1 1 2 n 7 (by decide) (by decide) (by decide)
+      (by omega) (by decide) (by omega)
+
+/-- The 7-forcing hypothesis produces actual positive natural denominators. -/
+theorem t2_seven_covered (s : ℕ) (hleg : legendreSym 7 (s : ℤ) = -1) :
+    ESCovering.Covered s := qnr7_covered s (legendre_seven_neg_one s hleg)
+
+/-- Entire progressions with a modulus divisible by 20 inherit 5-forcing
+coverage; no positivity exception at t=0 is omitted. -/
+theorem t1_five_covers_class (M s : ℕ) (hM : 20 ∣ M) (h4 : s%4 = 1)
+    (hleg : legendreSym 5 (s : ℤ) = -1) : ESCovering.CoversClass M s := by
+  intro t
+  have hmod : (M*t+s)%20 = s%20 := by
+    simp [Nat.add_mod, Nat.mul_mod, Nat.mod_eq_zero_of_dvd hM]
+  obtain ⟨f, hf, hclass⟩ := t1_five_forcing_full s h4 hleg
+  exact t1_w20_class_covered (M*t+s) f hf (hmod.trans hclass)
+
+/-- Entire progressions with a modulus divisible by 7 inherit T2 coverage. -/
+theorem t2_seven_covers_class (M s : ℕ) (hM : 7 ∣ M)
+    (hleg : legendreSym 7 (s : ℤ) = -1) : ESCovering.CoversClass M s := by
+  intro t
+  have hmod : (M*t+s)%7 = s%7 := by
+    simp [Nat.add_mod, Nat.mul_mod, Nat.mod_eq_zero_of_dvd hM]
+  apply qnr7_covered
+  rw [hmod]
+  exact legendre_seven_neg_one s hleg
 
 end ESFiveSevenForcing

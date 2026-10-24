@@ -392,12 +392,17 @@ theorem count_le (hα : Irrational α) (hα0 : 0 < α) (hQ : 1 ≤ Q) (hrec : Is
 
 /-! ## C29 main theorem -/
 
-/-- C29 (R52): `D_Q(t) ≥ 0` on `[0,1]` — in fact `> 0` on `(0,1)`. -/
-theorem c29 (hα : Irrational α) (hα0 : 0 < α) (hQ : 1 ≤ Q) (hrec : IsStrictRecord α Q) (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
-    (Q : ℝ) * t ≤ (((Finset.range Q).filter (fun x => yfrac α x < t)).card : ℝ) := by
+/-- Shared discrepancy estimate, retaining strictness in the interior. -/
+private theorem c29_with_strict (hα : Irrational α) (hα0 : 0 < α) (hQ : 1 ≤ Q) (hrec : IsStrictRecord α Q) (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    ((Q : ℝ) * t ≤ (((Finset.range Q).filter (fun x => yfrac α x < t)).card : ℝ)) ∧
+      (0 < t → t < 1 →
+        (Q : ℝ) * t < (((Finset.range Q).filter (fun x => yfrac α x < t)).card : ℝ)) := by
   rcases eq_or_lt_of_le ht0 with rfl | htpos
-  · rw [mul_zero]
-    exact Nat.cast_nonneg _
+  · constructor
+    · rw [mul_zero]
+      exact Nat.cast_nonneg _
+    · intro h _
+      exact (lt_irrefl 0 h).elim
   · have htQ0 : 0 ≤ t * Q := mul_nonneg htpos.le (le_of_lt (hQ0 hα hα0 hQ))
     set j := ⌊t * Q⌋₊ with hjdef
     have hjt : (j:ℝ) ≤ t * Q := by
@@ -430,8 +435,11 @@ theorem c29 (hα : Irrational α) (hα0 : 0 < α) (hQ : 1 ≤ Q) (hrec : IsStric
         constructor
         · intro h; exact h.1
         · intro hx; exact ⟨hx, Int.fract_lt_one _⟩
-      rw [hcard, Finset.card_range]
-      simp
+      constructor
+      · rw [hcard, Finset.card_range]
+        simp
+      · intro _ h
+        exact (lt_irrefl 1 h).elim
     · -- `j < Q`: the coupling gives `Q*t < j+1 ≤ #{y_x < t}`
       have hjt' : (j:ℝ)/(Q:ℝ) ≤ t := by
         rw [div_le_iff₀ (hQ0 hα hα0 hQ)]
@@ -507,6 +515,18 @@ theorem c29 (hα : Irrational α) (hα0 : 0 < α) (hQ : 1 ≤ Q) (hrec : IsStric
         Nat.cast_le.mpr (Finset.card_le_card hsub)
       have hlt : (Q:ℝ) * t < ((((Finset.range Q).filter (fun x => yfrac α x < t)).card : ℕ):ℝ) :=
         lt_of_lt_of_le (lt_of_lt_of_le hstep1 hstep2) hstep3
-      exact le_of_lt hlt
+      exact ⟨hlt.le, fun _ _ => hlt⟩
+
+/-- C29 (R52): `D_Q(t) ≥ 0` on `[0,1]`. -/
+theorem c29 (hα : Irrational α) (hα0 : 0 < α) (hQ : 1 ≤ Q)
+    (hrec : IsStrictRecord α Q) (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    (Q : ℝ) * t ≤ (((Finset.range Q).filter (fun x => yfrac α x < t)).card : ℝ) :=
+  (c29_with_strict hα hα0 hQ hrec t ht0 ht1).1
+
+/-- C29 strict interior conclusion: `D_Q(t) > 0` for `0 < t < 1`. -/
+theorem c29_strict (hα : Irrational α) (hα0 : 0 < α) (hQ : 1 ≤ Q)
+    (hrec : IsStrictRecord α Q) (t : ℝ) (ht0 : 0 < t) (ht1 : t < 1) :
+    (Q : ℝ) * t < (((Finset.range Q).filter (fun x => yfrac α x < t)).card : ℝ) :=
+  (c29_with_strict hα hα0 hQ hrec t ht0.le ht1.le).2 ht0 ht1
 
 end CollatzGapC29

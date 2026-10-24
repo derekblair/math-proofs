@@ -15,7 +15,7 @@ Source proofs: `~/workspace/math-unsolved/ROUND18_DOSSIER.md` (C18b),
 
 The hand proof of C18b goes through continuous second derivatives
 (`S″(u) = (ln2)²·(ψ(2^{u−δ′}) − ψ(2^u))` via `HasDerivAt` plumbing).
-Here we take a **strictly stronger and calculus-free route**: the discrete
+Here we prove the needed discrete statement without derivatives: the discrete
 second differences of both parts of `ln G` are positive by *pure polynomial
 identities* —
 - T-part: `A³(A+2c) − (A+c)³(A−c) = c³(2A+c) > 0`,
