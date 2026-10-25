@@ -505,7 +505,7 @@ sources:
   theorems: []
   status: supporting definitions
   axioms: []
-  note: Shared definitions imported by the formalization modules; no flagship theorems.
+  note: Starter scaffolding containing only def hello := "world"; directly imported only by Mathproofs.lean, with no theorems.
 - title: Fiber-compatibility and composite suppression
   authors:
   - Derek Blair

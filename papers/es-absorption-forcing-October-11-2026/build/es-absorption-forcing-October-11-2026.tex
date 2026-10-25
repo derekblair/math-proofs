@@ -84,14 +84,17 @@ originally written fails on void cells; repaired after review), the
 pc-secured/void/split characterizations S2(b--d), the six-class partition S3,
 and union monotonicity S4 ($\psi_{S\cup T}=\max$, with pc-secured wins).  The
 spectrum census ($3{,}081$ pair types, $82{,}272{,}378$ weighted pairs) yields
-aggregate masses and a complete upgrade anatomy [COMPUTED]$\times2$.  We
-also formalize [PROVED] the two-sided forcing decomposition A--D (CRT,
-scaling, filter, cardinality) under four documented review conditions.
+aggregate masses and a complete upgrade anatomy [COMPUTED]$\times2$.  For
+the two-sided forcing decomposition, Lean checks A's finite image-membership
+and bounded box tests, B's scaling identity, C's filter equivalences, and
+D's quotient-value, mod-7 exclusion, and conditional singleton-divisibility
+lemmas. A's general congruence export and D's covered-set/progression bridge
+and surgical assembly remain [UNFORMALIZED] (\S\ref{sec:adecomp}).
 
-The abstract structural results listed in the formalization note
-(\S\ref{sec:formal}) are checked in Lean~4.34.1 under their stated
-hypotheses. Census counts remain supplied data, not Lean-certified results;
-the surgical down-set A4 is explicitly [OPEN].
+The named statements in the formalization note (\S\ref{sec:formal}) are
+checked in Lean~4.34.1 under their stated hypotheses and at the limited
+scope specified there for A and D. Census counts remain supplied data,
+not Lean-certified results; the surgical down-set A4 is explicitly [OPEN].
 
 %======================================================================
 \section{Introduction}
@@ -139,8 +142,10 @@ Our contributions, all [PROVED] unless labeled otherwise:
   S2(a)$'$ (repaired forced-cell characterization), S2(b--d), the partition
   S3, and union monotonicity S4 (Theorems~\ref{thm:s2ap}--\ref{thm:s4}),
   plus its $3{,}081$-pair-type census (Figure~\ref{fig:spectrum}).
-\item The two-sided forcing decomposition A--D [PROVED] under four
-  documented review conditions (\S\ref{sec:adecomp}).
+\item Finite checks for A, the scaling and filter lemmas B--C, and partial
+  arithmetic lemmas for D [PROVED]; A's general congruence export and D's
+  covered-set/progression bridge and surgical assembly are [UNFORMALIZED]
+  (\S\ref{sec:adecomp}).
 \end{enumerate}
 
 The honest history is part of the record: two statements as originally
@@ -244,7 +249,8 @@ equicardinal~\cite{D311}.
 \subsection{Formalization and verification}
 \label{sec:formal}
 
-The abstract results listed in Table~\ref{tab:lean} are machine-checked in the repo
+The named statements listed in Table~\ref{tab:lean}, at the scope specified
+there and in~\S\ref{sec:adecomp}, are machine-checked in the repo
 \texttt{derekblair/math-proofs} (workspace checkout
 \texttt{\textasciitilde/workspace/math-unsolved/lean/}), modules
 \url{Mathproofs/ESAbsorptionOrder.lean},
@@ -276,8 +282,10 @@ the adjacent \texttt{SUPERSEDED.md} records its status.
 
 \begin{table}[t]
   \centering
-  \caption{Lean theorem inventory.  Every theorem below is [PROVED] under
-    the verification config of~\S\ref{sec:formal}.  Module paths are
+  \caption{Lean theorem inventory. Each named statement is [PROVED] under
+    its hypotheses and the verification config of~\S\ref{sec:formal}.
+    A and D list finite checks and partial lemmas, not the unformalized
+    congruence export or surgical assembly (\S\ref{sec:adecomp}). Module paths are
     relative to the repo root \texttt{derekblair/math-proofs}.}
   \label{tab:lean}
   \begin{tabular}{p{3.6cm}p{4.6cm}p{2.6cm}p{3.6cm}}
@@ -315,15 +323,19 @@ the adjacent \texttt{SUPERSEDED.md} records its status.
     & S4 union max & R313 / Q-53 &
       {\small\url{psi_union_max}} \\
     \texttt{\small Mathproofs/ESForcingDecomp.lean} &
-      A CRT + box & R281 / Q-25 &
+      A finite image membership; box equivalence for $k<35$ & R281 / Q-25 &
       {\small\url{theoremA_crt}, \url{theoremA_crt_box}} \\
     & B scaling & R281 / Q-25 &
       {\small\url{theoremB_scaling}} \\
     & C filter & R281 / Q-25 &
       {\small\url{theoremC_filter}} \\
-    & D card/mod7/surgical & R281 / Q-25 &
-      {\small\url{theoremD_card}, \url{theoremD_mod7},
-      \url{theoremD_surgical}} \\
+    & D: $35/\gcd(m,35)\in\{1,5,7,35\}$ for $m>0$ & R281 / Q-25 &
+      {\small\url{theoremD_card}} \\
+    & D: no full mod-7 class in Hard6 & R281 / Q-25 &
+      {\small\url{theoremD_mod7}} \\
+    & D: $|\mathrm{covered}|=1\Rightarrow35\mid m$, assuming the cardinality
+      formula and $m>0$ & R281 / Q-25 &
+      {\small\url{theoremD_surgical}} \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -598,23 +610,52 @@ name \emph{ES} forcing spectrum avoids the collision~\cite{D313}.)
 \subsection{The forcing decomposition A--D}
 \label{sec:adecomp}
 
-The two-sided forcing decomposition of the R281 census~\cite{D322} is
-formalized as [PROVED]:
+The Lean declarations associated with the two-sided forcing decomposition
+of the R281 census~\cite{D322} have the following scope. Here
+$\mathrm{HardClasses}=\{1,121,169,289,361,529\}$,
+$\mathrm{OpenKClasses}=\text{Hard6}=\{0,5,7,12,15,22\}$, and
+$m=f.\mathrm{mprime}$ for a family datum $f$.
 \begin{itemize}
-\item \textbf{Theorem A} (open--hard coincidence): $n=24k+1\equiv H\pmod{840}
-  \iff k\equiv(H-1)/24\pmod{35}$ for the six hard classes
-  (\texttt{theoremA\_crt}, \texttt{decide}); the six $k$-classes are exactly
-  $k\bmod7\in\{0,1,5\}\times k\bmod5\in\{0,2\}$
-  (\url{theoremA_crt_box}).
-\item \textbf{Theorem B} (scaling-forced composites): a solution of
- ~\eqref{eq:es} for $n$ scales to one for $kn$ (\texttt{theoremB\_scaling},
-  field algebra).
-\item \textbf{Theorem C} (filter = $F$-axis): definitional unfolding
-  (\url{theoremC_filter}).
-\item \textbf{Theorem D} (surgical characterization): divisor analysis plus
-  \texttt{decide} (\url{theoremD_card}, \url{theoremD_mod7},
-  \url{theoremD_surgical}).
+\item \textbf{A: finite checks [PROVED].} \url{theoremA_crt} checks only
+  $((H-1)/24)\bmod35\in\mathrm{OpenKClasses}$ for every
+  $H\in\mathrm{HardClasses}$, using natural-number division.
+  Separately, \url{theoremA_crt_box} proves, for natural $k<35$,
+  \[
+    (k\bmod7\in\{0,1,5\}\ \land\ k\bmod5\in\{0,2\})
+    \iff k\in\mathrm{OpenKClasses}.
+  \]
+  The general congruence export
+  $24k+1\equiv H\pmod{840}\iff k\equiv(H-1)/24\pmod{35}$
+  for $H\in\mathrm{HardClasses}$ remains [UNFORMALIZED].
+\item \textbf{B: scaling identity [PROVED].} Over a field, a solution of
+  \eqref{eq:es} scales to the corresponding identity for $kn$ when
+  $k,x,y,z$ are nonzero (\url{theoremB_scaling}).
+\item \textbf{C: filter equivalences [PROVED].} \url{theoremC_filter}
+  assumes $f.F=f.\mathrm{cap2}-(\text{if }f.\mathrm{primeCovering}
+  \text{ then }f.\mathrm{cap2}\text{ else }0)$ and
+  $0<f.\mathrm{cap2}$. It proves $f.F=0\iff f.\mathrm{primeCovering}
+  =\mathrm{true}$ and $f.F=f.\mathrm{cap2}\iff f.\mathrm{primeCovering}
+  =\mathrm{false}$.
+\item \textbf{D: partial arithmetic lemmas [PROVED].}
+  \url{theoremD_card} proves $35/\gcd(m,35)\in\{1,5,7,35\}$ for $m>0$;
+  it does not prove a covered-set cardinality formula.
+  \url{theoremD_mod7} checks that, for natural $r<7$,
+  $\{r,r+7,r+14,r+21,r+28\}\not\subseteq\mathrm{OpenKClasses}$.
+  \url{theoremD_surgical} assumes
+  $|f.\mathrm{covered}|=35/\gcd(m,35)$ and $m>0$, and concludes only
+  $|f.\mathrm{covered}|=1\Rightarrow35\mid m$. Its additional premise
+  \texttt{hC}, $\forall c\in f.\mathrm{covered},\,
+  c\in\mathrm{OpenKClasses}\Rightarrow\mathrm{True}$, is tautological
+  and imposes no hard-cell restriction.
 \end{itemize}
+The family structure does not link $f.\mathrm{covered}$ to the residue
+progression determined by $f.k0$ and $m$. That bridge, the derivation of
+the covered-set cardinality formula, and the surgical assembly remain
+[UNFORMALIZED]. In particular, these declarations do not prove the claim
+that a prime-covering family has $C=0$ if and only if $35\mid m$ and its
+single covered cell is hard. Neither the quotient-value lemma nor the
+mod-7 check supplies the missing progression bridge.
+
 The Q-25 review verdict (SURVIVES conditional~\cite{D322}) binds the
 following conditions, stated verbatim from the module docstrings:
 (1) B's Reading carries the prime-free-class lemma: every non-prime-covering
@@ -709,8 +750,8 @@ characterized by the comparability shadow (D3), also failing with no top in
 sight ($X=\{4,6\}$, $Y=\{0\}$, D3$'$); and the redundancy rank refutes core
 canonicity: $S=\{0,4,6,17,22,29,35,38\}$ has exactly two cores, $\{0\}$ and
 the seven singletons, so $\rho(S)=7$ (R5).  These all SURVIVED hostile review
-Q-48~\cite{D315} but are \emph{not Lean-formalized}: we report them as
-[PROVED*] context, not as claimed theorems of this paper.
+Q-48~\cite{D315}; we report them as human-reviewed historical context
+[UNFORMALIZED], without Lean certification.
 
 \paragraph{Lessons from the two objections.}  The Q-48 objection~\cite{D315}
 showed the naive R3 proof transferred a reduction sequence across the
@@ -754,10 +795,14 @@ exact count $7{,}052{,}450$.  The ES forcing spectrum~\eqref{eq:sig} carries
 the repaired forced-cell characterization (Theorem~\ref{thm:s2ap}), the
 pc-secured/void/split laws (Theorem~\ref{thm:s2bcd}), the six-class
 partition (Theorem~\ref{thm:s3}), and the union-max rule (Theorem~\ref{thm:s4}),
-together with its complete pair-type census.  Theorems~A--D close the cited
-two-sided decomposition under four documented conditions.  All of this is
-[COMPUTED]$\times2$ where data and [PROVED] where mathematics, except the
-surgical down-set A4, which we leave explicitly [OPEN].
+together with its complete pair-type census. For the two-sided
+decomposition, the [PROVED] statements are A's finite checks, B--C's
+scaling and filter lemmas, and D's partial arithmetic lemmas, with the
+precise hypotheses in~\S\ref{sec:adecomp}. A's general congruence export
+and D's covered-set/progression bridge and surgical assembly remain
+[UNFORMALIZED]. Census data remain [COMPUTED]$\times2$; the historical
+greedoid material is human-reviewed and [UNFORMALIZED], and the surgical
+down-set A4 remains [OPEN].
 
 %======================================================================
 \section{References}
@@ -803,7 +848,8 @@ D.~Blair,
 \emph{Unsolved Math --- Round 311: the cover greedoid of the ES absorption
 poset},
 program dossier, 2026-10-11.
-([PROVED*] D1--D3, R1--R5; Q-48 SURVIVES for all but R3/R4's wording.)
+(Historical review of D1--D3, R1--R5; Q-48 SURVIVES for all but R3/R4's
+wording. The greedoid material is human-reviewed and [UNFORMALIZED].)
 
 \bibitem{D312}
 D.~Blair,
@@ -872,7 +918,7 @@ Q-56 quoted SURVIVES verdicts.)
 %    negative, so the bound says little in the interesting direction.
 % 3. The R59/R63 monotone audit is a human audit recorded in the dossiers,
 %    not a machine check; and the D1--D3''/R1/R5 material reported in
-%    Discussion is [PROVED*] but not Lean-formalized, so the paper's honest
+%    Discussion is human-reviewed and [UNFORMALIZED], so the paper's honest
 %    center of gravity (the formalized core) is thinner than the full theory
 %    the dossiers built. A4 remains [OPEN], leaving the surgical layer of the
 %    poset theory incomplete.

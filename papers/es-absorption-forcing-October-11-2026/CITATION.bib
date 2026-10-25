@@ -16,10 +16,28 @@
                   containing $S$, with no singleton on $S_0$ in that family.
                   The cited census reports $7{,}052{,}450$ minimal
                   $u$-covers of $\mathbb{Z}/35$; this count is not Lean-certified.
-                  The ES forcing spectrum's
+                  The ES forcing spectrum contributes the
                   repaired forced-cell characterization S2(a)$'$, S2(b--d),
-                  partition S3, and union-max S4; Theorems A--D of the
-                  two-sided forcing decomposition. Listed abstract results checked
+                  partition S3, and union-max S4. For the two-sided forcing
+                  decomposition, A checks only that each $H\in\mathrm{HardClasses}$
+                  maps to OpenKClasses under $((H-1)/24)\bmod35$ (natural-number
+                  division), plus the separate
+                  equivalence $(k\bmod7\in\{0,1,5\}\land
+                  k\bmod5\in\{0,2\})\Leftrightarrow k\in\mathrm{OpenKClasses}$
+                  for natural $k<35$; B and C are the named scaling
+                  and filter lemmas under their stated hypotheses.
+                  D checks that $35/\gcd(m',35)$ is in
+                  $\{1,5,7,35\}$ for natural $m'>0$, and that for natural $r<7$ the set
+                  $\{r,r+7,r+14,r+21,r+28\}$ is not contained in OpenKClasses.
+                  Writing $m'=f.\mathrm{mprime}$, its singleton lemma proves only
+                  $|\mathrm{covered}(f)|=1\Rightarrow35\mid m'$ given
+                  $|\mathrm{covered}(f)|=35/\gcd(m',35)$ and $m'>0$
+                  (the additional $hC$ premise is tautological).
+                  The general congruence export, the covered-set/progression
+                  bridge, the cardinality-formula derivation, and the surgical prime-covering/hard-cell
+                  biconditional assembly remain UNFORMALIZED.
+                  These declarations, together with the listed absorption and
+                  forcing-spectrum results, were checked
                   in Lean 4.34.1 + Mathlib v4.34.1 (modules
                   Mathproofs/ESAbsorptionOrder.lean,
                   Mathproofs/ESForcingSpectrum.lean,
