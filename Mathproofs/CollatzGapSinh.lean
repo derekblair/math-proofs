@@ -23,9 +23,10 @@ independent of the Collatz / continued-fraction machinery:
   Used in the sufficient-condition cleanups of C23(b) and C25 Theorem 2.
 
 Checked with Lean 4.34.1 + Mathlib v4.34.1, zero sorrys.
-Remaining for the full batch: the exact Δ-sign criterion (C22 Lemma 1),
-Δ strict monotonicity (C18b), the argmin-selection algebra, and the
-C24 continued-fraction identity `ρ = 1 / α_{n+1}`.
+The exact Δ-sign criterion and argmin comparison are in `CollatzGapDelta`,
+discrete Δ monotonicity is in `CollatzGapConvex`, and the C24 continued-fraction
+identity is in `CollatzGapCF`. The argmin assemblies remain conditional on
+the identification of a concrete objective with the analytic model.
 -/
 
 open NormedSpace

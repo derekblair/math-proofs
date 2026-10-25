@@ -1,4 +1,5 @@
-% Preprint — compiled to zero errors on xanthe (TeX Live, latexmk 4.87), 2026-10-04.
+% Corrected source, 2026-10-23. Existing PDF is the historical 2026-10-04 version.
+% This revision has not been rebuilt with TeX; see BUILD.md.
 % Author: Derek Blair <derekjblair@gmail.com>
 % Source data: ~/workspace/math-unsolved/ROUND16_DOSSIER.md (2026-10-04),
 %              family pool ~/workspace/math-unsolved/erdos_straus_r16_families.json,
@@ -21,7 +22,7 @@
 \theoremstyle{definition}
 \newtheorem{assumption}{Assumption}
 
-\title{A Finite-Identity Barrier for the Erd\H{o}s--Straus Conjecture\\
+\title{CRT Escape from Local Quadratic Obstructions\\
   on Square Classes Modulo $840$}
 \author{Derek Blair \\ \texttt{derekjblair@gmail.com}}
 \date{October 2026}
@@ -33,28 +34,28 @@
 \section{Abstract}
 %======================================================================
 
-We prove that no finite system of polynomial identities of the form
+We prove a scoped CRT escape theorem: for a finite family of
+progressions with $8\mid A_i$, suppose every residue $B_i$ either is
+nonsquare modulo some odd prime divisor of $A_i$, or is not congruent
+to $1$ modulo $8$. Then infinitely many primes in each class
+$r\in\{1,121,169,289,361,529\}\pmod{840}$ avoid all the progressions.
+This theorem is formalized as \texttt{es\_crt\_escape}, using Mathlib's
+proved general Dirichlet theorem and no custom axioms.
+
+The intended Erd\H{o}s--Straus application concerns identities
 \begin{equation}
   \label{eq:identityform}
   \frac{4}{A_it+B_i} = \sum_{j=1}^{3}\frac{1}{F_{ij}(t)},
   \qquad F_{ij} \in \mathbb{Z}[t],
 \end{equation}
-valid for all $t$ with $F_{ij}$ of positive leading coefficient and
-$\gcd(A_i,B_i)=1$, can cover all primes $p \equiv r \pmod{840}$ for any of
-the six square classes $r \in \{1,121,169,289,361,529\}$. The proof
-combines the classical Schinzel--Mordell quadratic-residue obstruction
-(Lemma~\ref{lem:schinzel}) with a CRT--Dirichlet construction
-(Figure~\ref{fig:construction}): infinitely many such primes lie outside
-every progression of the system. The obstruction is confirmed numerically
-on a pool of $21{,}296$ discovered identity families ($6{,}388$
-prime-covering progressions): the Jacobi symbol $(B_i/A_i)$ equals $-1$
-for all $5{,}965$ progressions with $\gcd(A_i,B_i)=1$. A greedy
-covering-system computation (Table~\ref{tab:coverage},
-Figure~\ref{fig:coveragebars}) reaches only $73.5$--$84.9\%$ of each class,
-consistent with the theorem. A concrete witness prime
-$p = 77{,}598{,}049 \equiv 529 \pmod{840}$ is exhibited, lying in $0$ of
-$30$ progressions of a maximal greedy system
-(Figure~\ref{fig:witness}).
+as rational-function identities, with positive leading coefficients and
+$A_i>0$. The implication from such
+integer-polynomial identities to the required local obstructions is
+an external mathematical input, not proved or assumed as a Lean axiom
+here. Consequently the full polynomial-identity barrier is not claimed
+as a formalized theorem. The reported $21{,}296$-family census, greedy
+coverage values, and witness prime $77{,}598{,}049$ are retained as
+external computational data, separate from the kernel-checked theorem.
 
 %======================================================================
 \section{Introduction}
@@ -72,33 +73,38 @@ every residue class except the six square classes
   \label{eq:squareclasses}
   r \in \{1,121,169,289,361,529\} \pmod{840},
 \end{equation}
-the quadratic residues modulo $840$. A long-running program has attacked
+the invertible quadratic residue classes modulo $840$. A long-running
+program has attacked
 these classes with \emph{finite covering systems}: finitely many
 polynomial identities \eqref{eq:identityform}, each covering an arithmetic
-progression, whose union would cover a whole class. The strongest
-computational attempt, over $21{,}296$ discovered families, covers only
-$73.5$--$84.9\%$ of each class (Table~\ref{tab:coverage}). We show this
-shortfall is structural, not a pool-size problem: Theorem~\ref{thm:barrier}
-proves that no finite polynomial-identity system can cover a full square
-class. Figure~\ref{fig:construction} outlines the construction and
-Figure~\ref{fig:witness} exhibits an explicit escaping prime.
+progression, whose union would cover a whole class. The reported
+computational attempt, over $21{,}296$ discovered families, covers
+$73.5$--$84.9\%$ of each class (Table~\ref{tab:coverage}).
+Theorem~\ref{thm:barrier} explains why a finite family satisfying the
+explicit local obstructions cannot cover a full square class.
+Applying that conclusion to every integer-polynomial identity requires
+the separate cited obstruction discussed below. It is not discharged
+by the present Lean formalization. Figure~\ref{fig:construction}
+outlines the checked construction, while Figure~\ref{fig:witness}
+records the externally computed example.
 
-\begin{assumption}[Classical lemma]
+\begin{assumption}[External polynomial-identity input]
   \label{ass:lemma}
-  Lemma~\ref{lem:schinzel} below is a cited classical result (Schinzel
-  1956; Mordell 1967 \cite{schinzel1956,mordell1967}); we do not reprove
-  it. Full bibliographic details are
-  \textbf{[PLACEHOLDER: verify journal references against a library
-  catalogue]}.
+  The polynomial-identity application invokes the cited integer-polynomial
+  obstruction recorded in Assumption~\ref{lem:schinzel}
+  (Schinzel 1956; Mordell 1967~\cite{schinzel1956,mordell1967}).
+  Its exact bibliographic statement and hypotheses have not been verified
+  here. It is not an axiom in the corrected Lean module.
 \end{assumption}
 
 \begin{assumption}[Scope]
   \label{ass:scope}
-  The barrier concerns \emph{polynomial-identity} systems of the exact form
-  \eqref{eq:identityform}. Per-prime infinite constructions (e.g.\ the
-  Hasse--Minkowski/Ionascu--Wilson idea: for each prime $p$ find a larger
-  prime $q$ with $p$ a non-residue mod $q$) are not blocked by this
-  theorem.
+  The checked theorem starts with explicit local obstructions and
+  $8\mid A_i$. It neither supplies them from~\eqref{eq:identityform}
+  nor formalizes a reduction from arbitrary progression moduli to
+  moduli divisible by eight. Any polynomial-identity barrier derived
+  from it remains conditional on those steps. Per-prime infinite
+  constructions are outside this finite-family statement.
 \end{assumption}
 
 %======================================================================
@@ -117,8 +123,10 @@ $\mathbf{21{,}296}$ families ($20{,}976$ numeric $+$ $320$ symbolic) with
 $0$ identity failures on $20$-sample exact checks, of which
 $\mathbf{6{,}388}$ are prime-covering progressions (supplied data;
 \url{erdos_straus_r16_families.json}). Of the $6{,}388$ progressions,
-$5{,}965$ satisfy $\gcd(A_i,B_i)=1$; the remaining $423$ are vacuous
-(their progressions contain no primes).
+$5{,}965$ satisfy $\gcd(A_i,B_i)=1$. The original computation labels
+the remaining $423$ as containing no primes; that data-dependent claim
+is not checked here. Noncoprimality alone only shows that at most the
+prime divisors of the common gcd could occur.
 
 \subsection{Greedy covering computation}
 
@@ -134,29 +142,29 @@ $13{,}962$ uncovered, coverage $0.848860$).
 
 \subsection{Barrier construction}
 
-The proof of Theorem~\ref{thm:barrier} uses Lemma~\ref{lem:schinzel} to
-force, for each progression $(A_i,B_i)$, an odd prime divisor $q_i \mid
-A_i$ and a quadratic-residue class $c_i \bmod q_i$ with $c_i \not\equiv
-B_i \pmod{q_i}$; the classes are chosen compatible with $r \pmod{840}$,
-merged by the Chinese remainder theorem, and Dirichlet's theorem on
-primes in arithmetic progressions supplies infinitely many primes in the
-merged class, all escaping every progression. The construction is
-diagrammed in Figure~\ref{fig:construction} and applied to a concrete
-$30$-identity system in Section~\ref{sec:witness}.
+The proof of Theorem~\ref{thm:barrier} starts with the supplied
+obstruction for each progression. For an odd-prime obstruction, choose
+a nonzero square residue incompatible with $B_i$ and compatible with
+the target class modulo $840$. For a 2-adic obstruction, the target
+class already avoids $B_i$ modulo $8$. Chinese remaindering combines
+the odd-prime conditions with the target class, and the general
+Dirichlet theorem supplies infinitely many primes in the resulting
+coprime residue class. None of these steps infers an obstruction from
+a polynomial identity.
 
 \begin{figure}[t]
   \centering
   \begin{tikzpicture}[node distance=0.8cm, auto,
       box/.style={rectangle, draw, rounded corners, minimum width=7.2cm,
                   minimum height=0.85cm, align=center, font=\small}]
-    \node[box] (l) {Lemma~\ref{lem:schinzel}: each $B_i$ is a non-residue
-      mod $A_i$};
-    \node[box, below=of l] (q) {Pick odd $q_i \mid A_i$ and QR class
-      $c_i \bmod q_i$ with $c_i \not\equiv B_i \pmod{q_i}$,
-      $c_i \equiv r \pmod{q_i}$};
+    \node[box] (l) {Input: $8\mid A_i$ and an odd-prime nonsquare\\
+      obstruction or $B_i\not\equiv1\pmod8$};
+    \node[box, below=of l] (q) {At odd witnesses choose nonzero square
+      $c_i\not\equiv B_i\pmod{q_i}$;\\
+      the target $r\equiv1\pmod8$ handles 2-adic witnesses};
     \node[box, below=of q] (crt) {CRT: class $c \bmod M =
       \mathrm{lcm}(840, q_i)$ with $c \equiv r \pmod{840}$,
-      $c \not\equiv B_i \pmod{q_i}\ \forall i$, $\gcd(c,M)=1$};
+      all supplied local obstructions avoided, $\gcd(c,M)=1$};
     \node[box, below=of crt, fill=gray!15] (d) {Dirichlet: infinitely many
       primes $p \equiv c \pmod{M}$; each is $\equiv r \pmod{840}$ but
       $p \not\equiv B_i \pmod{A_i}\ \forall i$};
@@ -164,10 +172,10 @@ $30$-identity system in Section~\ref{sec:witness}.
     \draw[->, thick] (q) -- (crt);
     \draw[->, thick] (crt) -- (d);
   \end{tikzpicture}
-  \caption{Schematic of the barrier construction. The square classes $r$
-    are themselves squares ($11^2, 13^2, 17^2, 19^2, 23^2, 1^2$), hence
-    quadratic residues modulo each $q_i$, which is what makes the choice
-    $c_i \equiv r \pmod{q_i}$ available.}
+  \caption{CRT escape from supplied local obstructions. Use $r\bmod q_i$
+    when $q_i\nmid r$, and $1\bmod q_i$ when $q_i\mid r$; the latter
+    case has $q_i\nmid840$. Equal witness primes use the same residue.
+    No polynomial-to-obstruction implication is part of this diagram.}
   \label{fig:construction}
 \end{figure}
 
@@ -177,64 +185,80 @@ $30$-identity system in Section~\ref{sec:witness}.
 
 \subsection{Formalization note}
 
-The barrier argument is formalized in Lean~4.34.1 with
-Mathlib~v4.34.1 (pinned commit \texttt{d13f23b}):
-\texttt{Mathproofs/ESBarrier.lean}, theorem \texttt{es\_barrier}, in the
-\texttt{derekblair/math-proofs} repository. Verification config:
-\texttt{lake build} exit~0, zero \texttt{sorry}s. Status [PROVED*]:
-the formalization depends on two explicitly labeled classical-input
-axioms beyond Lean's standard ones — \texttt{schinzel\_mordell}
-(Schinzel~1956 / Mordell~1967 obstruction, Lemma~\ref{lem:schinzel})
-and \texttt{dirichlet\_arith\_prog} (Dirichlet's theorem on arithmetic
-progressions; Mathlib~4.34.1 proves only the $\equiv 1 \pmod{k}$ case).
-The Lean module header points at this paper, and this paper points at
-the module and theorem name.
+The checked theorem is \texttt{es\_crt\_escape} in
+\texttt{Mathproofs/ESBarrier.lean}, using Lean~4.34.1 and
+Mathlib~v4.34.1 (pinned commit \texttt{d13f23b}). Its hypotheses are
+exactly the per-progression local obstructions and divisibility by eight
+stated in Theorem~\ref{thm:barrier}. The targeted build succeeds with
+no sorrys; \texttt{\#print axioms es\_crt\_escape} returns only
+\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}.
 
-\subsection{The barrier theorem}
+The general Dirichlet theorem is already proved in this pinned Mathlib
+as \texttt{Nat.infinite\_setOfPred\_prime\_and\_modEq}, in
+\texttt{Mathlib/NumberTheory/LSeries/PrimesInAP.lean}. It requires a
+nonzero modulus, which the CRT construction supplies. The former custom
+axioms and the unrestricted rational-polynomial \texttt{es\_barrier}
+statement were removed after the October 23 review: a zero-modulus
+instance made the former Dirichlet axiom inconsistent, and allowing
+arbitrary rational denominator polynomials made the former obstruction
+axiom false. The present module makes no polynomial-identity implication.
+The committed PDF predates these corrections; see \texttt{BUILD.md}.
 
-\begin{lemma}[Schinzel 1956 / Mordell 1967; cited classical]
+\subsection{The scoped CRT escape theorem}
+
+\begin{assumption}[Cited integer-polynomial obstruction; unformalized]
   \label{lem:schinzel}
-  An identity of the form \eqref{eq:identityform}, valid for all $t$ with
-  $F_{ij}$ of positive leading coefficient, exists only if $B_i$ is a
-  quadratic non-residue modulo $A_i$.
-\end{lemma}
+  The intended application cites the claim that an identity of the
+  integer-polynomial form~\eqref{eq:identityform}, with positive leading
+  coefficients, $A_i>0$, and coprime $A_i,B_i$, forces $B_i$ to be nonsquare
+  modulo $A_i$. The references and exact scope remain to be verified.
+  This cited mathematical input, and its required local consequence,
+  are distinct from the Lean theorem below.
+\end{assumption}
 
-\begin{theorem}
+\begin{theorem}[CRT escape; PROVED]
   \label{thm:barrier}
-  Let $S = \{(A_i,B_i)\}_{i=1}^{t}$ be the progressions arising from a finite
-  family of polynomial identities of the form~\eqref{eq:identityform},
-  each with $\gcd(A_i,B_i)=1$. Then
-  $\bigcup_i (A_i\mathbb{N}+B_i)$ does \emph{not} contain all primes
-  $p \equiv r \pmod{840}$ for any square class $r$ of
-  \eqref{eq:squareclasses}. Infinitely many such primes lie outside every
-  progression.
+  Let $(A_i,B_i)$ be finitely many pairs of natural numbers, with
+  $8\mid A_i$ for every $i$. Suppose for each $i$ that either
+  \begin{enumerate}
+    \item some odd prime $q_i\mid A_i$ has $B_i$ nonsquare modulo $q_i$; or
+    \item $B_i\not\equiv1\pmod8$.
+  \end{enumerate}
+  For each $r\in\{1,121,169,289,361,529\}$, infinitely many primes
+  satisfy $p\equiv r\pmod{840}$ and $p\not\equiv B_i\pmod{A_i}$ for
+  every $i$. In particular they lie outside every $A_i\mathbb{N}+B_i$.
 \end{theorem}
 
 \begin{proof}
-  By Lemma~\ref{lem:schinzel}, each $B_i$ is a non-residue mod $A_i$, so
-  each $A_i$ has a prime divisor $q_i$ (odd; the $2$-adic case is handled
-  below) and a quadratic-residue class $c_i \bmod q_i$ with
-  $c_i \not\equiv B_i \pmod{q_i}$: take $c_i \equiv r \pmod{q_i}$ --- $r$
-  is itself a square ($11^2, 13^2, 17^2, 19^2, 23^2, 1^2$), hence a QR mod
-  $q_i$ and $\not\equiv B_i$; if $q_i \mid r$ use $c_i = 1$ (compatible
-  since then $\gcd(840,q_i)=1$). For the $2$-adic case take $c_i \equiv 1
-  \pmod 8$, compatible since every odd square is $\equiv 1 \pmod 8$. CRT
-  gives a class $c \bmod M = \mathrm{lcm}(840,q_i)$ with $c \equiv r
-  \pmod{840}$, $c \not\equiv B_i \pmod{q_i}$ for all $i$, and
-  $\gcd(c,M)=1$. By Dirichlet's theorem there are infinitely many primes
-  $p \equiv c \pmod M$; each satisfies $p \equiv r \pmod{840}$ but
-  $p \not\equiv B_i \pmod{A_i}$ for all $i$. \qedhere
+  Each listed $r$ is an integer square coprime to $840$, and
+  $r\equiv1\pmod8$. At each distinct odd witness prime $q$, choose
+  $c_q=r\bmod q$ if $q\nmid r$, and $c_q=1$ otherwise. These are
+  nonzero squares, so they differ from every nonsquare $B_i$ witnessed
+  by that prime. If $q\mid840$, coprimality gives $q\nmid r$, hence
+  compatibility with $r\pmod{840}$; if $q\mid r$, then $q\nmid840$.
+  Chinese remaindering therefore supplies a residue $c$ modulo a
+  positive common multiple $M$ of $840$ and the witness primes, with
+  $c\equiv r\pmod{840}$, $c\equiv c_q\pmod q$, and $\gcd(c,M)=1$.
+  Every 2-adic obstruction is already avoided by $c\equiv1\pmod8$.
+  By Dirichlet's theorem infinitely many primes are $c\pmod M$.
+  They avoid every progression: congruence to $B_i$ modulo $A_i$
+  would contradict the associated odd-prime obstruction, or, since
+  $8\mid A_i$, the 2-adic obstruction.
 \end{proof}
 
-\subsection{Numerical confirmation of the lemma}
+\subsection{Reported numerical obstruction data}
 
-For all $6{,}388$ prime-covering progressions, with $A_i = 24m'$,
-$B_i = 24k_0+1 \bmod A_i$: the Jacobi symbol $(B_i/A_i)$ equals
-$\mathbf{-1}$ in all $5{,}965$ cases with $\gcd(A_i,B_i)=1$, and $+1$ in
-zero cases --- exactly Schinzel's conclusion (supplied datum). Every
-family has an odd prime witness $q_i \mid A_i$ with $(B_i/q_i) = -1$.
+The supplied computation describes $6{,}388$ prime-covering progressions
+with $A_i=24m'$ and $B_i=24k_0+1\bmod A_i$. It reports a symbol value
+$-1$ in all $5{,}965$ coprime cases and $+1$ in zero cases, calling this
+symbol $(B_i/A_i)$ a Jacobi symbol. Since $A_i$ is even, the ordinary
+Jacobi symbol does not have this denominator; the implementation's
+extension or odd-part convention has not been checked here. The data
+also report an odd prime $q_i\mid A_i$ with $(B_i/q_i)=-1$ for every
+admissible family. Neither the data nor the cited general implication
+are certified by the Lean module.
 
-\subsection{Greedy coverage ceilings}
+\subsection{Reported greedy coverage}
 
 \begin{table}[t]
   \centering
@@ -251,7 +275,7 @@ family has an odd prime witness $q_i \mid A_i$ with $(B_i/q_i) = -1$.
     $529$ & $3615$ & $31$ & $3233230$ & $0.848860$ \\
     \bottomrule
   \end{tabular}
-  \caption{Maximal greedy finite-system coverage per square class
+  \caption{Reported greedy finite-system coverage per square class
     (supplied data; \url{erdos_straus_r16_cover_all.json}).
     Coverage is decided by exact residue counting mod
     $M = 3233230$ and was recount-verified by an independent
@@ -262,8 +286,9 @@ family has an odd prime witness $q_i \mid A_i$ with $(B_i/q_i) = -1$.
 Table~\ref{tab:coverage} and Figure~\ref{fig:coveragebars} show the best
 finite systems found: $73.5$--$84.9\%$ coverage per cell. The extended
 pool ($21{,}296$ families) lifts coverage only marginally over the
-smaller pool ($71.1$--$84.7\%$): the residual $15$--$25\%$ is structural,
-as Theorem~\ref{thm:barrier} explains.
+smaller pool ($71.1$--$84.7\%$). Theorem~\ref{thm:barrier} proves
+infinitely many escapes under its hypotheses, but gives no uniform
+percentage bound and does not certify these observed residual fractions.
 
 \begin{figure}[t]
   \centering
@@ -286,16 +311,19 @@ as Theorem~\ref{thm:barrier} explains.
     \end{axis}
   \end{tikzpicture}
   \caption{Best greedy finite-system coverage per square class, from
-    Table~\ref{tab:coverage}. No finite polynomial-identity system can
-    reach $1.0$ (Theorem~\ref{thm:barrier}).}
+    Table~\ref{tab:coverage}. A finite family satisfying the explicit
+    local-obstruction hypotheses cannot cover a whole square class
+    (Theorem~\ref{thm:barrier}); the plotted values are external data.}
   \label{fig:coveragebars}
 \end{figure}
 
 \subsection{Concrete witness prime}
 \label{sec:witness}
 
-Applying the construction of Theorem~\ref{thm:barrier} to the
-$30$-identity greedy system for the $529$ cell gives the barrier class
+The external computation reports the following application of the CRT
+construction to its $30$-identity greedy system for the $529$ cell.
+Its family data and obstruction certificates are not instantiated in
+Lean here. The reported barrier class is
 \begin{equation}
   \label{eq:barrierclass}
   p \equiv 529 \pmod{38798760},
@@ -327,7 +355,7 @@ illustrates the escape.
   \end{tikzpicture}
   \caption{Escape diagram for the witness prime \eqref{eq:witness}:
     it is $\equiv 529 \pmod{840}$ yet lies outside every progression of
-    the maximal greedy system.}
+    the reported greedy system.}
   \label{fig:witness}
 \end{figure}
 
@@ -335,31 +363,31 @@ illustrates the escape.
 \section{Discussion}
 %======================================================================
 
-Theorem~\ref{thm:barrier} closes the finite-union route for target
-Erd\H{o}s--Straus coverings: no enlargement of the family pool can push a
-polynomial-identity system to full coverage of a square class, since the
-obstruction is Diophantine rather than computational. The greedy ceilings
-of Table~\ref{tab:coverage} are therefore not a failure of the search but
-the expected signature of the barrier.
+Theorem~\ref{thm:barrier} excludes complete coverage by finite
+families carrying the stated local obstructions. Extending this
+conclusion to every integer-polynomial identity system still requires
+the cited obstruction and any modulus-normalization argument; these
+are not supplied by the formalization. The greedy data illustrate the
+intended application but do not discharge its general mathematical input.
 
-The theorem does not touch per-prime infinite constructions
-(Assumption~\ref{ass:scope}), which remain the live angle. A further
-limitation of the present work: the greedy set-cover is heuristic, so the
-$73.5$--$84.9\%$ figures are lower bounds on what finite systems achieve
-rather than exact maxima; and the $423$ vacuous ``prime-covering''
-progressions show the discovery filter needs a $\gcd(A,B)=1$ tightening.
+The theorem does not address per-prime infinite constructions
+(Assumption~\ref{ass:scope}). The reported greedy set-cover is heuristic,
+so the $73.5$--$84.9\%$ figures are achieved coverage values, not proved
+maxima. The discovery census and the stated witness prime are external
+computations, not additional conclusions of \texttt{es\_crt\_escape}.
 
 %======================================================================
 \section{Conclusion}
 %======================================================================
 
-We have proved (Theorem~\ref{thm:barrier}) that no finite system of
-polynomial identities \eqref{eq:identityform} can cover all primes of any
-square class modulo $840$, via the Schinzel--Mordell non-residue
-obstruction and a CRT--Dirichlet construction. The result is supported by
-exact computation: Jacobi symbol $-1$ on all $5{,}965$ admissible
-progressions of a $21{,}296$-family pool, greedy coverage ceilings of
-$73.5$--$84.9\%$, and the explicit escaping prime $77{,}598{,}049$.
+The formalized result is CRT escape from explicit odd-prime or 2-adic
+obstructions for progressions with $8\mid A_i$. It proves infinitely
+many escaping primes in every listed square class modulo $840$, using
+Mathlib's general Dirichlet theorem and standard axioms only. The
+polynomial-identity-to-obstruction implication remains an unformalized
+cited input. The reported family census, greedy coverage values, and
+witness prime are preserved as computational context rather than
+kernel-certified consequences.
 
 %======================================================================
 \section{References}
@@ -384,7 +412,7 @@ Wikipedia contributors.
 
 \bibitem{ionascu-wilson}
 \textbf{[PLACEHOLDER: citation for the Ionascu--Wilson per-prime
-construction idea mentioned in Assumption~\ref{ass:scope} ---
+construction idea ---
 unverified]}.
 
 \end{thebibliography}

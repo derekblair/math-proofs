@@ -4,9 +4,11 @@ import Mathproofs.EST1TwoCase
 /-!
 # R140 QR-core theorem (Round 154, Lean formalization lane)
 
-Formalizes R140's QR-core theorem §2: the hard core H = frontier ∖ (T1∪T2∪cubic)
-contains the QR-core Q = {s ∈ S : x² ≡ s (mod M) is solvable}, and every
-s ∈ Q is missed by the Type-I and Type-II systems.
+Formalizes the Type-I and Type-II residue-obstruction parts of R140 §2:
+every square residue modulo M is excluded from the specified T1/T2 classes.
+There is no cubic-coverage predicate or proof in this module. In particular,
+these theorems do not establish inclusion in a hard core that also excludes
+cubic families or an externally filtered frontier.
 
 Built on the machine-checked reciprocity kernels:
 - T2: R134 Theorem 1, `ESPrimeSquareT2.t2_class_nonsquare`: the T2 class residue

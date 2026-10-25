@@ -8,28 +8,20 @@ import Mathlib.Algebra.Polynomial.Basic
 import Mathlib.Algebra.Group.Even
 import Mathlib.Data.Set.Finite.Basic
 import Mathlib.Algebra.Divisibility.Units
+import Mathlib.NumberTheory.LSeries.PrimesInAP
 
 /-!
-# Round 16 barrier theorem — Erdős–Straus finite-identity barrier
+# CRT escape from explicit quadratic obstructions
 
-Source: `~/workspace/math-unsolved/ROUND16_DOSSIER.md`
-Preprint: `papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.tex`
-(Theorem 1 there).
+For finitely many progressions whose residues have a supplied quadratic
+obstruction, `es_crt_escape` constructs infinitely many primes in each listed
+square class modulo 840 that avoid every progression. Dirichlet's theorem is
+proved by Mathlib; the CRT argument is proved here.
 
-**Theorem (R16).** Let `S = {(Aᵢ,Bᵢ)}` be progressions arising from a finite family
-of polynomial identities `4/(Aᵢt+Bᵢ) = Σⱼ 1/Fᵢⱼ(t)`, `Fᵢⱼ ∈ ℤ[t]` of positive
-leading coefficient, valid for all `t`, with `gcd(Aᵢ,Bᵢ) = 1` and `8 ∣ Aᵢ`.
-Then `⋃ᵢ (Aᵢℕ + Bᵢ)` does *not* contain all primes `p ≡ r (mod 840)` for any
-square class `r ∈ {1,121,169,289,361,529}`. Infinitely many such primes lie
-outside every progression.
-
-The classical Schinzel–Mordell lemma is taken as an axiom (see `schinzel_mordell`
-below); Dirichlet's theorem on arithmetic progressions is taken as a second
-axiom (see `dirichlet_arith_prog` below — Mathlib 4.34.1 only contains the
-special case of primes ≡ 1 mod k); the CRT construction is fully proved.
-
-Checked with Lean 4.34.1 (`leanprover/lean4:stable`) + Mathlib, modulo the two
-axioms.
+This theorem does not establish the Schinzel–Mordell obstruction for polynomial
+Erdős–Straus identities. That mathematical input is outside this module's scope.
+No polynomial-identity barrier is claimed without first proving the explicit
+per-progression obstruction hypotheses.
 -/
 
 /-- Coprimality is preserved when replacing a number by a congruent one. -/
@@ -83,41 +75,15 @@ lemma crt_finset_coprime (S : Finset ℕ) (g : ℕ → ℕ) :
     · have hdvd : q ∣ ∏ q' ∈ S', q' := Finset.dvd_prod_of_mem (fun q' => q') hq
       exact (Nat.ModEq.of_dvd hdvd hT1).trans (hT' q hq)
 
-/-- **Schinzel–Mordell obstruction (classical input, taken as an axiom).**
-
-The classical lemma (Schinzel 1956, Mordell 1967) says that a polynomial identity
-`4/(At+B) = Σⱼ 1/Fⱼ(t)`, valid for all `t`, with `Fⱼ ∈ ℤ[t]` (here viewed over ℚ)
-of positive leading coefficient, forces the Jacobi symbol `(B/A) = -1`.
-For `8 ∣ A` (as in our progressions, where `A = 24m'`), this implies the
-disjunction below: either an odd prime divisor witnesses the non-residuosity,
-or the obstruction is 2-adic (`B ≢ 1 mod 8`). The derivation of this disjunction
-from `(B/A) = -1` is elementary and is packaged here as part of the classical
-input. This is the *first* of two unproved classical inputs in the barrier
-formalization. -/
-axiom schinzel_mordell (A B : ℕ) (hA : 1 < A) (hgcd : Nat.Coprime A B) (h8 : 8 ∣ A)
-    (hident : ∃ F : Fin 3 → Polynomial ℚ, (∀ j, 0 < (F j).leadingCoeff) ∧
-      ∀ t : ℕ, (4:ℚ)/(A*t+B) = ∑ j, 1/((F j).eval (t:ℚ))) :
-    (∃ q, q.Prime ∧ Odd q ∧ q ∣ A ∧ ¬ IsSquare (B : ZMod q)) ∨ (¬ (B ≡ 1 [MOD 8]))
-
-/-- **Dirichlet's theorem on arithmetic progressions (classical input, taken as
-an axiom).**
-
-Infinitely many primes lie in any residue class coprime to the modulus.
-Mathlib 4.34.1 only proves the special case of primes `≡ 1 [MOD k]`
-(`infinite_setOfPred_prime_modEq_one` in
-`Mathlib/NumberTheory/PrimesCongruentOne.lean`); the general statement is
-packaged here as a classical input. This is the *second* of two unproved
-classical inputs in the barrier formalization. -/
-axiom dirichlet_arith_prog (M c : ℕ) (hcop : Nat.Coprime c M) :
-    Set.Infinite { p : ℕ | p.Prime ∧ p ≡ c [MOD M] }
-
-/-- The Round 16 barrier theorem: no finite polynomial-identity system covers
-all primes of a square class mod 840; infinitely many escape. -/
-theorem es_barrier {t : ℕ} (A B : Fin t → ℕ)
-    (hA : ∀ i, 1 < A i) (hgcd : ∀ i, Nat.Coprime (A i) (B i))
+/-- CRT escape theorem: explicit per-progression quadratic obstructions imply
+infinitely many escaping primes in any of the six square classes modulo 840.
+The obstruction is a hypothesis, not a claimed consequence of an unformalized
+polynomial-identity theorem. -/
+theorem es_crt_escape {t : ℕ} (A B : Fin t → ℕ)
     (h8 : ∀ i, 8 ∣ A i)
-    (hident : ∀ i, ∃ F : Fin 3 → Polynomial ℚ, (∀ j, 0 < (F j).leadingCoeff) ∧
-      ∀ s : ℕ, (4:ℚ)/((A i)*s + (B i)) = ∑ j, 1/((F j).eval (s:ℚ)))
+    (hobstruction : ∀ i,
+      (∃ q, q.Prime ∧ Odd q ∧ q ∣ A i ∧ ¬ IsSquare (B i : ZMod q)) ∨
+        ¬ (B i ≡ 1 [MOD 8]))
     (r : ℕ) (hr : r = 1 ∨ r = 121 ∨ r = 169 ∨ r = 289 ∨ r = 361 ∨ r = 529) :
     Set.Infinite { p : ℕ | p.Prime ∧ p ≡ r [MOD 840] ∧
       ∀ i, ¬ (p ≡ B i [MOD (A i)]) } := by
@@ -139,12 +105,12 @@ theorem es_barrier {t : ℕ} (A B : Fin t → ℕ)
     · exact hsq 17 (by norm_num)
     · exact hsq 19 (by norm_num)
     · exact hsq 23 (by norm_num)
-  -- Per-progression obstruction from the axiom, unified into one witness per i:
+  -- The supplied obstruction, unified into one witness per progression:
   -- either an odd prime with Bᵢ a nonsquare mod q, or the marker q = 2 for the
   -- 2-adic case (Bᵢ ≢ 1 mod 8).
   have hdisj : ∀ i, (∃ q, q.Prime ∧ Odd q ∧ q ∣ A i ∧ ¬ IsSquare (B i : ZMod q))
       ∨ ¬ (B i ≡ 1 [MOD 8]) :=
-    fun i => schinzel_mordell (A i) (B i) (hA i) (hgcd i) (h8 i) (hident i)
+    hobstruction
   have hwit : ∀ i, ∃ qq, (qq.Prime ∧ Odd qq ∧ qq ∣ A i ∧ ¬ IsSquare (B i : ZMod qq))
       ∨ (qq = 2 ∧ ¬ (B i ≡ 1 [MOD 8])) := by
     intro i
@@ -316,7 +282,7 @@ theorem es_barrier {t : ℕ} (A B : Fin t → ℕ)
     intro p hpQ
     exact (hQprime p hpQ).pos
   haveI : NeZero M := ⟨hMpos.ne'⟩
-  have hinf := dirichlet_arith_prog M c hcopM
+  have hinf := Nat.infinite_setOfPred_prime_and_modEq hMpos.ne' hcopM
   apply Set.Infinite.mono _ hinf
   intro p hp
   rw [Set.mem_setOf_eq] at hp

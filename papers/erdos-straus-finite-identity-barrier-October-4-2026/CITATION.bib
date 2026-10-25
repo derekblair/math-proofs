@@ -1,12 +1,15 @@
 @misc{blair2026erdosstrausfiniteidentitybarrier,
   author       = {Derek Blair},
-  title        = {A Finite-Identity Barrier for the Erd\H{o}s--Straus Conjecture
+  title        = {{CRT} Escape from Local Quadratic Obstructions
                   on Square Classes Modulo $840$},
   year         = {2026},
   month        = oct,
-  note         = {Preprint. Lean 4 formalization in the same repository
-                  (\texttt{Mathproofs/ESBarrier.lean}, theorem \texttt{es\_barrier}),
-                  typechecking cleanly modulo two explicitly labeled classical-input
-                  axioms (\texttt{schinzel\_mordell}, \texttt{dirichlet\_arith\_prog}).},
+  note         = {Corrected source, 23 October 2026. Lean 4 theorem
+                  \texttt{es\_crt\_escape} in \texttt{Mathproofs/ESBarrier.lean}
+                  assumes explicit local obstructions and progression moduli
+                  divisible by eight; its proof uses only standard axioms.
+                  The integer-polynomial obstruction implication remains
+                  unformalized. The committed PDF is historical and predates
+                  this correction; the current TeX source is authoritative.},
   email        = {derekjblair@gmail.com}
 }

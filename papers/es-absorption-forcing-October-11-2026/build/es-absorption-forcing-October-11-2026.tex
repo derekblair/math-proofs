@@ -61,17 +61,19 @@ On the $78$ union groups $G=(C,p)$ ($C\subseteq\mathbb{Z}/35$ nonempty, $p\in\{0
 we define the \emph{absorption order}
 $G\preceq H\iff C_G\subseteq C_H\land(p_G\Rightarrow p_H)$.
 We prove [PROVED] that $\preceq$ is a partial order (A1), that it
-characterizes datum-equality of unions (A2), and that dominated families can
-be pruned from any union without changing the datum, so minimal covering
-families are $\preceq$-antichains (A3).  For the redundancy rank
+characterizes datum-equality of unions when $C_G\ne\emptyset$ (A2), and that
+dominated families can be pruned from any union without changing the datum,
+so minimal covering families are $\preceq$-antichains (A3).  For the redundancy rank
 $\rho(S)$ (maximum removable members under datum-preserving reduction) we
 prove [PROVED] disjoint superadditivity (R3$'$), a general corollary (R3$''$),
 the overlap-deficit bound (T), and the absorption-collapse formula with
-uniqueness (R4$'$) --- the naive stated superadditivity being
-\emph{false} for overlapping families, with exact counterexample, repaired
+uniqueness when $C_H\ne\emptyset$ (R4$'$) --- the naive stated
+superadditivity being \emph{false} for overlapping families, with exact counterexample, repaired
 after hostile review.  We prove [PROVED] the singleton-factorization theorem:
-every minimal $u$-cover of $\mathbb{Z}/35$ splits uniquely into a hard core
-$T$ times an independent per-cell singleton fill; the census gives
+every minimal $u$-cover $S$ of $\mathbb{Z}/35$ drawn from a finite ambient
+family $\mathcal G$ splits uniquely into a hard core $T$ times an independent
+per-cell singleton fill. The footprint condition on $T$ assumes that no
+group in $\mathcal G$ is a singleton on a cell of $S_0$; the census gives
 $212{,}264$ cores and exactly $7{,}052{,}450$ minimal $u$-covers
 [COMPUTED]$\times2$.
 
@@ -276,8 +278,9 @@ in~\S\ref{sec:adecomp})~\cite{D314,D315,D316,D322}.
       A1 partial order & R304 / Q-46 &
       {\small\url{absorp_refl}, \url{absorp_trans},
       \url{absorp_antisymm}} \\
-    & A2 datum characterization & R304 / Q-46 &
-      {\small\url{absorp_datum_iff}} \\
+    & A2 datum characterization ($C_G\ne\emptyset$); absorption implies
+      equality without this premise & R304 / Q-46 &
+      {\small\url{absorp_datum_iff}, \url{datum_eq_of_absorpLE}} \\
     & A3 pruning + antichain corollary & R304 / Q-46 &
       {\small\url{dominance_prune}, \url{minimal_pcov_antichain}} \\
     & R2 redundancy monotonicity & R308 / Q-48 &
@@ -285,10 +288,11 @@ in~\S\ref{sec:adecomp})~\cite{D314,D315,D316,D322}.
     & R3$'$/R3$''$/T(iii) & R315 / Q-55 &
       {\small\url{rho_superadd_disjoint},
       \url{rho_superadd_general}, \url{overlap_deficit_bound}} \\
-    & R4$'$ collapse + uniqueness & R315 / Q-55 &
+    & R4$'$ collapse + uniqueness ($C_H\ne\emptyset$) & R315 / Q-55 &
       {\small\url{rho_absorption_collapse},
       \url{absorption_collapse_unique_core}} \\
-    & singleton factorization ($\iff$) & R312 / Q-52 &
+    & singleton factorization ($\iff$); $S\subseteq\mathcal G$,
+      singleton exclusions within $\mathcal G$ & R312 / Q-52 &
       {\small\url{singleton_factorization},
       \url{singleton_factorization_converse}} \\
     \texttt{\small Mathproofs/ESForcingSpectrum.lean} &
@@ -330,9 +334,10 @@ in~\S\ref{sec:adecomp})~\cite{D314,D315,D316,D322}.
 
 \begin{theorem}[A2; PROVED]
   \label{thm:a2}
-  For union groups $G,H$,
+  For union groups $G,H$ with $C_G\ne\emptyset$,
   $\text{datum}(G\cup H)=\text{datum}(H)\iff G\preceq H$:
-  \url{absorp_datum_iff}.
+  \url{absorp_datum_iff}. The implication from absorption to datum-equality
+  needs no nonemptiness premise: \url{datum_eq_of_absorpLE}.
 \end{theorem}
 
 \begin{theorem}[A3; PROVED]
@@ -400,6 +405,7 @@ deficit.
 
 \begin{theorem}[R4$'$ absorption-collapse; PROVED]
   \label{thm:r4p}
+  If $C_H\ne\emptyset$, then
   $G\prec H\Rightarrow\rho(\{G,H\})=1=\rho(\{H\})+1$:
   \url{rho_absorption_collapse}, with the reduction
   $\{G,H\}\to\{H\}$ unique: \texttt{absorption\_collapse\_unique\_core}.
@@ -422,8 +428,10 @@ group~\cite{D312}.
 
 \begin{theorem}[Singleton factorization; PROVED]
   \label{thm:factorization}
-  Every minimal $u$-cover $S$ of $\mathbb{Z}/35$ splits uniquely as
-  $S=T\cup U$ where $T$ is a $\preceq$-antichain of non-singleton groups,
+  Fix a finite ambient family $\mathcal G$ and a set $S_0$ of cells such that
+  $C_g\ne\{c\}$ for every $c\in S_0$ and $g\in\mathcal G$.
+  Every minimal $u$-cover $S\subseteq\mathcal G$ of $\mathbb{Z}/35$ splits
+  uniquely as $S=T\cup U$ where $T$ is a $\preceq$-antichain of non-singleton groups,
   each with a $T$-private cell, with footprint $F(T)\supseteq S_0$, and $U$
   contains exactly one singleton group for each cell $c\notin F(T)$ (none
   on cells of $F(T)$); conversely every such pair is a minimal $u$-cover:

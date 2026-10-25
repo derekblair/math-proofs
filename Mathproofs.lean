@@ -2,6 +2,9 @@
 -- Import modules here that should be built as part of the library.
 import Mathproofs.Basic
 import Mathproofs.ESIdentity
+import Mathproofs.ESIdentityCRT
+import Mathproofs.SidonSat184
+import Mathproofs.SidonSat184Census
 import Mathproofs.ESBarrier
 import Mathproofs.CollatzGapSinh
 import Mathproofs.CollatzGapDelta
@@ -11,15 +14,21 @@ import Mathproofs.CollatzGapC24
 import Mathproofs.CollatzGapC24Lemma3
 import Mathproofs.CollatzGapC23
 import Mathproofs.CollatzGapC22C25
+import Mathproofs.CollatzGapFactor
 import Mathproofs.CollatzGapC29
 import Mathproofs.CollatzGapC29Mirror
 import Mathproofs.ESX0S1S3
 import Mathproofs.ESDescentTransfer
+import Mathproofs.ESDescentCovering
 import Mathproofs.CollatzGapHump
 import Mathproofs.ESQadicBranch1
+import Mathproofs.ESQadicBoundary
 import Mathproofs.Girth5Floor3v
+import Mathproofs.Girth5Floor3vRegression
+import Mathproofs.Girth5Extremal
 import Mathproofs.WitnessComplexThm2
 import Mathproofs.WitnessComplexThm13
+import Mathproofs.ESCovering
 import Mathproofs.ESPrimeSquareT2
 import Mathproofs.EST1TwoCase
 import Mathproofs.ESQRCore

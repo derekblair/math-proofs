@@ -9,14 +9,23 @@
 --   * the conditional cross-nonedge (condition (2')),
 --   * the intersection bound |A∩B| ≤ 1, empty when the internal edge is present (3'),
 --   * P triangle-free (condition (4)),
+--   * attachment containment and candidate-internal-edge feasibility guards,
+--   * intersection exclusion at the endpoints of an internal two-edge path,
 --   * the identity move is feasible,
 --   * its score equals R98's D = d_u+d_v+d_w − e_in (degree bookkeeping),
 --   * the floor: max achievable 3v score ≥ D, i.e. 3v-gap ≥ −1,
 --   * conditional 3v rigidity: no improving move ⟹ gap = −1 (R119 §A corollary).
 --
--- Framework-external inputs (explicit hypotheses, never sorry-faked):
---   * the girth-≥5 graph itself (noC3/noC4 as structure fields),
---   * D as R98's removed-edge count (the identity emits exactly G — R98 semantics).
+-- Arbitrary corrected feasible moves now produce a `Girth5Graph` through
+-- `emittedGraph`; no triangle-freeness or 4-cycle-freeness of the output is
+-- assumed in `IsFeasible`.
+--
+-- The companion module `Girth5Extremal` proves exact unordered-edge accounting
+-- and derives the score ceiling, rigidity, and gap = −1 from global edge
+-- extremality among all `Girth5Graph V`. The theorem `three_v_rigidity` below
+-- remains the general conditional lemma used by that result.
+--
+-- The girth-≥5 graph is an explicit input (noC3/noC4 as structure fields).
 -- R119 §B.1 (cross edges harmless in the emitted graph when uv ∉ P) IS
 -- formalized here (R133): the emitted-graph re-attachment model `emitAdj` plus
 -- `cross_edge_no_triangle` (no C3 uses a cross edge — needs only (1)) and
@@ -276,28 +285,93 @@ theorem P_not_all_three (G : Girth5Graph V) (u v w : V) :
   have e3 : G.adj v w := (Finset.mem_filter.mp h3).2
   exact G.noTri u v w e1 e3 (G.symm u w e2)
 
-/-- Corrected 3v feasibility (R119 §A): conditions (1), (2'), (3'), (4).
-    Note (2') is conditional on the internal edge — R119 §B's correction of
-    R98's unconditional (2). -/
-def IsFeasible (G : Girth5Graph V) (u v w : V) (A' B' C' : Finset V)
-    (P' : Finset (V × V)) : Prop :=
-  IsH3Clique G u v w A' ∧ IsH3Clique G u v w B' ∧ IsH3Clique G u v w C' ∧
-  (G.adj u v → ∀ x ∈ A', ∀ y ∈ B', ¬ G.adj x y) ∧
-  (G.adj u w → ∀ x ∈ A', ∀ y ∈ C', ¬ G.adj x y) ∧
-  (G.adj v w → ∀ x ∈ B', ∀ y ∈ C', ¬ G.adj x y) ∧
-  (A' ∩ B').card ≤ 1 ∧ (B' ∩ C').card ≤ 1 ∧ (A' ∩ C').card ≤ 1 ∧
-  (G.adj u v → A' ∩ B' = ∅) ∧ (G.adj u w → A' ∩ C' = ∅) ∧ (G.adj v w → B' ∩ C' = ∅) ∧
-  P' ⊆ {(u, v), (u, w), (v, w)} ∧ ¬ ((u, v) ∈ P' ∧ (u, w) ∈ P' ∧ (v, w) ∈ P')
+/-- Local conditions for a girth-at-least-five 3-vertex reattachment.
+    Guards refer to the candidate internal edges `P'`, not the removed edges.
+    Containment excludes loops and duplicate attachment/internal-edge counting;
+    the final three conditions exclude a 4-cycle through an internal 2-edge path. -/
+structure IsFeasible (G : Girth5Graph V) (u v w : V) (A' B' C' : Finset V)
+    (P' : Finset (V × V)) : Prop where
+  attachA : A' ⊆ W G u v w
+  attachB : B' ⊆ W G u v w
+  attachC : C' ⊆ W G u v w
+  cliqueA : IsH3Clique G u v w A'
+  cliqueB : IsH3Clique G u v w B'
+  cliqueC : IsH3Clique G u v w C'
+  crossAB : (u, v) ∈ P' → ∀ x ∈ A', ∀ y ∈ B', ¬ G.adj x y
+  crossAC : (u, w) ∈ P' → ∀ x ∈ A', ∀ y ∈ C', ¬ G.adj x y
+  crossBC : (v, w) ∈ P' → ∀ x ∈ B', ∀ y ∈ C', ¬ G.adj x y
+  interAB : (A' ∩ B').card ≤ 1
+  interBC : (B' ∩ C').card ≤ 1
+  interAC : (A' ∩ C').card ≤ 1
+  disjointAB : (u, v) ∈ P' → A' ∩ B' = ∅
+  disjointAC : (u, w) ∈ P' → A' ∩ C' = ∅
+  disjointBC : (v, w) ∈ P' → B' ∩ C' = ∅
+  internal : P' ⊆ {(u, v), (u, w), (v, w)}
+  internalTriangle : ¬ ((u, v) ∈ P' ∧ (u, w) ∈ P' ∧ (v, w) ∈ P')
+  pathAB : (u, w) ∈ P' → (v, w) ∈ P' → A' ∩ B' = ∅
+  pathAC : (u, v) ∈ P' → (v, w) ∈ P' → A' ∩ C' = ∅
+  pathBC : (u, v) ∈ P' → (u, w) ∈ P' → B' ∩ C' = ∅
 
-/-- The identity re-attachment satisfies the corrected feasibility conditions. -/
+/-- The identity reattachment satisfies all local feasibility conditions. -/
 theorem identity_feasible (G : Girth5Graph V) (u v w : V) (huv : u ≠ v) (huw : u ≠ w)
     (hvw : v ≠ w) :
-    IsFeasible G u v w (A G u v w) (B G u v w) (C G u v w) (P G u v w) :=
-  ⟨h3_A G u v w, h3_B G u v w, h3_C G u v w,
-    cross_AB G u v w, cross_AC G u v w, cross_BC G u v w,
-    inter_AB_le_one G u v w huv, inter_BC_le_one G u v w hvw, inter_AC_le_one G u v w huw,
-    inter_AB_empty G u v w, inter_AC_empty G u v w, inter_BC_empty G u v w,
-    P_subset G u v w, P_not_all_three G u v w⟩
+    IsFeasible G u v w (A G u v w) (B G u v w) (C G u v w) (P G u v w) := by
+  refine {
+    attachA := ?_, attachB := ?_, attachC := ?_
+    cliqueA := h3_A G u v w, cliqueB := h3_B G u v w, cliqueC := h3_C G u v w
+    crossAB := fun h => cross_AB G u v w (Finset.mem_filter.mp h).2
+    crossAC := fun h => cross_AC G u v w (Finset.mem_filter.mp h).2
+    crossBC := fun h => cross_BC G u v w (Finset.mem_filter.mp h).2
+    interAB := inter_AB_le_one G u v w huv
+    interBC := inter_BC_le_one G u v w hvw
+    interAC := inter_AC_le_one G u v w huw
+    disjointAB := fun h => inter_AB_empty G u v w (Finset.mem_filter.mp h).2
+    disjointAC := fun h => inter_AC_empty G u v w (Finset.mem_filter.mp h).2
+    disjointBC := fun h => inter_BC_empty G u v w (Finset.mem_filter.mp h).2
+    internal := P_subset G u v w
+    internalTriangle := P_not_all_three G u v w
+    pathAB := ?_, pathAC := ?_, pathBC := ?_ }
+  · intro x hx
+    obtain ⟨hux, hxv, hxw⟩ := (mem_A G u v w x).mp hx
+    exact (mem_W G u v w x).mpr ⟨fun h => G.irrefl u (h ▸ hux), hxv, hxw⟩
+  · intro x hx
+    obtain ⟨hvx, hxu, hxw⟩ := (mem_B G u v w x).mp hx
+    exact (mem_W G u v w x).mpr ⟨hxu, fun h => G.irrefl v (h ▸ hvx), hxw⟩
+  · intro x hx
+    obtain ⟨hwx, hxu, hxv⟩ := (mem_C G u v w x).mp hx
+    exact (mem_W G u v w x).mpr ⟨hxu, hxv, fun h => G.irrefl w (h ▸ hwx)⟩
+  · intro huwE hvwE
+    apply Finset.eq_empty_iff_forall_notMem.mpr
+    intro x hx
+    obtain ⟨hA, hB⟩ := Finset.mem_inter.mp hx
+    obtain ⟨hux, _, hxw⟩ := (mem_A G u v w x).mp hA
+    obtain ⟨hvx, _, _⟩ := (mem_B G u v w x).mp hB
+    rcases G.noC4 u x v w hux (G.symm v x hvx)
+      (Finset.mem_filter.mp hvwE).2 (G.symm u w (Finset.mem_filter.mp huwE).2) with h | h
+    · exact huv h
+    · exact hxw h
+  · intro huvE hvwE
+    apply Finset.eq_empty_iff_forall_notMem.mpr
+    intro x hx
+    obtain ⟨hA, hC⟩ := Finset.mem_inter.mp hx
+    obtain ⟨hux, hxv, _⟩ := (mem_A G u v w x).mp hA
+    obtain ⟨hwx, _, _⟩ := (mem_C G u v w x).mp hC
+    rcases G.noC4 u x w v hux (G.symm w x hwx)
+      (G.symm v w (Finset.mem_filter.mp hvwE).2)
+      (G.symm u v (Finset.mem_filter.mp huvE).2) with h | h
+    · exact huw h
+    · exact hxv h
+  · intro huvE huwE
+    apply Finset.eq_empty_iff_forall_notMem.mpr
+    intro x hx
+    obtain ⟨hB, hC⟩ := Finset.mem_inter.mp hx
+    obtain ⟨hvx, hxu, _⟩ := (mem_B G u v w x).mp hB
+    obtain ⟨hwx, _, _⟩ := (mem_C G u v w x).mp hC
+    rcases G.noC4 v x w u hvx (G.symm w x hwx)
+      (G.symm u w (Finset.mem_filter.mp huwE).2)
+      (Finset.mem_filter.mp huvE).2 with h | h
+    · exact hvw h
+    · exact hxu h
 
 /-- 3v score of a move (R98 semantics): |A| + |B| + |C| + |P|. -/
 def score (A' B' C' : Finset V) (P' : Finset (V × V)) : ℕ :=
@@ -924,5 +998,207 @@ theorem cross_edge_no_c4 (G : Girth5Graph V) (u v w : V)
       rw [htw_eq] at hst htx
       exfalso
       exact emitAdj_irrefl G u v w A' B' C' P' huv huw hvw hA'W hB'W hC'W w hst
+
+/-! ## Preservation for arbitrary corrected feasible moves
+
+The finite case analysis classifies every cycle vertex as one of the three
+reattached vertices or a vertex in W. A triangle uses an H3 clique, a disjoint
+attachment pair, or the internal triangle condition. A 4-cycle with one, two,
+or three reattached vertices is excluded respectively by the H3 two-step,
+cross/intersection, or internal-path conditions.
+-/
+
+private theorem locations (u v w x : V) :
+    x = u ∨ x = v ∨ x = w ∨ (x ≠ u ∧ x ≠ v ∧ x ≠ w) := by tauto
+
+private theorem clique_nonadj (G : Girth5Graph V) (u v w : V) (S : Finset V)
+    (h : IsH3Clique G u v w S) (x y : V) (hx : x ∈ S) (hy : y ∈ S) : ¬ G.adj x y := by
+  by_cases hxy : x = y
+  · subst y; exact G.irrefl x
+  · exact (h x hx y hy hxy).1
+
+private theorem guarded_inter_empty (S T : Finset V) {p : Prop}
+    (h : p → S ∩ T = ∅) (hp : p) (x : V) (hx : x ∈ S) (hy : x ∈ T) : False := by
+  have hm := Finset.mem_inter.mpr ⟨hx, hy⟩
+  rw [h hp] at hm
+  simpa using hm
+
+set_option maxHeartbeats 1000000 in
+theorem feasible_emit_noTri (G : Girth5Graph V) (u v w : V) (A' B' C' : Finset V)
+    (P' : Finset (V × V)) (huv : u ≠ v) (huw : u ≠ w) (hvw : v ≠ w)
+    (h : IsFeasible G u v w A' B' C' P') :
+    ∀ a b c, emitAdj G u v w A' B' C' P' a b →
+      emitAdj G u v w A' B' C' P' b c → emitAdj G u v w A' B' C' P' c a → False := by
+  have hA := clique_nonadj G u v w A' h.cliqueA
+  have hB := clique_nonadj G u v w B' h.cliqueB
+  have hC := clique_nonadj G u v w C' h.cliqueC
+  have hAB := guarded_inter_empty A' B' h.disjointAB
+  have hAC := guarded_inter_empty A' C' h.disjointAC
+  have hBC := guarded_inter_empty B' C' h.disjointBC
+  have hP := h.internalTriangle
+  have hOld := G.noTri
+  obtain ⟨huA, hvA, hwA⟩ := not_mem_attach_of_mem_tri G u v w A' h.attachA
+  obtain ⟨huB, hvB, hwB⟩ := not_mem_attach_of_mem_tri G u v w B' h.attachB
+  obtain ⟨huC, hvC, hwC⟩ := not_mem_attach_of_mem_tri G u v w C' h.attachC
+  clear h
+  intro a b c e1 e2 e3
+  have ha := locations u v w a
+  have hb := locations u v w b
+  have hc := locations u v w c
+  rcases ha with rfl | rfl | rfl | ⟨haU, haV, haW⟩ <;>
+    rcases hb with rfl | rfl | rfl | ⟨hbU, hbV, hbW⟩ <;>
+    rcases hc with rfl | rfl | rfl | ⟨hcU, hcV, hcW⟩ <;>
+    simp_all only [emitAdj, and_true, true_and, and_false, false_and,
+      or_true, true_or, or_false, false_or, not_false_eq_true, not_true_eq_false,
+      ne_eq, eq_self, false_implies, implies_true, not_false_eq_true, or_self, eq_comm] <;>
+    solve_by_elim (maxDepth := 6) [And.intro]
+
+
+private theorem clique_no_two_step (G : Girth5Graph V) (u v w : V) (S : Finset V)
+    (h : IsH3Clique G u v w S) (x y z : V) (hx : x ∈ S) (hy : y ∈ S)
+    (hzu : z ≠ u) (hzv : z ≠ v) (hzw : z ≠ w)
+    (hxz : G.adj x z) (hzy : G.adj z y) (hne : x ≠ y) : False :=
+  (h x hx y hy hne).2 z ((mem_W G u v w z).mpr ⟨hzu, hzv, hzw⟩) ⟨hxz, hzy⟩
+
+private theorem inter_no_two (S T : Finset V) (h : (S ∩ T).card ≤ 1)
+    (x y : V) (hxS : x ∈ S) (hxT : x ∈ T) (hyS : y ∈ S) (hyT : y ∈ T)
+    (hne : x ≠ y) : False :=
+  hne (Finset.card_le_one.mp h x (Finset.mem_inter.mpr ⟨hxS, hxT⟩)
+    y (Finset.mem_inter.mpr ⟨hyS, hyT⟩))
+
+private theorem guarded_path_empty (S T : Finset V) {p q : Prop}
+    (h : p → q → S ∩ T = ∅) (hp : p) (hq : q)
+    (x : V) (hx : x ∈ S) (hy : x ∈ T) : False := by
+  have hm := Finset.mem_inter.mpr ⟨hx, hy⟩
+  rw [h hp hq] at hm
+  simp at hm
+
+private theorem reverse_cross (G : Girth5Graph V) (S T : Finset V) {p : Prop}
+    (h : p → ∀ x ∈ S, ∀ y ∈ T, ¬ G.adj x y) (hp : p)
+    (x : V) (hx : x ∈ T) (y : V) (hy : y ∈ S) : ¬ G.adj x y :=
+  fun hxy => h hp y hy x hx (G.symm x y hxy)
+
+set_option maxHeartbeats 3000000 in
+theorem feasible_emit_noC4 (G : Girth5Graph V) (u v w : V) (A' B' C' : Finset V)
+    (P' : Finset (V × V)) (huv : u ≠ v) (huw : u ≠ w) (hvw : v ≠ w)
+    (h : IsFeasible G u v w A' B' C' P') :
+    ∀ a b c d, emitAdj G u v w A' B' C' P' a b →
+      emitAdj G u v w A' B' C' P' b c → emitAdj G u v w A' B' C' P' c d →
+      emitAdj G u v w A' B' C' P' d a → (a = c ∨ b = d) := by
+  have hA := clique_no_two_step G u v w A' h.cliqueA
+  have hB := clique_no_two_step G u v w B' h.cliqueB
+  have hC := clique_no_two_step G u v w C' h.cliqueC
+  have hAB := inter_no_two A' B' h.interAB
+  have hAC := inter_no_two A' C' h.interAC
+  have hBC := inter_no_two B' C' h.interBC
+  have hpAB := guarded_path_empty A' B' h.pathAB
+  have hpAC := guarded_path_empty A' C' h.pathAC
+  have hpBC := guarded_path_empty B' C' h.pathBC
+  have hcAB := h.crossAB
+  have hcAC := h.crossAC
+  have hcBC := h.crossBC
+  have hcBA := reverse_cross G A' B' h.crossAB
+  have hcCA := reverse_cross G A' C' h.crossAC
+  have hcCB := reverse_cross G B' C' h.crossBC
+  have hOld : ∀ a b c d, a ≠ c → b ≠ d → G.adj a b → G.adj b c →
+      G.adj c d → G.adj d a → False := by
+    intro a b c d hac hbd e1 e2 e3 e4
+    exact (G.noC4 a b c d e1 e2 e3 e4).elim hac hbd
+  obtain ⟨huA, hvA, hwA⟩ := not_mem_attach_of_mem_tri G u v w A' h.attachA
+  obtain ⟨huB, hvB, hwB⟩ := not_mem_attach_of_mem_tri G u v w B' h.attachB
+  obtain ⟨huC, hvC, hwC⟩ := not_mem_attach_of_mem_tri G u v w C' h.attachC
+  have heI := emitAdj_irrefl G u v w A' B' C' P' huv huw hvw h.attachA h.attachB h.attachC
+  clear h
+  intro a b c d e1 e2 e3 e4
+  have hab : a ≠ b := by intro he; subst b; exact heI a e1
+  have hbc : b ≠ c := by intro he; subst c; exact heI b e2
+  have hcd : c ≠ d := by intro he; subst d; exact heI c e3
+  have hda : d ≠ a := by intro he; subst a; exact heI d e4
+  clear heI
+  by_contra hn
+  have hac : a ≠ c := fun he => hn (Or.inl he)
+  have hbd : b ≠ d := fun he => hn (Or.inr he)
+  clear hn
+  have ha := locations u v w a
+  have hb := locations u v w b
+  have hc := locations u v w c
+  have hd := locations u v w d
+  rcases ha with rfl | rfl | rfl | ⟨haU, haV, haW⟩ <;>
+    rcases hb with rfl | rfl | rfl | ⟨hbU, hbV, hbW⟩ <;>
+    rcases hc with rfl | rfl | rfl | ⟨hcU, hcV, hcW⟩ <;>
+    rcases hd with rfl | rfl | rfl | ⟨hdU, hdV, hdW⟩ <;>
+    simp_all only [emitAdj, and_true, true_and, and_false, false_and,
+      or_true, true_or, or_false, false_or, not_false_eq_true, not_true_eq_false,
+      ne_eq, eq_self, false_implies, implies_true, or_self, eq_comm] <;>
+    first
+    | exact hOld a b c d hac hbd e1 e2 e3 e4
+    | exact hA b d c e1 e4 (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) e2 e3 (by first | assumption | exact Ne.symm (by assumption))
+    | exact hB b d c e1 e4 (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) e2 e3 (by first | assumption | exact Ne.symm (by assumption))
+    | exact hC b d c e1 e4 (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) e2 e3 (by first | assumption | exact Ne.symm (by assumption))
+    | exact hA c a d e2 e1 (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) e3 e4 (by first | assumption | exact Ne.symm (by assumption))
+    | exact hB c a d e2 e1 (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) e3 e4 (by first | assumption | exact Ne.symm (by assumption))
+    | exact hC c a d e2 e1 (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) e3 e4 (by first | assumption | exact Ne.symm (by assumption))
+    | exact hA d b a e3 e2 (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) e4 e1 (by first | assumption | exact Ne.symm (by assumption))
+    | exact hB d b a e3 e2 (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) e4 e1 (by first | assumption | exact Ne.symm (by assumption))
+    | exact hC d b a e3 e2 (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) e4 e1 (by first | assumption | exact Ne.symm (by assumption))
+    | exact hA a c b e4 e3 (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) e1 e2 (by first | assumption | exact Ne.symm (by assumption))
+    | exact hB a c b e4 e3 (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) e1 e2 (by first | assumption | exact Ne.symm (by assumption))
+    | exact hC a c b e4 e3 (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) (by first | assumption | exact Ne.symm (by assumption)) e1 e2 (by first | assumption | exact Ne.symm (by assumption))
+    | exact hAB b d e1 e2 e4 e3 hbd
+    | exact hAB b d e2 e1 e3 e4 hbd
+    | exact hAB a c e1 e4 e2 e3 hac
+    | exact hAB a c e4 e1 e3 e2 hac
+    | exact hAC b d e1 e2 e4 e3 hbd
+    | exact hAC b d e2 e1 e3 e4 hbd
+    | exact hAC a c e1 e4 e2 e3 hac
+    | exact hAC a c e4 e1 e3 e2 hac
+    | exact hBC b d e1 e2 e4 e3 hbd
+    | exact hBC b d e2 e1 e3 e4 hbd
+    | exact hBC a c e1 e4 e2 e3 hac
+    | exact hBC a c e4 e1 e3 e2 hac
+    | exact hcAB e1 c e2 d e4 e3
+    | exact hcAC e1 c e2 d e4 e3
+    | exact hcBC e1 c e2 d e4 e3
+    | exact hcBA e1 c e2 d e4 e3
+    | exact hcCA e1 c e2 d e4 e3
+    | exact hcCB e1 c e2 d e4 e3
+    | exact hcAB e2 d e3 a e1 e4
+    | exact hcAC e2 d e3 a e1 e4
+    | exact hcBC e2 d e3 a e1 e4
+    | exact hcBA e2 d e3 a e1 e4
+    | exact hcCA e2 d e3 a e1 e4
+    | exact hcCB e2 d e3 a e1 e4
+    | exact hcAB e3 a e4 b e2 e1
+    | exact hcAC e3 a e4 b e2 e1
+    | exact hcBC e3 a e4 b e2 e1
+    | exact hcBA e3 a e4 b e2 e1
+    | exact hcCA e3 a e4 b e2 e1
+    | exact hcCB e3 a e4 b e2 e1
+    | exact hcAB e4 b e1 c e3 e2
+    | exact hcAC e4 b e1 c e3 e2
+    | exact hcBC e4 b e1 c e3 e2
+    | exact hcBA e4 b e1 c e3 e2
+    | exact hcCA e4 b e1 c e3 e2
+    | exact hcCB e4 b e1 c e3 e2
+    | solve_by_elim (maxDepth := 8) only [hpAB, e1, e2, e3, e4]
+    | solve_by_elim (maxDepth := 8) only [hpAC, e1, e2, e3, e4]
+    | solve_by_elim (maxDepth := 8) only [hpBC, e1, e2, e3, e4]
+
+
+/-- A corrected feasible reattachment emits a finite simple graph with no
+    triangle and no 4-cycle. All girth obligations follow from the local
+    attachment and internal-edge conditions; none is a feasibility assumption. -/
+noncomputable def emittedGraph (G : Girth5Graph V) (u v w : V)
+    (A' B' C' : Finset V) (P' : Finset (V × V))
+    (huv : u ≠ v) (huw : u ≠ w) (hvw : v ≠ w)
+    (h : IsFeasible G u v w A' B' C' P') : Girth5Graph V where
+  adj := emitAdj G u v w A' B' C' P'
+  decAdj := fun _ _ => Classical.propDecidable _
+  symm := emitAdj_symm G u v w A' B' C' P'
+  irrefl := emitAdj_irrefl G u v w A' B' C' P' huv huw hvw h.attachA h.attachB h.attachC
+  noTri := feasible_emit_noTri G u v w A' B' C' P' huv huw hvw h
+  noC4 := feasible_emit_noC4 G u v w A' B' C' P' huv huw hvw h
+
+
 
 end Girth5Floor3v

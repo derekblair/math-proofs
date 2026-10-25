@@ -2,8 +2,10 @@
   ESRefinedSieveInverse.lean — R169/R178 refined sieve inverse: 44-CRT lemma + 6-class inverse-closure mod 3960.
 
   Paper: papers/sieve-inverse-branch-isolation-October-11-2026/
-  Status: [PROVED] — crt44_forward, crt44_backward, crt44_iff. [PROVED*] — sixClasses_inv_closed, crt_inv_compose, S1_subset (Lean-checked, zero sorrys; carry per-theorem `native_decide` certificate axioms)
-  Verification: Lean 4.34.1 + Mathlib v4.34.1 (pinned d13f23b); bakkie `lake build` exit 0, zero sorrys; crt44_* axioms [propext, Quot.sound] (narrower than standard).
+  Scope: the residue-algebra kernel and embedded finite data; the external
+  lift-set provenance and extension claims remain outside these theorem types.
+  All finite arithmetic proofs use kernel-checked tactics.
+  Toolchain: Lean 4.34.1 + Mathlib v4.34.1 (pinned d13f23b).
 -/
 
 import Mathlib
@@ -32,8 +34,7 @@ including the finite data premises (the 196 parent residues, R169 section 3
 F1--F3, verified here by `decide` over the embedded list, rebuilt read-only
 from the round JSONs exactly as `r153_shadow.load_frontiers` does).
 
-Honesty labels: every theorem below is [PROVED] (Lean 4.34.1, standard axioms
-only -- see `#print axioms` evidence in `ROUND178_DOSSIER.md`). The
+The residue-algebra statements below use only standard Lean axioms. The
 saturated-regime *extension* (R169 section 7(d)) and the break boundary
 (R169 section 8) remain [COMPUTED]: they are statements about lift-set
 sizes, checked in `r169_diag4.py` / `r169_boundary.py`, not finite residue
@@ -80,7 +81,24 @@ theorem sixClasses_exact : ∀ x : ZMod 3960,
     (x.val % 8 = 1 ∧ x.val % 5 = 1 ∧
       (x.val % 9 = 1 ∨ x.val % 9 = 4 ∨ x.val % 9 = 7) ∧
       (x.val % 11 = 2 ∨ x.val % 11 = 6)) ↔ x ∈ sixClasses := by
-  native_decide
+  intro x
+  constructor
+  · rintro ⟨h8, h5, h9, h11⟩
+    have hlt := x.val_lt
+    have h3 : x.val % 3 = 1 := by
+      have hmod := Nat.mod_mod_of_dvd x.val (by decide : 3 ∣ 9)
+      omega
+    have h120 : x.val % 120 = 1 := by omega
+    have hv : x.val = 2521 ∨ x.val = 721 ∨ x.val = 1201 ∨
+        x.val = 3361 ∨ x.val = 3841 ∨ x.val = 2041 := by
+      clear h8 h5 h9 h3
+      omega
+    rcases hv with h | h | h | h | h | h <;>
+      rw [← ZMod.natCast_zmod_val x, h] <;> decide
+  · intro hx
+    have hc : x = 2521 ∨ x = 721 ∨ x = 1201 ∨ x = 3361 ∨ x = 3841 ∨ x = 2041 := by
+      simpa [sixClasses] using hx
+    rcases hc with rfl | rfl | rfl | rfl | rfl | rfl <;> decide
 
 /-- Case analysis on the 6 classes. -/
 theorem sixClasses_cases (c : ZMod 3960) (hc : c ∈ sixClasses) :
@@ -122,13 +140,24 @@ theorem sixClasses_inv_pairs :
 /-- S2, existential form: every class has its inverse in the set. -/
 theorem sixClasses_inv_closed : ∀ x : ZMod 3960, x ∈ sixClasses →
     ∃ y ∈ sixClasses, x * y = 1 := by
-  native_decide
+  intro x hx
+  rcases sixClasses_cases x hx with rfl | rfl | rfl | rfl | rfl | rfl
+  · exact ⟨721, by decide, by decide⟩
+  · exact ⟨2521, by decide, by decide⟩
+  · exact ⟨2041, by decide, by decide⟩
+  · exact ⟨3841, by decide, by decide⟩
+  · exact ⟨3361, by decide, by decide⟩
+  · exact ⟨1201, by decide, by decide⟩
 
 /-- CRT composition (mechanism behind R169 section 7): inverse-closure composes
 across CRT components -- if x*y = 1 in every prime-power component, then x*y = 1. -/
 theorem crt_unique_one : ∀ z : ZMod 3960,
     z.val % 8 = 1 → z.val % 9 = 1 → z.val % 5 = 1 → z.val % 11 = 1 → z = 1 := by
-  native_decide
+  intro z h8 h9 h5 h11
+  have hlt := z.val_lt
+  have hz : z.val = 1 := by omega
+  apply ZMod.val_injective 3960
+  exact hz
 
 theorem crt_inv_compose (x y : ZMod 3960)
     (h8 : (x * y).val % 8 = 1) (h9 : (x * y).val % 9 = 1)

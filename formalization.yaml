@@ -1,554 +1,1105 @@
-# Catalog of papers with a formalized main result. Paths are relative to the repo root.
-# Mirrors the OpenAI math repository's formalization.yaml schema style, with
-# extensions: lean_module, theorems, status, axioms.
-version: "v0.1"
-
+version: v0.2
 project:
-  name: "math-proofs"
-  description: "Lean formalizations accompanying a machine-checked mathematics manuscript collection."
-  authors: ["Derek Blair"]
-  license: "not specified"
-  lean_version: "4.34.1"
-  mathlib_version: "v4.34.1"
-
+  name: math-proofs
+  description: Lean formalizations with explicit statement scope and remaining application boundaries.
+  authors:
+  - Derek Blair
+  license: not specified
+  lean_version: 4.34.1
+  mathlib_version: v4.34.1
+status_definitions:
+  '[PROVED]': The named Lean statement is kernel-checked using only standard axioms; this does not assert a broader
+    application.
+  '[CONDITIONAL]': The classification or application retains explicit mathematical inputs as theorem arguments;
+    the conditional statement is kernel-checked.
+  '[PROVED*]': Staged publication status for named kernel-checked statements; not an assertion of an unassembled
+    larger claim.
+  '[COMPUTED]': External computation without Lean kernel certification.
+  supporting definitions: Definitions or infrastructure with no listed flagship theorem.
+axioms_convention: The axioms field lists only axioms beyond propext, Classical.choice, and Quot.sound; [] means
+  no additional axioms.
+artifact_policy:
+  correction_date: '2026-10-23'
+  authoritative_overview: overview.tex
+  historical_pdf_paths:
+  - overview.pdf
+  - papers/erdos-straus-identity-217mod264-October-3-2026/erdos-straus-identity-217mod264-October-3-2026.pdf
+  - papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.pdf
+  - papers/sieve-inverse-branch-isolation-October-11-2026/sieve-inverse-branch-isolation-October-11-2026.pdf
+  - papers/r47-sat184-October-7-2026/r47-sat184-October-7-2026.pdf
+  pdf_status: historical_pre_correction
+  note: Affected PDFs were not regenerated because no TeX toolchain is installed in this lane. Corrected TeX sources
+    and current catalogues are authoritative.
 sources:
-  - title: "A new Erdős–Straus covering identity"
-    authors: ["Derek Blair"]
-    id: papers/erdos-straus-identity-217mod264-October-3-2026/erdos-straus-identity-217mod264-October-3-2026.pdf
-    type: article
-    lean_module: Mathproofs/ESIdentity.lean
-    theorems: ["es_identity_217mod264"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "A finite-identity barrier for Erdős–Straus on square classes mod 840"
-    authors: ["Derek Blair"]
-    id: papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.pdf
-    type: article
-    lean_module: Mathproofs/ESBarrier.lean
-    theorems: ["es_barrier"]
-    status: "[PROVED*]"
-    axioms: [schinzel_mordell, dirichlet_arith_prog]
-
-  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/CollatzGapSinh.lean
-    theorems: ["gap_sinh_superlinear", "gap_sinh_le_mul_exp", "gap_log_one_add_ge", "six_pow_mul_factorial_le"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/CollatzGapDelta.lean
-    theorems: [""]
-    status: "supporting definitions"
-    axioms: []
-    note: "Structural definitions and lemmas for the C22/C23/C25/C26 batch; a build dependency of CollatzGapConvex."
-
-  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/CollatzGapConvex.lean
-    theorems: ["gapT_seconddiff_pos", "gapS_seconddiff_pos", "gapDelta_strictly_increasing", "gap_margin_duality"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/CollatzGapCF.lean
-    theorems: ["cf_error_formula", "cf_ratio_formula", "cf_det_identity"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/CollatzGapC24.lean
-    theorems: ["cf_selector_le", "cf_selector_lt", "cf_selector_eq", "cf_selector_ne"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/CollatzGapC24Lemma3.lean
-    theorems: ["cf_firstdiff_decide", "cf_firstdiff", "cf_firstdiff_term"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/CollatzGapC23.lean
-    theorems: ["strictConvexOn_sinh_Ici", "sinh_scaling_gt", "c23a"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/CollatzGapC22C25.lean
-    theorems: ["c26a", "c26b", "c26c", "c22_delta_pos_at", "log_one_add_div_one_sub_ge"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/CollatzGapC29.lean
-    theorems: ["c29", "lemmaA_coprime", "lemmaB_nowrap", "yfrac_formula", "count_le"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/CollatzGapC29Mirror.lean
-    theorems: ["beta_pos", "beta_irr", "isStrictRecord_beta"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The Collatz gap-factor theory: selector, duality, and hump laws"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/CollatzGapHump.lean
-    theorems: [""]
-    status: "[PROVED]"
-    axioms: []
-    note: "C64/C64b hump-law identity kernel + arithmetic closures (22 theorems)."
-
-  - title: "The witness complex, square obstructions, and the QR-core"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/ESX0S1S3.lean
-    theorems: ["lemma_X0", "lemma_S1S3"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The witness complex, square obstructions, and the QR-core"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/ESDescentTransfer.lean
-    theorems: ["mu_valuation_of_S3", "transfer_key_00", "transfer_qcancel"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The witness complex, square obstructions, and the QR-core"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/WitnessComplexThm2.lean
-    theorems: ["b0_vacuity", "fiber_collision_law"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The witness complex, square obstructions, and the QR-core"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/WitnessComplexThm13.lean
-    theorems: ["t2_integrality_iff", "t3_full_class"]
-    status: "[PROVED]"
-    axioms: []
-    note: "W(M) Thm 1(a) + Thm 3 (7 theorems total)."
-
-  - title: "The witness complex, square obstructions, and the QR-core"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/ESPrimeSquareT2.lean
-    theorems: ["t2_jacobi_neg_one", "t2_class_nonsquare"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The witness complex, square obstructions, and the QR-core"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/EST1TwoCase.lean
-    theorems: ["t1_two_case"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The witness complex, square obstructions, and the QR-core"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/ESQRCore.lean
-    theorems: ["qr_core_t2_misses", "qr_core_t1_misses"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The witness complex, square obstructions, and the QR-core"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/ESQRCoreCount.lean
-    theorems: [""]
-    status: "[PROVED]"
-    axioms: []
-    note: "QR-core exact count |Q| = |S|/2^k via CRT."
-
-  - title: "The witness complex, square obstructions, and the QR-core"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/ESFiveSevenForcing.lean
-    theorems: [""]
-    status: "[PROVED]"
-    axioms: []
-    note: "5/7-forcing lemma."
-
-  - title: "The witness complex, square obstructions, and the QR-core"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/ESBranchSDREndgame.lean
-    theorems: ["branch_sdr_endgame", "branch_sdr_endgame_clique_bound"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: "The witness complex, square obstructions, and the QR-core"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/ESMod7UniversalFamilies.lean
-    theorems: [""]
-    status: "[PROVED]"
-    axioms: []
-    note: "18 theorems: three mod-7 universal families + fiber-pinning lemma."
-
-  - title: "The 3v floor theorem for girth-5 graphs"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/Girth5Floor3v.lean
-    theorems: [""]
-    status: "[PROVED]"
-    axioms: []
-    note: "9 theorems: re-attachment model + cross-edge harmlessness."
-
-  - title: "Branch-1 q-adic type theorem"
-    authors: ["Derek Blair"]
-    id: null
-    type: article
-    lean_module: Mathproofs/ESQadicBranch1.lean
-    theorems: ["kill_02", "kill_12", "descent_01"]
-    status: "[PROVED]"
-    axioms: []
-
-  - title: null
-    authors: ["Derek Blair"]
-    id: null
-    type: library
-    lean_module: Mathproofs/Basic.lean
-    theorems: [""]
-    status: "supporting definitions"
-    axioms: []
-    note: "Shared definitions imported by the formalization modules; no flagship theorems."
-
-  - title: "Fiber-compatibility and composite suppression"
-    authors: ["Derek Blair"]
-    id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/ESFiberCompat.lean
-    theorems: ["fiber_compat_pair_iff", "fiber_compat_saturated", "fiber_compat_card", "forced_digit"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209 fiber-compatibility kernel, composite theorem, thi...)."
-
-  - title: "Fiber-compatibility and composite suppression"
-    authors: ["Derek Blair"]
-    id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/ESFiberCompatComposite.lean
-    theorems: ["fiber_compat_iffC", "forced_digit_of_memC"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209 fiber-compatibility kernel, composite theorem, thi...)."
-
-  - title: "Fiber-compatibility and composite suppression"
-    authors: ["Derek Blair"]
-    id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/ESFiberTiling.lean
-    theorems: ["masks_match_boxes", "liveUnion_bound_6", "liveUnion_bound_11", "shape0_fiber6_blocked", "shape0_fiber11_blocked", "cover2_fiber6_blocked", "cover2_fiber11_blocked", "unique_2cover", "seven_minimal_3covers", "no_tiling_fiber6", "no_tiling_fiber11"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209 fiber-compatibility kernel, composite theorem, thi...)."
-
-  - title: "Fiber-compatibility and composite suppression"
-    authors: ["Derek Blair"]
-    id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/CompositeSuppression.lean
-    theorems: ["demands_descend", "capability_descend", "degeneracy_lemma"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209 fiber-compatibility kernel, composite theorem, thi...)."
-
-  - title: "Fiber-compatibility and composite suppression"
-    authors: ["Derek Blair"]
-    id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/ESBranchTwo.lean
-    theorems: ["branch2_collapse", "family_identity", "branch2_m_mod8_refuted"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209 fiber-compatibility kernel, composite theorem, thi...)."
-
-  - title: "Sieve inversion and branch isolation"
-    authors: ["Derek Blair"]
-    id: papers/sieve-inverse-branch-isolation-October-11-2026/sieve-inverse-branch-isolation-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/ESRefinedSieveInverse.lean
-    theorems: ["crt44_forward", "crt44_backward", "crt44_iff", "sixClasses_inv_closed", "crt_inv_compose", "S1_subset"]
-    status: "[PROVED] / [PROVED*]"
-    axioms: ["propext", "Quot.sound", "native_decide certs (on the three [PROVED*] theorems)"]
-    note: "Paper: papers/sieve-inverse-branch-isolation-October-11-2026/ (R169/R178 44-CRT sieve inversion and R163/R174 u-branch isolation...)."
-
-  - title: "Sieve inversion and branch isolation"
-    authors: ["Derek Blair"]
-    id: papers/sieve-inverse-branch-isolation-October-11-2026/sieve-inverse-branch-isolation-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/ESUBranchIsolation.lean
-    theorems: ["uBranch_isolation", "closeImage_disjoint_of_subset", "uSide_degree_bound", "r163_uSideBound_inHclique"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/sieve-inverse-branch-isolation-October-11-2026/ (R169/R178 44-CRT sieve inversion and R163/R174 u-branch isolation...)."
-
-  - title: "Hole suppression and absorption"
-    authors: ["Derek Blair"]
-    id: papers/hole-suppression-absorption-October-11-2026/hole-suppression-absorption-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/HoleSuppression.lean
-    theorems: ["t2_iff", "t5_saturation", "t5_double_saturation", "dichotomy_two_margins"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/hole-suppression-absorption-October-11-2026/ (R199/R200 hole-suppression finite-set lemmas, absorbed-regime arithmetic, and th...)."
-
-  - title: "Hole suppression and absorption"
-    authors: ["Derek Blair"]
-    id: papers/hole-suppression-absorption-October-11-2026/hole-suppression-absorption-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/AbsorbedRegime.lean
-    theorems: ["t5prime_combined"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/hole-suppression-absorption-October-11-2026/ (R199/R200 hole-suppression finite-set lemmas, absorbed-regime arithmetic, and th...)."
-
-  - title: "Hole suppression and absorption"
-    authors: ["Derek Blair"]
-    id: papers/hole-suppression-absorption-October-11-2026/hole-suppression-absorption-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/AbsorbedBound.lean
-    theorems: ["t4_self_bound"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/hole-suppression-absorption-October-11-2026/ (R199/R200 hole-suppression finite-set lemmas, absorbed-regime arithmetic, and th...)."
-
-  - title: "Translation marches and dip mechanics"
-    authors: ["Derek Blair"]
-    id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/TranslationMarch.lean
-    theorems: ["rawBlocked_translate", "rigidity", "march", "march_neg", "march_saturated_iff_shadow", "plateau_downward"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core, corrected ψ-translate and unsat...)."
-
-  - title: "Translation marches and dip mechanics"
-    authors: ["Derek Blair"]
-    id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/CorrectedMarch.lean
-    theorems: ["psi_as_phi_translate", "feas_iff", "chain_bounds", "chain_width"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core, corrected ψ-translate and unsat...)."
-
-  - title: "Translation marches and dip mechanics"
-    authors: ["Derek Blair"]
-    id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/TranslationMarchUnsat.lean
-    theorems: ["propagation_subset"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core, corrected ψ-translate and unsat...)."
-
-  - title: "Translation marches and dip mechanics"
-    authors: ["Derek Blair"]
-    id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/HoleTwinDip.lean
-    theorems: ["hole_twin_of_dip", "chain_dip", "s1_instance"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core, corrected ψ-translate and unsat...)."
-
-  - title: "Translation marches and dip mechanics"
-    authors: ["Derek Blair"]
-    id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/DipMarch.lean
-    theorems: ["continuation_iff", "break_case", "reset_case", "perfect_case", "phi_duality"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core, corrected ψ-translate and unsat...)."
-
-  - title: "Sub-family dichotomy and ladder ceilings"
-    authors: ["Derek Blair"]
-    id: papers/subfamily-ladder-ceiling-October-11-2026/subfamily-ladder-ceiling-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/ESSubfamilyExtended.lean
-    theorems: ["generalized_subfamily_identity", "admission_criterion", "a0_constancy", "u_eq_Aqe_div_f", "excess_prime_dvd_u", "M_const", "split_layered_repaired"]
-    status: "[PROVED] / [PROVED*]"
-    axioms: []
-    note: "Paper: papers/subfamily-ladder-ceiling-October-11-2026/ (R245 generalized sub-family theorem (+ staged R253/R261/R265 extensions) and the...)."
-
-  - title: "Sub-family dichotomy and ladder ceilings"
-    authors: ["Derek Blair"]
-    id: papers/subfamily-ladder-ceiling-October-11-2026/subfamily-ladder-ceiling-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/MarchLadderCeiling.lean
-    theorems: ["theorem6", "catalog_ceiling"]
-    status: "[PROVED]"
-    axioms: [propext, Quot.sound]
-    note: "Paper: papers/subfamily-ladder-ceiling-October-11-2026/ (R245 generalized sub-family theorem (+ staged R253/R261/R265 extensions) and the...)."
-
-  - title: "Sigma transfer and fiber overlap"
-    authors: ["Derek Blair"]
-    id: papers/sigma-transfer-fiber-overlap-October-11-2026/sigma-transfer-fiber-overlap-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/SigmaTrans.lean
-    theorems: ["A3_holds"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/sigma-transfer-fiber-overlap-October-11-2026/ (R275 σ-transfer ascent machinery and R277 fiber-overlap lemmas...)."
-
-  - title: "Sigma transfer and fiber overlap"
-    authors: ["Derek Blair"]
-    id: papers/sigma-transfer-fiber-overlap-October-11-2026/sigma-transfer-fiber-overlap-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/FiberOverlap.lean
-    theorems: ["fiber_overlap", "fiber_overlap_identity", "autocorr_le_one", "top_interval_sparsity"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/sigma-transfer-fiber-overlap-October-11-2026/ (R275 σ-transfer ascent machinery and R277 fiber-overlap lemmas...)."
-
-  - title: "Abstract locks and transition DAGs"
-    authors: ["Derek Blair"]
-    id: papers/abstract-lock-transdag-October-11-2026/abstract-lock-transdag-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/AbstractLock.lean
-    theorems: ["consecT_gives_consec_fire", "no_consecT_scattered", "consec_window_no_consecT_not_full", "full_no_consecT_gap_window", "sharpness_witness"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/abstract-lock-transdag-October-11-2026/ (R280/R287 abstract lock theory (repaired) and R279/R288/R292 dual-ascent barrier...)."
-
-  - title: "Abstract locks and transition DAGs"
-    authors: ["Derek Blair"]
-    id: papers/abstract-lock-transdag-October-11-2026/abstract-lock-transdag-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/TransDAG.lean
-    theorems: ["no_dual_target_demote", "no_dual_source_promote", "dual_preserves_s_card"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/abstract-lock-transdag-October-11-2026/ (R280/R287 abstract lock theory (repaired) and R279/R288/R292 dual-ascent barrier...)."
-
-  - title: "Void frames and defect calculus"
-    authors: ["Derek Blair"]
-    id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/VoidUnion.lean
-    theorems: ["V1_void_iff_zero", "V8_forced_split", "k0_zero_impossible"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under union, void locks, the N′_W...)."
-
-  - title: "Void frames and defect calculus"
-    authors: ["Derek Blair"]
-    id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/VoidLock.lean
-    theorems: ["forced_cell_in_window", "void_exclusion"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under union, void locks, the N′_W...)."
-
-  - title: "Void frames and defect calculus"
-    authors: ["Derek Blair"]
-    id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/VoidMonoidParam.lean
-    theorems: ["additive_iff_disjoint", "defect_core", "fully_additive_submonoid", "disjoint_footprint_submonoid", "prod_additive_iff"]
-    status: "[PROVED*] (staged, build-clean)"
-    axioms: []
-    note: "Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under union, void locks, the N′_W...)."
-
-  - title: "Void frames and defect calculus"
-    authors: ["Derek Blair"]
-    id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/VoidMonoid.lean
-    theorems: ["d2c_not_closed", "d2c_generated_loses_disjoint", "maximal_family_tiles"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under union, void locks, the N′_W...)."
-
-  - title: "Void frames and defect calculus"
-    authors: ["Derek Blair"]
-    id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/VoidDefectHom.lean
-    theorems: ["defect_hom_rigidity", "literal_product_never", "split_boundary_witness", "mixed_count"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under union, void locks, the N′_W...)."
-
-  - title: "Absorption order and forcing spectrum"
-    authors: ["Derek Blair"]
-    id: papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/ESAbsorptionOrder.lean
-    theorems: ["absorp_datum_iff", "overlap_deficit_bound", "rho_absorption_collapse", "absorption_collapse_unique_core", "singleton_factorization"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/es-absorption-forcing-October-11-2026/ (ES absorption poset + redundancy rank, forcing spectrum partition, and forcing d...)."
-
-  - title: "Absorption order and forcing spectrum"
-    authors: ["Derek Blair"]
-    id: papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/ESForcingSpectrum.lean
-    theorems: ["s2a'_forced", "s2b_pc", "s2c_void", "s2d_split", "spectrum_partition", "psi_union_max"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/es-absorption-forcing-October-11-2026/ (ES absorption poset + redundancy rank, forcing spectrum partition, and forcing d...)."
-
-  - title: "Absorption order and forcing spectrum"
-    authors: ["Derek Blair"]
-    id: papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf
-    type: article
-    lean_module: Mathproofs/ESForcingDecomp.lean
-    theorems: ["theoremA_crt", "theoremB_scaling", "theoremC_filter", "theoremD_card"]
-    status: "[PROVED]"
-    axioms: []
-    note: "Paper: papers/es-absorption-forcing-October-11-2026/ (ES absorption poset + redundancy rank, forcing spectrum partition, and forcing d...)."
+- title: An Erdős–Straus covering identity
+  authors:
+  - Derek Blair
+  id: papers/erdos-straus-identity-217mod264-October-3-2026/erdos-straus-identity-217mod264-October-3-2026.pdf
+  type: article
+  lean_module: Mathproofs/ESIdentity.lean
+  theorems:
+  - es_covering_217mod264
+  - es_identity_217mod264
+  status: '[PROVED]'
+  axioms: []
+  scope: positive_natural_covering_witnesses
+  note: For every natural n congruent to 217 modulo 264, es_covering_217mod264 supplies positive natural x,y,z with
+    4x=n+3, y=n(n+3), 11z=n(n+3), and 4/n=1/x+1/y+1/z. The original theorem is the rational-equality lemma.
+  current_source: papers/erdos-straus-identity-217mod264-October-3-2026/erdos-straus-identity-217mod264-October-3-2026.tex
+  pdf_status: historical_pre_correction
+- title: CRT Escape from Local Quadratic Obstructions on Square Classes Modulo 840
+  authors:
+  - Derek Blair
+  id: papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.pdf
+  type: article
+  lean_module: Mathproofs/ESBarrier.lean
+  theorems:
+  - es_crt_escape
+  status: '[PROVED]'
+  axioms: []
+  scope: conditional_crt_escape_kernel
+  unformalized:
+  - Schinzel-Mordell implication from integer polynomial identities to the supplied local obstructions
+  note: Infinitely many escaping primes in each listed square class modulo 840, assuming 8 divides every progression
+    modulus and a supplied odd-prime nonsquare obstruction or failure of the 1-mod-8 residue condition. Uses Mathlib
+    general Dirichlet. The inconsistent custom axioms and false rational-polynomial es_barrier statement were removed.
+  current_source: papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.tex
+  pdf_status: historical_pre_correction
+- title: Continued-fraction identities and conditional gap-factor assemblies
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/CollatzGapSinh.lean
+  theorems:
+  - gap_sinh_superlinear
+  - gap_sinh_le_mul_exp
+  - gap_log_one_add_ge
+  - six_pow_mul_factorial_le
+  status: '[PROVED]'
+  axioms: []
+  application_status: '[CONDITIONAL]'
+  unformalized:
+  - Identification of the explicit factor parameters with log_2(3) continued fractions and Collatz dynamics
+- title: Continued-fraction identities and conditional gap-factor assemblies
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/CollatzGapDelta.lean
+  theorems:
+  - gap_delta_sign_criterion
+  - gap_sinh_product_identity
+  - gap_cf_selector_identity
+  - gap_lt_of_delta_signs
+  - gap_argmin_of_delta_signs
+  status: '[PROVED]'
+  axioms: []
+  note: The argmin export includes membership of the selected index in its interval; the comparison-only helper
+    remains available separately.
+  application_status: '[CONDITIONAL]'
+  unformalized:
+  - Identification of the explicit factor parameters with log_2(3) continued fractions and Collatz dynamics
+  scope: analytic_comparison_kernel
+- title: Continued-fraction identities and conditional gap-factor assemblies
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/CollatzGapConvex.lean
+  theorems:
+  - gapT_seconddiff_pos
+  - gapS_seconddiff_pos
+  - gapDelta_strictly_increasing
+  - gap_margin_duality
+  status: '[PROVED]'
+  axioms: []
+  application_status: '[CONDITIONAL]'
+  unformalized:
+  - Identification of the explicit factor parameters with log_2(3) continued fractions and Collatz dynamics
+  scope: discrete_monotonicity_and_analytic_margin_duality
+  note: The monotonicity export is a unit-step discrete inequality; margin duality is the three-way analytic equivalence.
+    No continuous StrictMonoOn result or concrete G specialization is asserted.
+- title: Continued-fraction identities and conditional gap-factor assemblies
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/CollatzGapCF.lean
+  theorems:
+  - GapCF.cf_error_formula
+  - GapCF.cf_ratio_formula
+  - GapCF.cf_det_identity
+  status: '[PROVED]'
+  axioms: []
+  application_status: '[CONDITIONAL]'
+  unformalized:
+  - Identification of the explicit factor parameters with log_2(3) continued fractions and Collatz dynamics
+  scope: general_irrational_continued_fractions
+- title: Continued-fraction identities and conditional gap-factor assemblies
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/CollatzGapC24.lean
+  theorems:
+  - GapCF.cf_selector_le
+  - GapCF.cf_selector_lt
+  - GapCF.cf_selector_eq
+  - GapCF.cf_selector_ne
+  status: '[PROVED]'
+  axioms: []
+  application_status: '[CONDITIONAL]'
+  unformalized:
+  - Identification of the explicit factor parameters with log_2(3) continued fractions and Collatz dynamics
+  scope: general_irrational_continued_fractions
+- title: Continued-fraction identities and conditional gap-factor assemblies
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/CollatzGapC24Lemma3.lean
+  theorems:
+  - GapCF.cf_firstdiff_decide
+  - GapCF.cf_firstdiff
+  - GapCF.cf_firstdiff_term
+  status: '[PROVED]'
+  axioms: []
+  application_status: '[CONDITIONAL]'
+  unformalized:
+  - Identification of the explicit factor parameters with log_2(3) continued fractions and Collatz dynamics
+  scope: general_irrational_continued_fractions
+- title: Continued-fraction identities and conditional gap-factor assemblies
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/CollatzGapC23.lean
+  theorems:
+  - GapCF.strictConvexOn_sinh_Ici
+  - GapCF.sinh_scaling_gt
+  - GapCF.c23a
+  - GapCF.c23b
+  status: '[PROVED]'
+  axioms: []
+  application_status: '[CONDITIONAL]'
+  unformalized:
+  - Identification of the explicit factor parameters with log_2(3) continued fractions and Collatz dynamics
+  scope: conditional_argmin_selection
+  note: The argmin range and adjacent-difference bridge are explicit hypotheses. The rho<r direction additionally
+    requires K(n).
+- title: Continued-fraction identities and conditional gap-factor assemblies
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/CollatzGapC22C25.lean
+  theorems:
+  - GapCF.c26a
+  - GapCF.c26b
+  - GapCF.c26c
+  - GapCF.c22_delta_pos_at
+  - GapCF.c22_upper
+  - GapCF.c22_argmin
+  - GapCF.log_one_add_div_one_sub_ge
+  status: '[PROVED]'
+  axioms: []
+  application_status: '[CONDITIONAL]'
+  unformalized:
+  - Identification of the explicit factor parameters with log_2(3) continued fractions and Collatz dynamics
+  scope: conditional_argmin_and_selector_assemblies
+  note: c26c now gives both selector equivalences with K(n) required only when rho<r; it has no argmin hypothesis.
+    c22_delta_pos_at has range m>=2 without the old unused m>=4 restriction. c22_upper and c22_argmin assume the
+    explicit objective/difference bridge.
+- title: Continued-fraction identities and conditional gap-factor assemblies
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/CollatzGapC29.lean
+  theorems:
+  - CollatzGapC29.c29
+  - CollatzGapC29.c29_strict
+  - CollatzGapC29.lemmaA_coprime
+  - CollatzGapC29.lemmaB_nowrap
+  - CollatzGapC29.yfrac_formula
+  - CollatzGapC29.count_le
+  status: '[PROVED]'
+  axioms: []
+  application_status: '[CONDITIONAL]'
+  unformalized:
+  - Identification of the explicit factor parameters with log_2(3) continued fractions and Collatz dynamics
+  scope: strict_record_discrepancy
+  note: The non-strict bound is exported on [0,1] and c29_strict gives strict positivity on (0,1).
+- title: Continued-fraction identities and conditional gap-factor assemblies
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/CollatzGapC29Mirror.lean
+  theorems:
+  - CollatzGapC29Mirror.beta_pos
+  - CollatzGapC29Mirror.beta_irr
+  - CollatzGapC29Mirror.isStrictRecord_beta
+  - CollatzGapC29Mirror.c29_mirror
+  status: '[PROVED]'
+  axioms: []
+  application_status: '[CONDITIONAL]'
+  unformalized:
+  - Identification of the explicit factor parameters with log_2(3) continued fractions and Collatz dynamics
+  scope: strict_record_discrepancy_mirror
+- title: Continued-fraction identities and conditional gap-factor assemblies
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/CollatzGapHump.lean
+  theorems:
+  - humpPhi_identity
+  - humpPsi_identity
+  - humpPhiTilde_identity
+  - humpPsiTilde_identity
+  - humpC_two_pos
+  - humpCtilde_three_pos
+  status: '[PROVED]'
+  axioms: []
+  note: Selected identities and arithmetic closures; no full hump-law theorem is claimed.
+  application_status: '[CONDITIONAL]'
+  unformalized:
+  - Full C64/C64b hump-law assembly, including Abel summation, block decomposition, and second-difference estimates
+  - Identification of the explicit factor parameters with log_2(3) continued fractions and Collatz dynamics
+  scope: hump_law_identity_kernel
+- title: The witness complex, square obstructions, and the QR-core
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/ESX0S1S3.lean
+  theorems:
+  - lemma_X0
+  - lemma_S1S3
+  status: '[PROVED]'
+  axioms: []
+- title: The witness complex, square obstructions, and the QR-core
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/ESDescentTransfer.lean
+  theorems:
+  - mu_valuation_of_S3
+  - transfer_key_00
+  - transfer_qcancel
+  status: '[PROVED]'
+  axioms: []
+  scope: conditional_divisibility_transfer
+  unformalized:
+  - Framework normalization for all external branch identities
+  - R74 sweep-contradiction source
+  note: Arithmetic transfers retain explicit congruence/divisibility premises. ESDescentCovering now supplies denominator
+    algebra and positive progression identities under explicit slope/intercept normalizations.
+- title: The witness complex, square obstructions, and the QR-core
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/WitnessComplexThm2.lean
+  theorems:
+  - b0_vacuity
+  - fiber_collision_law
+  status: '[PROVED]'
+  axioms: []
+- title: The witness complex, square obstructions, and the QR-core
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/WitnessComplexThm13.lean
+  theorems:
+  - t2_integrality_iff
+  - t3_full_class
+  status: '[PROVED]'
+  axioms: []
+  note: W(M) Thm 1(a) + Thm 3 (7 theorems total).
+- title: The witness complex, square obstructions, and the QR-core
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/ESPrimeSquareT2.lean
+  theorems:
+  - t2_jacobi_neg_one
+  - t2_class_nonsquare
+  status: '[PROVED]'
+  axioms: []
+- title: The witness complex, square obstructions, and the QR-core
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/EST1TwoCase.lean
+  theorems:
+  - t1_two_case
+  status: '[PROVED]'
+  axioms: []
+- title: The witness complex, square obstructions, and the QR-core
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/ESQRCore.lean
+  theorems:
+  - qr_core_t2_misses
+  - qr_core_t1_misses
+  status: '[PROVED]'
+  axioms: []
+  scope: arithmetic_square_obstructions
+  unformalized:
+  - Cubic-family exclusion
+  - Identification with externally filtered frontiers
+  note: T1 and T2 residue obstructions only; no cubic exclusion theorem is asserted.
+- title: The witness complex, square obstructions, and the QR-core
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/ESQRCoreCount.lean
+  theorems:
+  - ESQRCoreCount.card_qr_units
+  - ESQRCoreCount.qr_count_crt
+  - ESQRCoreCount.qr_ratio
+  - ESQRCoreCount.qr_ratio_div
+  - ESQRCoreCount.qr_core_count
+  - ESQRCoreCount.qr_residue_count
+  - ESQRCoreCount.qr_residue_count_finset
+  status: '[PROVED]'
+  axioms: []
+  note: Constructed CRT equivalences for M=24*product of distinct primes at least 5. S is the unit residues equal
+    to 1 modulo 24; Q is its full-modulus square subset. Both cardinalities and their ratio are proved.
+  scope: actual_unit_residue_and_square_subset_count
+  unformalized:
+  - Identification of any separately filtered external frontier with targetResidues
+- title: The witness complex, square obstructions, and the QR-core
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/ESFiveSevenForcing.lean
+  theorems:
+  - ESFiveSevenForcing.t1_five_forcing_full
+  - ESFiveSevenForcing.t2_seven_forcing
+  - ESFiveSevenForcing.t1_five_covers_class
+  - ESFiveSevenForcing.t2_seven_covers_class
+  status: '[PROVED]'
+  axioms: []
+  note: The residue/divisor implications now compose with explicit positive-natural covering for the w=20 T1 classes
+    and q=7 T2 fibers.
+  scope: positive_natural_covering_for_w20_and_q7
+  unformalized:
+  - External class censuses
+  - Arbitrary T1 parameterizations beyond the proved w=20 classes
+- title: The witness complex, square obstructions, and the QR-core
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/ESBranchSDREndgame.lean
+  theorems:
+  - branch_sdr_endgame
+  - branch_sdr_endgame_clique_bound
+  status: '[PROVED]'
+  axioms: []
+- title: The witness complex, square obstructions, and the QR-core
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/ESMod7UniversalFamilies.lean
+  theorems:
+  - ESMod7UniversalFamilies.fam1_universal
+  - ESMod7UniversalFamilies.fam2_universal
+  - ESMod7UniversalFamilies.fam3_universal
+  - ESMod7UniversalFamilies.fiber_pin
+  - ESMod7UniversalFamilies.fam1_covers
+  - ESMod7UniversalFamilies.fam2_covers
+  - ESMod7UniversalFamilies.fam3_covers
+  status: '[PROVED]'
+  axioms: []
+  note: All three family premises now imply positive natural covering witnesses for every progression member. Fiber-pinning
+    results remain arithmetic statements.
+  scope: full_progression_positive_natural_covering
+  unformalized:
+  - External 165-class coverage sweep and fiber census
+- title: The 3v floor theorem for girth-5 graphs
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/Girth5Floor3v.lean
+  theorems:
+  - Girth5Floor3v.identity_feasible
+  - Girth5Floor3v.score_identity
+  - Girth5Floor3v.three_v_floor
+  - Girth5Floor3v.three_v_rigidity
+  - Girth5Floor3v.cross_edge_no_triangle
+  - Girth5Floor3v.cross_edge_no_c4
+  - Girth5Floor3v.feasible_emit_noTri
+  - Girth5Floor3v.feasible_emit_noC4
+  definitions:
+  - Girth5Floor3v.emittedGraph
+  status: '[PROVED]'
+  axioms: []
+  note: Local girth preservation and identity-score floor. The compatible conditional rigidity API remains; Girth5Extremal
+    now proves its ceiling from global edge maximality.
+  scope: general_girth_preservation_and_identity_score_floor
+  application_status: '[CONDITIONAL]'
+  required_inputs:
+  - Explicit score ceiling for three_v_rigidity
+- title: Girth-5 feasibility regressions
+  authors:
+  - Derek Blair
+  id: null
+  type: library
+  lean_module: Mathproofs/Girth5Floor3vRegression.lean
+  theorems:
+  - Girth5Floor3v.Regression.triangle_move_rejected
+  - Girth5Floor3v.Regression.loop_move_rejected
+  - Girth5Floor3v.Regression.four_cycle_move_rejected
+  - Girth5Floor3v.Regression.cross_edge_move_rejected
+  - Girth5Floor3v.Regression.path_bad_move_rejected
+  - Girth5Floor3v.Regression.empty_identity_feasible
+  - Girth5Floor3v.Regression.path_identity_feasible
+  status: '[PROVED]'
+  axioms: []
+- title: Branch-1 q-adic type theorem
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/ESQadicBranch1.lean
+  theorems:
+  - ESQadicBranch1.qadic_type_restriction
+  - ESQadicBranch1.kill_02
+  - ESQadicBranch1.kill_12
+  - ESQadicBranch1.descent_01
+  status: '[CONDITIONAL]'
+  axioms: []
+  scope: classification_with_explicit_inputs
+  required_inputs:
+  - QQ-integrality
+  - M23 divisibility and q-free hypotheses
+  - R74 no-descended-bundle hypothesis
+  unformalized:
+  - External R74 sweep
+  - Framework supplying the full QQ/M23 inputs
+  note: The conditional classification and arithmetic lemmas are kernel-checked with standard axioms only.
+- title: null
+  authors:
+  - Derek Blair
+  id: null
+  type: library
+  lean_module: Mathproofs/Basic.lean
+  theorems: []
+  status: supporting definitions
+  axioms: []
+  note: Shared definitions imported by the formalization modules; no flagship theorems.
+- title: Fiber-compatibility and composite suppression
+  authors:
+  - Derek Blair
+  id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/ESFiberCompat.lean
+  theorems:
+  - fiber_compat_pair_iff
+  - fiber_compat_saturated
+  - fiber_compat_card
+  - forced_digit
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209
+    fiber-compatibility kernel, composite theorem, thi...).'
+- title: Fiber-compatibility and composite suppression
+  authors:
+  - Derek Blair
+  id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/ESFiberCompatComposite.lean
+  theorems:
+  - fiber_compat_iffC
+  - forced_digit_of_memC
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209
+    fiber-compatibility kernel, composite theorem, thi...).'
+- title: Fiber-compatibility and composite suppression
+  authors:
+  - Derek Blair
+  id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/ESFiberTiling.lean
+  theorems:
+  - masks_match_boxes
+  - liveUnion_bound_6
+  - liveUnion_bound_11
+  - shape0_fiber6_blocked
+  - shape0_fiber11_blocked
+  - cover2_fiber6_blocked
+  - cover2_fiber11_blocked
+  - unique_2cover
+  - seven_minimal_3covers
+  - no_tiling_fiber6
+  - no_tiling_fiber11
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209
+    fiber-compatibility kernel, composite theorem, thi...).'
+- title: Fiber-compatibility and composite suppression
+  authors:
+  - Derek Blair
+  id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/CompositeSuppression.lean
+  theorems:
+  - demands_descend
+  - capability_descend
+  - degeneracy_lemma
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209
+    fiber-compatibility kernel, composite theorem, thi...).'
+- title: Fiber-compatibility and composite suppression
+  authors:
+  - Derek Blair
+  id: papers/fiber-compatibility-composite-suppression-October-11-2026/fiber-compatibility-composite-suppression-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/ESBranchTwo.lean
+  theorems:
+  - branch2_collapse
+  - family_identity
+  - branch2_m_mod8_refuted
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/fiber-compatibility-composite-suppression-October-11-2026/ (R185/R192/R193/R205/R207/R209
+    fiber-compatibility kernel, composite theorem, thi...).'
+- title: Sieve inversion and branch isolation
+  authors:
+  - Derek Blair
+  id: papers/sieve-inverse-branch-isolation-October-11-2026/sieve-inverse-branch-isolation-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/ESRefinedSieveInverse.lean
+  theorems:
+  - ESRefinedSieve.crt44_forward
+  - ESRefinedSieve.crt44_backward
+  - ESRefinedSieve.crt44_iff
+  - ESRefinedSieve.sixClasses_exact
+  - ESRefinedSieve.sixClasses_inv_closed
+  - ESRefinedSieve.crt_unique_one
+  - ESRefinedSieve.crt_inv_compose
+  - ESRefinedSieve.S1_subset
+  - ESRefinedSieve.S1_proj_subset
+  - ESRefinedSieve.S1_exact
+  status: '[PROVED]'
+  axioms: []
+  note: All former native-computation certificate axioms in this module were replaced by kernel proofs.
+  scope: kernel_checked_residue_and_crt_theorems
+  current_source: papers/sieve-inverse-branch-isolation-October-11-2026/build/sieve-inverse-branch-isolation-October-11-2026.tex
+  pdf_status: historical_pre_correction
+- title: Sieve inversion and branch isolation
+  authors:
+  - Derek Blair
+  id: papers/sieve-inverse-branch-isolation-October-11-2026/sieve-inverse-branch-isolation-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/ESUBranchIsolation.lean
+  theorems:
+  - uBranch_isolation
+  - closeImage_disjoint_of_subset
+  - uSide_degree_bound
+  - r163_uSideBound_inHclique
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/sieve-inverse-branch-isolation-October-11-2026/ (R169/R178 44-CRT sieve inversion and R163/R174
+    u-branch isolation...).'
+  current_source: papers/sieve-inverse-branch-isolation-October-11-2026/build/sieve-inverse-branch-isolation-October-11-2026.tex
+  pdf_status: historical_pre_correction
+- title: Hole suppression and absorption
+  authors:
+  - Derek Blair
+  id: papers/hole-suppression-absorption-October-11-2026/hole-suppression-absorption-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/HoleSuppression.lean
+  theorems:
+  - t2_iff
+  - t5_saturation
+  - t5_double_saturation
+  - dichotomy_two_margins
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/hole-suppression-absorption-October-11-2026/ (R199/R200 hole-suppression finite-set lemmas,
+    absorbed-regime arithmetic, and th...).'
+- title: Hole suppression and absorption
+  authors:
+  - Derek Blair
+  id: papers/hole-suppression-absorption-October-11-2026/hole-suppression-absorption-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/AbsorbedRegime.lean
+  theorems:
+  - t5prime_combined
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/hole-suppression-absorption-October-11-2026/ (R199/R200 hole-suppression finite-set lemmas,
+    absorbed-regime arithmetic, and th...).'
+- title: Hole suppression and absorption
+  authors:
+  - Derek Blair
+  id: papers/hole-suppression-absorption-October-11-2026/hole-suppression-absorption-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/AbsorbedBound.lean
+  theorems:
+  - t4_self_bound
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/hole-suppression-absorption-October-11-2026/ (R199/R200 hole-suppression finite-set lemmas,
+    absorbed-regime arithmetic, and th...).'
+- title: Translation marches and dip mechanics
+  authors:
+  - Derek Blair
+  id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/TranslationMarch.lean
+  theorems:
+  - rawBlocked_translate
+  - rigidity
+  - march
+  - march_neg
+  - march_saturated_iff_shadow
+  - plateau_downward
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core,
+    corrected ψ-translate and unsat...).'
+- title: Translation marches and dip mechanics
+  authors:
+  - Derek Blair
+  id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/CorrectedMarch.lean
+  theorems:
+  - psi_as_phi_translate
+  - feas_iff
+  - chain_bounds
+  - chain_width
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core,
+    corrected ψ-translate and unsat...).'
+- title: Translation marches and dip mechanics
+  authors:
+  - Derek Blair
+  id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/TranslationMarchUnsat.lean
+  theorems:
+  - propagation_subset
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core,
+    corrected ψ-translate and unsat...).'
+- title: Translation marches and dip mechanics
+  authors:
+  - Derek Blair
+  id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/HoleTwinDip.lean
+  theorems:
+  - hole_twin_of_dip
+  - chain_dip
+  - s1_instance
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core,
+    corrected ψ-translate and unsat...).'
+- title: Translation marches and dip mechanics
+  authors:
+  - Derek Blair
+  id: papers/translation-march-dip-October-11-2026/translation-march-dip-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/DipMarch.lean
+  theorems:
+  - continuation_iff
+  - break_case
+  - reset_case
+  - perfect_case
+  - phi_duality
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/translation-march-dip-October-11-2026/ (R227/R231/R233/R235/R247 translation-march core,
+    corrected ψ-translate and unsat...).'
+- title: Sub-family dichotomy and ladder ceilings
+  authors:
+  - Derek Blair
+  id: papers/subfamily-ladder-ceiling-October-11-2026/subfamily-ladder-ceiling-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/ESSubfamilyExtended.lean
+  theorems:
+  - generalized_subfamily_identity
+  - admission_criterion
+  - a0_constancy
+  - u_eq_Aqe_div_f
+  - excess_prime_dvd_u
+  - M_const
+  - split_layered_repaired
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/subfamily-ladder-ceiling-October-11-2026/ (R245 generalized sub-family theorem (+ staged
+    R253/R261/R265 extensions) and the...).'
+  publication_status: partially_staged
+  staged_theorems:
+  - admission_criterion
+  - a0_constancy
+  - u_eq_Aqe_div_f
+  - excess_prime_dvd_u
+  - M_const
+  - split_layered_repaired
+- title: Sub-family dichotomy and ladder ceilings
+  authors:
+  - Derek Blair
+  id: papers/subfamily-ladder-ceiling-October-11-2026/subfamily-ladder-ceiling-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/MarchLadderCeiling.lean
+  theorems:
+  - theorem6
+  - catalog_ceiling
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/subfamily-ladder-ceiling-October-11-2026/ (R245 generalized sub-family theorem (+ staged
+    R253/R261/R265 extensions) and the...).'
+- title: Sigma transfer and fiber overlap
+  authors:
+  - Derek Blair
+  id: papers/sigma-transfer-fiber-overlap-October-11-2026/sigma-transfer-fiber-overlap-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/SigmaTrans.lean
+  theorems:
+  - A3_holds
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/sigma-transfer-fiber-overlap-October-11-2026/ (R275 σ-transfer ascent machinery and R277
+    fiber-overlap lemmas...).'
+- title: Sigma transfer and fiber overlap
+  authors:
+  - Derek Blair
+  id: papers/sigma-transfer-fiber-overlap-October-11-2026/sigma-transfer-fiber-overlap-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/FiberOverlap.lean
+  theorems:
+  - fiber_overlap
+  - fiber_overlap_identity
+  - autocorr_le_one
+  - top_interval_sparsity
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/sigma-transfer-fiber-overlap-October-11-2026/ (R275 σ-transfer ascent machinery and R277
+    fiber-overlap lemmas...).'
+- title: Abstract locks and transition DAGs
+  authors:
+  - Derek Blair
+  id: papers/abstract-lock-transdag-October-11-2026/abstract-lock-transdag-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/AbstractLock.lean
+  theorems:
+  - consecT_gives_consec_fire
+  - no_consecT_scattered
+  - consec_window_no_consecT_not_full
+  - full_no_consecT_gap_window
+  - sharpness_witness
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/abstract-lock-transdag-October-11-2026/ (R280/R287 abstract lock theory (repaired) and R279/R288/R292
+    dual-ascent barrier...).'
+- title: Abstract locks and transition DAGs
+  authors:
+  - Derek Blair
+  id: papers/abstract-lock-transdag-October-11-2026/abstract-lock-transdag-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/TransDAG.lean
+  theorems:
+  - no_dual_target_demote
+  - no_dual_source_promote
+  - dual_preserves_s_card
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/abstract-lock-transdag-October-11-2026/ (R280/R287 abstract lock theory (repaired) and R279/R288/R292
+    dual-ascent barrier...).'
+- title: Void frames and defect calculus
+  authors:
+  - Derek Blair
+  id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/VoidUnion.lean
+  theorems:
+  - V1_void_iff_zero
+  - V8_forced_split
+  - k0_zero_impossible
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under
+    union, void locks, the N′_W...).'
+- title: Void frames and defect calculus
+  authors:
+  - Derek Blair
+  id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/VoidLock.lean
+  theorems:
+  - forced_cell_in_window
+  - void_exclusion
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under
+    union, void locks, the N′_W...).'
+- title: Void frames and defect calculus
+  authors:
+  - Derek Blair
+  id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/VoidMonoidParam.lean
+  theorems:
+  - additive_iff_disjoint
+  - defect_core
+  - fully_additive_submonoid
+  - disjoint_footprint_submonoid
+  - prod_additive_iff
+  status: '[PROVED*]'
+  axioms: []
+  note: 'Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under
+    union, void locks, the N′_W...).'
+  publication_status: staged
+- title: Void frames and defect calculus
+  authors:
+  - Derek Blair
+  id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/VoidMonoid.lean
+  theorems:
+  - d2c_not_closed
+  - d2c_generated_loses_disjoint
+  - maximal_family_tiles
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under
+    union, void locks, the N′_W...).'
+- title: Void frames and defect calculus
+  authors:
+  - Derek Blair
+  id: papers/void-frames-defect-October-11-2026/void-frames-defect-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/VoidDefectHom.lean
+  theorems:
+  - defect_hom_rigidity
+  - literal_product_never
+  - split_boundary_witness
+  - mixed_count
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/void-frames-defect-October-11-2026/ (R283/R289/R291/R296/R299/R300/R303 void frames under
+    union, void locks, the N′_W...).'
+- title: Absorption order and forcing spectrum
+  authors:
+  - Derek Blair
+  id: papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/ESAbsorptionOrder.lean
+  theorems:
+  - datum_eq_of_absorpLE
+  - absorp_datum_iff
+  - overlap_deficit_bound
+  - rho_absorption_collapse
+  - absorption_collapse_unique_core
+  - singleton_factorization
+  status: '[PROVED]'
+  axioms: []
+  scope: absorption_with_local_nonemptiness_and_ambient_family_singleton_exclusions
+  required_inputs:
+  - G.C.Nonempty for absorp_datum_iff; datum_eq_of_absorpLE needs no nonemptiness premise
+  - H.C.Nonempty for rho_absorption_collapse and absorption_collapse_unique_core
+  - S ⊆ 𝒢 for a finite ambient family 𝒢 in singleton_factorization
+  - For every c ∈ S0 and g ∈ 𝒢, g.C ≠ {c}
+  note: 'Paper: papers/es-absorption-forcing-October-11-2026/ (ES absorption poset + redundancy rank, forcing spectrum
+    partition, and forcing d...).'
+- title: Absorption order and forcing spectrum
+  authors:
+  - Derek Blair
+  id: papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/ESForcingSpectrum.lean
+  theorems:
+  - s2a'_forced
+  - s2b_pc
+  - s2c_void
+  - s2d_split
+  - spectrum_partition
+  - psi_union_max
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/es-absorption-forcing-October-11-2026/ (ES absorption poset + redundancy rank, forcing spectrum
+    partition, and forcing d...).'
+- title: Absorption order and forcing spectrum
+  authors:
+  - Derek Blair
+  id: papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf
+  type: article
+  lean_module: Mathproofs/ESForcingDecomp.lean
+  theorems:
+  - theoremA_crt
+  - theoremB_scaling
+  - theoremC_filter
+  - theoremD_card
+  status: '[PROVED]'
+  axioms: []
+  note: 'Paper: papers/es-absorption-forcing-October-11-2026/ (ES absorption poset + redundancy rank, forcing spectrum
+    partition, and forcing d...).'
+- title: 'A Saturated 9-Element Sidon Set in [1,184]: A Kernel-Checked Finite Witness'
+  authors:
+  - Derek Blair
+  id: papers/r47-sat184-October-7-2026/r47-sat184-October-7-2026.pdf
+  type: article
+  lean_module: Mathproofs/SidonSat184.lean
+  theorems:
+  - SidonSat184.r47_sat184
+  - SidonSat184.unique_extension_saturated
+  status: '[PROVED]'
+  axioms: []
+  scope: finite_nine_element_sidon_saturation_witness
+  current_source: papers/r47-sat184-October-7-2026/r47-sat184-October-7-2026.tex
+  pdf_status: historical_pre_correction
+  note: Lean kernel checks cardinality nine, containment in [1,184], the Sidon property including diagonal pairs,
+    and absence of any admissible extension. No native-computation or external certificate axiom.
+  ancillary_search_status: '[COMPUTED]'
+  not_asserted:
+  - Search exhaustiveness
+  - Minimality
+  - Historical priority
+- title: The six identity subclasses modulo 9240
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/ESIdentityCRT.lean
+  theorems:
+  - ESIdentityCRT.covered_classes_exact
+  - ESIdentityCRT.parent_fiber_card
+  - ESIdentityCRT.covered_parent_fiber_card
+  - ESIdentityCRT.covered_class_identity
+  status: '[PROVED]'
+  axioms: []
+  scope: exact_subclass_table_and_residue_counts
+  note: One of eleven subclasses per listed parent residue; positive natural covering for all listed members. No
+    prime density or novelty theorem.
+- title: Constructive Egyptian-fraction covering bridges
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/ESCovering.lean
+  theorems:
+  - ESCovering.of_split
+  - ESCovering.splitting_family
+  - ESCovering.of_t2
+  status: '[PROVED]'
+  axioms: []
+  scope: positive_natural_covering_constructors
+  note: Derives rational identities and positive natural denominators from explicit parameter/divisibility premises.
+- title: Three-vertex rigidity from global graph extremality
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/Girth5Extremal.lean
+  theorems:
+  - Girth5Floor3v.emitted_edgeCount_balance
+  - Girth5Floor3v.score_le_D_of_extremal
+  - Girth5Floor3v.three_v_rigidity_of_extremal
+  - Girth5Floor3v.three_v_gap_of_extremal
+  status: '[PROVED]'
+  axioms: []
+  scope: global_edge_extremality_to_local_score_ceiling
+  note: Uses ordinary unordered SimpleGraph edgeFinset cardinality. Global extremality compares every girth-five
+    graph on the same vertex type, not just local replacements.
+- title: Nine one-hole Sidon sets and C28 counterexamples
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/SidonSat184Census.lean
+  theorems:
+  - SidonSat184.census_facts
+  - SidonSat184.census_unique_hole
+  - SidonSat184.census_blocked_card
+  - SidonSat184.census_extensions_saturated
+  - SidonSat184.census_gate_counterexamples
+  status: '[PROVED]'
+  axioms: []
+  scope: kernel_checked_displayed_census
+  note: Rows 13 through 21, unique holes, 183 blocked positions, saturated ten-element extensions, and rows 14/21
+    excluding 121 and 123. Does not certify earlier rows, search shells, minimality, or priority.
+- title: Explicit analytic gap factor and unique odd-block minimum
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/CollatzGapFactor.lean
+  theorems:
+  - CollatzGapFactor.factor_pos
+  - CollatzGapFactor.log_factor
+  - CollatzGapFactor.log_factor_diff
+  - CollatzGapFactor.c22_factor_unique_min
+  status: '[PROVED]'
+  axioms: []
+  scope: explicit_factor_with_proved_logarithmic_bridge
+  required_inputs:
+  - C22 quantitative L inequality and parameter equations
+  unformalized:
+  - Specialization to log_2(3) continued fractions and Collatz dynamics
+  note: The factor is the explicit Q-ratio times the power-of-two-ratio; no arbitrary objective, adjacent-difference
+    bridge, or existing minimizer is assumed by the unique-minimum theorem.
+- title: Q-adic bounds and the necessary sweep boundary
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/ESQadicBoundary.lean
+  theorems:
+  - ESQadicBranch1.branch1_valuation_bounds
+  - ESQadicBranch1.qadic_type_bounds_without_sweep
+  - ESQadicBranch1.qadic_type_restriction_from_m23
+  - ESQadicBranch1.generic_type01_counterexample
+  status: '[PROVED]'
+  axioms: []
+  scope: four_type_bound_and_generic_boundary_counterexample
+  note: Derives alpha<=1 and rho<=1 without R74, removes redundant q-not-dividing-m input from the conditional three-type
+    API, and checks all other generic inputs for a type-(0,1) witness. Not a refutation of the fixed 2042040/refined-target
+    claim.
+- title: Positive covering identities from descent arithmetic
+  authors:
+  - Derek Blair
+  id: null
+  type: article
+  lean_module: Mathproofs/ESDescentCovering.lean
+  theorems:
+  - ESDescentCovering.branch2_pointwise
+  - ESDescentCovering.branch2_covering_of_divisibility
+  - ESDescentCovering.descend_intercept
+  - ESDescentCovering.transfer_00_covering
+  - ESDescentCovering.transfer_11_covering
+  status: '[PROVED]'
+  axioms: []
+  scope: branch2_positive_parent_progression_identities
+  required_inputs:
+  - Explicit slope and intercept divisibilities
+  - Positive parameters and 4*x0=s+m
+  - Shifted intercept equation for the chosen transfer
+  unformalized:
+  - Normalization of arbitrary external branch identities
+  - R74 sweep
+  note: Constructs x, n*A*C, n*r*C with positive natural linear C and proves the rational identity. The desired
+    covering conclusion is not an input.

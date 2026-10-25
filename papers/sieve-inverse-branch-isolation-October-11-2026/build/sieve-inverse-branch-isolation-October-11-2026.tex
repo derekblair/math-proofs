@@ -55,15 +55,14 @@ for $z\in Z_0^{\mathrm{close}}$ the unique u-branch $\varphi(z)$ is never
 in the H-clique $C$ (Theorem~\ref{thm:l1}), and the u-side degree bound
 $|Z_0^{\mathrm{close}}|+|Z_0^{\mathrm{mid}}|\le|U_0|=d(u)-1=5<6=|V_0|$
 (Theorem~\ref{thm:ubound}), the essential use of $d(u)<d(v)$.
-Formalization (R186, bakkie, Lean~4.34.1 + Mathlib~v4.34.1): the 44-CRT
-lemmas are [PROVED] with axioms narrower than standard
-(\url{propext}, \url{Quot.sound}); the three decide-heavy sieve
-theorems (\url{sixClasses_inv_closed}, \url{crt_inv_compose},
-\url{S1_subset}) are Lean-checked with zero sorrys but carry
-per-theorem \url{native_decide} certificate axioms and are labeled
-[PROVED*] under staged-verification language; all four branch-isolation
-theorems are [PROVED] on standard axioms. Full \texttt{lake build}
-exit~0, zero sorrys, on the standing machine bakkie.
+Formalization (Lean~4.34.1 + Mathlib~v4.34.1): the 44-CRT
+lemmas, the six-residue characterization, inverse-closure, and the
+mod-$3960$ CRT composition are [PROVED] using kernel-checked proofs
+and standard axioms only. The set-level S1 theorem is [PROVED] for
+$q=19$ and the embedded parent list; its $q=23$ extension and the
+identification with the external sieve pipeline retain their stated
+hand-proof/computational scope. The branch-isolation theorems are
+[PROVED] as conditional combinatorial statements.
 
 %======================================================================
 \section{Introduction}
@@ -97,23 +96,25 @@ degree-essential inequality, i.e.\ one that uses $d(u)<d(v)$
 genuinely. Round~163 supplied two lemmas with one-line proofs: u-branch
 isolation (L1) and the u-side degree bound. The (R2)-Hall lemma itself
 remains [OPEN]; the gap is precisely delimited in~\cite{R163}~\S B and
-recalled in \S\ref{sec:discussion}. Both threads were formalized in
-R178/R174 and verified end to end on bakkie in R186~\cite{R178,R174,R186}.
+recalled in \S\ref{sec:discussion}. Their arithmetic and
+conditional combinatorial kernels were formalized in R178/R174; the
+current scopes are recorded below.
 
 Our contributions, with honesty labels:
 \begin{enumerate}
 \item The 44-CRT selectivity lemma [PROVED in Lean]
   (Theorem~\ref{thm:crt44}).
-\item Exact six-class residue support of the lift set [PROVED*]
-  (Theorem~\ref{thm:s1}; hand proof plus independent computation).
-\item Inverse-closure of the six-class support mod $3960$ [PROVED*]
+\item Exact six-class residue support for the embedded $q=19$ lift set
+  [PROVED]; the $q=23$ case retains its hand-proof/computational status
+  (Theorem~\ref{thm:s1}).
+\item Inverse-closure of the explicit six-residue set mod $3960$ [PROVED]
   (Theorem~\ref{thm:s2}).
 \item The saturated-regime characterization with exact break boundary
   [COMPUTED] (Theorem~\ref{thm:boundary}).
 \item u-branch isolation L1 and the u-side degree bound [PROVED in Lean]
   (Theorems~\ref{thm:l1} and~\ref{thm:ubound}).
 \item The formalization status table (Table~\ref{tab:lean}), distinguishing
-  [PROVED] from staged-verification [PROVED*] results.
+  kernel-proved results from unformalized hand-proof and computational claims.
 \end{enumerate}
 
 %======================================================================
@@ -187,23 +188,19 @@ this paper at \texttt{papers/sieve-inverse-branch-isolation-October-11-2026/}:
   \url{uSide_degree_bound} (abstract Finset form),
   \url{r163_uSideBound_inHclique} (combined statement).
 \end{itemize}
-Verification config: bakkie (standing Lean machine, Lean~4.34.1 /
-Lake~5.0.0), full \texttt{lake build} exit~0, zero sorrys, both modules
-registered in \url{Mathproofs.lean} on both sides with byte-identical
-md5s. Axiom probes via \texttt{\#print axioms} on the headline theorems
-give: \texttt{crt44\_*} depends on $[\texttt{propext},
-\texttt{Quot.sound}]$ (narrower than the standard set); the four
-branch-isolation theorems on
-$[\texttt{propext},\texttt{Classical.choice},\texttt{Quot.sound}]$
-(standard); the three decide-heavy sieve theorems carry, in addition to
-the standard set, a per-theorem Lean-generated \url{native_decide}
-certificate axiom (e.g.\ \url{ESRefinedSieve.sixClasses_inv_closed._native.native_decide.ax_1_1}).
-These three are therefore reported as [PROVED*] under staged
-verification: Lean-checked end to end with zero sorrys
-(\url{native_decide} is Lean's own verified certificate mechanism),
-but exceeding the standard axiom budget, so they are never presented as
-fully proved pending the coordinator's ruling (R186~\cite{R186}~\S
-Phase~4).
+The 2026-10-23 correction replaces the three native-computation
+proofs with bounded arithmetic and six explicit inverse witnesses.
+The targeted Lean build succeeds with no sorrys. Axiom probes via
+\texttt{\#print axioms} show that \texttt{crt44\_*} uses
+$[\texttt{propext},\texttt{Quot.sound}]$; the residue characterization,
+inverse-closure, CRT composition, and all their S1 dependents use only
+$[\texttt{propext},\texttt{Classical.choice},\texttt{Quot.sound}]$.
+There are no native certificate axioms in the corrected module.
+This verifies the displayed finite residue statements and the embedded
+$q=19$ lift set; it does not verify the provenance of the parent list,
+the $q=23$ surjectivity argument, or the full external graph programme.
+The four branch-isolation theorems likewise use standard axioms and
+retain their explicit combinatorial hypotheses.
 
 %======================================================================
 \section{Results}
@@ -244,7 +241,7 @@ touch) and $\bmod5=1$ (R169~\cite{R169}~\S4).
 
 \subsection{Exact residue support (S1)}
 
-\begin{theorem}[Exact six-class support; PROVED*]
+\begin{theorem}[Exact six-class support; $q=19$ PROVED, $q=23$ PROVED*]
   \label{thm:s1}
   Every $n\in L_q$ satisfies $n\equiv1\pmod{40}$, $n\bmod9\in\{1,4,7\}$,
   $n\bmod11\in\{2,6\}$, and the mod-$3960$ projection of $L_q$ is
@@ -271,15 +268,18 @@ independently, and both mod-$11$ residues occur in $P$ ($104$ vs $92$)
 --- all six combinations occur. (Hand proof R169~\cite{R169}~\S5;
 the residue-algebra kernel is machine-checked as
 \url{sixClasses_exact}, \url{lift_components},
-\url{S1_subset}; \url{S1_subset} is [PROVED*] staged
-via \url{native_decide}.)
+\url{S1_subset}, all [PROVED] with standard axioms. The set-level
+\url{S1_proj_subset} works for every $q$; \url{S1_exact} proves equality
+for $q=19$ using explicit witnesses. The $q=23$ equality and the
+external parent-list provenance are not established by these Lean
+statements.)
 \end{proof}
 
 \subsection{Inverse-closure (S2) and CRT composition}
 
-\begin{theorem}[Inverse-closure of the six-class support; PROVED*]
+\begin{theorem}[Inverse-closure of the six-residue set; PROVED]
   \label{thm:s2}
-  The six-class support~\eqref{eq:sixclasses} is inverse-closed
+  The explicit six-residue set in~\eqref{eq:sixclasses} is inverse-closed
   modulo $3960$, with explicit inverse pairs
   \begin{equation}
     \label{eq:invpairs}
@@ -292,20 +292,21 @@ $\{1,4,7\}$ is closed; $1^{-1}=1\bmod5$; $2\cdot6=12\equiv1\bmod11$, so
 $\{2,6\}$ is closed. Closure composes across CRT components, giving the
 six explicit pairings (Figure~\ref{fig:invpairs}). (Hand proof
 R169~\cite{R169}~\S6; machine-checked as
-\url{sixClasses_inv_closed}, [PROVED*] staged via
-\url{native_decide}.) This is the proved mechanism behind R165's
+\url{sixClasses_inv_closed}, [PROVED] using the six explicit inverse
+witnesses and kernel-checked arithmetic.) This is the proved mechanism behind R165's
 dual symmetry (Assumption~\ref{asm:r165}): dual shapes $(f,V/f)$ cover
 the inverse classes $-f,-f^{-1}\bmod w$ ($V=4ad+1\equiv1\bmod w$), and
 the frontier's mod-$w$ support is inverse-closed --- so duals co-hit by
 structure, not luck.
 \end{proof}
 
-\begin{proposition}[CRT composition; PROVED* staged]
+\begin{proposition}[CRT composition modulo $3960$; PROVED]
   \label{prop:crtcomp}
-  Inverse-closure composes across CRT components --- the mechanism
-  behind S3 (\url{crt_unique_one}, \url{crt_inv_compose} in
-  \url{Mathproofs/ESRefinedSieveInverse.lean}; [PROVED*] staged via
-  \url{native_decide}).
+  For $x,y\in\mathbb{Z}/3960\mathbb{Z}$, if $xy\equiv1$ modulo
+  each of $8,9,5,11$, then $xy\equiv1\pmod{3960}$.
+  These are the statements \url{crt_unique_one} and
+  \url{crt_inv_compose} in \url{Mathproofs/ESRefinedSieveInverse.lean},
+  proved with bounded integer arithmetic.
 \end{proposition}
 
 \begin{figure}[t]
@@ -337,7 +338,8 @@ fiber argument [PROVED*] (R169~\cite{R169}~\S7(a)--(c)): for $p^e\mid M_0$
 they equal $P$'s projection (inverse-closed by F3~\cite{R169}~\S3); for
 $2^e$, $e\le6$, and $3^e$, $e\le3$, the projection is the full fiber
 $\{x\equiv1\bmod8\}$ resp.\ $\{x\equiv1\bmod3\}$, inverse-closed since
-$x\equiv1$ is self-inverse modulo $2^e$ and $3^e$. The saturated
+inversion preserves reduction to $1$ modulo $8$ and $3$, respectively.
+This does not assert that every element of either fiber is self-inverse. The saturated
 extension --- fibers stay full through $2^{12}$ and $3^7$ ---
 is [COMPUTED] (verified at $w\in\{3960,1056,468,2376\}$ at all three
 sieve stages, 0 violations; R169 V4). Deliberately not formalized: S3(d)
@@ -448,11 +450,10 @@ $5{,}601/4{,}940/10{,}194$ close/mid/far)~\cite{R163}~\S\S C--D.
 
 \begin{table}[t]
   \centering
-  \caption{Lean formalization status (R186~\cite{R186}, bakkie,
-    Lean~4.34.1 + Mathlib~v4.34.1). Full \texttt{lake build} exit~0,
-    zero sorrys. Staged [PROVED*]: Lean-checked end to end but carrying
-    a per-theorem \url{native_decide} certificate axiom, hence never
-    presented as fully proved.}
+  \caption{Current Lean formalization status after the 2026-10-23
+    correction (Lean~4.34.1 + Mathlib~v4.34.1). The named residue
+    results have kernel-checked proofs with standard axioms only;
+    the broader unformalized claims remain separately labeled.}
   \label{tab:lean}
   \begin{tabular}{lll}
     \toprule
@@ -460,12 +461,12 @@ $5{,}601/4{,}940/10{,}194$ close/mid/far)~\cite{R163}~\S\S C--D.
     \midrule
     \url{crt44_forward}, \url{crt44_backward}, \url{crt44_iff}
       & \url{ESRefinedSieveInverse} & [PROVED]; \url{propext}, \url{Quot.sound} \\
-    \url{sixClasses_inv_closed}
-      & \url{ESRefinedSieveInverse} & [PROVED*] staged; + \url{native_decide} cert. \\
-    \url{crt_inv_compose}
-      & \url{ESRefinedSieveInverse} & [PROVED*] staged; + \url{native_decide} cert. \\
-    \url{S1_subset}
-      & \url{ESRefinedSieveInverse} & [PROVED*] staged; + \url{native_decide} cert. \\
+    \url{sixClasses_exact}, \url{sixClasses_inv_closed}
+      & \url{ESRefinedSieveInverse} & [PROVED]; standard axioms \\
+    \url{crt_unique_one}, \url{crt_inv_compose}
+      & \url{ESRefinedSieveInverse} & [PROVED]; standard axioms \\
+    \url{S1_subset}, \url{S1_proj_subset}, \url{S1_exact}
+      & \url{ESRefinedSieveInverse} & [PROVED]; standard axioms \\
     \url{uBranch_isolation} (L1)
       & \url{ESUBranchIsolation} & [PROVED]; standard axioms \\
     \url{closeImage_disjoint_of_subset}
@@ -509,52 +510,39 @@ program was missing: the inequality $5<6$ in~\eqref{eq:ubound} has no
 meaning without $d(u)<d(v)$, and the $(8,6)$ counterexamples saturate
 exactly what Lemma~A forbids for $(6,7)$ (e.g.\ Cex~2:
 $Z_0=U_0$, all seven $Z_0$-points mid~\cite{R163}~\S C). But (R2)-Hall
-for $(6,7)$ remains [OPEN] as [PROVED*]: the far-point lemma ---
+for $(6,7)$ remains [OPEN]: the far-point lemma ---
 far $Z_0$-points must contribute enough new branches --- is the precise
 missing step (R163~\cite{R163}~\S B). The computational shadow
 ($0$ violators over $12{,}650$ cliques) stands, but the proof is not
 finished.
 
-\paragraph{Limitations.} (i) The [PROVED*] hand-proof labels on
-Theorems~\ref{thm:s1}--\ref{thm:s2} rest on numerical premises
-(parent facts F1--F3, $j$-variation counts) that are machine-checked
-data certificates (\texttt{decide} over embedded lists), not abstract
-lemmas. (ii) Three of the six formalized sieve theorems are
-staged-verification [PROVED*] (Table~\ref{tab:lean}); the coordinator's
-ruling on \url{native_decide} certificates is pending.
-(iii) $q=23$ exactness was verified in Python, not in Lean ($q=19$ is
-the checked instance). (iv) The branch-isolation formalization is
-deliberately abstract (generic $\mathrm{Adj}$, pure combinatorics) and
-does not check the R145 premises (injectivity of $\varphi$, the
-trichotomy) that hook the lemmas into the actual graph program.
-(v) The parent prime-power projections $\{1,2,4\}_7$,
-$\{1,2,3,4,5,7,8,9,10,12\}_{13}$,
-$\{1,2,3,4,6,8,9,13,15,16\}_{17}$ are inverse-closed [COMPUTED], but
-\emph{why} exactly these sets remains [OPEN] (R169 F3~\cite{R169}~\S11).
-(vi) S3(d) and the boundary numbers are statements about lift-set
-sizes and remain [COMPUTED], deliberately outside the Lean lane.
+\paragraph{Limitations.} (i) The finite data predicates are proved
+about the embedded parent list; Lean does not establish that this list
+is exactly the output of the external R67--R74 sieve pipeline.
+(ii) The $q=19$ support equality is [PROVED] for \url{liftSet 19};
+$q=23$ exactness retains the hand-proof and Python verification above,
+not a Lean theorem. (iii) The branch-isolation formalization is
+conditional (generic $\mathrm{Adj}$ and finite sets) and does not prove
+the R145 premises, including injectivity of $\varphi$ and the
+trichotomy, for the actual graph programme. (iv) The embedded parent
+prime-power projections are checked in Lean, including their
+inverse-closure; why those particular sets arise remains [OPEN].
+(v) The general S3 fiber argument retains its hand-proof scope;
+\url{fiber2_inv_closed} and \url{fiber3_inv_closed} check the concrete
+mod-$64$ and mod-$27$ fibers. S3(d) and the boundary numbers concern
+lift-set sizes and remain [COMPUTED].
 
 %======================================================================
 \section{Conclusion}
 %======================================================================
 
-We have stated, proved where possible, and formalized where staged, two
-structural results: the sieve-inversion theory (the 44-CRT selectivity
-lemma, the exact six-class support, its inverse-closure, and the exact
-saturated-regime boundary at $2^{13}$) and the branch-isolation lemmas
-(u-branch isolation and the degree-essential u-side bound $5<6$).
-The Lean record is: \url{crt44_forward},
-\url{crt44_backward}, \url{crt44_iff} [PROVED] on axioms
-narrower than standard; \url{sixClasses_inv_closed},
-\url{crt_inv_compose}, \url{S1_subset} [PROVED*] under
-staged verification; \url{uBranch_isolation},
-\url{closeImage_disjoint_of_subset},
-\url{uSide_degree_bound},
-\url{r163_uSideBound_inHclique} [PROVED] on standard axioms ---
-all with \texttt{lake build} exit~0 and zero sorrys on bakkie.
-Open ahead: the coordinator's \url{native_decide} ruling, the
-far-point lemma closing (R2)-Hall, and the dual-law decay test at the
-next large-$w$ frontier.
+The kernel-checked results are the 44-CRT selectivity lemma, the
+explicit six-residue characterization and inverse-closure, the
+mod-$3960$ CRT composition, the embedded $q=19$ lift-set equality,
+and the conditional branch-isolation lemmas. The corrected residue
+module has no native certificate axioms. The external sieve provenance,
+$q=23$ exactness, the saturated-regime boundary, and the far-point
+lemma needed for (R2)-Hall remain outside those formalized claims.
 
 %======================================================================
 \section{References}
@@ -642,13 +630,10 @@ counterexamples.)
 %     proved abstract lemmas. The "proof" therefore contains
 %     certificate-style premises; a skeptical reader would want them
 %     promoted to standalone lemmas with real arguments.
-% W2. Three of the six formalized sieve theorems sit at [PROVED*]
-%     because of native_decide certificate axioms. Until the
-%     coordinator rules on whether Lean-generated native_decide
-%     certificates count as standard-axiom proofs, the paper's
-%     headline inverse-closure claims (S2, CRT composition, S1
-%     subset) cannot be cited as [PROVED] — the most consequential
-%     results are the least securely labeled.
+% W2. The 2026-10-23 correction replaced all three native proof calls
+%     with kernel-checked arithmetic; the seven affected dependencies
+%     now use standard axioms only. This does not close the separate
+%     external-sieve or general-fiber formalization gaps.
 % W3. The branch-isolation formalization is deliberately abstracted
 %     (generic Adj, pure combinatorics) and does not check the R145
 %     premises — injectivity of phi on Z0^close (from the C4-ban) and

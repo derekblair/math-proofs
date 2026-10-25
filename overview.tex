@@ -7,7 +7,7 @@
 
 \title{Overview of the math-proofs Collection}
 \author{Derek Blair}
-\date{October 2026}
+\date{October 23, 2026 --- corrected source}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{conjecture}{Conjecture}
@@ -17,15 +17,12 @@
 
 \begin{abstract}
 This document describes the result families in the \texttt{math-proofs}
-collection: machine-checked mathematics in which every proven result ships as
-a paper preprint (human-readable argument) paired with its Lean~4
-formalization (machine-checked proof). Manuscripts are organized into
-families; each family groups a principal result with companion arguments,
-consequences, or alternative proofs. All formalizations typecheck with
-\texttt{lake build} under Lean~4.34.1 + Mathlib~v4.34.1. The per-theorem
-verification status and axiom dependencies are recorded in
-\texttt{formalization.yaml} (machine-readable) and
-\texttt{FORMALIZATION\_CATALOGUE.md} (human-readable).
+collection of Lean~4 formalizations and accompanying manuscripts. The exported
+Lean statements determine the proved scope. Some larger research claims still
+require identifications, external inputs, or assemblies that are not formalized;
+those boundaries are stated below. The project pins Lean~4.34.1 and
+Mathlib~v4.34.1. Selected theorem names, statuses, and axiom dependencies appear
+in \texttt{formalization.yaml} and \texttt{FORMALIZATION\_CATALOGUE.md}.
 \end{abstract}
 
 \section{Labeling convention}
@@ -37,14 +34,24 @@ verification status and axiom dependencies are recorded in
 Label & Meaning \\
 \midrule
 \texttt{[PROVED]} & Machine-checked by Lean; no axioms beyond Lean's standard ones. \\
-\texttt{[PROVED*]} & Typechecks cleanly but depends on explicitly labeled classical-input axioms. \\
-\texttt{[SOLVED]} & Computationally established on independent code paths (no Lean proof yet). \\
+\texttt{[CONDITIONAL]} & Larger interpretation requires the explicit theorem inputs. \\
+\texttt{[PROVED*]} & Staged publication status; the checked scope remains the named statement. \\
+\texttt{[COMPUTED]} & External computation, not a Lean kernel certificate. \\
 \bottomrule
 \end{tabular}
 \caption{Status labels used throughout the collection.}
 \end{table}
 
 Nothing in this collection is claimed on the basis of a \texttt{sorry}.
+A conditional theorem can be kernel-checked without establishing the external
+inputs needed for a broader application.
+
+\paragraph{Artifact status.}
+This corrected \texttt{overview.tex} is authoritative. The existing overview,
+ES identity, ES barrier, r47, and sieve-inverse PDFs are historical
+pre-correction artifacts. Their corrected TeX sources and current catalogues
+state the current scope; the PDFs were not regenerated because this lane has
+no TeX toolchain.
 
 \section{Family 001 --- Erd\H{o}s--Straus identities and obstructions}
 
@@ -56,80 +63,147 @@ Results on representing $4/n$ as a sum of three unit fractions.
 \toprule
 ID & Result & Status & Lean module \\
 \midrule
-ES-001 & New covering identity for $n \equiv 217 \pmod{264}$ & \texttt{[PROVED]} & \texttt{ESIdentity.lean} \\
-ES-002 & Finite-identity barrier on square classes mod~840 & \texttt{[PROVED*]} & \texttt{ESBarrier.lean} \\
+ES-001 & Positive natural covering witnesses for $n \equiv 217 \pmod{264}$ & \texttt{[PROVED]} & \texttt{ESIdentity.lean} \\
+ES-002 & CRT escape from supplied local obstructions & \texttt{[PROVED]} & \texttt{ESBarrier.lean} \\
 \bottomrule
 \end{tabular}
 \caption{Family 001 manuscripts.}
 \end{table}
 
-\textbf{ES-001} gives a new covering identity
+\textbf{ES-001} proves that every natural $n\equiv217\pmod{264}$ has
+positive natural denominators $x,y,z$ with
 \[
-\frac{4}{n} = \frac{1}{(n+3)/4} + \frac{1}{n(n+3)} + \frac{11}{n(n+3)},
-\qquad n \equiv 217 \pmod{264},
+4x=n+3,\qquad y=n(n+3),\qquad 11z=n(n+3),\qquad
+\frac4n=\frac1x+\frac1y+\frac1z.
 \]
-covering the prime $1009$ --- the smallest prime missed by the published
-Mordell/Yamamoto/Rosati identities. The formalized theorem is
-\texttt{es\_identity\_217mod264}, depending only on Lean's standard axioms
-(\texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}).
+The theorem \texttt{es\_covering\_217mod264} includes positivity,
+integrality, the denominator equations, and the unit-fraction identity.
+The compatible rational-equality lemma is
+\texttt{es\_identity\_217mod264}; both use standard Lean axioms only.
+The example $n=1009$ is included in the module.
+\texttt{ESIdentityCRT.lean} proves the exact six covered subclasses modulo
+9240, positive covering witnesses for their members, and exactly one out
+of eleven subclasses of each parent residue modulo 840. This is a residue
+count, not a prime-density or historical-priority theorem.
+The former novelty claim is withdrawn in light of Lopez (2024),
+\href{https://arxiv.org/html/2206.10319v4}{arXiv:2206.10319v4};
+the corrected ES-001 manuscript records the prior art and specialization.
 
-\textbf{ES-002} proves that no finite system of polynomial identities
-$4/(A_i t + B_i) = \sum 1/F_{ij}(t)$ with positive leading coefficients can
-cover a full square class mod~840: infinitely many primes escape every such
-system. Witness: $p = 77{,}598{,}049 \equiv 529 \pmod{840}$. The
-formalization carries two explicitly labeled classical-input axioms:
-\texttt{schinzel\_mordell} and \texttt{dirichlet\_arith\_prog}.
+\textbf{ES-002} exports \texttt{es\_crt\_escape}: for finitely many
+progressions with $8\mid A_i$ and an explicit local obstruction for each
+$B_i$, infinitely many primes in each listed square class modulo~840 avoid
+every progression. The supplied obstruction is either an odd prime
+$q\mid A_i$ for which $B_i$ is a nonsquare modulo $q$, or $B_i\not\equiv1
+\pmod8$. The CRT argument and Mathlib's general Dirichlet theorem give a
+proof with no custom axioms. The former inconsistent assumptions and the
+false rational-polynomial \texttt{es\_barrier} statement were removed.
+The Schinzel--Mordell implication from integer polynomial identities to
+these local obstructions is not formalized; no polynomial-identity barrier
+is asserted as an end-to-end Lean theorem.
 
 \section{Family 002 --- Collatz convergent control (gap-factor theory)}
 
-A machine-checked theory of the gap factor $G(t)$ on from-above blocks of
-$\log_2 3$'s continued fraction, developed across thirteen Lean modules:
-the complete-quotient API for irrationals (\texttt{CollatzGapCF}),
-the C24 tail-mirror selector and strict dichotomy (\texttt{CollatzGapC24},
-\texttt{CollatzGapC24Lemma3}), C23 sinh estimates
-(\texttt{CollatzGapC23}, \texttt{CollatzGapSinh}), the C22/C25/C26 assembly
-(\texttt{CollatzGapC22C25}), C18b convexity and the C26 margin-duality
-trichotomy (\texttt{CollatzGapConvex}), C29 discrepancy dominance and its
-from-below mirror (\texttt{CollatzGapC29}, \texttt{CollatzGapC29Mirror}),
-and the C64/C64b hump-law identity kernel (\texttt{CollatzGapHump}).
-All modules are \texttt{[PROVED]} with standard axioms only; preprints are in
-preparation.
+Twelve modules prove general continued-fraction identities, analytic lemmas,
+and conditional argmin assemblies: the complete-quotient API
+(\texttt{CollatzGapCF}); C24 selectors and first-difference rules
+(\texttt{CollatzGapC24}, \texttt{CollatzGapC24Lemma3}); analytic estimates
+and comparison helpers (\texttt{CollatzGapSinh}, \texttt{CollatzGapDelta});
+discrete monotonicity and C26 margin duality (\texttt{CollatzGapConvex});
+C23 and C22/C25/C26 assemblies (\texttt{CollatzGapC23},
+\texttt{CollatzGapC22C25}); discrepancy bounds
+(\texttt{CollatzGapC29}, \texttt{CollatzGapC29Mirror}); and the hump-law
+identity kernel (\texttt{CollatzGapHump}). These named statements are
+\texttt{[PROVED]} with standard axioms only.
+
+The repaired \texttt{GapCF.c26c} gives both selector equivalences, with
+its quantitative $K(n)$ hypothesis required only when $\rho<r$.
+\texttt{c22\_upper} and \texttt{c22\_argmin} now export the conditional
+odd-block upper bound and argmin equality. \texttt{c29\_strict} exports
+strict interior discrepancy positivity, and the argmin helper includes
+membership of the selected index in its domain.
+
+\texttt{CollatzGapFactor.lean} defines the explicit product
+\[
+G(t)=\frac{Q(t+1)}{Q(t)}\frac{2^{x(t)}-1}{2^{x(t+1)}-1},\qquad
+Q(t)=tq'+q'',\quad x(t)=(a-t)d+e.
+\]
+It proves positivity, $\log G=T+S$, and the logarithmic adjacent-difference
+bridge. Under C22's existing quantitative hypotheses, the factor has a
+unique minimum at $m$ on $\{1,\ldots,2m\}$; the bridge and existence of a
+minimizer are proved. Identifying the parameters with the continued fraction
+of $\log_2 3$ and Collatz dynamics remains unassembled.
+The full C64/C64b hump laws also require further assembly beyond the
+exported identities and bounds. These larger interpretations are
+\texttt{[CONDITIONAL]}, not completed concrete Collatz theorems.
 
 \section{Family 003 --- Erd\H{o}s--Straus witness-complex and QR-core theory}
 
-A machine-checked theory of Erd\H{o}s--Straus covering families on refined
-moduli: the witness complex $W(M)$ (\texttt{WitnessComplexThm2},
-\texttt{WitnessComplexThm13}), the T2 prime-square obstruction
-(\texttt{ESPrimeSquareT2}), the T1 two-case theorem (\texttt{EST1TwoCase}),
-and the QR-core --- the set of quadratic-residue classes missed by both
-covering systems --- with its exact count $|Q| = |S|/2^k$
-(\texttt{ESQRCore}, \texttt{ESQRCoreCount}), the 5/7-forcing lemma
-(\texttt{ESFiveSevenForcing}), the mod-7 universal families and
-fiber-pinning lemma (\texttt{ESMod7UniversalFamilies}), the X0/S1S3 descent
-core (\texttt{ESX0S1S3}), general descent transfer
-(\texttt{ESDescentTransfer}), and the pair-specific conditional SDR endgame
-(\texttt{ESBranchSDREndgame}). All modules are \texttt{[PROVED]} with
-standard axioms only; preprints are in preparation.
+The modules prove witness-complex arithmetic, T1/T2 square obstructions,
+5/7 forcing, descent kernels, and a pair-specific SDR endgame.
+\texttt{ESCovering.lean} now constructs positive natural denominators from
+the splitting premises. All three mod-7 universal families, T1 classes
+at $w=20$, and T2 fibers at $q=7$ export complete covering statements,
+including the first member of each progression.
+
+\texttt{ESQRCoreCount.qr\_residue\_count} proves $|Q|=|S|/2^k$ for
+$M=24\prod_{p\in s}p$, where $s$ is a finite set of primes at least five,
+$S$ is the unit residues congruent to one modulo 24, and $Q$ is its subset
+of squares modulo $M$. Both CRT equivalences and the equivalence of square
+solvability are proved. This does not identify an externally filtered
+frontier with $S$. Cubic exclusion, external coverage tables, and R74
+sweep data remain outside these statements.
+\texttt{ESDescentCovering.lean} proves the branch-2 denominator algebra
+and composes the $(0,0)$ and $(1,1)$ arithmetic transfers with positive
+parent-progression identities. The required slope, intercept, and parameter
+normalizations remain explicit; a classification of all external identities
+into these normalizations is not proved. Preprints are in preparation.
 
 \section{Family 004 --- Girth-5 extremal graphs}
 
-\textbf{G5-001} is the 3v floor theorem for girth-5 graphs
-(\texttt{Girth5Floor3v.lean}, \texttt{[PROVED]}): the emitted-graph
-re-attachment model and cross-edge harmlessness argument, showing that no
-improving 3v move exists on the extremal graphs. Preprint in preparation.
+\textbf{G5-001} (\texttt{Girth5Floor3v.lean}) proves local reattachment
+kernels using corrected feasibility conditions: attachment containment,
+guards on candidate internal edges, and restrictions for internal two-edge
+paths. The identity move is feasible and attains score $D$, yielding the
+floor. For every feasible move on a distinct triple,
+\texttt{feasible\_emit\_noTri} and \texttt{feasible\_emit\_noC4}
+prove general cycle exclusion, and \texttt{emittedGraph} constructs a
+simple graph of girth at least five. Five invalid-move regressions and two
+identity examples are included in \texttt{Girth5Floor3vRegression.lean}.
+\texttt{Girth5Extremal.lean} counts unordered edges and proves
+$e(G')+D=e(G)+\mathrm{score}$ for every feasible replacement.
+Global maximality of $e(G)$ among all girth-five graphs on the vertex type
+therefore implies the score ceiling. The new rigidity and gap theorems
+conclude maximum score $D$ and gap $-1$ without assuming that ceiling.
+Preprint in preparation.
 
 \section{Family 005 --- q-adic classification of Erd\H{o}s--Straus witnesses}
 
-\textbf{QA-001} is the branch-1 q-adic type theorem
-(\texttt{ESQadicBranch1.lean}, \texttt{[PROVED]}): $v_q(r) \le v_q(A)$ on
-refined targets, the first classification theorem for the q-adic types of
-Erd\H{o}s--Straus witnesses. Preprint in preparation.
+\textbf{QA-001} is a \texttt{[CONDITIONAL]} classification:
+\texttt{ESQadicBranch1.qadic\_type\_restriction} proves
+$v_q(r)\le v_q(A)$ under its explicit QQ-integrality, M23 divisibility,
+and R74 no-descended-bundle inputs. The arithmetic kills and descent
+lemmas are kernel-checked using standard axioms. The external R74 sweep
+and the full framework supplying the QQ/M23 inputs are not proved here.
+\texttt{ESQadicBoundary.lean} proves $\alpha\le1$ and $\rho\le1$
+without the sweep premise and derives $q\nmid m$ from the supplied M23
+congruence. A fully checked generic type-$(0,1)$ example shows that simply
+deleting R74 would be false; it does not refute the fixed refined-target
+claim. Preprint in preparation.
 
 \section{Family 006 --- Saturated Sidon sets}
 
-\textbf{SS-001} (\texttt{[SOLVED]}): the set
-$\{16, 62, 66, 74, 88, 104, 117, 122, 123\}$ is Sidon and saturated in
-$[1,184]$, verified on three independent code paths. Paper:
+\textbf{SS-001} (\texttt{[PROVED]}):
+\texttt{SidonSat184.r47\_sat184} proves that
+$\{16,62,66,74,88,104,117,122,123\}$ has nine elements and is a Sidon
+subset of $[1,184]$ with no admissible extension in that interval. The
+finite checks are evaluated by Lean's kernel, with standard axioms only.
+\texttt{unique\_extension\_saturated} supplies the general extension lemma.
+\texttt{SidonSat184Census.lean} additionally checks the nine displayed
+one-hole rows, their 183 blocked positions, the saturated ten-element
+extensions, and both C28 gate counterexamples.
+Ancillary searches remain separate external computations. Search
+exhaustiveness, minimality, and priority claims are not conclusions of
+this theorem. Paper:
 \texttt{papers/r47-sat184-October-7-2026/}.
 
 \section{Family 007 --- Erd\H{o}s--Straus fiber compatibility and suppression}
@@ -209,7 +283,11 @@ defect-homomorphism rigidity/counts (\texttt{VoidDefectHom.lean},
 
 \textbf{ES-005} (\texttt{[PROVED]}): the ES absorption poset and
 redundancy rank --- A1--A3, $\rho$/R3$'$/R3$''$/T/R4$'$ superadditivity,
-singleton factorization (\texttt{ESAbsorptionOrder.lean}); the forcing
+singleton factorization (\texttt{ESAbsorptionOrder.lean}). The datum
+equivalence assumes $C_G\ne\emptyset$; absorption collapse and its unique
+core assume $C_H\ne\emptyset$. Singleton factorization uses a finite
+ambient family $\mathcal G\supseteq S$, with $C_g\ne\{c\}$ for all
+$c\in S_0$ and $g\in\mathcal G$. Also proved are the forcing
 spectrum partition S2(a)$'$/S2(b--d)/S3/S4
 (\texttt{ESForcingSpectrum.lean}); and the forcing decomposition theorems
 A--D (\texttt{ESForcingDecomp.lean}). Paper:
@@ -217,11 +295,12 @@ A--D (\texttt{ESForcingDecomp.lean}). Paper:
 
 \section{Family 015 --- Sieve inversion and branch isolation}
 
-\textbf{ES-006}: the 44-CRT sieve inversion
-(\texttt{crt44\_forward/backward/iff} in \texttt{ESRefinedSieveInverse.lean},
-\texttt{[PROVED]} with narrower-than-standard axioms; three
-\texttt{native\_decide} theorems \texttt{[PROVED*]}) and u-branch isolation
-(\texttt{ESUBranchIsolation.lean}, \texttt{[PROVED]}, standard axioms).
+\textbf{ES-006}: \texttt{ESRefinedSieveInverse.lean} proves the 44-CRT
+identities, six-class exactness and inverse closure, CRT composition, and
+lift-projection statements by kernel proofs. The former native-computation
+certificate axioms have been removed. These results and the u-branch
+isolation results in \texttt{ESUBranchIsolation.lean} are
+\texttt{[PROVED]} using standard axioms only.
 Paper: \url{papers/sieve-inverse-branch-isolation-October-11-2026/}.
 
 \section{Summary of families}
@@ -232,12 +311,12 @@ Paper: \url{papers/sieve-inverse-branch-isolation-October-11-2026/}.
 \toprule
 Family & Subject & Modules \\
 \midrule
-001 & Erd\H{o}s--Straus identities and obstructions & 2 \\
-002 & Collatz convergent control (gap-factor theory) & 13 \\
-003 & Erd\H{o}s--Straus witness-complex and QR-core theory & 11 \\
-004 & Girth-5 extremal graphs & 1 \\
-005 & q-adic classification of ES witnesses & 1 \\
-006 & Saturated Sidon sets & 0 (computational) \\
+001 & Erd\H{o}s--Straus identities and obstructions & 3 \\
+002 & CF identities and conditional gap-factor assemblies & 12 \\
+003 & Erd\H{o}s--Straus witness-complex and QR-core theory & 13 \\
+004 & Girth-5 graphs (including regression module) & 3 \\
+005 & q-adic classification of ES witnesses & 2 \\
+006 & Saturated Sidon sets & 2 \\
 007 & ES fiber compatibility and suppression & 5 \\
 008 & Sidon hole suppression and absorption & 3 \\
 009 & Translation marches and dip mechanics & 5 \\

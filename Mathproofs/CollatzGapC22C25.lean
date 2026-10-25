@@ -11,7 +11,7 @@ This module machine-checks the remaining `[PROVED*]` members of the gap-factor
 batch:
 - **C22 Theorem 3** (odd-a argmin): `t* ≥ m` unconditionally (`c22_lower`),
   and `Δ(m) > 0` under the explicit `L(n)` condition, hence `t* = m`
-  (`c22_delta_pos_at`, `c22_upper`);
+  (`c22_delta_pos_at`, `c22_upper`, `c22_argmin`);
 - **C25(a)** (even-a lower bracket): `t* ≥ m−1` unconditionally, zero
   Diophantine input (`c25a`);
 - **C25(b)** (even-a upper bracket): `t* ≤ m` under the explicit checkable
@@ -26,9 +26,10 @@ superlinearity), `gap_sinh_le_mul_exp` (sub-lemma E: sinh upper envelope),
 form), `gapDelta_strictly_increasing` (C18b), `gap_margin_duality` (C26 proper),
 `c23a` / `c23b` (C23 assembly), `cf_selector_ne` (C24 strict dichotomy).
 
-Convention: every assembled theorem takes the CF/analysis variable
-identifications and the `Δ = g(t+1) − g(t)` bridge as explicit hypotheses,
-in the style of `c23a` / `c23b`.
+Scope: the argmin assemblies take the CF/analysis variable identifications
+and the `Δ = g(t+1) − g(t)` bridge as explicit hypotheses. `c26c` directly
+compares the analytic margins and CF selector, with K(n) required only
+when `ρ < r`. No theorem here specializes a concrete Collatz gap function.
 
 Checked with Lean 4.34.1 + Mathlib v4.34.1 on xavier (R101):
 c26a/c26b/c26c, gapDeltaLogT_pos/neg_chain, log_one_add_div_one_sub_ge all
@@ -675,70 +676,60 @@ theorem c26b {g : ℕ → ℝ} {tstar m : ℕ} {qp qpp d dn rho r : ℝ}
   have hlb := argmin_ge_of_dec g (2*m-1) m tstar (by omega) (by omega) hdom harg hdec
   omega
 
-/-- **C26c** (`c26_proofs_r36.md` Corollary C26c, the selector in disguise):
-under C25(b)'s hypothesis (and C23(b)'s `K(n)` for the `ρ < r` direction),
-`M⁻ < M⁺ → ρ < r` and `M⁻ > M⁺ → ρ > r` — the margin order IS the C23
-selector. Uses `c26a`/`c26b` for the argmin readings, `c23a`/`c23b` for the
-selector, and `cf_selector_ne` (ρ≠r always) to close the trichotomy. -/
-theorem c26c {g : ℕ → ℝ} {tstar m : ℕ} {qp qpp d dn rho r : ℝ} {α : ℝ} {n : ℕ}
+/-- **C26c**, conditional selector equivalences: the K(n) lower bound is
+required only in the regime `ρ < r`. Consequently the other regime remains
+available. The proof uses the analytic sign estimates directly, without
+assuming an argmin or its value. The CF identifications supply `ρ ≠ r`.
+As in the other assemblies, these are statements about the explicit analytic
+model, with the CF variable identifications supplied as hypotheses. -/
+theorem c26c {m : ℕ} {qp qpp d dn rho r : ℝ} {α : ℝ} {n : ℕ}
     (hirr : Irrational α)
     (hrho_cf : rho = |cerr α (n+2)| / |cerr α (n+1)|)
     (hr_cf : r = Q α n / Q α (n+1))
     (hm : 3 ≤ m) (hqp : 0 < qp) (hqpp : 0 < qpp) (hd : 0 < d) (hdn : 0 < dn)
-    (hqpp_le : qpp ≤ qp)
-    (hr0 : 0 ≤ r) (hr1 : r < 1) (hrho0 : 0 < rho) (hrho1 : rho < 1)
+    (hr1 : r < 1) (hrho0 : 0 < rho) (hrho1 : rho < 1)
     (hdn_eq : dn = rho * d) (hqpp_eq : qpp = r * qp)
     (hdelta' : d = 1 / (qp * (2*(m:ℝ) + r + rho)))
-    (hcond : (Real.log 2)^2 * ((m:ℝ)+1) / 96 ≤ qp^2)
-    (hK : 3 * (Real.log 2)^2 / 128 * ((m:ℝ) + 1) ≤ qp^2 * (r - rho))
-    (hdom : 1 ≤ tstar ∧ tstar ≤ 2*m - 1)
-    (harg : ∀ t : ℕ, 1 ≤ t → t ≤ 2*m - 1 → g tstar ≤ g t)
-    (hdelta : ∀ t : ℕ, 1 ≤ t → t ≤ 2*m - 2
-      → g (t+1) - g t = gapDeltaLogT qp qpp d dn (2*(m:ℝ)) (t:ℝ)) :
+    (hK : rho < r →
+      3 * (Real.log 2)^2 / 128 * ((m:ℝ) + 1) ≤ qp^2 * (r - rho)) :
     (gapMminus qp qpp (d*Real.log 2/2) m (dn/d) < gapMplus qp qpp (d*Real.log 2/2) m (dn/d)
-      → rho < r)
+      ↔ rho < r)
     ∧ (gapMplus qp qpp (d*Real.log 2/2) m (dn/d) < gapMminus qp qpp (d*Real.log 2/2) m (dn/d)
-      → r < rho) := by
+      ↔ r < rho) := by
+  have hmR : (3:ℝ) ≤ (m:ℝ) := by exact_mod_cast hm
   have hrpos : (0:ℝ) < r := by
     by_contra hcon
-    push Not at hcon
-    have hle := mul_nonpos_of_nonpos_of_nonneg hcon hqp.le
+    have hle := mul_nonpos_of_nonpos_of_nonneg (le_of_not_gt hcon) hqp.le
     rw [← hqpp_eq] at hle
-    linarith [hqpp]
+    linarith
   have hne : rho ≠ r := by
     rw [hrho_cf, hr_cf]
     exact cf_selector_ne hirr n
-  have harg23 : ∀ t : ℕ, t = m - 1 ∨ t = m → g tstar ≤ g t := by
-    intro t ht
-    cases ht with
-    | inl h => rw [h]; exact harg (m-1) (by omega) (by omega)
-    | inr h => rw [h]; exact harg m (by omega) (by omega)
-  have hdelta23 : g m - g (m - 1) = gapDeltaLog qp qpp d dn (m : ℝ) := by
-    have h1 : g ((m-1)+1) - g (m-1) = gapDeltaLogT qp qpp d dn (2*(m:ℝ)) (((m-1 : ℕ)):ℝ) :=
-      hdelta (m-1) (by omega) (by omega)
-    have e1 : m - 1 + 1 = m := by omega
-    rw [e1] at h1
-    have e2 : ((m-1 : ℕ):ℝ) = (m:ℝ) - 1 := by
-      rw [Nat.cast_sub (by omega : 1 ≤ m)]; simp
-    rw [e2, gapDeltaLogT_eq_gapDeltaLog] at h1
-    exact h1
+  have hdual := gap_margin_duality hmR hqp hqpp hd hdn
+  simp only [gt_iff_lt] at hdual
+  have hpos (hrr : rho < r) : 0 < gapDeltaLog qp qpp d dn (m:ℝ) :=
+    c23b_delta_pos (by linarith) hqp hqpp hd hrho0 hrho1 hrpos hr1 hrr
+      hdn_eq hqpp_eq hdelta' (hK hrr)
+  have hneg (hrr : r ≤ rho) : gapDeltaLog qp qpp d dn (m:ℝ) < 0 :=
+    c23a_delta_neg (by linarith) hqp hqpp hd hrho0 hrpos hrr hdn_eq hqpp_eq
   constructor
-  · intro hM
-    have hts := c26a hm hqp hqpp hd hdn hqpp_le hM hdom harg hdelta
-    by_contra hcon
-    push Not at hcon
-    have hts2 := c23a (by omega) hqp hqpp hd hrho0 hrpos hcon hdn_eq hqpp_eq
-      (Or.inl hts) harg23 hdelta23
-    omega
-  · intro hM
-    have hts := c26b hm hqp hqpp hd hdn hr0 hrho0 hrho1 hdn_eq hqpp_eq
-      hdelta' hcond hM hdom harg hdelta
-    rcases lt_trichotomy rho r with h | h | h
-    · have hts2 := c23b (by omega) hqp hqpp hd hrho0 hrho1 hrpos hr1 h hdn_eq hqpp_eq
-        hdelta' hK (Or.inr hts) harg23 hdelta23
-      omega
-    · exact absurd h hne
-    · exact h
+  · rw [hdual.1]
+    constructor
+    · intro h
+      by_contra hrr
+      have hcontra := hneg (le_of_not_gt hrr)
+      linarith
+    · exact hpos
+  · rw [hdual.2.1]
+    constructor
+    · intro h
+      rcases lt_trichotomy rho r with hrr | heq | hrr
+      · have hcontra := hpos hrr
+        linarith
+      · exact (hne heq).elim
+      · exact hrr
+    · intro hrr
+      exact hneg hrr.le
 
 /-! ## C22 upper bound: `Δ(m) > 0` under the explicit `L(n)` condition
 
@@ -845,8 +836,7 @@ theorem c22_delta_pos_at {m : ℕ} {qp qpp d dn rho r : ℝ}
     (hr : 0 ≤ r) (hrho : 0 < rho) (hrho1 : rho < 1)
     (hdn_eq : dn = rho * d) (hqpp_eq : qpp = r * qp)
     (hdelta' : d = 1 / (qp * (2*(m:ℝ)+1 + r + rho)))
-    (hL : (Real.log 2)^2 ≤ 192 * qpp * qp^2 / ((2*(m:ℝ)+2)*qp + qpp))
-    (hm3 : (3:ℝ) ≤ (m:ℝ) - 1) :
+    (hL : (Real.log 2)^2 ≤ 192 * qpp * qp^2 / ((2*(m:ℝ)+2)*qp + qpp)) :
     0 < gapDeltaLogT qp qpp d dn (2*(m:ℝ)+1) (m:ℝ) := by
   have hlog2 : (0:ℝ) < Real.log 2 := Real.log_pos (by norm_num)
   have hmpos : (0:ℝ) < (m:ℝ) := by exact_mod_cast (by omega : 0 < m)
@@ -1079,5 +1069,52 @@ theorem c22_delta_pos_at {m : ℕ} {qp qpp d dn rho r : ℝ}
     rw [show gapQ qp qpp ((m:ℝ)+1) = (((m:ℝ)+1)*qp+qpp) from rfl]
   rw [hfin]
   exact hgt.mpr key
+
+/-- **C22 upper bound**: in the odd-a analytic model, the L(n) condition
+forces every minimizer on `{1,…,2m}` to lie at or before `m`. The bridge to
+an arbitrary objective `g` is an explicit hypothesis. -/
+theorem c22_upper {g : ℕ → ℝ} {tstar m : ℕ} {qp qpp d dn rho r : ℝ}
+    (hm : 2 ≤ m) (hqp : 0 < qp) (hqpp : 0 < qpp) (hd : 0 < d) (hdn : 0 < dn)
+    (hr : 0 ≤ r) (hrho : 0 < rho) (hrho1 : rho < 1)
+    (hdn_eq : dn = rho * d) (hqpp_eq : qpp = r * qp)
+    (hdelta' : d = 1 / (qp * (2*(m:ℝ)+1 + r + rho)))
+    (hL : (Real.log 2)^2 ≤ 192 * qpp * qp^2 / ((2*(m:ℝ)+2)*qp + qpp))
+    (hdom : 1 ≤ tstar ∧ tstar ≤ 2*m)
+    (harg : ∀ t : ℕ, 1 ≤ t → t ≤ 2*m → g tstar ≤ g t)
+    (hdelta : ∀ t : ℕ, 1 ≤ t → t ≤ 2*m - 1
+      → g (t+1) - g t = gapDeltaLogT qp qpp d dn (2*(m:ℝ)+1) (t:ℝ)) :
+    tstar ≤ m := by
+  have hbase := c22_delta_pos_at hm hqp hqpp hd hdn hr hrho hrho1
+    hdn_eq hqpp_eq hdelta' hL
+  have hinc : ∀ t : ℕ, m ≤ t → t ≤ 2*m - 1 → g t < g (t+1) := by
+    intro t hmt ht
+    have hcast : (t:ℝ) ≤ 2*(m:ℝ) - 1 := by
+      have h : t + 1 ≤ 2*m := by omega
+      have hR : (t:ℝ) + 1 ≤ 2*(m:ℝ) := by exact_mod_cast h
+      linarith
+    have hpos := gapDeltaLogT_pos_chain hqp hqpp hd hdn (b := m)
+      (a := 2*(m:ℝ)+1) (by omega) hbase hmt (by linarith)
+    have hbr := hdelta t (by omega) ht
+    linarith
+  exact argmin_le_of_inc g (2*m) m tstar (by omega) (by omega) hdom harg hinc
+
+/-- **C22 argmin conclusion**: combining the lower and upper bounds yields
+`tstar = m`, under the stated analytic identifications and L(n) condition. -/
+theorem c22_argmin {g : ℕ → ℝ} {tstar m : ℕ} {qp qpp d dn rho r : ℝ}
+    (hm : 2 ≤ m) (hqp : 0 < qp) (hqpp : 0 < qpp) (hd : 0 < d) (hdn : 0 < dn)
+    (hqpp_le : qpp ≤ qp)
+    (hr : 0 ≤ r) (hrho : 0 < rho) (hrho1 : rho < 1)
+    (hdn_eq : dn = rho * d) (hqpp_eq : qpp = r * qp)
+    (hdelta' : d = 1 / (qp * (2*(m:ℝ)+1 + r + rho)))
+    (hL : (Real.log 2)^2 ≤ 192 * qpp * qp^2 / ((2*(m:ℝ)+2)*qp + qpp))
+    (hdom : 1 ≤ tstar ∧ tstar ≤ 2*m)
+    (harg : ∀ t : ℕ, 1 ≤ t → t ≤ 2*m → g tstar ≤ g t)
+    (hdelta : ∀ t : ℕ, 1 ≤ t → t ≤ 2*m - 1
+      → g (t+1) - g t = gapDeltaLogT qp qpp d dn (2*(m:ℝ)+1) (t:ℝ)) :
+    tstar = m := by
+  have hlower := c22_lower (by omega) hqp hqpp hd hdn hqpp_le hdom harg hdelta
+  have hupper := c22_upper hm hqp hqpp hd hdn hr hrho hrho1
+    hdn_eq hqpp_eq hdelta' hL hdom harg hdelta
+  omega
 
 end GapCF

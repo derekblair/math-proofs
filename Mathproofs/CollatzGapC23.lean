@@ -10,10 +10,11 @@ open scoped Nat
 
 Source: `~/workspace/math-unsolved/c23_proofs_r27.md` (Round 27).
 
-C23 resolves the even-a split: on a from-above block with even `a_n = 2m ≥ 4`,
-the argmin `t*` of `G` is `m` or `m-1`, decided by the selector `ρ ⋚ r`
-(C24 Lemma 2, now [PROVED], gives `ρ ⋚ r ↔ T ⋛ M`; C24 Lemma 3, now [PROVED],
-decides `T ⋛ M` by the finite first-difference rule).
+C23 gives conditional selectors for the even-a analytic model `a_n = 2m ≥ 4`.
+Given an argmin already localized to `{m-1,m}` and the adjacent-difference
+identification, `ρ ≥ r` selects `m`; `ρ < r` selects `m-1` under the explicit
+K(n) threshold. C24 gives `ρ ⋚ r ↔ T ⋛ M` and the finite first-difference rule.
+These results do not by themselves specialize a concrete Collatz gap function.
 
 This module machine-checks the two hyperbolic estimates at the heart of
 C23's proof (Steps 2–3 of `c23_proofs_r27.md`):
@@ -26,9 +27,9 @@ C23's proof (Steps 2–3 of `c23_proofs_r27.md`):
   `sinh w ≤ w·exp(w²/6)`. Termwise from the Taylor series
   `sinh w = ∑ w^{2k+1}/(2k+1)!`, using `(2k+1)! ≥ 6^k·k!`.
 
-The full C23(a) assembly (wiring these through the R24 criterion
-`gap_criterion_CF`, C18b `gapDelta_strictly_increasing`, and C21's range
-to the argmin conclusion `t* = m` / `t* = m-1`) is in progress: R81 added
+The conditional C23(a) assembly uses the R24 criterion `gap_criterion_CF`
+and an explicit two-point range hypothesis to obtain the argmin conclusion.
+R81 added
 the Step-0 argmin logic (`gap_argmin_step0`), the selector bridge
 (`c23a_selector_ge`, from C24 Lemma 2), the Δ-sign core
 (`c23a_delta_neg`, via `gap_criterion_CF` + `sinh_scaling_gt`), and the

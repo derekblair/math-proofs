@@ -35,17 +35,16 @@ Contents:
   `ρ = 1/α_{n+1}`: given the classical CF error formula
   `δₖ = 1/(α_{k+1}·qₖ + q_{k-1})` (taken as the definitions here),
   `δₙ/δ_{n-1} = 1/α_{n+1}` by pure algebra. The error formula itself
-  (from Mathlib's continued-fraction machinery) is not yet formalized.
+  is proved for the recursively defined CF data in `CollatzGapCF`.
 - `gap_argmin_of_delta_signs` — the argmin-selection algebra:
-  if `g` strictly decreases on `{1,…,m}` and strictly increases on
-  `{m,…,N}`, then `m` is the unique argmin on `{1,…,N}`.
+  for `m ∈ {1,…,N}`, if `g` strictly decreases on `{1,…,m}` and strictly
+  increases on `{m,…,N}`, then `m` is the unique argmin on `{1,…,N}`.
 
 Checked with Lean 4.34.1 + Mathlib v4.34.1, zero sorrys.
-Remaining for the full batch: Δ strict monotonicity (C18b — needs
-`HasDerivAt` plumbing for `S″(u) = (ln2)²(ψ(2^{u−δ′}) − ψ(2^u))` via
-ψ decreasing; the hand proof's algebra was verified symbolically),
-the C24 error formula from Mathlib CF theory, and wiring these
-self-contained lemmas to the CF definitions (`G`, `Q_t`, `x(t)`).
+The discrete Δ monotonicity and the CF error formula are proved in
+`CollatzGapConvex` and `CollatzGapCF`. These structural lemmas do not
+define a concrete Collatz gap function; later argmin assemblies retain
+the identification of that function as an explicit hypothesis.
 -/
 
 /-- Exact Δ-sign criterion (C22 Lemma 1, self-contained form).
@@ -241,8 +240,8 @@ Given the classical continued-fraction error formula
 `δₖ = 1/(α_{k+1}·qₖ + q_{k-1})` (taken here as the *definitions* of the
 two `δ` quantities), the complete-quotient relation `αₙ = aₙ + 1/α_{n+1}`
 and the denominator recurrence `qₙ = aₙ·q_{n-1} + q_{n-2}`, the ratio
-`δₙ/δ_{n-1}` equals `1/α_{n+1}` by pure algebra. The error formula itself
-(from Mathlib's continued-fraction theory) is not yet formalized. -/
+`δₙ/δ_{n-1}` equals `1/α_{n+1}` by pure algebra. `CollatzGapCF` separately
+proves the error formula for recursively defined continued fractions. -/
 theorem gap_cf_selector_identity (a_n α_np1 q_n q_nm1 q_nm2 : ℝ)
     (hα : 0 < α_np1) (ha : 1 ≤ a_n) (hq1 : 0 < q_nm1) (hq2 : 0 < q_nm2)
     (hqn : q_n = a_n * q_nm1 + q_nm2) :
@@ -263,17 +262,18 @@ theorem gap_cf_selector_identity (a_n α_np1 q_n q_nm1 q_nm2 : ℝ)
   rw [key]
   field_simp
 
-/-- Argmin-selection algebra (C22/C23/C25): from `Δ` signs to `t*`.
+/-- Strict comparison helper (C22/C23/C25): from `Δ` signs to comparisons.
 
 If `g` is strictly decreasing on `{1, …, m}` (i.e. `g(t+1) < g(t)` for
 `1 ≤ t`, `t+1 ≤ m`) and strictly increasing on `{m, …, N}` (i.e.
-`g(t) < g(t+1)` for `m ≤ t`, `t+1 ≤ N`), then `m` is the unique minimizer
-of `g` on `{1, …, N}`: `g m < g t` for every `t ∈ {1,…,N}`, `t ≠ m`.
+`g(t) < g(t+1)` for `m ≤ t`, `t+1 ≤ N`), then `g m < g t` for every
+`t ∈ {1,…,N}`, `t ≠ m`. This helper does not assert that `m` belongs to the interval; `gap_argmin_of_delta_signs`
+adds membership and exports the unique-minimizer statement.
 
 In the applications, `g = G` (or `ln G`), the decrease/increase comes
 from the Δ-sign criterion (`gap_delta_sign_criterion`) plus Δ strict
 monotonicity (C18b), e.g. C22: `Δ(m−1) < 0 < Δ(m)` gives `t* = m`. -/
-theorem gap_argmin_of_delta_signs (g : ℕ → ℝ) (m N : ℕ)
+theorem gap_lt_of_delta_signs (g : ℕ → ℝ) (m N : ℕ)
     (hdec : ∀ t, 1 ≤ t → t + 1 ≤ m → g (t + 1) < g t)
     (hinc : ∀ t, m ≤ t → t + 1 ≤ N → g t < g (t + 1)) :
     ∀ t, 1 ≤ t → t ≤ N → t ≠ m → g m < g t := by
@@ -323,3 +323,13 @@ theorem gap_argmin_of_delta_signs (g : ℕ → ℝ) (m N : ℕ)
     have htm2 : m + (t - m - 1) = t - 1 := by omega
     rw [htm2] at hle2
     linarith
+
+/-- Unique minimizer on `{1, …, N}`: the selected index belongs to the
+interval and has strictly smaller value than every other index in it. -/
+theorem gap_argmin_of_delta_signs (g : ℕ → ℝ) (m N : ℕ)
+    (hm1 : 1 ≤ m) (hmN : m ≤ N)
+    (hdec : ∀ t, 1 ≤ t → t + 1 ≤ m → g (t + 1) < g t)
+    (hinc : ∀ t, m ≤ t → t + 1 ≤ N → g t < g (t + 1)) :
+    (1 ≤ m ∧ m ≤ N) ∧
+      ∀ t, 1 ≤ t → t ≤ N → t ≠ m → g m < g t := by
+  exact ⟨⟨hm1, hmN⟩, gap_lt_of_delta_signs g m N hdec hinc⟩
