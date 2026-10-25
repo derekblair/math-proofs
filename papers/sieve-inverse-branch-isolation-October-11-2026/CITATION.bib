@@ -8,10 +8,13 @@
                   (s\equiv7\pmod{11}\iff s\equiv29\pmod{44})$)
                   is machine-checked in Lean~4.34.1 ([PROVED], axioms
                   $[\text{propext},\text{Quot.sound}]$); the six-class
-                  support inverse-closure theorems are Lean-checked
-                  with zero sorrys but carry per-theorem
-                  \texttt{native\_decide} certificate axioms
-                  ([PROVED*] staged). The u-branch isolation lemma and
+                  support inverse-closure theorems are kernel-checked
+                  with standard axioms only ([PROVED]); the former
+                  \texttt{native\_decide} certificate dependencies were
+                  removed in the 2026-10-23 correction. The lift-set
+                  equality is proved for $q=19$ and the embedded parent
+                  list; external sieve provenance and the $q=23$
+                  extension remain unformalized. The u-branch isolation lemma and
                   u-side degree bound $|Z_0^{\mathrm{close}}|
                   +|Z_0^{\mathrm{mid}}|\le d(u)-1=5<6=d(v)-1$ are
                   [PROVED] on standard axioms. Full \texttt{lake build}

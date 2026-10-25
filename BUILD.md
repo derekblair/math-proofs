@@ -26,5 +26,10 @@ latexmk -pdf -interaction=nonstopmode overview.tex
 ```
 
 Use each affected paper's `BUILD.md` for its working directory and commands.
+The absorption paper's two PDFs also predate remediation; its adjacent
+`SUPERSEDED.md` files identify both copies. The October 24 attempt with
+installed Tectonic failed because `tectonic-format-latex.tex` was unavailable
+in its cached resources. No package installation or PDF regeneration was
+performed; its corrected TeX source governs.
 The r47 paper includes the previously missing `strip.inc`, reproduced by
 `python3 verify_witness.py --write-strip` from its directory.

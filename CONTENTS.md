@@ -318,16 +318,31 @@ R283/R289/R291/R296/R299/R300/R303 void frames under union, void locks, the N′
 
 ### <a id="es-005"></a>ES-005 — Absorption order and forcing spectrum — [PROVED]
 
-ES absorption poset + redundancy rank, forcing spectrum partition, and forcing decomposition theorems A–D.
-The datum equivalence assumes `G.C.Nonempty`; absorption collapse and its
-unique core assume `H.C.Nonempty`. Singleton factorization takes a finite
-ambient family `𝒢 ⊇ S`, with no singleton group on a cell of `S0` within `𝒢`.
+ES absorption poset + redundancy rank and forcing spectrum partition.
+The datum equivalence assumes `G.C.Nonempty`; for distinct `G ≼ H`, absorption
+collapse and its unique minimum core assume `H.C.Nonempty`. Singleton
+factorization takes a finite ambient family `𝒢 ⊇ S`, with no singleton group on a cell of `S0` within `𝒢`.
+
+For the forcing decomposition, `theoremA_crt` checks only
+`(H - 1) / 24 % 35 ∈ OpenKClasses` for `H ∈ HardClasses`;
+`theoremA_crt_box` separately proves
+`(k % 7 ∈ {0,1,5} ∧ k % 5 ∈ {0,2}) ↔ k ∈ OpenKClasses` for natural `k < 35`.
+B and C are the scaling and filter lemmas under their stated hypotheses.
+The partial D lemmas prove `35 / gcd(m,35) ∈ {1,5,7,35}` for `m > 0`,
+exclude `{r,r+7,r+14,r+21,r+28} ⊆ OpenKClasses` for natural `r < 7`,
+and prove `f.covered.card = 1 → 35 ∣ f.mprime` assuming
+`f.covered.card = 35 / gcd(f.mprime,35)` and `0 < f.mprime`.
+The last lemma's additional `hC` premise is tautological.
+A's general congruence export and D's covered-set/progression bridge,
+cardinality-formula derivation, and surgical prime-covering/hard-cell
+biconditional assembly remain **UNFORMALIZED**.
 
 - Paper: [`papers/es-absorption-forcing-October-11-2026/`](papers/es-absorption-forcing-October-11-2026/)
-  ([PDF](papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf),
+  ([superseded PDF](papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf),
   [source](papers/es-absorption-forcing-October-11-2026/build/es-absorption-forcing-October-11-2026.tex),
   [build](papers/es-absorption-forcing-October-11-2026/BUILD.md),
   [citation](papers/es-absorption-forcing-October-11-2026/CITATION.bib))
+  The PDF predates remediation; see [SUPERSEDED.md](papers/es-absorption-forcing-October-11-2026/SUPERSEDED.md).
 - Lean modules:
   [`Mathproofs/ESAbsorptionOrder.lean`](Mathproofs/ESAbsorptionOrder.lean)
   [`Mathproofs/ESForcingSpectrum.lean`](Mathproofs/ESForcingSpectrum.lean)
