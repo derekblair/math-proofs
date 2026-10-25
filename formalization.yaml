@@ -27,9 +27,12 @@ artifact_policy:
   - papers/erdos-straus-finite-identity-barrier-October-4-2026/erdos-straus-finite-identity-barrier-October-4-2026.pdf
   - papers/sieve-inverse-branch-isolation-October-11-2026/sieve-inverse-branch-isolation-October-11-2026.pdf
   - papers/r47-sat184-October-7-2026/r47-sat184-October-7-2026.pdf
+  - papers/es-absorption-forcing-October-11-2026/es-absorption-forcing-October-11-2026.pdf
+  - papers/es-absorption-forcing-October-11-2026/build/es-absorption-forcing-October-11-2026.pdf
   pdf_status: historical_pre_correction
-  note: Affected PDFs were not regenerated because no TeX toolchain is installed in this lane. Corrected TeX sources
-    and current catalogues are authoritative.
+  note: These PDFs were not regenerated in the October 23 correction. The October 24 absorption rebuild
+    failed because cached Tectonic LaTeX format resources were unavailable; both copies have adjacent
+    SUPERSEDED.md notices. Corrected TeX sources and current catalogues are authoritative.
 sources:
 - title: An Erdős–Straus covering identity
   authors:
@@ -921,11 +924,12 @@ sources:
   scope: absorption_with_local_nonemptiness_and_ambient_family_singleton_exclusions
   required_inputs:
   - G.C.Nonempty for absorp_datum_iff; datum_eq_of_absorpLE needs no nonemptiness premise
-  - H.C.Nonempty for rho_absorption_collapse and absorption_collapse_unique_core
+  - G ≼ H, G ≠ H, and H.C.Nonempty for rho_absorption_collapse and absorption_collapse_unique_core
+  - IsCore {G,H} C and C.card = 1 for absorption_collapse_unique_core
   - S ⊆ 𝒢 for a finite ambient family 𝒢 in singleton_factorization
   - For every c ∈ S0 and g ∈ 𝒢, g.C ≠ {c}
-  note: 'Paper: papers/es-absorption-forcing-October-11-2026/ (ES absorption poset + redundancy rank, forcing spectrum
-    partition, and forcing d...).'
+  note: For distinct G ≼ H with H.C.Nonempty, rho({G,H})=1 and {H} is the unique minimum core.
+    The abstract theorems do not certify the external group census or cover counts.
 - title: Absorption order and forcing spectrum
   authors:
   - Derek Blair

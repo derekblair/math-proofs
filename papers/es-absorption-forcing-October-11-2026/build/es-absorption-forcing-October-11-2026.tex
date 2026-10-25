@@ -52,7 +52,7 @@
 
 The Erd\H{o}s--Straus conjecture asks whether $4/n=1/x+1/y+1/z$ is solvable
 for every $n\ge2$~\cite{Erd50}.  Recent computational work in this program
-reduced the problem to two finite data layers: a covering census of $12{,}827$
+produced two finite data layers for studying covering families: a census of $12{,}827$
 covering families~\cite{D322} and a union-forcing census of $78$ union
 groups~\cite{D322}.  This paper studies the order theory and per-cell
 structure of that union layer.
@@ -67,7 +67,7 @@ so minimal covering families are $\preceq$-antichains (A3).  For the redundancy 
 $\rho(S)$ (maximum removable members under datum-preserving reduction) we
 prove [PROVED] disjoint superadditivity (R3$'$), a general corollary (R3$''$),
 the overlap-deficit bound (T), and the absorption-collapse formula with
-uniqueness when $C_H\ne\emptyset$ (R4$'$) --- the naive stated
+minimum-core uniqueness when $C_H\ne\emptyset$ (R4$'$) --- the naive stated
 superadditivity being \emph{false} for overlapping families, with exact counterexample, repaired
 after hostile review.  We prove [PROVED] the singleton-factorization theorem:
 every minimal $u$-cover $S$ of $\mathbb{Z}/35$ drawn from a finite ambient
@@ -88,9 +88,10 @@ aggregate masses and a complete upgrade anatomy [COMPUTED]$\times2$.  We
 also formalize [PROVED] the two-sided forcing decomposition A--D (CRT,
 scaling, filter, cardinality) under four documented review conditions.
 
-All claims are [PROVED] by Lean~4.34.1 machine check except the surgical
-down-set A4, which is explicitly [OPEN].  The formalization note
-(\S\ref{sec:formal}) names the modules and theorems.
+The abstract structural results listed in the formalization note
+(\S\ref{sec:formal}) are checked in Lean~4.34.1 under their stated
+hypotheses. Census counts remain supplied data, not Lean-certified results;
+the surgical down-set A4 is explicitly [OPEN].
 
 %======================================================================
 \section{Introduction}
@@ -243,7 +244,7 @@ equicardinal~\cite{D311}.
 \subsection{Formalization and verification}
 \label{sec:formal}
 
-The theorems of \S\ref{sec:results} are machine-checked in the repo
+The abstract results listed in Table~\ref{tab:lean} are machine-checked in the repo
 \texttt{derekblair/math-proofs} (workspace checkout
 \texttt{\textasciitilde/workspace/math-unsolved/lean/}), modules
 \url{Mathproofs/ESAbsorptionOrder.lean},
@@ -263,6 +264,15 @@ singleton factorization by Q-52 (SURVIVES), S2(a)$'$ by Q-56 (SURVIVES),
 S2(b--d)/S3/S4 by Q-53 (SURVIVES, with the original S2(a) objected to and
 repaired), A--D by Q-25 (SURVIVES conditional, four conditions
 in~\S\ref{sec:adecomp})~\cite{D314,D315,D316,D322}.
+
+These are historical verification records. The October 2026 remediation
+replaced the impossible premise that every unrestricted Lean \texttt{Group}
+has a nonempty footprint: A2 now assumes only $C_G\ne\emptyset$, and
+collapse and minimum-core uniqueness assume only $C_H\ne\emptyset$.
+The unrestricted structure admits empty footprints. Singleton factorization
+now places its singleton exclusions in a finite ambient family
+$\mathcal G\supseteq S$. The committed October 11 PDF predates these repairs;
+the adjacent \texttt{SUPERSEDED.md} records its status.
 
 \begin{table}[t]
   \centering
@@ -288,7 +298,7 @@ in~\S\ref{sec:adecomp})~\cite{D314,D315,D316,D322}.
     & R3$'$/R3$''$/T(iii) & R315 / Q-55 &
       {\small\url{rho_superadd_disjoint},
       \url{rho_superadd_general}, \url{overlap_deficit_bound}} \\
-    & R4$'$ collapse + uniqueness ($C_H\ne\emptyset$) & R315 / Q-55 &
+    & R4$'$ collapse + minimum-core uniqueness ($C_H\ne\emptyset$) & R315 / Q-55 &
       {\small\url{rho_absorption_collapse},
       \url{absorption_collapse_unique_core}} \\
     & singleton factorization ($\iff$); $S\subseteq\mathcal G$,
@@ -407,13 +417,15 @@ deficit.
   \label{thm:r4p}
   If $C_H\ne\emptyset$, then
   $G\prec H\Rightarrow\rho(\{G,H\})=1=\rho(\{H\})+1$:
-  \url{rho_absorption_collapse}, with the reduction
-  $\{G,H\}\to\{H\}$ unique: \texttt{absorption\_collapse\_unique\_core}.
+  \url{rho_absorption_collapse}. Among datum-preserving subfamilies of
+  $\{G,H\}$, the unique minimum core is $\{H\}$:
+  \texttt{absorption\_collapse\_unique\_core} proves uniqueness for
+  cardinality-one cores.
 \end{theorem}
 
-The R4$'$ proof requires a case split: when $C_G=C_H$ (strictness forces
-$p_G=0<p_H=1$), $H$ is saved from redundancy by the pc-union, not by the
-cell inclusion~\cite{D315}.  All $303$ strict census pairs give $\rho=1$,
+The current R4$'$ collapse proof uses datum preservation directly and
+$C_H\ne\emptyset$ to rule out a zero-size core; it needs no footprint case
+split. Uniqueness uses A2 and antisymmetry. All $303$ strict census pairs give $\rho=1$,
 including the $36$ equal-cell pairs [COMPUTED]$\times2$~\cite{D315}.
 Strictness of R3$'$ is genuine: $S=\{4,5\}$, $T=\{3\}$ (disjoint) give
 $\rho(S\cup T)=2>0+0$ with unique core $\{\top\}$
@@ -733,8 +745,8 @@ absorption order $\preceq$ of~\eqref{eq:absorp} is a partial order
 datum (Theorem~\ref{thm:a3}).  The redundancy rank $\rho$ of~\eqref{eq:rho}
 satisfies disjoint superadditivity (Theorem~\ref{thm:r3p}), its general
 corollary (Theorem~\ref{thm:r3pp}), the one-sided overlap-deficit bound
-(Theorem~\ref{thm:tb}), and the absorption-collapse formula with uniqueness
-(Theorem~\ref{thm:r4p}) --- with the naive unrestricted superadditivity
+(Theorem~\ref{thm:tb}), and absorption collapse with minimum-core uniqueness
+when $C_H\ne\emptyset$ (Theorem~\ref{thm:r4p}) --- with the naive unrestricted superadditivity
 honestly refuted (Proposition~\ref{prop:r3refuted}).  The singleton
 factorization (Theorem~\ref{thm:factorization}) reduces the minimal
 $u$-cover census of $\mathbb{Z}/35$ to a $2^{24}$ factorization yielding the

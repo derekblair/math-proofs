@@ -45,6 +45,11 @@ kernel proofs; their former native-computation certificate axioms were removed.
   The old inconsistent axioms and false rational-polynomial `es_barrier`
   statement were removed. The Schinzel–Mordell implication from integer
   polynomial identities to those obstructions remains unformalized.
+- [ESAbsorptionOrder.lean](Mathproofs/ESAbsorptionOrder.lean) proves the
+  datum equivalence assuming `G.C.Nonempty`. For distinct `G ≼ H` with
+  `H.C.Nonempty`, collapse gives `ρ({G,H})=1` and `{H}` is the unique
+  minimum core. Singleton factorization uses a finite ambient family
+  `𝒢 ⊇ S` with no singleton footprint on `S0` within `𝒢`.
 - The Collatz modules prove analytic/continued-fraction identities and
   conditional argmin assemblies. [CollatzGapFactor.lean](Mathproofs/CollatzGapFactor.lean)
   defines the explicit Q-ratio times power-of-two-ratio, proves its logarithmic
@@ -89,6 +94,12 @@ the Lean kernel. No result is justified by a proof placeholder.
 
 The 2026-10-23 correction updates the `.tex` sources. Existing PDFs for the
 overview, ES identity, ES barrier, r47, and sieve-inverse papers are historical
-pre-correction artifacts; they were not regenerated because no TeX toolchain
-is installed in this lane. Read the corrected sources and catalogues for
-current statements. Their BUILD files explain regeneration.
+pre-correction artifacts; they were not regenerated in that correction.
+Read the corrected sources and catalogues for current statements. Their BUILD
+files explain regeneration.
+
+The absorption paper's two committed PDFs are also **SUPERSEDED** and
+predate the repaired local nonemptiness and ambient-family hypotheses;
+see its [supersession note](papers/es-absorption-forcing-October-11-2026/SUPERSEDED.md).
+The October 24 rebuild attempt failed because the installed Tectonic lacked
+the cached LaTeX format resources. The corrected TeX source governs.

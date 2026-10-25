@@ -50,8 +50,12 @@ inputs needed for a broader application.
 This corrected \texttt{overview.tex} is authoritative. The existing overview,
 ES identity, ES barrier, r47, and sieve-inverse PDFs are historical
 pre-correction artifacts. Their corrected TeX sources and current catalogues
-state the current scope; the PDFs were not regenerated because this lane has
-no TeX toolchain.
+state the current scope; these PDFs were not regenerated in the October 23
+correction.
+The absorption paper's two PDFs likewise predate remediation; their adjacent
+\texttt{SUPERSEDED.md} notices describe the repaired hypotheses. Its October 24
+rebuild attempt failed because cached Tectonic LaTeX format resources were
+unavailable; the corrected source governs.
 
 \section{Family 001 --- Erd\H{o}s--Straus identities and obstructions}
 
@@ -282,11 +286,12 @@ defect-homomorphism rigidity/counts (\texttt{VoidDefectHom.lean},
 \section{Family 014 --- ES absorption order and forcing spectrum}
 
 \textbf{ES-005} (\texttt{[PROVED]}): the ES absorption poset and
-redundancy rank --- A1--A3, $\rho$/R3$'$/R3$''$/T/R4$'$ superadditivity,
-singleton factorization (\texttt{ESAbsorptionOrder.lean}). The datum
-equivalence assumes $C_G\ne\emptyset$; absorption collapse and its unique
-core assume $C_H\ne\emptyset$. Singleton factorization uses a finite
-ambient family $\mathcal G\supseteq S$, with $C_g\ne\{c\}$ for all
+redundancy rank --- A1--A3, disjoint superadditivity R3$'$, its general
+corollary R3$''$, the overlap-deficit bound T, absorption collapse R4$'$,
+and singleton factorization (\texttt{ESAbsorptionOrder.lean}). The datum
+equivalence assumes $C_G\ne\emptyset$; for distinct $G\preceq H$, absorption
+collapse and its unique minimum core assume $C_H\ne\emptyset$. Singleton
+factorization uses a finite ambient family $\mathcal G\supseteq S$, with $C_g\ne\{c\}$ for all
 $c\in S_0$ and $g\in\mathcal G$. Also proved are the forcing
 spectrum partition S2(a)$'$/S2(b--d)/S3/S4
 (\texttt{ESForcingSpectrum.lean}); and the forcing decomposition theorems
