@@ -52,12 +52,14 @@ On 2026-10-25 the web tool opened A071051, A043545, A267442, A071035, A267417, A
 
 Queries actually executed: `"A267447" proof`; `"A267442" proof`; `"Rule 129" "Rule 126" proof`; `"A071051" "A267447"`; `"A043545" "A267442"`; `"cellular automaton" "129" "126" complement`; both exact pairs with `proof -site:sequencedb.net`; `"Rule 126" "central" "Mersenne"`. Exact-pair results found the conjecture-bearing entries and automatic sequence-context neighbors, not a later proof/refutation. Identifier-only searches produced substantial unrelated commercial/legal noise. SequenceMachine matches were not used as proof. This is a bounded negative literature finding, not certification of worldwide openness.
 
-Sloane's primary paper [*On the Number of ON Cells in Cellular Automata*, arXiv:1503.01168](https://arxiv.org/html/1503.01168), §4, supplies the established Rule126 count in terms of binary weight with a Mersenne exception. Its retrieved full HTML had no substantive Rule129 passage; its lone search hit for129 was a reference anchor. Therefore that paper is background, not a located proof of the named Rule129 comparison. The Wolfram property-table PDF search exposed rules126/129 and their rule words, but opening the PDF failed with content-too-large (22,303,232 bytes); no unseen PDF theorem is relied upon.
+Sloane's primary paper [*On the Number of ON Cells in Cellular Automata*, arXiv:1503.01168](https://arxiv.org/html/1503.01168), §6.1, “The 256 one-dimensional rules”, unnumbered Rule126 paragraph, supplies the established Rule126 count in terms of binary weight with a Mersenne exception. Its retrieved full HTML had no substantive Rule129 passage; its lone search hit for129 was a reference anchor. Therefore that paper is background, not a located proof of the named Rule129 comparison. The Wolfram property-table PDF search exposed rules126/129 and their rule words, but opening the PDF failed with content-too-large (22,303,232 bytes); no unseen PDF theorem is relied upon.
 
 
 ## 3. A225530(n) = A384710(n), n >= 1
 
 **Mathematical status: TRIVIAL; exact named-pair attribution: UNVERIFIED. DROP as a first-proof target.** The located conjectural statement does not name A384710. No verbatim assertion of that exact named pair was located; this is a source mismatch to report, not permission to reconstruct an attributed conjecture.
+
+The required UNVERIFIED notice for the A225530/A384710 exact-pair assertion was posted on [issue #5](https://github.com/derekblair/math-proofs/issues/5) by Bossman on 2026-10-25.
 
 Primary definitions: [A225530](https://oeis.org/A225530), NAME, counts ordered nonnegative pairs with “i + j = n and gcd(i,j) <= 1.” Robert Price authored the entry May 09 2013. Its COMMENTS assertion is “Apparently a(n) = A000010(n), n >= 2.” — R. J. Mathar, May 11 2013. [A384710](https://oeis.org/A384710), NAME, Peter Luschny, Jun 07 2025: “a(n) = Sum_{k=0..n} [gcd(k, n) = 1]”; its COMMENTS identifies A000010 for n>=2. These are common-target statements, not a located exact-pair quote.
 
@@ -85,7 +87,38 @@ Audit date: 2026-10-25 UTC. Research only for math-proofs issue #5; no new compu
 
 - [A097724 NAME](https://oeis.org/A097724/internal), Emeric Deutsch, September 11, 2004: “number of left factors of Motzkin paths without peaks, having length n and endpoint height k.” The NAME specifies a triangle read by rows. Its published FORMULA gives the bivariate generating function G(z)/(1-tzG(z)); G is the RNA/peakless-Motzkin excursion generating function. COMMENTS retain Deléham's January 26, 2014 apparent identity and Bala's June 26, 2025 conjectural Chebyshev connection-coefficient interpretation. The latter is not a published resolution.
 - [A191579 COMMENTS](https://oeis.org/A191579/internal), R. J. Mathar, August 1, 2011: **“Is this (apart from offsets) the same as A097724?”** This is the exact authored source assertion. Its NAME describes a “Triangular array related to continued fractions”; author Kenneth J. Ramsey, June 7, 2011. FORMULA defines rows by solving linear equations in the auxiliary array A192062. The prose swaps the array indices relative to its explicit fourth-row EXAMPLE; using that EXAMPLE and the auxiliary formula is essential, not silently taking the prose literally.
-- [A192062 FORMULA](https://oeis.org/A192062/internal), Kenneth J. Ramsey, June 21, 2011: the even-row subsequence has initial values 1 and j+2 and obeys **“T(n+2,j) = (j+2)*T(n,j)-T(n-2,j).”** The same section explicitly expands T(2n,j) in T(2k,j-1) with the A191579 row coefficients. This fixes the index orientation and identifies a monic polynomial basis, so the row is uniquely specified.
+- [A192062 FORMULA](https://oeis.org/A192062/internal): the entry author is Kenneth J Ramsey, Jun 21 2011; the recurrence and connection formula are unsigned, with no separate byline. The even-row subsequence has initial values 1 and j+2 and obeys **“T(n+2,j) = (j+2)*T(n,j)-T(n-2,j).”** The same section explicitly expands T(2n,j) in T(2k,j-1) with the A191579 row coefficients. This fixes the index orientation and identifies a monic polynomial basis, so the row is uniquely specified.
+
+Verbatim source premises fetched from the live entries on 2026-10-26 UTC (notation and index order retained):
+
+[A097724](https://oeis.org/A097724), FORMULA, full generating-function passage:
+
+```text
+G.f.: G/(1-tzG), where G = (1 - z + z^2 - sqrt(1 - 2z - z^2 - 2z^3 + z^4))/(2z^2) is the g.f. for the sequence A004148.
+```
+
+[A191579](https://oeis.org/A191579), FORMULA, full section:
+
+```text
+The only way I know to generate this triangle is by reference to the square array A192062. The columns of that array, T(i,j) are such that for any given i>0, each term T(i,2*n) equals the sum as k = 1 to n, T(i-1,2*k)*C_k where C_k is the k th term of the n th row of this triangle. So solving the system of linear equations for each n > 0 gives the n th row of this triangle.
+```
+
+[A191579](https://oeis.org/A191579), EXAMPLE, fourth-row passage and its four displayed identities:
+
+```text
+The 4th row is 2,3,3,1 because the 2nd,4th,6th and 8th terms of columns j = 1-5 of square array T(i,j) A192062 form the 4*5 matrix {{1,3,8,21},{1,4,15,56},{1,5,24,115},{1,6,35,204},{1,7,48,329}}. Solving the resulting system of linear equations results in the identities:
+  2*1 + 3*3 + 3*8 + 1*21 = 56 = T(8,2) of A192062
+  2*1 + 3*4 + 3*15+ 1*56 = 115 = T(8,3) of A192062
+  2*1 + 3*5 + 3*24 + 1*115 = 204 = T(8,4) of A192062
+  2*1 + 3*6 + 3*35 + 1*204 = 329 = T(8,5) of A192062
+```
+
+[A192062](https://oeis.org/A192062), FORMULA, first two passages (recurrence and defining connection expansion):
+
+```text
+Each column j is a recursive sequence defined by T(0,j)=0, T(1,j) = 1, T(2i,j)= T(2i-2,j)+T(2i-1,j) and T(2i+1,j) = T(2i-1,j)+j*T(2i,j). Also, T(n+2,j) = (j+2)*T(n,j)-T(n-2,j).
+T(2n,j) = Sum(k=1 to n) C(k)*T(2*k,j-1) where the C(k) are the n-th row of the triangle A191579.
+```
 
 ### Classification and recommendation
 
@@ -112,7 +145,7 @@ The published A097724 generating function makes its kth column z^k G^(k+1). Subs
 
 On 2026-10-25, opened all three full OEIS internal pages (COMMENTS, FORMULA, EXAMPLE, CROSSREFS); searched web queries `"A097724" "A191579" proof`, `"A191579" Chebyshev`, `"peakless Motzkin" "connection" Chebyshev`, `"A097724" "Bala" conjecture`, `"Chebyshev" "translation" "Motzkin"`, and A191579 excluding OEIS with collision exclusions. Relevant exact-pair hits returned the OEIS tentative assertions; identifier collisions were discarded, not counted as mathematical evidence.
 
-Inspected the linked primary [Cameron–Nkwanta (2005) paper](https://cs.uwaterloo.ca/journals/JIS/VOL8/Cameron/cameron46.pdf): its Riordan-group framework treats the RNA triangle and pseudo-involutions; no Chebyshev match was found in the searchable PDF text. Inspected [Nkwanta–Tefera (2013)](https://cs.uwaterloo.ca/journals/JIS/VOL16/Nkwanta/nkwanta4.pdf): Proposition 3 gives the RNA generating function quadratic; the located Chebyshev discussion concerns first-kind moment polynomials, not an explicit A191579 equality. Searches of that PDF for A191579 and A097724 returned no matches. These checks establish neither exhaustive literature coverage nor proof absence. The linked 2021 Cameron–Sullivan DOI could not be fetched: HTTP 500 redirect to inaccessible linkinghub.elsevier.com, reported non-retryable; its full text was not inspected and no conclusion is drawn from it.
+Inspected the linked primary [Cameron–Nkwanta (2005) paper](https://cs.uwaterloo.ca/journals/JIS/VOL8/Cameron/cameron46.pdf): its Riordan-group framework treats the RNA triangle and pseudo-involutions; no Chebyshev match was found in the searchable PDF text. Inspected [Nkwanta–Tefera (2013)](https://cs.uwaterloo.ca/journals/JIS/VOL16/Nkwanta/nkwanta4.pdf): Proposition 3 gives the RNA generating function quadratic; the located Chebyshev discussion concerns first-kind moment polynomials, not an explicit A191579 equality. The original audit reported no PDF-search matches for either A191579 or A097724; the A097724 result was a search/extraction limitation, not evidence of absence from the paper. Corrected text extraction on 2026-10-26 finds two A097724 matches: immediately after equation (7) in §3, printed/PDF p.6, identifying the RNA array, and again in the sequence index on p.15; it finds no A191579 match. These occurrences do not locate a published proof of the exact pair. These checks establish neither exhaustive literature coverage nor proof absence. The linked 2021 Cameron–Sullivan DOI could not be fetched: HTTP 500 redirect to inaccessible linkinghub.elsevier.com, reported non-retryable; its full text was not inspected and no conclusion is drawn from it.
 
 ### Supplied finite evidence and limits
 
