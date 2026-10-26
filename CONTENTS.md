@@ -257,6 +257,12 @@ R227/R231/R233/R235/R247 translation-march core, corrected ψ-translate and unsa
 
 R245 generalized sub-family theorem (+ staged R253/R261/R265 extensions) and the R259/R263 ladder-length ceiling.
 
+Verification checkpoint for the six staged extensions: the compiled-statement/axiom
+checks and module `leanchecker` passed at the recorded commit, but the full-repository
+build and independent-review gates remain open. Staged labels are not promoted by
+this checkpoint. See the [SS-004 verification evidence](FORMALIZATION_CATALOGUE.md#ss-004-verification-checkpoint-issue-10)
+and [issue #10](https://github.com/derekblair/math-proofs/issues/10).
+
 - Paper: [`papers/subfamily-ladder-ceiling-October-11-2026/`](papers/subfamily-ladder-ceiling-October-11-2026/)
   ([PDF](papers/subfamily-ladder-ceiling-October-11-2026/subfamily-ladder-ceiling-October-11-2026.pdf),
   [source](papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex),

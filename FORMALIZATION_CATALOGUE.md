@@ -109,3 +109,23 @@ publication pipeline — they are **not** part of this release:
 - `ESCubicClassify.lean` (R89, quarantined — known `Int.Coprime` breakage, not registered)
 - `DonorKernel.lean`, `ESUBBranchIsolation.lean`
   (verification status ambiguous or in flight — excluded pending confirmation)
+
+
+### SS-004 verification checkpoint (issue #10)
+
+The six staged results `admission_criterion`, `a0_constancy`, `u_eq_Aqe_div_f`,
+`excess_prime_dvd_u`, `M_const`, and `split_layered_repaired` passed compiled-statement/
+axiom checks and `leanchecker --verbose Mathproofs.ESSubfamilyExtended` (exit 0) at
+commit `c9d3c0ebb6474c5b134b2c85cae36ff84cd2af43`, using Lean 4.34.1 (compiler
+`5045d0056413266e57c625dcd7c365b10e377c52`) and Mathlib
+`d13f23b723b8a846827a245b89c10fc7d3f11612`. `u_eq_Aqe_div_f` reports only
+`propext`; the other five report `propext`, `Classical.choice`, and `Quot.sound`.
+No `sorryAx` or nonstandard axioms were reported in these checks.
+
+This is partial verification evidence, **not a full-repository build pass or final
+acceptance**. The full build was stopped with `Mathproofs/SidonSat184Census.lean`
+unfinished after measured memory pressure; build repair is in progress. Independent
+review before merge also remains required. The existing [PROVED*] labels are retained
+pending resolution of the open gates; no additional theorem is promoted.
+See [the recorded audit](https://github.com/derekblair/math-proofs/issues/10#issuecomment-6405779931)
+and [resource checkpoint](https://github.com/derekblair/math-proofs/issues/10#issuecomment-6405903263).
