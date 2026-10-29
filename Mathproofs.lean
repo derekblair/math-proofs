@@ -72,3 +72,8 @@ import Mathproofs.VoidDefectHom
 import Mathproofs.ESAbsorptionOrder
 import Mathproofs.ESForcingSpectrum
 import Mathproofs.ESForcingDecomp
+
+import Mathproofs.Rule129ClosedForm
+import Mathproofs.Rule129Lucas
+import Mathproofs.Rule129Digits
+import Mathproofs.Rule129MiddleColumn
