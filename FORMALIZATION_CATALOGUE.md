@@ -109,3 +109,40 @@ publication pipeline — they are **not** part of this release:
 - `ESCubicClassify.lean` (R89, quarantined — known `Int.Coprime` breakage, not registered)
 - `DonorKernel.lean`, `ESUBBranchIsolation.lean`
   (verification status ambiguous or in flight — excluded pending confirmation)
+
+## SS-004 verification checkpoint (issue #10)
+
+The six staged results `admission_criterion`, `a0_constancy`, `u_eq_Aqe_div_f`,
+`excess_prime_dvd_u`, `M_const`, and `split_layered_repaired` passed compiled-statement/
+axiom checks and `leanchecker --verbose Mathproofs.ESSubfamilyExtended` (exit 0) at
+commit `c9d3c0ebb6474c5b134b2c85cae36ff84cd2af43`, using Lean 4.34.1 (compiler
+`5045d0056413266e57c625dcd7c365b10e377c52`) and Mathlib
+`d13f23b723b8a846827a245b89c10fc7d3f11612`. `u_eq_Aqe_div_f` reports only
+`propext`; the other five report `propext`, `Classical.choice`, and `Quot.sound`.
+No `sorryAx` or nonstandard axioms were reported in these checks.
+See [the recorded SS-004 audit](https://github.com/derekblair/math-proofs/issues/10#issuecomment-6405779931).
+
+The earlier full-build resource blocker in `Mathproofs/SidonSat184Census.lean`
+is resolved. The repaired local checkout completed all 17,966 build jobs (exit 0),
+followed by the census artifact axiom audit and official kernel replay (exit 0).
+Both [push CI](https://github.com/derekblair/math-proofs/actions/runs/40426034024)
+and [PR CI](https://github.com/derekblair/math-proofs/actions/runs/40426098547)
+also completed the 17,966-job build successfully for repair head
+`cbf4c3d4b3ed545daf22b1e00a28a68b48e8867a`. Those CI workflows skipped their
+optional axiom-audit/kernel-replay steps; the separate local audit evidence
+must not be conflated with CI.
+
+[Source-repair PR #15](https://github.com/derekblair/math-proofs/pull/15) merged
+at `0b17820a79f969c883b363de670402512b47341d` on 2026-10-27 at 00:55:28 UTC.
+The [coordinator's report](https://github.com/derekblair/math-proofs/issues/10#issuecomment-6431013776)
+attests an independent hostile-review PASS for the census repair, with unchanged
+exported census statements and rows. This is coordinator-attested external review,
+not a GitHub review submission or independent review of the six SS-004 results.
+`ESSubfamilyExtended.lean` is byte-identical between the audited commit above and
+the repair merge commit.
+
+The existing [PROVED*] labels remain staged pending the relevant independent
+SS-004/status-promotion and documentation review. The full-build/source-delivery
+blocker is no longer open, but its resolution does not by itself settle those
+review gates or close [issue #10](https://github.com/derekblair/math-proofs/issues/10).
+No additional theorem is promoted by this checkpoint.
