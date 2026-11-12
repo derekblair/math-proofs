@@ -1,0 +1,15 @@
+{
+  "command": "lean --version",
+  "argv": [
+    "lean",
+    "--version"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:34:00.738527+00:00",
+  "finished_utc": "2026-10-29T03:34:00.738968+00:00",
+  "exit_status": 127,
+  "stdout": "",
+  "stderr": "[Errno 2] No such file or directory: 'lean'",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "3f32016c6ac09a6e8637b770037ce66e914760fc51ead8b631bc56b41e974d6b"
+}

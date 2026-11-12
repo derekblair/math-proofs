@@ -1,0 +1,59 @@
+--- pr-body-before.md
++++ pr-body-after.md
+@@ -8,7 +8,7 @@
+ 
+ - Statement SHA256: `2bfada69046ed20429e039c895aae8eb2617663f86cf5027ec9600de64ad758e`
+ - Freeze commit: `3fc2503c69dba90dcf438be5c5334079c9c41266`
+-- Pin manifest SHA256 (UTF-8 file including heading/fence below): `8bc4bffc10b383bdf1ce557c37e70a2b93aafe56d627285a1a22c5f78b9d1e97`
++- Frozen pin manifest file SHA256 (unchanged file; not the corrected PR-body rendering below): `8bc4bffc10b383bdf1ce557c37e70a2b93aafe56d627285a1a22c5f78b9d1e97`
+ - Branch: `rule129-pin-freeze`
+ - Freeze executor: `derekblair@bakkie` (delegated coding lane `codex-rule129-freeze`, pool `chatgpt-live`)
+ 
+@@ -67,9 +67,9 @@
+ 
+ ## Coordinator desk handoff
+ 
+-The populated manifest is saved at `/home/derekblair/lane-work/codex-rule129-freeze/pins/a267442-eq-a043545.md`; its complete file content appears below. The authoritative destination is `bossman-vm:~/workspace/math-fleet/pins/a267442-eq-a043545.md`, with registration in adjacent `REGISTRY.md`. Those coordinator writes remain pending: the fleet specification states that no fleet machine can SSH into the coordinator VM (§2, line 37; §6, line 382), and no coordinator filesystem connector is exposed to this lane. A precise registration entry is prepared in the lane's `REGISTRY-ENTRY.md`. No substitute bakkie desk was created and no proof lane was launched.
++The populated manifest is saved at `/home/derekblair/lane-work/codex-rule129-freeze/pins/a267442-eq-a043545.md`; a PR-body rendering with corrected proof-status wording and arXiv citation appears below. The frozen manifest file is unchanged. The authoritative destination is `bossman-vm:~/workspace/math-fleet/pins/a267442-eq-a043545.md`, with registration in adjacent `REGISTRY.md`. Those coordinator writes remain pending: the fleet specification states that no fleet machine can SSH into the coordinator VM (§2, line 37; §6, line 382), and no coordinator filesystem connector is exposed to this lane. A precise registration entry is prepared in the lane's `REGISTRY-ENTRY.md`. No substitute bakkie desk was created and no proof lane was launched.
+ 
+-## Populated manifest (complete file)
++## Manifest rendering (PR-body corrections; frozen file unchanged)
+ 
+ # Pin Manifest — a267442-eq-a043545
+ 
+@@ -101,13 +101,16 @@
+     conjecture (verified computationally for 1 <= n <= 1,048,576 in derekblair/math-proofs#5).
+     On the equivalent Rule 126 side, C_126(n, 0) = A036987(n) is asserted without proof in
+     OEIS A071035 (%Y), OEIS A267366 (Koeppl 2022), indirectly via row-sums in N. J. A. Sloane
+-    (arXiv:1503.01168v3, Sec. 6.1, 2015), and empirically via bivariate generating functions in
++    (arXiv:1503.01168v1, Sec. 6.1, 2015), and empirically via bivariate generating functions in
+     A. J. Macfarlane (DAMTP Cambridge unpublished note GFsForCAsOfEvenRuleNo.ps, Sec. 9 Eq. 67,
+     2016); in formal libraries, Mykola Palamarchuk (lividgreen/lean-elementary-cellular-automata,
+     ECA/Doubling.lean, 2026) proves LocalRule.finRule_two_dbl only on even-support doubled states
+-    (dbl x), which excludes singleSeed. The pinned theorems prove both the Rule 126 middle-column
+-    theorem for all n >= 0 and Mathar's full conjecture A267442(n) = A043545(n) for all n > 0
+-    with zero weakening.
++    (dbl x), which excludes singleSeed. The pinned statements have zero statement weakening
++    against the published targets: they retain the same quantifiers and hypotheses for the
++    Rule 126 middle-column result for all n >= 0 and Mathar's full conjecture
++    A267442(n) = A043545(n) for all n > 0. All three theorem bodies are currently sorry
++    placeholders with zero proved theorem content. Proof is future work; this PR claims
++    a statement freeze only, not a proof.
+ statement_file:
+   path: Mathproofs/Rule129MiddleColumn.lean
+   sha256: 2bfada69046ed20429e039c895aae8eb2617663f86cf5027ec9600de64ad758e
+@@ -181,9 +184,11 @@
+      frozen by this manifest; zero edits to any of these 10 declarations are permitted in a
+      solution closure.
+ delta_vs_source: >
+-  NONE — proves the exact full-quantifier statement of Mathar's OEIS A267442 conjecture for all
+-  n > 0 from primary definitions alongside the equivalent all-n >= 0 Rule 126 middle-column
+-  theorem.
++  NONE in statement weakening: the pinned statements retain the published targets'
++  exact quantifiers and hypotheses, including Mathar's OEIS A267442 conjecture for all
++  n > 0 from primary definitions and the equivalent all-n >= 0 Rule 126 middle-column
++  result. All three theorem bodies are currently sorry placeholders with zero proved
++  theorem content. Proof is future work; this PR claims a statement freeze only, not a proof.
+ review_route: >
+   Codex review lane (OpenAI/Codex reviewer pool != Gemini/Argon author-side research pool;
+   satisfies the cross-model review gate without pre-assigning a specific host machine).

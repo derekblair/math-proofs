@@ -1,0 +1,21 @@
+## Focused build repair for #10 (draft; independent review required)
+
+Changes **only** `Mathproofs/SidonSat184Census.lean`. Replaces the expensive all-insertions `decide` proof of `census_facts` with explicit collision certificates, checked row-by-row using `decide +kernel`, plus a small proof that a collision precludes a Sidon extension. This bounds reduction-cache work instead of weakening the theorem.
+
+The nine census rows, holes and all five exported theorem statements are byte-for-byte unchanged. No `sorry`, new axioms, toolchain/pin changes, native proof bypass or catalogue promotion is introduced. The certificate table is checked proof data, not a trusted oracle.
+
+### Verified local evidence and exact provenance
+- Tested checkout base: `c9d3c0ebb6474c5b134b2c85cae36ff84cd2af43` on the authorized MacBook Air.
+- Source: 28,041 UTF-8 bytes, SHA256 `1bff125c70462028f13c32ab66ccbf299a473c45585c39b427688cdbb0fc9e57`; connector readback of this branch exactly matches those tested bytes.
+- Lean4.34.1/compiler `5045d0056413266e57c625dcd7c365b10e377c52`; Mathlib `d13f23b723b8a846827a245b89c10fc7d3f11612`, unchanged.
+- `elan run leanprover/lean4:v4.34.1 lake build`: exit0, all17,966 jobs,36.1seconds, completed2026-10-26 22:57:29UTC using preserved dependency/build artifacts (not a clean-from-scratch benchmark). Observed maximum RSS5.91GiB/physical footprint1.13GiB; no new swap-outs.
+- Five census theorem axiom audits and official `leanchecker --verbose` kernel replay exited0; replay completed22:58:53UTC. Axioms only `[propext, Classical.choice, Quot.sound]`, no `sorryAx` or nonstandard axioms.
+- Tested `.olean` SHA256 `38452c4a97ec51e53858b7ae55c19992923b7fc08122ed07cd4adaeb2303b5ec`.
+- The earlier six SS-004 audited artifacts remain intact. Result recorded at https://github.com/derekblair/math-proofs/issues/10#issuecomment-6429391792.
+
+This PR is based on current master `da16a575525e4e224c990d9b72b1e069cfb44f0a`. Compared with tested base c9d3c0e, master adds only `research/dossiers/2026-10-stated-open-five.md`; no Lean source/pins differ. Nevertheless, no additional clean build or remote CI pass for this exact Git commit is claimed.
+
+### Review and related work
+Independent review and coordinator merge are mandatory. Brian will not self-review or merge. Please verify certificate soundness, exported-statement preservation and the exact-tree build before approval.
+
+This is separate from docs-only draft #14, whose historical checkpoint must be refreshed after source review. It addresses the build blocker in #10 but does not prematurely close the full verification/documentation ticket. No other assignments or theorem scope are expanded.

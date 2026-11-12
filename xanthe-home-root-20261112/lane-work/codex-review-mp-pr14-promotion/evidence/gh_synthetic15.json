@@ -1,0 +1,18 @@
+{
+  "command": "gh api repos/derekblair/math-proofs/git/commits/d8cd10ab8687b8e8fc454f4072bef5f0b466e4d7 --jq '{sha,tree,parents}'",
+  "argv": [
+    "gh",
+    "api",
+    "repos/derekblair/math-proofs/git/commits/d8cd10ab8687b8e8fc454f4072bef5f0b466e4d7",
+    "--jq",
+    "{sha,tree,parents}"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:35:03.083673+00:00",
+  "finished_utc": "2026-10-29T03:35:03.895786+00:00",
+  "exit_status": 0,
+  "stdout": "{\"parents\":[{\"html_url\":\"https://github.com/derekblair/math-proofs/commit/da16a575525e4e224c990d9b72b1e069cfb44f0a\",\"sha\":\"da16a575525e4e224c990d9b72b1e069cfb44f0a\",\"url\":\"https://api.github.com/repos/derekblair/math-proofs/git/commits/da16a575525e4e224c990d9b72b1e069cfb44f0a\"},{\"html_url\":\"https://github.com/derekblair/math-proofs/commit/cbf4c3d4b3ed545daf22b1e00a28a68b48e8867a\",\"sha\":\"cbf4c3d4b3ed545daf22b1e00a28a68b48e8867a\",\"url\":\"https://api.github.com/repos/derekblair/math-proofs/git/commits/cbf4c3d4b3ed545daf22b1e00a28a68b48e8867a\"}],\"sha\":\"d8cd10ab8687b8e8fc454f4072bef5f0b466e4d7\",\"tree\":{\"sha\":\"3a74a89f5be99dd9685f97fa2dd30b6fd99c44b8\",\"url\":\"https://api.github.com/repos/derekblair/math-proofs/git/trees/3a74a89f5be99dd9685f97fa2dd30b6fd99c44b8\"}}\n",
+  "stderr": "",
+  "stdout_sha256": "7692081fe74c18581035d3303fd11ec25eb0d04cca5d7f37e98dbbfe7dffc1d9",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

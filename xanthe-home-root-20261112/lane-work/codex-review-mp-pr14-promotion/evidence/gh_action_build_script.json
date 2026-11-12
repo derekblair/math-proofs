@@ -1,0 +1,18 @@
+{
+  "command": "gh api 'repos/leanprover/lean-action/contents/scripts/lake_build.sh?ref=24581d74d674803a25a81b10b059c5c0cdd344c6' --jq '.content|@base64d'",
+  "argv": [
+    "gh",
+    "api",
+    "repos/leanprover/lean-action/contents/scripts/lake_build.sh?ref=24581d74d674803a25a81b10b059c5c0cdd344c6",
+    "--jq",
+    ".content|@base64d"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:35:27.626633+00:00",
+  "finished_utc": "2026-10-29T03:35:28.367045+00:00",
+  "exit_status": 0,
+  "stdout": "#!/usr/bin/env bash\nset -e\n\n# start log group\necho \"::group::Lake Build Output\"\n\n# handle_exit function to handle the exit status of the script\n# and set the build-status output parameter accordingly\nhandle_exit() {\n    exit_status=$?\n    if [ $exit_status -ne 0 ]; then\n        echo \"build-status=FAILURE\" >>\"$GITHUB_OUTPUT\"\n        echo \"::error:: lake build failed\"\n    else\n        echo \"build-status=SUCCESS\" >>\"$GITHUB_OUTPUT\"\n        # end log group and add a new line to improve readabiltiy\n        echo \"::endgroup::\"\n        echo\n    fi\n}\n\ntrap handle_exit EXIT\n\n# use eval to ensure build arguments are expanded\neval \"lake build $BUILD_ARGS\"\n\n",
+  "stderr": "",
+  "stdout_sha256": "8fb46eddce41e784cb519922f0a5fdc45d64c7b47d95bc734070e1d87ee7a804",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

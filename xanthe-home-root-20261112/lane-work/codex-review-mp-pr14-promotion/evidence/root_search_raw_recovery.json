@@ -1,0 +1,15 @@
+{
+  "command": "python3 ../recover_search_bytes.py",
+  "argv": [
+    "python3",
+    "../recover_search_bytes.py"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:39:37.712659+00:00",
+  "finished_utc": "2026-10-29T03:39:37.803095+00:00",
+  "exit_status": 1,
+  "stdout": "{\"command\": \"rg -n 'R253|R261|R265|admission|constancy|nonempty|non-empty|split|layered|determin' papers/subfamily-ladder-ceiling-October-11-2026\", \"exit_status\": 0, \"stdout_sha256\": \"4beac7ddda9977bb676b0d0777c6f46839cede3e5a377d6305e5bd79c9c777b8\", \"original_stdout_sha256\": \"ee72e6dde48421c618dcea5bd5c628679f9c5c8c514209230d6655cbf989b2ed\", \"matches_original\": false}\n",
+  "stderr": "Traceback (most recent call last):\n  File \"/root/lane-work/codex-review-mp-pr14-promotion/repo/../recover_search_bytes.py\", line 17, in <module>\n    assert digest == entry['stdout_sha256'], 'Do not substitute changed bytes for original evidence'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Do not substitute changed bytes for original evidence\n",
+  "stdout_sha256": "181ff3da557f2d4790e6ff683c22848323a5bd04b14315632b032952ea9c11f0",
+  "stderr_sha256": "b90443140a79b3de885f9456b2c9b326b120c038b162c089b94c258fc9c40569"
+}

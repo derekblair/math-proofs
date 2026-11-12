@@ -1,0 +1,16 @@
+{
+  "command": "git status --porcelain=v1",
+  "argv": [
+    "git",
+    "status",
+    "--porcelain=v1"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:35:43.655908+00:00",
+  "finished_utc": "2026-10-29T03:35:43.659658+00:00",
+  "exit_status": 0,
+  "stdout": "",
+  "stderr": "",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
