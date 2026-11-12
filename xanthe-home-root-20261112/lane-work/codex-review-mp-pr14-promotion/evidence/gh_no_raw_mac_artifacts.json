@@ -1,0 +1,19 @@
+{
+  "command": "git grep -n -E 'BUILD-REPAIR-APPLIED-REPORT|56-final-applied-repair-checkpoint|6405779931|6429391792' HEAD",
+  "argv": [
+    "git",
+    "grep",
+    "-n",
+    "-E",
+    "BUILD-REPAIR-APPLIED-REPORT|56-final-applied-repair-checkpoint|6405779931|6429391792",
+    "HEAD"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:35:35.295274+00:00",
+  "finished_utc": "2026-10-29T03:35:35.304024+00:00",
+  "exit_status": 0,
+  "stdout": "HEAD:FORMALIZATION_CATALOGUE.md:123:See [the recorded SS-004 audit](https://github.com/derekblair/math-proofs/issues/10#issuecomment-6405779931).\n",
+  "stderr": "",
+  "stdout_sha256": "e00489311e5cd5c7a6696023627efe230afd613ff150685021230fa82ca3fce4",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

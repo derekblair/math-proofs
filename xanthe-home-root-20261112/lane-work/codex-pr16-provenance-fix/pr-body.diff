@@ -1,0 +1,24 @@
+--- pr-body-before.md
++++ pr-body-proposed.md
+@@ -64,6 +64,13 @@
+ The supplied dossier records the Rule 126 middle-column identification as existing folklore: OEIS A071035 and A267366, Sloane (2015), and Macfarlane (2016). This freeze makes no new proof or novelty claim. The manifest below retains that disclosure and the audited exact statement scope.
+ 
+ This PR stays **draft**. Review and merge belong to the coordinator on a different pool from this coding lane. The manifest's Codex review route concerns independence from the Gemini/Argon research author pool; this freeze execution is not that review.
++
++## Review history
++
++- 2026-10-28 crossed review — host `nibbles`, pool `chatgpt-proton`, verdict **FAIL**. Blocking findings: (F1) PR-body present-tense proof claims contradicted the three `sorry` placeholders; (F2) the citation arXiv:1503.01168v3 was refuted (arXiv lists only v1).
++- 2026-10-28 coordinator body-only fix — host `xanthe`, pool `chatgpt-gmail`. Corrected F1 proof-status wording and F2 citation to arXiv:1503.01168v1, section 6.1, 2015; no Lean source or `PIN.md` change; head unchanged.
++- 2026-10-28 post-fix crossed re-review — host `nibbles`, pool `chatgpt-proton`, verdict **FAIL**. Single blocking finding: provenance omission (the body did not yet record the prior review history). All technical freeze checks passed: head, statement hash `2bfada69046ed20429e039c895aae8eb2617663f86cf5027ec9600de64ad758e`, toolchain v4.34.1, compile, axiom outputs, recomputation, and trust screen.
++- 2026-10-29 coordinator body-only provenance fix (this edit) — host `xanthe`. This edit adds the review history and corrects the review-gate wording; no Lean source or `PIN.md` change; head unchanged. The freeze gate remains **OPEN pending a fresh PASS re-review**. Neither crossed review returned PASS; this edit does not satisfy the gate.
+ 
+ ## Coordinator desk handoff
+ 
+@@ -191,5 +198,5 @@
+   theorem content. Proof is future work; this PR claims a statement freeze only, not a proof.
+ review_route: >
+   Codex review lane (OpenAI/Codex reviewer pool != Gemini/Argon author-side research pool;
+-  satisfies the cross-model review gate without pre-assigning a specific host machine).
+-```
++  cross-model review gate remains OPEN pending a fresh PASS re-review).
++```

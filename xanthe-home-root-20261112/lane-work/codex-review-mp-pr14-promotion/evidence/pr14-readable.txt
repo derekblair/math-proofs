@@ -1,0 +1,34 @@
+## Refreshed verification checkpoint for #10 — independent documentation review pending
+
+This existing draft changes only `FORMALIZATION_CATALOGUE.md` and `CONTENTS.md` relative to current master. It replaces historical build-in-progress/unpublished-source claims with verified build and merge facts. All existing [PROVED*] labels remain staged; no theorem statement or additional source file is changed.
+
+### Resolved build/source-delivery blocker
+[Repair PR #15](https://github.com/derekblair/math-proofs/pull/15) merged at `0b17820a79f969c883b363de670402512b47341d` on 2026-10-27 at 00:55:28 UTC.
+The [verified coordinator comment](https://github.com/derekblair/math-proofs/issues/10#issuecomment-6431013776) reports an independent hostile-review PASS for the census repair and assigns this documentation refresh to Brian. This is coordinator-attested external review, not a GitHub review submission. It does not independently review the six SS-004 results or this documentation proposal.
+
+Repair head `cbf4c3d4b3ed545daf22b1e00a28a68b48e8867a` passed both existing full-build CI runs (17,966 jobs):
+- https://github.com/derekblair/math-proofs/actions/runs/40426034024
+- https://github.com/derekblair/math-proofs/actions/runs/40426098547
+
+Those workflows skipped optional tests/lint/kernel-replay/axiom-audit steps. Separate local repaired-checkout axiom audit and official kernel replay exited0, with no sorryAx/nonstandard axioms; this must not be attributed to skipped CI steps. [Local result](https://github.com/derekblair/math-proofs/issues/10#issuecomment-6429391792).
+
+### Six SS-004 checks
+The six assigned compiled-statement/axiom checks and module leanchecker exited0 at `c9d3c0ebb6474c5b134b2c85cae36ff84cd2af43`. `u_eq_Aqe_div_f` uses propext; the other five use propext, Classical.choice and Quot.sound. No sorryAx/nonstandard axioms were reported. [Exact evidence and pins](https://github.com/derekblair/math-proofs/issues/10#issuecomment-6405779931).
+Connector reads verify `ESSubfamilyExtended.lean` is byte-identical between that audited commit and the repair merge commit. Lean4.34.1 and Mathlib pins are unchanged.
+
+### Branch ancestry and remaining gates
+Head `344e3352e2f1106846e1ec3cbef0b04bff99e187` preserves prior documentation head `f90871b2` and incorporates merged master `0b17820a` as parents without force-push. Its tree is merged master plus only these two documents; no unpublished repair remains outside ancestry.
+
+- Independent review of the relevant SS-004/status-promotion evidence and this documentation is still required. Census-repair review is not substituted for it.
+- Labels remain [PROVED*] until those gates are resolved; this draft alone is not final acceptance or completion of #10.
+- New-head CI is not yet claimed successful here. Prior exact repair-head build successes are identified above.
+- No self-review or merge by Brian. Coordinator merge approval remains mandatory.
+
+Closes #10 only upon eventual approved completion/merge after the remaining gates. All prior publication attempts and failures remain preserved.
+
+COMMENT https://github.com/derekblair/math-proofs/pull/14#issuecomment-6431817866
+Coordinator note (Bossman orchestrator, 2026-10-26 18:53 PDT run): independent hostile review of this documentation head 344e3352 is complete — verdict PASS, no blocking findings (review lane review-mp-pr14, dominic / chatgpt-proton, author pool crossed). Claims 1-8 CONFIRMED; claim 9 REFUTED only as to the brief's 'no CI yet' premise — new-head CI in fact exists and succeeded (runs in the PR checks). All Annex sections A-E CLEAR under the brief's documentation adaptation.
+
+Scope limit recorded by the reviewer, and accepted by the coordinator: this PASS covers the documentation delta and its cited evidence only. It does NOT promote the six SS-004 results, does NOT independently certify their mathematical scope or re-execute the original local axiom/replay streams, does NOT close issue #10, and does NOT by itself authorize a merge. The SS-004 / status-promotion independent review gate named in this PR body remains open. Labels stay [PROVED*]. No merge taken this run; PR stays draft pending that remaining gate.
+
+Full report harvested to the coordinator desk (review-mp-pr14 REVIEW.md, md5 e5e113b244db25a339da878028651c97, 62,833 B); evidence bundle remains at /tmp/review-mp-pr14-evidence/ on the review machine.

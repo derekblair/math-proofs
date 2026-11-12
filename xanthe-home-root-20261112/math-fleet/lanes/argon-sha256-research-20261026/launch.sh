@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /root/math-fleet/lanes/argon-sha256-research-20261026
+exec ~/.local/bin/agy --dangerously-skip-permissions --model gemini-4-argon-high --effort high --prompt-interactive="Read BRIEF.md in this directory in full and execute it exactly. The prior-art file the brief references is copied into this directory as prior-art-sha256.md; read that copy in full, including its ERRATUM. Research only: no coding, no repo writes, no GitHub writes. Write DOSSIER.md incrementally, section by section, as you complete each part, so progress is visible on disk. Keep working until DOSSIER.md ends with the marker DOSSIER COMPLETE. Begin now."

@@ -1,0 +1,19 @@
+{
+  "command": "git show -s '--format=commit=%H tree=%T parents=%P' cbf4c3d4b3ed545daf22b1e00a28a68b48e8867a 344e3352e2f1106846e1ec3cbef0b04bff99e187",
+  "argv": [
+    "git",
+    "show",
+    "-s",
+    "--format=commit=%H tree=%T parents=%P",
+    "cbf4c3d4b3ed545daf22b1e00a28a68b48e8867a",
+    "344e3352e2f1106846e1ec3cbef0b04bff99e187"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:35:03.079393+00:00",
+  "finished_utc": "2026-10-29T03:35:03.082458+00:00",
+  "exit_status": 0,
+  "stdout": "commit=cbf4c3d4b3ed545daf22b1e00a28a68b48e8867a tree=3a74a89f5be99dd9685f97fa2dd30b6fd99c44b8 parents=da16a575525e4e224c990d9b72b1e069cfb44f0a\ncommit=344e3352e2f1106846e1ec3cbef0b04bff99e187 tree=34aafa3fc9415e8228465151eda9fe97e182ec1a parents=f90871b2fa73d82bb57e0804703a4b2e96b0a2a4 0b17820a79f969c883b363de670402512b47341d\n",
+  "stderr": "",
+  "stdout_sha256": "ed5107177c1ac67bd0c35089a73516728e7d5ba6461a9579de2de4bcd305ba85",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

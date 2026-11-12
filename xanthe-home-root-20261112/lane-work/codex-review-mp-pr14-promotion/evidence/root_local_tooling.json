@@ -1,0 +1,16 @@
+{
+  "command": "bash -c 'for tool in elan lean lake leanchecker; do command -v \"$tool\" || true; done; if command -v elan >/dev/null; then elan toolchain list; fi; for dir in /root/.elan/toolchains /root/.cache/mathlib /root/.cache/lean; do if [ -d \"$dir\" ]; then ls -ld \"$dir\" \"$dir\"/*; fi; done; if [ -d .lake ]; then ls -la .lake; fi'",
+  "argv": [
+    "bash",
+    "-c",
+    "for tool in elan lean lake leanchecker; do command -v \"$tool\" || true; done; if command -v elan >/dev/null; then elan toolchain list; fi; for dir in /root/.elan/toolchains /root/.cache/mathlib /root/.cache/lean; do if [ -d \"$dir\" ]; then ls -ld \"$dir\" \"$dir\"/*; fi; done; if [ -d .lake ]; then ls -la .lake; fi"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:33:18.456505+00:00",
+  "finished_utc": "2026-10-29T03:33:18.459495+00:00",
+  "exit_status": 0,
+  "stdout": "",
+  "stderr": "",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

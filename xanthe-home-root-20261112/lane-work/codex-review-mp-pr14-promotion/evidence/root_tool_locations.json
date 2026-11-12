@@ -1,0 +1,16 @@
+{
+  "command": "bash -c 'for tool in lean lake elan leanchecker; do type -a \"$tool\"; whereis \"$tool\"; done; for dir in /root/.elan /opt/lean /opt/lean4 /usr/local/lean /usr/local/lib/lean /usr/lib/lean .lake; do if [ -e \"$dir\" ]; then ls -ld \"$dir\"; else printf \"Absent: %s\\n\" \"$dir\"; fi; done'",
+  "argv": [
+    "bash",
+    "-c",
+    "for tool in lean lake elan leanchecker; do type -a \"$tool\"; whereis \"$tool\"; done; for dir in /root/.elan /opt/lean /opt/lean4 /usr/local/lean /usr/local/lib/lean /usr/lib/lean .lake; do if [ -e \"$dir\" ]; then ls -ld \"$dir\"; else printf \"Absent: %s\\n\" \"$dir\"; fi; done"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:33:47.441666+00:00",
+  "finished_utc": "2026-10-29T03:33:47.489025+00:00",
+  "exit_status": 0,
+  "stdout": "lean:\nlake:\nelan:\nleanchecker:\nAbsent: /root/.elan\nAbsent: /opt/lean\nAbsent: /opt/lean4\nAbsent: /usr/local/lean\nAbsent: /usr/local/lib/lean\nAbsent: /usr/lib/lean\nAbsent: .lake\n",
+  "stderr": "bash: line 1: type: lean: not found\nbash: line 1: type: lake: not found\nbash: line 1: type: elan: not found\nbash: line 1: type: leanchecker: not found\n",
+  "stdout_sha256": "6f74dcf20c982ad4edf9946bdbdcdb957bf1d9ad90bee669f9d5b6cc15e6d706",
+  "stderr_sha256": "6b87a093a65cdcf2e6ff37ee574cbaa9cd47b43fa0f7aa22bef05e95fac91ed5"
+}

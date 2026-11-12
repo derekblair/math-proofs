@@ -1,0 +1,24 @@
+{
+  "command": "git diff --no-ext-diff --name-only 0b17820a79f969c883b363de670402512b47341d HEAD -- '*.lean' lean-toolchain lakefile.toml lake-manifest.json",
+  "argv": [
+    "git",
+    "diff",
+    "--no-ext-diff",
+    "--name-only",
+    "0b17820a79f969c883b363de670402512b47341d",
+    "HEAD",
+    "--",
+    "*.lean",
+    "lean-toolchain",
+    "lakefile.toml",
+    "lake-manifest.json"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:33:51.763147+00:00",
+  "finished_utc": "2026-10-29T03:33:51.765668+00:00",
+  "exit_status": 0,
+  "stdout": "",
+  "stderr": "",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

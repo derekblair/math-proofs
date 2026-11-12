@@ -1,0 +1,19 @@
+{
+  "command": "gh run view 40431654876 --json databaseId,name,headSha,event,status,conclusion,createdAt,updatedAt,url,jobs",
+  "argv": [
+    "gh",
+    "run",
+    "view",
+    "40431654876",
+    "--json",
+    "databaseId,name,headSha,event,status,conclusion,createdAt,updatedAt,url,jobs"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:35:03.077708+00:00",
+  "finished_utc": "2026-10-29T03:35:04.825315+00:00",
+  "exit_status": 0,
+  "stdout": "{\"conclusion\":\"success\",\"createdAt\":\"2026-10-27T01:17:04Z\",\"databaseId\":40431654876,\"event\":\"push\",\"headSha\":\"344e3352e2f1106846e1ec3cbef0b04bff99e187\",\"jobs\":[{\"completedAt\":\"2026-10-27T01:19:02Z\",\"conclusion\":\"success\",\"databaseId\":121950523755,\"name\":\"build\",\"startedAt\":\"2026-10-27T01:17:08Z\",\"status\":\"completed\",\"steps\":[{\"completedAt\":\"2026-10-27T01:17:10Z\",\"conclusion\":\"success\",\"name\":\"Set up job\",\"number\":1,\"startedAt\":\"2026-10-27T01:17:09Z\",\"status\":\"completed\"},{\"completedAt\":\"2026-10-27T01:17:11Z\",\"conclusion\":\"success\",\"name\":\"Run actions/checkout@v5\",\"number\":2,\"startedAt\":\"2026-10-27T01:17:10Z\",\"status\":\"completed\"},{\"completedAt\":\"2026-10-27T01:18:58Z\",\"conclusion\":\"success\",\"name\":\"Run leanprover/lean-action@v1\",\"number\":3,\"startedAt\":\"2026-10-27T01:17:11Z\",\"status\":\"completed\"},{\"completedAt\":\"2026-10-27T01:18:59Z\",\"conclusion\":\"success\",\"name\":\"Post Run actions/checkout@v5\",\"number\":6,\"startedAt\":\"2026-10-27T01:18:58Z\",\"status\":\"completed\"},{\"completedAt\":\"2026-10-27T01:18:59Z\",\"conclusion\":\"success\",\"name\":\"Complete job\",\"number\":7,\"startedAt\":\"2026-10-27T01:18:59Z\",\"status\":\"completed\"}],\"url\":\"https://github.com/derekblair/math-proofs/actions/runs/40431654876/job/121950523755\"}],\"name\":\"Lean Action CI\",\"status\":\"completed\",\"updatedAt\":\"2026-10-27T01:19:03Z\",\"url\":\"https://github.com/derekblair/math-proofs/actions/runs/40431654876\"}\n",
+  "stderr": "",
+  "stdout_sha256": "e2399c7ac56917183b77ccf6ca3ee7af7266dcfeae8246650d75ea0faf193d07",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

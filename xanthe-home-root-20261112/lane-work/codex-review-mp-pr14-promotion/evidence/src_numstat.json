@@ -1,0 +1,19 @@
+{
+  "command": "git diff --no-ext-diff --numstat 0b17820a79f969c883b363de670402512b47341d HEAD",
+  "argv": [
+    "git",
+    "diff",
+    "--no-ext-diff",
+    "--numstat",
+    "0b17820a79f969c883b363de670402512b47341d",
+    "HEAD"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:33:12.071920+00:00",
+  "finished_utc": "2026-10-29T03:33:12.074436+00:00",
+  "exit_status": 0,
+  "stdout": "9\t0\tCONTENTS.md\n37\t0\tFORMALIZATION_CATALOGUE.md\n",
+  "stderr": "",
+  "stdout_sha256": "a418fd523cb36cf842a9f3ac60206c1c8435c5c99157cc1627b75b7e6e89cc83",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /root/math-fleet/lanes/argon-rule129-proof-strategy-20261028
+exec /root/.local/bin/agy --dangerously-skip-permissions --model gemini-4-argon-high --effort high --prompt-interactive="Read BRIEF.md in this directory in full and execute it exactly. Two path notes: the frozen pin manifest the brief cites is copied into this directory as PIN.md, quote that copy; the earlier paper draft the brief cites is copied here as PAPER-NOTES.md and paper.tex. Research only: no coding, no repo writes, no GitHub writes. Write DOSSIER.md incrementally, section by section, as you complete each part, so progress is visible on disk. Keep working until DOSSIER.md ends with the marker DOSSIER COMPLETE. Begin now."

@@ -1,0 +1,440 @@
+                       Binary submasks and the middle column
+                                of Rules 126 and 129∗
+                                                 Derek Blair
+
+                                              28 October 2026
+
+
+                                                     Abstract
+            We formulate a target characterization of the rows of elementary cellular automaton Rule
+        126 from a single live cell, and its consequence for the middle column of Rule 129 under an exact
+        complementation reduction. The candidate support is obtained by reflecting a union indexed
+        by the binary submasks of the lower part of the generation number. For a generation with p
+        set bits, this gives 2p+1 live cells except at n = 2p − 1, where the origin is counted once and
+        the candidate row is full. The resulting middle-column identity is A267442(n) = A043545(n)
+        for n ≥ 1, through A036987; the equality fails at n = 0. We report finite computational
+        evidence for popcounts 1 through 18, including the second-smallest p-bit threshold, and specify
+        a binomial-parity and Lucas-theorem roadmap. The universal row characterization and its Lean
+        formalization remain pending. The sequence identity is already an OEIS conjecture, and related
+        row-count and binomial formulas are prior art; no novelty is claimed for those assertions.
+
+Status and scope. In the title footnote, “computational evidence complete” means that the
+supplied reports record completion of their finite checks. It does not mean exhaustive verification
+of the universal statement. “Proof pinned” is the drafting brief’s project-status wording: the
+supplied reports still list pin-freezing as a next step, and contain no frozen Lean artifact. This
+paper neither certifies that status nor supplies the missing proof.
+
+
+1       Introduction
+Elementary cellular automata update a bi-infinite binary row using the same Boolean function of
+three neighboring cells at every position. In the standard numbering convention, Rule 126 returns
+zero on 000 and 111 and one on the remaining six triples. Rule 129 has the complementary output
+table. Wolfram’s A New Kind of Science describes these automata and the relation of Rule 126 to
+Rule 90 [9]; it also discusses the power-of-two pattern in the center column of Rule 129 [10].
+    The sequence of center-cell states for Rule 129 from a single live cell is catalogued as OEIS
+A267442 [1]. The two comparison sequences are
+                                r(n) := A036987(n) = 1{n=2j −1 for some j≥0} ,                              (1)
+                                q(n) := A043545(n) = 1 − r(n),          n ≥ 0.                              (2)
+The first is the Fredholm–Rueppel sequence; the second is its binary complement [2, 3]. The
+intended headline identity is
+                                    A267442(n) = A043545(n)        (n ≥ 1).                                 (3)
+    ∗
+    Preliminary draft — Lean formalization in progress; computational evidence complete, proof pinned and in
+preparation.
+
+
+                                                       1
+Preliminary draft — Lean formalization in progress                                                       2
+
+
+The positive-index qualification is essential. A267442 has value 1 at index zero, whereas A043545
+has value 0 there. Richard J. Mathar’s 17 January 2016 comment on A267442 already states (3)
+as a conjecture [1].
+    Our purpose is to organize a precise row-support statement, the finite evidence supplied for
+it, and the obligations of a subsequent formal derivation. The middle column is the simplest
+consequence of the proposed support formula. The threshold
+
+                                                 Tp = 3 · 2p−1 − 1
+
+has an elementary interpretation: it is the second-smallest integer with p set bits. Thus the apparent
+gap below the threshold contains only the single smaller p-bit integer 2p −1, and no other candidate
+generations.
+
+
+2    Conventions and the exact complementation reduction
+Let Bn , Sn : Z −→ {0, 1} be the Rule 126 and Rule 129 rows, respectively, with the same initial
+condition
+                                   B0 (x) = S0 (x) = 1{x=0} .                               (4)
+Writing f126 , f129 for the two local maps, the updates are
+
+                             Bn+1 (x) = f126 (Bn (x − 1), Bn (x), Bn (x + 1)),
+
+and likewise for S with f129 . Explicitly,
+
+                      f126 (a, b, c) = 1{(a,b,c) /∈{(0,0,0),(1,1,1)}} ,   f129 = 1 − f126 .
+
+Both maps are invariant under complementing all three inputs. If C is pointwise complementation
+and F126 , F129 are the global update maps, these truth-table identities give
+
+                                      F129 = CF126 ,           F126 C = F126 .
+
+Starting at time one and iterating these equalities yields the exact reduction
+
+                                  Sn (x) = 1 − Bn (x)            (n ≥ 1, x ∈ Z).                        (5)
+
+There is no alternating sign in time. At time zero, (4) applies instead.
+   The Rule 126 row vanishes outside the cone |x| ≤ n and is symmetric under x 7→ −x. We write
+
+         CB (n) = #{x ∈ Z : Bn (x) = 1},                CScone (n) = #{x ∈ [−n, n] ∩ Z : Sn (x) = 1}.
+
+For n ≥ 1, the Rule 129 background is one outside the cone, so a count of all its live cells would be
+infinite. The finite convention used here is
+
+                                 CScone (n) = 2n + 1 − CB (n)             (n ≥ 1).                      (6)
+
+This makes explicit the cone interpretation needed for the reports’ Mersenne assertion count_S = 0;
+their symbol is not separately defined in the supplied packet.
+Preliminary draft — Lean formalization in progress                                                    3
+
+
+3     The target row characterization and the middle column
+For a positive integer n, define
+                   p = popcount(n),             H(n) = 2⌊log2 n⌋ ,         L(n) = n − H(n).
+Here popcount counts the one-bits in the binary expansion, H is the leading power of two, and L
+is the lower part. For nonnegative integers, k ⪯ L means that every set bit of k is a set bit of L;
+equivalently, the bitwise intersection of k and L is k. The lower part has p − 1 set bits and hence
+2p−1 submasks. Define
+                                 U (n) =       {n − 2k, n − 2k − 1}.                            (7)
+                                           [
+
+                                               k⪯L(n)
+
+This is a set of candidate absolute positions; reflection is required to obtain positions in the whole
+row.
+Target Theorem 1 (Lower-part support and Mersenne exception; pending proof). Let p ≥ 1 and
+n ≥ 1 be integers with popcount(n) = p. If
+                                     n ≥ 3 · 2p−1 − 1,          n ̸= 2p − 1,                        (8)
+then the proposed generation-n Rule 126 row is characterized by
+                              Bn (x) = 1        ⇐⇒       |x| ∈ U (n)       (x ∈ Z).                 (9)
+The union has 2p distinct positive values, and
+                             CB (n) = 2p+1 ,            Bn (0) = 0,    Sn (0) = 1.                 (10)
+At the exceptional generation n = 2p − 1, the same union description gives
+                U (n) = {0, 1, . . . , n},       Bn (x) = 1{|x|≤n} ,        CB (n) = 2p+1 − 1.     (11)
+The value zero is produced exactly once in (7), from k = L(n) in the term n − 2k − 1. Consequently
+Bn (0) = 1, Sn (0) = 0, and CScone (n) = 0.
+Logical status. Target Theorem 1 states the intended universal result, for arbitrary p ≥ 1. It is
+not established here by the reported finite checks. Those checks concern specified samples in the
+tiers 1 ≤ p ≤ 18; they do not quantify over every generation of even those tiers. The redundant
+exclusion in (8) is retained to match the consolidated statement supplied for this draft.
+
+3.1   Why the threshold is the second p-bit integer
+The smallest integer with p set bits is Mp = 2p − 1, using positions 0, . . . , p − 1. Any other integer
+with p set bits must use a position at least p. Its other p − 1 bits contribute at least 2p−1 − 1.
+Equality is attained by using positions 0, . . . , p − 2, p, giving
+                                   Tp = 2p + (2p−1 − 1) = 3 · 2p−1 − 1.
+For p = 1 the lower list of positions is empty, so the same reasoning gives M1 = 1 and T1 = 2. In
+particular, among integers of popcount p,
+                                             n ≥ Tp     ⇐⇒     n ̸= Mp .                           (12)
+This is an ordering argument about binary integers, independent of any cellular-automaton asser-
+tion. There is no interval of additional p-bit test cases between Mp and Tp .
+Preliminary draft — Lean formalization in progress                                                                     4
+
+
+3.2   The conditional middle-column consequence
+Once Target Theorem 1, including its exceptional case, is established, its center-cell consequence is
+
+                          Bn (0) = r(n)           (n ≥ 0),        Sn (0) = q(n)            (n ≥ 1).                  (13)
+
+The first equality at n = 0 follows separately from the seed. Equations (5) and (1) then give the
+intended positive-index identity (3). The endpoint distinction is visible in the sequence values:
+
+                                  n               0   1   2   3       4       5   6    7    8
+                                  A036987         1   1   0   1       0       0   0    1    0
+                                  A043545         0   0   1   0       1       1   1    0    1
+                                  A267442         1   0   1   0       1       1   1    0    1
+
+These initial values illustrate the indexing; a finite matching prefix does not settle (3).
+
+
+4     Proof roadmap: obligations and established ingredients
+This section is a roadmap, not a proof of Target Theorem 1. The distinction is between the
+unresolved connection to the nonlinear evolution and the subsequent binary algebra.
+
+Step 1: fix the automata and the reduction. Formalize (4), the two truth tables, finite
+propagation, reflection symmetry, and (5). The Boolean reduction in Section 2 is elementary; its
+Lean implementation and the positive-time domain still have to be linked to the eventual statement.
+
+Step 2: connect the evolution to binomial parity (pending).                                       A candidate closed form
+consistent with the lower-part union is
+                                                                 !
+                                                n
+                                                                      mod 2,          |x| ≤ n,
+                                             
+                                             
+                              bn (x) =
+                              B            ⌊(n − |x|)/2⌋                                                             (14)
+                                         0,
+                                       
+                                                                                      |x| > n.
+                                       
+
+
+The upper binomial index is n. The key missing obligation is Bn (x) = B       bn (x) for all n and x,
+including the cone edges, the center, both spatial signs, and the seed. One possible route uses
+Rule 90 or a suitable auxiliary recurrence, followed by Pascal’s identity modulo two. Rule 126
+itself is nonlinear, so its update cannot simply be replaced by XOR. This candidate is an explicit
+roadmap formulation; the two supplied reports do not contain a frozen statement or a derivation
+of (14). A related binomial formula for the right half of the Rule 126 triangle is already catalogued
+as A127872 [6].
+
+Step 3: apply the established Lucas criterion.                                Lucas’s theorem modulo a prime, here
+specialized to the prime 2, gives
+                          !                  !                            !
+                      n                 ni                            n
+                                                  (mod 2),                    odd                                    (15)
+                                  Y
+                              ≡                                                        ⇐⇒        k ⪯ n,
+                      k           i≥0
+                                        ki                            k
+
+where ni , ki ∈ {0, 1} are binary digits [8]. For n ≥ 1 and |x| ≤ n, set k = ⌊(n − |x|)/2⌋. Then
+
+                                                 0 ≤ k ≤ ⌊n/2⌋ < H(n).
+Preliminary draft — Lean formalization in progress                                                  5
+
+
+Thus k ⪯ n is equivalent to k ⪯ L(n). The floor equation is in turn equivalent to |x| = n − 2k or
+|x| = n − 2k − 1. Accordingly Lucas’s theorem converts (14) into the union (7). This conversion
+does not discharge Step 2.
+
+Step 4: count the candidate union. Within either family n − 2k or n − 2k − 1, different
+submasks give different values; between the two families, parity differs. Hence U (n) has 2p distinct
+values. Its minimum is
+                        min U (n) = n − 2L(n) − 1 = H(n) − L(n) − 1 ≥ 0.                         (16)
+It is zero exactly when L(n) = H(n) − 1, or n is Mersenne. Every positive absolute position yields
+two reflected cells, while zero yields one. These set-theoretic facts explain the two candidate counts
+and the center criterion. They are facts about U (n); they apply to the automaton after the missing
+support equality is supplied.
+
+Step 5: complete the formal bridge. The Lean development must identify its evolution,
+generation numbering, binary-popcount and submask definitions, integer coordinates, and natu-
+ral binomial indices with the conventions above. It must then derive the exceptional case, the
+all-popcount assertion, and the positive-index OEIS identity from the actual row theorem. No
+Lean source, theorem identifier, dependency audit, or successful Lean build is part of the present
+evidence packet. The numbered target and equations here are editorial references, not claims that
+corresponding Lean declarations already exist.
+
+
+5     Computational evidence and its exact limits
+5.1   Provenance of the supplied evidence
+The two supplied reports are dated 27 October 2026. The consolidation report [11] records a review
+of tranche output files, not a new calculation. For the power-of-two tier and popcounts 2 through
+18, it records the terminal markers ALL CHECKS PASS and TOTAL failures: 0. The popcount-
+18 output has both markers twice: once for sections (A)–(E), and once for the (F) bitset run.
+The supporting mersenne-rows, lucas-submask, diagonals, and rowcounts tranches also carry
+ALL CHECKS PASS. The a1a4-truthtables, a3lucas, closedform, and recurrence tranches use
+different reporting conventions and are not cited there as tier evidence.
+    The threshold report [12] describes a separate compute.py run using Python and NumPy, with
+exit status zero and the same success markers. It states that no Lean was invoked. The present
+draft uses these two reports as evidence summaries; their underlying scripts and raw tranche logs
+were not supplied with this writing task.
+
+5.2   All 18 tiers, without extrapolated ranges
+For every tier 1 ≤ p ≤ 18, the consolidation reports agreement with (7) and the non-Mersenne
+count on the generations checked in that tranche, as well as the exceptional full row. It also reports
+the converse test
+                    CB (n) = 2p+1             popcount(n) = p and n ̸= 2p − 1                    (17)
+                                                                                
+                                      ⇐⇒
+on each tranche’s recorded converse interval. Only the largest such interval is reproduced: p = 18,
+2 ≤ n ≤ 512000. The other intervals are not specified. In particular, the upper endpoint 512000
+must not be applied to every tier.
+Preliminary draft — Lean formalization in progress                                                    6
+
+
+    Table 1 reproduces every threshold and explicitly separates these unknown ranges. The count
+column evaluates the reported formula 2p+1 ; it is not a sample count. “Not supplied” means that
+the two input reports omit the relevant range, not that the original tranche performed no such
+check.
+                     Table 1: Reported popcount tiers and bounds present in the source
+                     packet.
+
+                 p       Tp     2p+1 Analytic row      Converse interval    Simulation
+                                     sample                                 range
+                 1      2      4      not supplied     not supplied         not supplied
+                 2      5      8      not supplied     not supplied         not supplied
+                 3     11     16      not supplied     not supplied         not supplied
+                 4     23     32      not supplied     not supplied         not supplied
+                 5     47     64      not supplied     not supplied         not supplied
+                 6     95    128      not supplied     not supplied         not supplied
+                 7    191    256      not supplied     not supplied         not supplied
+                 8    383    512      not supplied     not supplied         not supplied
+                 9    767   1024      not supplied     not supplied         not supplied
+                10   1535   2048      not supplied     not supplied         not supplied
+                11   3071   4096      not supplied     not supplied         not supplied
+                12   6143   8192      not supplied     not supplied         not supplied
+                13 12287 16384        not supplied     not supplied         not supplied
+                14 24575 32768        not supplied     not supplied         not supplied
+                15 49151 65536        not supplied     not supplied         not supplied
+                16 98303 131072       not supplied     not supplied         not supplied
+                17 196607 262144      not supplied     not supplied         not supplied
+                18 393215 524288      19 values; see   2 ≤ n ≤ 512000       not supplied
+                                      below
+
+
+   The threshold report identifies the p = 18 generation list with the popcount-18 tranche’s list:
+the 19 integers having 18 set bits among positions 0, . . . , 18. Equivalently this explicitly specified
+sample is
+                                E18 = {524287 − 2j : 0 ≤ j ≤ 18}.                                  (18)
+The report describes these as 19 values ≤ 524288. This is a sparse list, not every generation up to
+that bound; its exact endpoints, from (18), are 262143 and 524286. The supplied packet does not
+identify the algorithm or coverage of every individual test on that list. In particular it does not give
+a bitset-simulation interval, even though it records completion of a bitset section. No analogous
+analytic row lists for the other 17 main tranches are reproduced.
+
+5.3   Threshold-sharpness tranche: S1–S4
+The separate threshold checks have a completely specified enumeration: for each p = 1, . . . , 18, the
+p + 1 values
+                                Ep = {2p+1 − 1 − 2j : 0 ≤ j ≤ p}                                  (19)
+are all the integers with p set bits in positions 0, . . . , p. They exhaust the integers of popcount p
+with n < 2p+1 , rather than all integers in that interval. A higher bit would already exceed the
+threshold. The report records the following four checks:
+Preliminary draft — Lean formalization in progress                                                        7
+
+
+ S1. At n = Tp , for every p = 1, . . . , 18, the candidate union has 2p distinct values, no collisions, and
+     minimum 2p−1 . The symmetry count is 2p+1 . The report also specifies a pinned math.comb
+     comparison for n ≤ 1000. This is a cutoff for that comparison, not a declaration that every row
+     up to 1000 was simulated. Among these threshold generations it includes p ≤ 9 (T9 = 767),
+     and excludes p ≥ 10 (T10 = 1535).
+
+ S2. Each complete list Ep contains exactly two values at most Tp , namely 2p − 1 and Tp , and no
+     value strictly between them. The p = 18 cross-consistency check is the 19-value list (18).
+
+ S3. At each of the 18 Mersenne generations n = 2p − 1, the union has 2p distinct values, with
+     zero produced once at k = L(n). The recorded symmetry count is 2p+1 − 1.
+
+ S4. At every n ∈ Ep , for every p = 1, . . . , 18, the minimum produced value is n − 2kmax − 1, with
+     kmax = L(n).
+
+The report states that an earlier expectation of additional failing generations below Tp was refuted
+by the enumeration: the proposed gap has no p-bit integers. The finding concerns ordering and the
+candidate union; it is not a new failure mode for the automaton.
+    In particular, the endpoint union properties were verified computationally for n = Tp and
+n = 2p − 1, p = 1, . . . , 18, as reported in S1 and S3. This statement has those finite domains only.
+    The threshold tranche supplies no additional coverage assertion for p > 18 or for arbitrary
+generations above Tp . The elementary ordering argument in (12) is logically distinct from its finite
+enumeration checks. Likewise, direct counting of U (n) is distinct from simulating Rule 126 or
+establishing the missing equality Bn = B     bn .
+
+
+6     Prior art and the limits of the novelty case
+The submask/Lucas mechanism is folklore-grade. Lucas’s theorem supplies the parity criterion,
+and the binary factorization of Pascal’s triangle and its relation to additive cellular automata are
+standard ingredients. This draft claims no novelty for those ingredients.
+   There is also specific prior art beyond that general mechanism:
+
+    • A267442 already records the positive-index identity (3) as Mathar’s 2016 conjecture [1]. Wol-
+      fram discusses the Rule 129 center-column pattern in 2002 [10].
+
+    • The Rule 126 triangle A071035 already identifies A036987 as its central column [4].
+
+    • A071051 already gives the Rule 126 row count 21+popcount(n) , with one subtracted at Mersenne
+      generations, in a comment by N. J. A. Sloane dated 9 August 2014 [5]. Sloane also states this
+      formula in Section 6.1 of his 2015 paper [7].
+
+    • A071035 identifies the triangle A127872 as the right half of its Rule 126 array [4]. A127872
+      includes G. C. Greubel’s 18 April 2017 code for the formula
+
+                                  2n − 1    2n − 1
+                                         !                !!
+                   T (n, k) =            −                     mod 2    (0 ≤ k ≤ n, n > 0),
+                                  n−k      n−k−2
+
+      with T (0, 0) = 1 and out-of-range binomial coefficients set to zero [6]. This is prior art
+      for a binomial representation, even though the entry does not supply the needed dynamical
+      derivation.
+Preliminary draft — Lean formalization in progress                                                   8
+
+
+The last formula is already algebraically equivalent to the candidate (14) on the right half. Put
+m = n − k. Two applications of Pascal’s identity, followed by binary Lucas, give
+
+                      2n − 1   2n − 1             2n + 1
+                             !            !                !               !
+                                                                     n
+                             −                ≡                ≡               (mod 2).           (20)
+                        m      m−2                  m              ⌊m/2⌋
+
+The first congruence uses that the middle Pascal coefficient is even and that plus and minus agree
+modulo two. Thus the algebraic comparison is available already; the remaining obligation is the
+dynamical derivation and its formalization, rather than this rewriting.
+    The precise lower-part union formulation (7) appears unpublished in the limited sources in-
+spected for this draft. This is a provisional observation about presentation, not a priority claim: it
+is an elementary reformulation of the catalogued binomial expression, conditional on that expres-
+sion’s identification with the automaton. The identity itself is already published as a conjecture, so
+the stronger wording that both the characterization and identity are unpublished would be inac-
+curate. A completed machine-checked derivation may be a useful contribution, but mathematical
+novelty is not established by this draft or by the finite evidence. The limited source check did not
+review all linked manuscripts, including A. J. Macfarlane’s manuscript linked from A071051 [5].
+
+
+7    Work required before a proof-bearing preprint
+The next mathematical deliverable is the missing recurrence-to-closed-form argument, followed by
+a Lean statement and checked derivation with the same seeds and indexing as this paper. The raw
+tranche reports and scripts are needed to replace the missing entries in Table 1 and to document
+which computations independently check the dynamics. Further literature review is needed before
+any novelty claim is finalized; the equivalence (20) already limits such a claim. Until those items are
+supplied, this manuscript is an evidence-based draft with a target theorem and a proof roadmap.
+
+
+References
+ [1] OEIS Foundation Inc., The On-Line Encyclopedia of Integer Sequences, entry A267442,
+     central column of the single-seed Rule 129 evolution. Includes R. J. Mathar’s conjecture, 17
+     January 2016. https://oeis.org/A267442.
+
+ [2] OEIS Foundation Inc., The On-Line Encyclopedia of Integer Sequences, entry A036987,
+     Fredholm–Rueppel sequence. https://oeis.org/A036987.
+
+ [3] OEIS Foundation Inc., The On-Line Encyclopedia of Integer Sequences, entry A043545,
+     complement of A036987. https://oeis.org/A043545.
+
+ [4] OEIS Foundation Inc., The On-Line Encyclopedia of Integer Sequences, entry A071035, Rule
+     126 triangle; central-column cross-reference. https://oeis.org/A071035.
+
+ [5] OEIS Foundation Inc., The On-Line Encyclopedia of Integer Sequences, entry A071051, Rule
+     126 row counts; formula comment by N. J. A. Sloane, 9 August 2014.
+     https://oeis.org/A071051.
+
+ [6] OEIS Foundation Inc., The On-Line Encyclopedia of Integer Sequences, entry A127872, right
+     half of the Rule 126 triangle. https://oeis.org/A127872.
+Preliminary draft — Lean formalization in progress                                                 9
+
+
+ [7] N. J. A. Sloane, On the Number of ON Cells in Cellular Automata, 2015, Section 6.1.
+     arXiv:1503.01168v1. https://arxiv.org/abs/1503.01168.
+
+ [8] Édouard Lucas, Sur les congruences des nombres eulériens et des coefficients différentiels des
+     fonctions trigonométriques suivant un module premier, Bulletin de la Société Mathématique
+     de France 6 (1878), 49–54. doi:10.24033/bsmf.127.
+     https://www.numdam.org/item/BSMF_1878__6__49_1/.
+
+ [9] Stephen Wolfram, A New Kind of Science, Wolfram Media, 2002, p. 55 (elementary rules)
+     and pp. 269–270 (Rule 126 and Rule 90).
+     https://www.wolframscience.com/nks/p55--more-cellular-automata/;
+     https://www.wolframscience.com/nks/p269--special-initial-conditions/.
+
+[10] Stephen Wolfram, A New Kind of Science, Wolfram Media, 2002, p. 641, discussion of the
+     center column of Rule 129.
+     https://www.wolframscience.com/nks/p641--computations-in-cellular-automata/.
+
+[11] Own-harness research—Rule 126 popcount series consolidation, 27 October 2026,
+     orchestrator run approximately 19:53 PDT. Unpublished supplied evidence summary,
+     REPORT-consolidation.md.
+
+[12] Own-harness tranche—Rule 126 popcount threshold sharpness, 27 October 2026, run
+     approximately 20:23 PDT. Unpublished supplied evidence summary, REPORT-threshold.md.
+
+Online references consulted 28 October 2026. The reports are local source documents, not public proof
+artifacts.
+
