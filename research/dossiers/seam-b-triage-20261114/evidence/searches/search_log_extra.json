@@ -1,0 +1,25 @@
+[
+  {
+    "label": "C085_koning",
+    "query": "all:\"Hilko Koning\" OR (all:\"294912\" AND all:\"composite\")",
+    "total_hits": 0,
+    "entries": []
+  },
+  {
+    "label": "C036_rogers_fine",
+    "query": "all:\"Rogers-Fine\" AND all:\"pentagonal\"",
+    "total_hits": 1,
+    "entries": [
+      {
+        "id": "http://arxiv.org/abs/1604.04028v1",
+        "title": "Partitions with fixed largest hook length"
+      }
+    ]
+  },
+  {
+    "label": "C047_dirsqrt",
+    "query": "all:\"Dirichlet\" AND all:\"unitary divisors\" AND all:\"square root\"",
+    "total_hits": 0,
+    "entries": []
+  }
+]
