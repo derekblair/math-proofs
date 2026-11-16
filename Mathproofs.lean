@@ -79,3 +79,4 @@ import Mathproofs.Rule129Digits
 import Mathproofs.Rule129MiddleColumn
 import MathProofs.SeamB.C049_A372556
 import Mathproofs.A266222
+import Mathproofs.A392002TwoColorPartition
