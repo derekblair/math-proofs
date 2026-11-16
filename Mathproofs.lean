@@ -78,4 +78,3 @@ import Mathproofs.Rule129Lucas
 import Mathproofs.Rule129Digits
 import Mathproofs.Rule129MiddleColumn
 import MathProofs.SeamB.C049_A372556
-import Mathproofs.A317933Records
