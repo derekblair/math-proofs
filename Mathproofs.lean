@@ -15,6 +15,8 @@ import Mathproofs.CollatzGapC24Lemma3
 import Mathproofs.CollatzGapC23
 import Mathproofs.CollatzGapC22C25
 import Mathproofs.CollatzGapFactor
+import Mathproofs.CollatzGapC29
+import Mathproofs.CollatzGapC29Mirror
 import Mathproofs.ESX0S1S3
 import Mathproofs.ESDescentTransfer
 import Mathproofs.ESDescentCovering
