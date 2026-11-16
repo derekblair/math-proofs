@@ -675,7 +675,18 @@ theorem base7LeastPeriodDenominator_eq_minIrredOrder :
 /-- Companion calibration value `minIrredOrder 2 = 4` (`OEIS A218358(2) = 4`). -/
 theorem minIrredOrder_two :
     minIrredOrder 2 = 4 := by
-  rw [← base7LeastPeriodDenominator_eq_minIrredOrder 2 le_rfl, base7LeastPeriodDenominator_two]
+  rw [minIrredOrder_eq_minPrimDiv7 le_rfl]
+  apply nat_sInf_eq_of_mem_of_le
+  · refine ⟨by decide, by decide, ?_⟩
+    intro k hk1 hk2
+    have hk : k = 1 := by omega
+    subst hk
+    decide
+  · rintro d ⟨hd1, _, hd_prim⟩
+    have hndvd6 : ¬ d ∣ 6 := hd_prim 1 le_rfl (by decide)
+    by_contra hlt4
+    have hd23 : d = 2 ∨ d = 3 := by omega
+    rcases hd23 with rfl | rfl <;> exact hndvd6 (by decide)
 
 /-- Fidelity check (`PIN-S019.md` fidelity note 3): for `2 ≤ f.natDegree`, `Irreducible f`
 automatically implies `f.coeff 0 ≠ 0` (the explicit guard only acts at `n = 1` to exclude `X`). -/
@@ -933,6 +944,34 @@ private lemma findLargePrimDiv_spec {n : ℕ} (hn : 2 ≤ n) :
         exact ⟨Nat.mod_eq_zero_of_dvd hrdvd, isPrimDiv7B_iff.mpr hprim⟩
       · exact hnone r hgt hrdvd hprim
 
+private lemma minPrimDiv7_eq_compute {n : ℕ} (hn : 2 ≤ n) :
+    minPrimDiv7 n = a381494Compute n := by
+  have hM_pos : 0 < 7 ^ n - 1 := by
+    have := one_lt_seven_pow (show 1 ≤ n by omega)
+    omega
+  unfold a381494Compute
+  simp only [show n ≠ 0 by omega, show n ≠ 1 by omega, ↓reduceIte]
+  have hsmall := findSmallPrimDiv_spec hn (7 ^ n - 1) 2 le_rfl (by omega)
+    (fun _ hc2 hlt => by omega)
+  cases hres : findSmallPrimDiv n (7 ^ n - 1) 2 (7 ^ n - 1) with
+  | inl r =>
+    rw [hres] at hsmall
+    exact hsmall.symm
+  | inr s =>
+    rw [hres] at hsmall
+    rcases hsmall with ⟨hs2, hsq, hnone_small⟩
+    symm
+    refine findLargePrimDiv_spec hn (s - 1) ?_
+    intro r hrgt hrdvd hprim
+    have hs_le_r : s ≤ r := by omega
+    have hmul : ((7 ^ n - 1) / r) * r = 7 ^ n - 1 := Nat.div_mul_cancel hrdvd
+    have hd_lt_s : (7 ^ n - 1) / r < s := by
+      by_contra hge
+      have hs_le_d : s ≤ (7 ^ n - 1) / r := by omega
+      have : s * s ≤ ((7 ^ n - 1) / r) * r := Nat.mul_le_mul hs_le_d hs_le_r
+      omega
+    exact hnone_small ((7 ^ n - 1) / r) (by have := hprim.1; omega) hd_lt_s hprim
+
 /-- Formal equivalence between `base7LeastPeriodDenominator` and its `O(√M)` computable mirror
 `a381494Compute` for all `n : ℕ`. -/
 theorem base7LeastPeriodDenominator_eq_compute (n : ℕ) :
@@ -940,39 +979,12 @@ theorem base7LeastPeriodDenominator_eq_compute (n : ℕ) :
   rcases n with _ | _ | m
   · exact base7LeastPeriodDenominator_zero
   · exact base7LeastPeriodDenominator_one
-  · set k := m + 2
-    have hk2 : 2 ≤ k := by omega
-    have hM_pos : 0 < 7 ^ k - 1 := by
-      have := one_lt_seven_pow (show 1 ≤ k by omega)
-      omega
-    unfold a381494Compute
-    simp only [show k ≠ 0 by omega, show k ≠ 1 by omega, ↓reduceIte]
-    rw [base7LeastPeriodDenominator_eq_minPrimDiv7 (by omega)]
-    have hsmall := findSmallPrimDiv_spec hk2 (7 ^ k - 1) 2 le_rfl (by omega)
-      (fun _ hc2 hlt => by omega)
-    cases hres : findSmallPrimDiv k (7 ^ k - 1) 2 (7 ^ k - 1) with
-    | inl r =>
-      rw [hres] at hsmall
-      exact hsmall.symm
-    | inr s =>
-      rw [hres] at hsmall
-      rcases hsmall with ⟨hs2, hsq, hnone_small⟩
-      symm
-      refine findLargePrimDiv_spec hk2 (s - 1) ?_
-      intro r hrgt hrdvd hprim
-      have hs_le_r : s ≤ r := by omega
-      have hmul : ((7 ^ k - 1) / r) * r = 7 ^ k - 1 := Nat.div_mul_cancel hrdvd
-      have hd_lt_s : (7 ^ k - 1) / r < s := by
-        by_contra hge
-        have hs_le_d : s ≤ (7 ^ k - 1) / r := by omega
-        have : s * s ≤ ((7 ^ k - 1) / r) * r := Nat.mul_le_mul hs_le_d hs_le_r
-        omega
-      exact hnone_small ((7 ^ k - 1) / r) (by have := hprim.1; omega) hd_lt_s hprim
+  · rw [base7LeastPeriodDenominator_eq_minPrimDiv7 (by omega), minPrimDiv7_eq_compute (by omega)]
 
 /-- Formal equivalence between `minIrredOrder` and `a381494Compute` for all `n ≥ 2`. -/
 theorem minIrredOrder_eq_compute {n : ℕ} (hn : 2 ≤ n) :
     minIrredOrder n = a381494Compute n := by
-  rw [← base7LeastPeriodDenominator_eq_minIrredOrder n hn, base7LeastPeriodDenominator_eq_compute]
+  rw [minIrredOrder_eq_minPrimDiv7 hn, minPrimDiv7_eq_compute hn]
 
 /-- Kernel-verified spot checks of both pinned sequences across `n = 2..10` against the live OEIS
 values `[4, 9, 5, 2801, 36, 29, 64, 27, 11]` (`PIN-S019.md` fidelity note 4) via the formally

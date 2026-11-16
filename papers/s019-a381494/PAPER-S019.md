@@ -1,7 +1,7 @@
 # Discrete Radix Periodicity and Finite-Field Minimal Polynomials: Proof and Lean 4 Formalization of R. J. Mathar's OEIS A381494 = A218358 Conjecture
 
 **Preprint Draft (`PAPER-S019.md`) — 2026-11-16**  
-**Repository / Module:** `derekblair/math-proofs` (`SeamC/A381494.lean`, `namespace SeamC.A381494`, `1,005` lines, `SHA-256: bf5936edff152e0100c786ba9947041c8c8b7b4be59cd47c2ca7dd0bc7a974c7`)  
+**Repository / Module:** `derekblair/math-proofs` (`SeamC/A381494.lean`, `namespace SeamC.A381494`, `1,017` lines, `SHA-256: ca7196659af75049e0dfe9e99ca8b716a6db0b40cdc36460d7c1890553c961bf`)  
 **Toolchain & Mathlib Pin:** `leanprover/lean4:v4.34.1` (`Lake 5.0.0-src+5045d00`), Mathlib `d13f23b723b8a846827a245b89c10fc7d3f11612`  
 **Target Contract:** `PIN-S019.md` v1 (`SHA-256: cb886cb3db98808363e93d9a882cd649c3dbce132015afb8f67bbadb7330c663`, `delta_vs_source: NONE`)
 
