@@ -15,8 +15,6 @@ import Mathproofs.CollatzGapC24Lemma3
 import Mathproofs.CollatzGapC23
 import Mathproofs.CollatzGapC22C25
 import Mathproofs.CollatzGapFactor
-import Mathproofs.CollatzGapC29
-import Mathproofs.CollatzGapC29Mirror
 import Mathproofs.ESX0S1S3
 import Mathproofs.ESDescentTransfer
 import Mathproofs.ESDescentCovering
@@ -81,3 +79,4 @@ import MathProofs.SeamB.C049_A372556
 import Mathproofs.A266222
 import Mathproofs.A317933Records
 import Mathproofs.A392002TwoColorPartition
+import SeamC.A363166.Statement
