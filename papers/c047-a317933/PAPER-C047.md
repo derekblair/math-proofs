@@ -84,7 +84,7 @@ Before scoping (`SCOPING-C047.md` §2.1), a preliminary heuristic (`TRIAGE-SEAMB
 1. replacing $\operatorname{A001790}(m_1) = \binom{2m_1}{m_1} / 2^{s_2(m_1)}$ with the crude upper bound $\binom{2m_1}{m_1} / 2$ (using $s_2(m_1) \ge 1$ for $m_1 \ge 1$); and
 2. arguing from $4^{m_1} \cdot 9^{m_2} < 4^k$, i.e., $m_1 + (\log_4 9)\,m_2 \approx m_1 + 1.585\,m_2 < k$, that the exponential slack $4^{k - m_1}$ absorbs the denominator penalty $2^{s_2(k)}$ in $\operatorname{A001790}(k) = \binom{2k}{k} / 2^{s_2(k)}$.
 
-**This literal intermediate inequality is false.** Consider $k = 31 = 2^5 - 1$, $m_1 = 29$, and $m_2 = 1$ (corresponding to $n = 4^{29} \cdot 9^1$):
+**This literal intermediate inequality is false.** Consider $k = 31 = 2^5 - 1$, $m_1 = 29$, and $m_2 = 1$ (corresponding to $n = 4^{29} \cdot 9^1):$
 - The domain condition holds: $4^{29} \cdot 9 < 4^{29} \cdot 16 = 4^{31}$.
 - Since $29 = (11101)_2$ has $s_2(29) = 4$ while $31 = (11111)_2$ has $s_2(31) = 5$, discarding $2^{s_2(29) - 1} = 2^3 = 8$ in the crude bound $\binom{58}{29}/2$ forfeits a factor of $8$, whereas stepping two central binomial indices from $29$ to $31$ gains less than $4^2 = 16$ relative to $2^{s_2(31)} = 32$:
   $$\frac{\binom{58}{29}}{2} \cdot \operatorname{A001790}(1) = 15{,}033{,}633{,}249{,}770{,}520 \;>\; 14{,}544{,}636{,}039{,}226{,}909 = \frac{\binom{62}{31}}{32} = \operatorname{A001790}(31).$$
@@ -222,11 +222,11 @@ For $n \ge 1$, set $M(n) := \sum_{p \in n.\mathrm{primeFactors}} \lfloor v_p(n)/
 
 ### 7.2 Recorded Trust, Axiom, Non-Vacuity, and Provenance Audit
 
-0. **Artifact source digests bound to toolchain pin (`leanprover/lean4:v4.34.1`, commit `5045d0056413266e57c625dcd7c365b10e377c52`, Mathlib `d13f23b723b8a846827a245b89c10fc7d3f11612`, base `master` `2d8267e1f5e7543e2915d8ed4aee8ae917531882`):**
+0. **Artifact source digests bound to toolchain pin (`leanprover/lean4:v4.34.1`, commit `5045d0056413266e57c625dcd7c365b10e377c52`, Mathlib `d13f23b723b8a846827a245b89c10fc7d3f11612`, base `master` `adca1b874376938a34d93d958ad74f2d4605bb21`):**
    - `Mathproofs/A317933Records.lean` (`814` lines): `32358f5814efb4138b2ef5f32b3373189315d461809b3db4309153f9ac419e94` (`0 diff chars` vs. `PIN-C047.md` v1 across all 5 definitions and 3 theorem signatures).
-   - `Mathproofs.lean` (`81` lines, adds `import Mathproofs.A317933Records`): `ecc22863de78c6d9df713a43cc122e2e55550a247ca04d0f919f108df172b158`.
+   - `Mathproofs.lean` (`82` lines, adds `import Mathproofs.A317933Records` after `import Mathproofs.A266222`): `65fa2e4a1d97f222526b45628f4448a1f94596f05e6b35c6dbfb274f24690a86`.
    - `lakefile.toml` (`19` lines, unchanged): `5a82a75a91dc597eccd9305c998dffaf6273956b9c0819f0c28cc86040316a21`.
-   - Clean-slate full build (`rm -rf .lake/build && lake build`): exit `0` (`17,978` jobs; `0` errors, `0` sorries, `0` warnings on `Mathproofs.A317933Records`; log SHA-256 `def37675715244cf432abd4c84da4304a5432671d8cddde138d7bc394fab743b`).
+   - Clean-slate full build (`rm -rf .lake/build && lake build`): exit `0` (`17,980` jobs; `0` errors, `0` sorries, `0` warnings on `Mathproofs.A317933Records`; log SHA-256 `d646ce12976a40c8bb69938d60d5d3bbd3f99390ef4aa758750f309367309a06`).
 1. **Axiom footprint (`#print axioms`):**
    - `Mathproofs.A317933Records.isStrictRecord`: depends on **no axioms**.
    - `Mathproofs.A317933Records.u`, `f`, `a`, `A001790`, `f_existsUnique`, `A001790_eq_num`, `a317933_records`, and all supporting declarations (`g`, `g_eq_f`, `a_mirror`, `a_mirror_eq_a`, `a_spot_checks`, `guard_exclusions`, `triage_step2_bound_false_at_31`): `[propext, Classical.choice, Quot.sound]` (exact allowlist).
