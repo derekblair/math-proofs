@@ -5,6 +5,10 @@ defaultTargets = ["mathproofs"]
 [[lean_lib]]
 name = "Mathproofs"
 
+[[lean_lib]]
+name = "MathProofs"
+globs = ["MathProofs.+"]
+
 [[lean_exe]]
 name = "mathproofs"
 root = "Main"
