@@ -9,6 +9,10 @@ name = "Mathproofs"
 name = "MathProofs"
 globs = ["MathProofs.+"]
 
+[[lean_lib]]
+name = "SeamC"
+globs = ["SeamC.+"]
+
 [[lean_exe]]
 name = "mathproofs"
 root = "Main"
