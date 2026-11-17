@@ -129,7 +129,7 @@ theorem c037_a203568_family_exists (N : ℕ) (hN : 1 ≤ N) :
             (∏ k ∈ Finset.Icc 1 (m + 1), (1 + (PowerSeries.X : ℤ⟦X⟧) ^ (2 * k - 1))) (1 : ℤˣ)) S ∧
         a203568Series =
           PowerSeries.invOfUnit
-            (∏ j ∈ Finset.Icc 1 (N - 1), (1 + (PowerSeries.X : ℤ⟦X⟧) ^ (2 * k - 1))) (1 : ℤˣ) *
+            (∏ j ∈ Finset.Icc 1 (N - 1), (1 + (PowerSeries.X : ℤ⟦X⟧) ^ (2 * j))) (1 : ℤˣ) *
             (Polynomial.toPowerSeries P + S) := by
   sorry
 
