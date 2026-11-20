@@ -1,0 +1,16 @@
+{
+  "command": "gh api repos/derekblair/math-proofs/actions/runs/40431659272/artifacts",
+  "argv": [
+    "gh",
+    "api",
+    "repos/derekblair/math-proofs/actions/runs/40431659272/artifacts"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:34:14.521098+00:00",
+  "finished_utc": "2026-10-29T03:34:15.304203+00:00",
+  "exit_status": 0,
+  "stdout": "{\"total_count\":0,\"artifacts\":[]}",
+  "stderr": "",
+  "stdout_sha256": "244563f989470892c537c9a4622920af0d228ee4528f7d00c64a06d6cd95856c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

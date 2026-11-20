@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /root/math-fleet/lanes/argon-streaming-hmac-m1-20261026
+exec ~/.local/bin/agy --dangerously-skip-permissions --model gemini-4-argon-high --effort high --print="Read the file BRIEF.md in this directory in full and execute it exactly. Local paths on this machine: the predecessor SHA-256 dossier the brief cites is at ./SHA256-DOSSIER.md in this directory (byte-identical copy of the harvested desk dossier), and the pin-manifest template the brief cites is at /root/math-fleet/files/pin-manifest-template.md. Your only deliverable is DOSSIER.md written incrementally in this directory, ending with the one-line marker DOSSIER COMPLETE. Research only: no coding, no repo writes, no GitHub writes."

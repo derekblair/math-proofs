@@ -1,0 +1,21 @@
+{
+  "command": "git grep -n -E 'admission_criterion|a0_constancy|u_eq_Aqe_div_f|excess_prime_dvd_u|M_const|split_layered_repaired' c9d3c0ebb6474c5b134b2c85cae36ff84cd2af43 -- Mathproofs/ESSubfamilyExtended.lean",
+  "argv": [
+    "git",
+    "grep",
+    "-n",
+    "-E",
+    "admission_criterion|a0_constancy|u_eq_Aqe_div_f|excess_prime_dvd_u|M_const|split_layered_repaired",
+    "c9d3c0ebb6474c5b134b2c85cae36ff84cd2af43",
+    "--",
+    "Mathproofs/ESSubfamilyExtended.lean"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:33:12.071388+00:00",
+  "finished_utc": "2026-10-29T03:33:12.075386+00:00",
+  "exit_status": 0,
+  "stdout": "c9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:5:  Status: [PROVED] \u2014 generalized_subfamily_identity. [PROVED*] (staged, machine-checked, review-cleared) \u2014 admission_criterion, a0_constancy, u_eq_Aqe_div_f, excess_prime_dvd_u, M_const, split_layered_restated, split_layered_repaired\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:25:  `admission_criterion` (+ `adm_congruence_solvable`). R261's constancy\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:351:theorem admission_criterion (A qe f k : \u2115)\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:435:theorem u_eq_Aqe_div_f (A qe f u : \u2115) (hf : 0 < f) (hu_eq : u * f = A * qe) :\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:441:theorem excess_prime_dvd_u (A qe f : \u2115) (hA : 0 < A) (hqe : 0 < qe) (hf : 0 < f)\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:478:    excess_prime_dvd_u A qe f hA hqe hf hfint p hp hlt\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:526:theorem a0_constancy_formula (A qe k : \u2115) (hA : 0 < A) (hqe : 0 < qe) (hk : 0 < k)\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:582:theorem a0_constancy (A qe k\u2081 k\u2082 : \u2115) (hA : 0 < A) (hqe : 0 < qe)\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:589:  rw [a0_constancy_formula A qe k\u2081 hA hqe hk\u2081 hpin\u2081,\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:590:    a0_constancy_formula A qe k\u2082 hA hqe hk\u2082 hpin\u2082]\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:594:theorem a0_constancy_admitted (A qe f k\u2081 k\u2082 m\u2081 m\u2082 : \u2115)\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:606:  a0_constancy A qe k\u2081 k\u2082 hA hqe hk\u2081 hk\u2082\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:611:theorem M_const (A qe k\u2081 k\u2082 : \u2115) (hA : 0 < A) (hqe : 0 < qe)\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:618:  rw [a0_constancy A qe k\u2081 k\u2082 hA hqe hk\u2081 hk\u2082 hpin\u2081 hpin\u2082]\nc9d3c0ebb6474c5b134b2c85cae36ff84cd2af43:Mathproofs/ESSubfamilyExtended.lean:687:theorem split_layered_repaired (Parents : Finset \u2115) (g res\u2081 res\u2082 : \u2115)\n",
+  "stderr": "",
+  "stdout_sha256": "51f434695e38e504f108a4a0ed1b9c25536ffeaeee157316af4b5f314188f384",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

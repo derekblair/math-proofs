@@ -1,0 +1,10 @@
+$ git clone https://github.com/derekblair/math-proofs.git ./repo
+Cloning into './repo'...
+exit=0
+$ gh pr checkout 14
+Switched to a new branch 'brian/issue-10-blocked-verification-draft-20261026'
+branch 'brian/issue-10-blocked-verification-draft-20261026' set up to track 'origin/brian/issue-10-blocked-verification-draft-20261026'.
+exit=0
+$ git rev-parse HEAD
+344e3352e2f1106846e1ec3cbef0b04bff99e187
+exit=0

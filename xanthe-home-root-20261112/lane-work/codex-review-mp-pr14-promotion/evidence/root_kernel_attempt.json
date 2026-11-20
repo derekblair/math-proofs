@@ -1,0 +1,16 @@
+{
+  "command": "leanchecker --verbose Mathproofs.ESSubfamilyExtended",
+  "argv": [
+    "leanchecker",
+    "--verbose",
+    "Mathproofs.ESSubfamilyExtended"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:34:00.736810+00:00",
+  "finished_utc": "2026-10-29T03:34:00.737290+00:00",
+  "exit_status": 127,
+  "stdout": "",
+  "stderr": "[Errno 2] No such file or directory: 'leanchecker'",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "9e1fa47f3f5e3f667510e33ca5c2ab5ccbecf2ace43adf606ac1dbedd88cfca3"
+}

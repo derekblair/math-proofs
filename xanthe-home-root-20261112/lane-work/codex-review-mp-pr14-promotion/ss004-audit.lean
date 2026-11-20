@@ -1,0 +1,14 @@
+import Mathproofs.ESSubfamilyExtended
+
+#check ESSubfamilyExtended.admission_criterion
+#print axioms ESSubfamilyExtended.admission_criterion
+#check ESSubfamilyExtended.a0_constancy
+#print axioms ESSubfamilyExtended.a0_constancy
+#check ESSubfamilyExtended.u_eq_Aqe_div_f
+#print axioms ESSubfamilyExtended.u_eq_Aqe_div_f
+#check ESSubfamilyExtended.excess_prime_dvd_u
+#print axioms ESSubfamilyExtended.excess_prime_dvd_u
+#check ESSubfamilyExtended.M_const
+#print axioms ESSubfamilyExtended.M_const
+#check ESSubfamilyExtended.split_layered_repaired
+#print axioms ESSubfamilyExtended.split_layered_repaired

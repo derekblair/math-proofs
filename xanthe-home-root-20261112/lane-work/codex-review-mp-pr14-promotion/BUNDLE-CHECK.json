@@ -1,0 +1,15 @@
+{
+  "record_count": 68,
+  "recorded_stream_hashes_valid": true,
+  "four_full_ci_logs_match_recorded_stdout": true,
+  "all_eight_claims_and_five_annexes_present": true,
+  "report_sha256": "5fede6888ce2891553147240397ddecfe95edc10e6e9fcb08b0ca0c2c98ca786",
+  "nonzero_command_statuses": {
+    "root_audit_attempt.json": 127,
+    "root_build_attempt.json": 127,
+    "root_compiler_attempt.json": 127,
+    "root_kernel_attempt.json": 127,
+    "root_repo_pins.json": 2,
+    "root_search_raw_recovery.json": 1
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "finding": "F1 scope",
+    "old": "    (dbl x), which excludes singleSeed. The pinned theorems prove both the Rule 126 middle-column\n    theorem for all n >= 0 and Mathar's full conjecture A267442(n) = A043545(n) for all n > 0\n    with zero weakening.",
+    "new": "    (dbl x), which excludes singleSeed. The pinned statements have zero statement weakening\n    against the published targets: they retain the same quantifiers and hypotheses for the\n    Rule 126 middle-column result for all n >= 0 and Mathar's full conjecture\n    A267442(n) = A043545(n) for all n > 0. All three theorem bodies are currently sorry\n    placeholders with zero proved theorem content. Proof is future work; this PR claims\n    a statement freeze only, not a proof."
+  },
+  {
+    "finding": "F1 delta",
+    "old": "  NONE — proves the exact full-quantifier statement of Mathar's OEIS A267442 conjecture for all\n  n > 0 from primary definitions alongside the equivalent all-n >= 0 Rule 126 middle-column\n  theorem.",
+    "new": "  NONE in statement weakening: the pinned statements retain the published targets'\n  exact quantifiers and hypotheses, including Mathar's OEIS A267442 conjecture for all\n  n > 0 from primary definitions and the equivalent all-n >= 0 Rule 126 middle-column\n  result. All three theorem bodies are currently sorry placeholders with zero proved\n  theorem content. Proof is future work; this PR claims a statement freeze only, not a proof."
+  },
+  {
+    "finding": "F2 citation",
+    "old": "    (arXiv:1503.01168v3, Sec. 6.1, 2015), and empirically via bivariate generating functions in",
+    "new": "    (arXiv:1503.01168v1, Sec. 6.1, 2015), and empirically via bivariate generating functions in"
+  },
+  {
+    "finding": "Rendering provenance: hash",
+    "old": "- Pin manifest SHA256 (UTF-8 file including heading/fence below): `8bc4bffc10b383bdf1ce557c37e70a2b93aafe56d627285a1a22c5f78b9d1e97`",
+    "new": "- Frozen pin manifest file SHA256 (unchanged file; not the corrected PR-body rendering below): `8bc4bffc10b383bdf1ce557c37e70a2b93aafe56d627285a1a22c5f78b9d1e97`"
+  },
+  {
+    "finding": "Rendering provenance: handoff",
+    "old": "its complete file content appears below.",
+    "new": "a PR-body rendering with corrected proof-status wording and arXiv citation appears below. The frozen manifest file is unchanged."
+  },
+  {
+    "finding": "Rendering provenance: heading",
+    "old": "## Populated manifest (complete file)",
+    "new": "## Manifest rendering (PR-body corrections; frozen file unchanged)"
+  }
+]

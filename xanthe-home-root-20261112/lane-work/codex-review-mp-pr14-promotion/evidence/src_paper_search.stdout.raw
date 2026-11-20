@@ -1,0 +1,80 @@
+papers/subfamily-ladder-ceiling-October-11-2026/CITATION.bib:19:                  The unconditional split/layered dichotomy is recorded
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:50:march-graph program (Round~245), its admission criterion (Round~253),
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:51:the $A_0$-constancy phenomenon (Round~261), the conditional
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:52:split/layered parent-set dichotomy (Rounds~256/265, repaired after a
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:65:of Erd\H{o}s--Straus expansions [PROVED]. The admission criterion
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:69:$k\mid D_0$ is admitted; the $A_0$-constancy theorem
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:70:(Theorem~\ref{thm:a0}, [PROVED*]) shows admitted divisors determine a
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:73:same-modulus form (Theorem~\ref{thm:split}, [PROVED*]): the
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:118:\item The admission criterion in prime valuations, [PROVED*]
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:120:\item $A_0$-constancy for admitted complementary divisors, [PROVED*]
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:122:\item The split/layered parent-set dichotomy in conditional
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:123:  (same-modulus) form, [PROVED*] (Theorem~\ref{thm:split}), plus the
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:179:For the admission criterion (R253) we track prime valuations
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:186:admission condition on the valuation quadruple is
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:196:datum, R253 dossier). In the cluster regime $f=A$ the criterion
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:212:$g(m)=\gcd(M_0,M(m))$. Parent sets are \emph{split} when disjoint and
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:213:\emph{layered} when identical.
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:255:    \ \ \texttt{admission\_criterion}
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:258:    \ \ \texttt{a0\_constancy} (+ \texttt{a0\_constancy\_formula},
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:260:        \texttt{pinning\_lemma}, \texttt{admission\_pinning},
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:265:    \ \ \texttt{split\_layered\_restated}
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:268:    \ \ \texttt{split\_layered\_repaired}
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:306:\begin{assumption}[Parent-set determination]
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:308:  The parent sets of~\eqref{eq:parents} are determined by the residue
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:311:  in the Lean modules; Theorems~\ref{thm:split} uses it explicitly.
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:399:Theorem~\ref{thm:admit} is the R253 criterion, formalized in R266
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:400:(\texttt{admission\_criterion}, [PROVED*]): machine-checked on bakkie,
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:405:(supplied datum, R253 dossier). Example: the $\times29$ cluster
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:411:parents are $\equiv1\pmod8$) (supplied datum, R253 dossier).
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:413:\begin{theorem}[$A_0$-constancy; PROVED*]
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:419:  \texttt{pinning\_lemma}, \texttt{admission\_pinning}); (iii) every
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:422:  (\texttt{a0\_constancy\_formula}); (iv) two admitted divisors
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:423:  $k_1,k_2$ determine the same $A_0$
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:424:  (\texttt{a0\_constancy}, \texttt{a0\_constancy\_admitted}); (v)
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:428:Theorem~\ref{thm:a0} is R261's A0-constancy suite, formalized in R266
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:431:review SURVIVES (``The A$_0$-constancy theorem survives''). Evidence
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:432:(supplied datum, R261 dossier): exhaustive census of $781{,}250$ shapes
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:438:\begin{theorem}[Conditional split/layered dichotomy; PROVED*]
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:439:  \label{thm:split}
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:446:  (\texttt{split\_layered\_restated}, \texttt{split\_layered\_repaired}).
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:449:Precisely, \texttt{split\_layered\_repaired} (R265, folded R274,
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:454:$(P_1\cup P_2).\mathrm{Nonempty}$. The determination premise itself is
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:460:  The unconditional split/layered $\iff$ corollary is false as stated.
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:463:  both $\iff$ directions (supplied datum, R261/R262 dossiers). Sharper
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:464:  (R265): for $A=10$ the four admitted $m$'s $\{3,27,43,387\}$ all have
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:468:This is R261's refuted corollary \texttt{split\_layered\_dichotomy\_
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:469:unconditional}: the rule-9 reviewer (verbatim) wrote ``The A$_0$-constancy
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:472:same-modulus forms of Theorem~\ref{thm:split} are claimed. Separately,
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:480:$302/302$ new-regime admitted pairs split; $6/6$ R223 pairs layered.
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:574:Erd\H{o}s--Straus expansions of the form~\eqref{eq:es}. The admission
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:576:per-prime valuation check, and $A_0$-constancy collapses the
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:587:explicit admitted example). R261's $A_0$-constancy survived, but its
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:591:the conditional, same-modulus form (Theorem~\ref{thm:split}), whose
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:592:determination premise remains Assumption~\ref{asm:determ}. This is the
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:615:(Theorem~\ref{thm:general}, [PROVED]), the valuation-form admission
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:616:criterion (Theorem~\ref{thm:admit}, [PROVED*]), the $A_0$-constancy
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:618:[PROVED*]), the conditional split/layered parent-set dichotomy
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:619:(Theorem~\ref{thm:split}, [PROVED*]) with the unconditional form's
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:627:determination premise (Assumption~\ref{asm:determ}), and the search for
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:672:\emph{Unsolved Math --- Round 253: admission criterion},
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:679:\emph{Unsolved Math --- Round 256: split/layered dichotomy},
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:685:\emph{Unsolved Math --- Round 261: $A_0$-constancy},
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.tex:726:% 2. The parent-set determination premise (Assumption 1) is unproved and
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.aux:29:\newlabel{asm:determ}{{1}{4}{Parent-set determination}{assumption.1}{}}
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.aux:36:\newlabel{thm:a0}{{3}{5}{$A_0$-constancy; PROVED*}{theorem.3}{}}
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.aux:39:\newlabel{thm:split}{{4}{6}{Conditional split/layered dichotomy; PROVED*}{theorem.4}{}}
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.log:612:[][]\OT1/cmr/bx/n/10.95 Theorem 3 \OT1/cmr/m/n/10.95 ($\OML/cmm/m/it/10.95 A[]$\OT1/cmr/m/n/10.95 -constancy; PROVED*)\OT1/cmr/bx/n/10.95 . []\OT1/cmr/m/it/10.95 In the setup of \TS1/cmr/m/it/10.95 §[][]\OT1/cmr/m/it/10.95 3.1[][]: (i) $\OML/cmm/m/it/10.95 u \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 A \OMS/cmsy/m/n/10.95 ^^A \OML/cmm/m/it/10.95 qe=f$ \OT1/cmr/m/it/10.95 (\OT1/cmtt/m/it/10.95 u[]eq[]Aqe[]div[]f\OT1/cmr/m/it/10.95 );
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.log:617:\OT1/cmr/m/it/10.95 (\OT1/cmtt/m/it/10.95 a0[]constancy[]formula\OT1/cmr/m/it/10.95 ); (iv) two ad-mit-ted di-vi-sors $\OML/cmm/m/it/10.95 k[]; k[]$ \OT1/cmr/m/it/10.95 de-ter-mine the same $\OML/cmm/m/it/10.95 A[]$ \OT1/cmr/m/it/10.95 (\OT1/cmtt/m/it/10.95 a0[]constancy\OT1/cmr/m/it/10.95 ,
+papers/subfamily-ladder-ceiling-October-11-2026/build/subfamily-ladder-ceiling-October-11-2026.log:622:[][]\OT1/cmr/bx/n/10.95 Proposition 1 \OT1/cmr/m/n/10.95 (Un-con-di-tional di-chotomy re-futed; COM-PUTED)\OT1/cmr/bx/n/10.95 . []\OT1/cmr/m/it/10.95 The un-con-di-tional split/layered
+papers/subfamily-ladder-ceiling-October-11-2026/build/compile.log:44:LaTeX Warning: Reference `thm:split' on page 1 undefined on input line 73.
+papers/subfamily-ladder-ceiling-October-11-2026/build/compile.log:78:LaTeX Warning: Reference `thm:split' on page 2 undefined on input line 123.
+papers/subfamily-ladder-ceiling-October-11-2026/build/compile.log:127:LaTeX Warning: Reference `thm:split' on page 3 undefined on input line 311.
+papers/subfamily-ladder-ceiling-October-11-2026/build/compile.log:157:\OT1/cmr/m/it/10.95 (\OT1/cmtt/m/it/10.95 a0[]constancy[]formula\OT1/cmr/m/it/10.95 ); (iv) two ad-mit-ted di-vi-sors $\OML/cmm/m/it/10.95 k[]; k[]$ \OT1/cmr/m/it/10.95 de-ter-mine the same $\OML/cmm/m/it/10.95 A[]$ \OT1/cmr/m/it/10.95 (\OT1/cmtt/m/it/10.95 a0[]constancy\OT1/cmr/m/it/10.95 ,
+papers/subfamily-ladder-ceiling-October-11-2026/build/compile.log:170:[][]\OT1/cmr/bx/n/10.95 Proposition 1 \OT1/cmr/m/n/10.95 (Un-con-di-tional di-chotomy re-futed; COM-PUTED)\OT1/cmr/bx/n/10.95 . []\OT1/cmr/m/it/10.95 The un-con-di-tional split/layered
+papers/subfamily-ladder-ceiling-October-11-2026/build/compile.log:172:LaTeX Warning: Reference `thm:split' on page 6 undefined on input line 472.
+papers/subfamily-ladder-ceiling-October-11-2026/build/compile.log:203:LaTeX Warning: Reference `thm:split' on page 7 undefined on input line 591.
+papers/subfamily-ladder-ceiling-October-11-2026/build/compile.log:224:LaTeX Warning: Reference `thm:split' on page 7 undefined on input line 619.
+papers/subfamily-ladder-ceiling-October-11-2026/build/compile.log:309:[][]\OT1/cmr/bx/n/10.95 Theorem 3 \OT1/cmr/m/n/10.95 ($\OML/cmm/m/it/10.95 A[]$\OT1/cmr/m/n/10.95 -constancy; PROVED*)\OT1/cmr/bx/n/10.95 . []\OT1/cmr/m/it/10.95 In the setup of \TS1/cmr/m/it/10.95 §[][]\OT1/cmr/m/it/10.95 3.1[][]: (i) $\OML/cmm/m/it/10.95 u \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 A \OMS/cmsy/m/n/10.95 ^^A \OML/cmm/m/it/10.95 qe=f$ \OT1/cmr/m/it/10.95 (\OT1/cmtt/m/it/10.95 u[]eq[]Aqe[]div[]f\OT1/cmr/m/it/10.95 );
+papers/subfamily-ladder-ceiling-October-11-2026/build/compile.log:312:\OT1/cmr/m/it/10.95 (\OT1/cmtt/m/it/10.95 a0[]constancy[]formula\OT1/cmr/m/it/10.95 ); (iv) two ad-mit-ted di-vi-sors $\OML/cmm/m/it/10.95 k[]; k[]$ \OT1/cmr/m/it/10.95 de-ter-mine the same $\OML/cmm/m/it/10.95 A[]$ \OT1/cmr/m/it/10.95 (\OT1/cmtt/m/it/10.95 a0[]constancy\OT1/cmr/m/it/10.95 ,
+papers/subfamily-ladder-ceiling-October-11-2026/build/compile.log:315:[][]\OT1/cmr/bx/n/10.95 Proposition 1 \OT1/cmr/m/n/10.95 (Un-con-di-tional di-chotomy re-futed; COM-PUTED)\OT1/cmr/bx/n/10.95 . []\OT1/cmr/m/it/10.95 The un-con-di-tional split/layered

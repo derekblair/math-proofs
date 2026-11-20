@@ -1,0 +1,17 @@
+{
+  "command": "lake env lean ../ss004-audit.lean",
+  "argv": [
+    "lake",
+    "env",
+    "lean",
+    "../ss004-audit.lean"
+  ],
+  "cwd": "/root/lane-work/codex-review-mp-pr14-promotion/repo",
+  "started_utc": "2026-10-29T03:34:00.741905+00:00",
+  "finished_utc": "2026-10-29T03:34:00.742379+00:00",
+  "exit_status": 127,
+  "stdout": "",
+  "stderr": "[Errno 2] No such file or directory: 'lake'",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "9f2e3a1c5afdb63fc927c4cbc455b37717ed73ca4b36324aa1902f6cf305e59c"
+}

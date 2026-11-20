@@ -1,0 +1,19 @@
+# BRIEF — Argon High research lane: Rule 129 pin-freeze preparation (corrected draft statement + manifest)
+
+Lane: argon-rule129-pinfreeze-prep-20261027 · Harness: agy, model gemini-4-argon-high · Machine: xanthe · Pool: google-ai-ultra
+Type: RESEARCH ONLY. No coding, no repo writes, no GitHub writes. Deliverable: DOSSIER.md in this directory, written incrementally, ending with the marker DOSSIER COMPLETE. The dossier must CONTAIN, as fenced code blocks ready for a coordinator to lift verbatim: (A) the corrected draft statement file, and (B) the corrected draft pin manifest.
+
+## Inputs (copied into this directory; read both in full)
+- SCREEN-DOSSIER.md — argon-rule129-screen: reduction, Route A strategy, DRAFT pin manifest in its section 5, draft statement file in its section 5 area.
+- AUDIT-DOSSIER.md — argon-rule129-audit: Route A verdicts SOUND / SOUND-WITH-REPAIR, reduction SOUND (non-circular), and section 3 with the 7 mandatory pre-freeze items and hazards S1–S5.
+
+## Your tasks
+1. CORRECTED DRAFT STATEMENT FILE. Apply to the screen dossier's draft statement file: Repairs A2-1 (uniform Bool/Prop typing of B), A2-2 (truncated-subtraction-safe formulation), A2-3 (iterate unfolding), A3-1 (the correct Mathlib name Choose.choose_modEq_choose_mod_mul_choose_div_nat with Fact (Nat.Prime 2), where the strategy references it — in comments only if the statement file itself does not need it), A3-2 (Bool.toNat bridge where needed), and Hazard S1's fix — choose ONE: explicit `import Mathlib.Logic.Function.Iterate`, or define ecaOrbit by direct Nat recursion; justify the choice in one paragraph, including which unfolding lemmas the proof lane will get for free under your choice. Honour Hazard S2 (keep the primary 2^m - 1 characterization of a036987; do not substitute the bit-hack) and S5 (no bv_decide / native_decide anywhere, including comments suggesting them). The theorem statements themselves must not change in strength or quantifier structure (delta vs the audited draft = NONE for the three pinned theorems); definition changes are allowed only where the audit mandated them, and each must be flagged inline with a comment naming the audit item.
+2. CORRECTED DRAFT PIN MANIFEST. Apply pre-freeze items 1, 2 (as a FREEZE-READY draft: frozen_by left as a clearly-marked coordinator field, NOT filled with your own identity), 4, 5, 6, and 7 from AUDIT-DOSSIER.md section 3.2. Item 3 (compile under leanprover/lean4:v4.34.1, commit to derekblair/math-proofs, fill statement_file sha256 + commit) is COORDINATOR-ONLY: leave those two fields as clearly-marked placeholders and end the manifest section with a numbered compile-and-freeze checklist the coordinator executes in order (exact commands, no placeholders except the two fields). For item 7, name the review route concretely as a Codex review lane (reviewer pool != author pool; this candidate's author-side lanes are Gemini/Argon research, so a Codex pool satisfies the crossing rule) — do not invent a specific machine.
+3. SELF-AUDIT TABLE. A gate-by-gate table showing, for each of the 7 items and each repair/hazard above, where in your corrected drafts it is discharged (line or section reference into your own DOSSIER.md), or explicitly NOT discharged with the reason.
+4. End with a "What this preparation does NOT show" section: a corrected draft is not a frozen pin, not a compilation, and not a proof; nothing here authorizes a proof lane.
+
+## Rules
+- Every claim names its evidence inline (an audit-dossier line/section, a quoted source line).
+- Do not import conclusions beyond the two input dossiers; where you must choose (Hazard S1), record the choice and its cost.
+- Research only: web/OEIS/Mathlib-doc reading and reasoning. No Lean execution (none is available under this lane's rules), no repo or GitHub writes.

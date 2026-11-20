@@ -1,0 +1,10 @@
+Final delivery verification: PASS
+- 18/18 threshold and non-Mersenne count rows match exact arithmetic.
+- Exact preliminary status appears in source header and on PDF page 1.
+- No occurrence of proved/proven in manuscript.
+- Labels are unique, references resolve, all citation keys exist.
+- Final pdfLaTeX log: no errors, warnings, undefined references/citations, or overfull/underfull boxes.
+- PDF: nine pages; no unresolved-reference markers.
+- Independent mathematical, evidence and reference reviews completed; corrections integrated.
+- All nine pages visually inspected; final citation-spacing cleanup recompiled.
+- No Lean proof or universal verification is claimed.

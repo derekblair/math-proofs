@@ -1,0 +1,1750 @@
+build	UNKNOWN STEP	﻿2026-10-27T01:17:09.2286345Z Current runner version: '2.338.0'
+build	UNKNOWN STEP	2026-10-27T01:17:09.2312909Z ##[group]Runner Image Provisioner
+build	UNKNOWN STEP	2026-10-27T01:17:09.2314086Z Hosted Compute Agent
+build	UNKNOWN STEP	2026-10-27T01:17:09.2314670Z Version: 20261021.618
+build	UNKNOWN STEP	2026-10-27T01:17:09.2315336Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+build	UNKNOWN STEP	2026-10-27T01:17:09.2316111Z Build Date: 2026-10-21T00:45:21Z
+build	UNKNOWN STEP	2026-10-27T01:17:09.2316801Z Worker ID: {c19cc045-07e9-446a-951e-f870fbf74bf9}
+build	UNKNOWN STEP	2026-10-27T01:17:09.2317581Z Region: westus
+build	UNKNOWN STEP	2026-10-27T01:17:09.2318122Z Cloud: Azure
+build	UNKNOWN STEP	2026-10-27T01:17:09.2318679Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:09.2320196Z ##[group]Operating System
+build	UNKNOWN STEP	2026-10-27T01:17:09.2321103Z Ubuntu
+build	UNKNOWN STEP	2026-10-27T01:17:09.2321713Z 24.04.5
+build	UNKNOWN STEP	2026-10-27T01:17:09.2322215Z LTS
+build	UNKNOWN STEP	2026-10-27T01:17:09.2322713Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:09.2323324Z ##[group]Runner Image
+build	UNKNOWN STEP	2026-10-27T01:17:09.2323995Z Image: ubuntu-24.04
+build	UNKNOWN STEP	2026-10-27T01:17:09.2324621Z Version: 20261012.334.1
+build	UNKNOWN STEP	2026-10-27T01:17:09.2325877Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+build	UNKNOWN STEP	2026-10-27T01:17:09.2327467Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+build	UNKNOWN STEP	2026-10-27T01:17:09.2328453Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:09.2329646Z ##[group]GITHUB_TOKEN Permissions
+build	UNKNOWN STEP	2026-10-27T01:17:09.2332286Z Contents: read
+build	UNKNOWN STEP	2026-10-27T01:17:09.2332986Z Metadata: read
+build	UNKNOWN STEP	2026-10-27T01:17:09.2333591Z Packages: read
+build	UNKNOWN STEP	2026-10-27T01:17:09.2334128Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:09.2336451Z Secret source: Actions
+build	UNKNOWN STEP	2026-10-27T01:17:09.2337369Z Cache mode: write
+build	UNKNOWN STEP	2026-10-27T01:17:09.2338178Z Prepare workflow directory
+build	UNKNOWN STEP	2026-10-27T01:17:09.2698022Z Prepare all required actions
+build	UNKNOWN STEP	2026-10-27T01:17:09.2749837Z Getting action download info
+build	UNKNOWN STEP	2026-10-27T01:17:09.6524177Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+build	UNKNOWN STEP	2026-10-27T01:17:09.7758910Z Download action repository 'leanprover/lean-action@v1' (SHA:24581d74d674803a25a81b10b059c5c0cdd344c6)
+build	UNKNOWN STEP	2026-10-27T01:17:10.1402615Z Getting action download info
+build	UNKNOWN STEP	2026-10-27T01:17:10.2721978Z Download action repository 'actions/cache@caa296126883cff596d87d8935842f9db880ef25' (SHA:caa296126883cff596d87d8935842f9db880ef25)
+build	UNKNOWN STEP	2026-10-27T01:17:10.4555340Z Complete job name: build
+build	UNKNOWN STEP	2026-10-27T01:17:10.5385606Z ##[group]Run actions/checkout@v5
+build	UNKNOWN STEP	2026-10-27T01:17:10.5386656Z with:
+build	UNKNOWN STEP	2026-10-27T01:17:10.5387188Z   repository: derekblair/math-proofs
+build	UNKNOWN STEP	2026-10-27T01:17:10.5395222Z   token: ***
+build	UNKNOWN STEP	2026-10-27T01:17:10.5395715Z   ssh-strict: true
+build	UNKNOWN STEP	2026-10-27T01:17:10.5396226Z   ssh-user: git
+build	UNKNOWN STEP	2026-10-27T01:17:10.5397049Z   persist-credentials: true
+build	UNKNOWN STEP	2026-10-27T01:17:10.5397691Z   clean: true
+build	UNKNOWN STEP	2026-10-27T01:17:10.5398210Z   sparse-checkout-cone-mode: true
+build	UNKNOWN STEP	2026-10-27T01:17:10.5398868Z   fetch-depth: 1
+build	UNKNOWN STEP	2026-10-27T01:17:10.5399373Z   fetch-tags: false
+build	UNKNOWN STEP	2026-10-27T01:17:10.5399891Z   show-progress: true
+build	UNKNOWN STEP	2026-10-27T01:17:10.5400413Z   lfs: false
+build	UNKNOWN STEP	2026-10-27T01:17:10.5401113Z   submodules: false
+build	UNKNOWN STEP	2026-10-27T01:17:10.5401679Z   set-safe-directory: true
+build	UNKNOWN STEP	2026-10-27T01:17:10.5402312Z   allow-unsafe-pr-checkout: false
+build	UNKNOWN STEP	2026-10-27T01:17:10.5403325Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:10.8147357Z Syncing repository: derekblair/math-proofs
+build	UNKNOWN STEP	2026-10-27T01:17:10.8149642Z ##[group]Getting Git version info
+build	UNKNOWN STEP	2026-10-27T01:17:10.8150696Z Working directory is '/home/runner/work/math-proofs/math-proofs'
+build	UNKNOWN STEP	2026-10-27T01:17:10.8153047Z [command]/usr/bin/git version
+build	UNKNOWN STEP	2026-10-27T01:17:10.8274799Z git version 2.55.0
+build	UNKNOWN STEP	2026-10-27T01:17:10.8312816Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:10.8329337Z Temporarily overriding HOME='/home/runner/work/_temp/b994a552-43e7-4b58-89f1-c03c862228d9' before making global git config changes
+build	UNKNOWN STEP	2026-10-27T01:17:10.8336063Z Adding repository directory to the temporary git global config as a safe directory
+build	UNKNOWN STEP	2026-10-27T01:17:10.8338086Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/math-proofs/math-proofs
+build	UNKNOWN STEP	2026-10-27T01:17:10.8397194Z Deleting the contents of '/home/runner/work/math-proofs/math-proofs'
+build	UNKNOWN STEP	2026-10-27T01:17:10.8405044Z ##[group]Initializing the repository
+build	UNKNOWN STEP	2026-10-27T01:17:10.8409067Z [command]/usr/bin/git init /home/runner/work/math-proofs/math-proofs
+build	UNKNOWN STEP	2026-10-27T01:17:10.8522100Z hint: Using 'master' as the name for the initial branch. This default branch name
+build	UNKNOWN STEP	2026-10-27T01:17:10.8524855Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+build	UNKNOWN STEP	2026-10-27T01:17:10.8527354Z hint: to use in all of your new repositories, which will suppress this warning,
+build	UNKNOWN STEP	2026-10-27T01:17:10.8529472Z hint: call:
+build	UNKNOWN STEP	2026-10-27T01:17:10.8531360Z hint:
+build	UNKNOWN STEP	2026-10-27T01:17:10.8533340Z hint: 	git config --global init.defaultBranch <name>
+build	UNKNOWN STEP	2026-10-27T01:17:10.8535281Z hint:
+build	UNKNOWN STEP	2026-10-27T01:17:10.8538193Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+build	UNKNOWN STEP	2026-10-27T01:17:10.8540430Z hint: 'development'. The just-created branch can be renamed via this command:
+build	UNKNOWN STEP	2026-10-27T01:17:10.8542867Z hint:
+build	UNKNOWN STEP	2026-10-27T01:17:10.8544766Z hint: 	git branch -m <name>
+build	UNKNOWN STEP	2026-10-27T01:17:10.8546383Z hint:
+build	UNKNOWN STEP	2026-10-27T01:17:10.8547694Z hint: Disable this message with "git config set advice.defaultBranchName false"
+build	UNKNOWN STEP	2026-10-27T01:17:10.8549255Z Initialized empty Git repository in /home/runner/work/math-proofs/math-proofs/.git/
+build	UNKNOWN STEP	2026-10-27T01:17:10.8552829Z [command]/usr/bin/git remote add origin https://github.com/derekblair/math-proofs
+build	UNKNOWN STEP	2026-10-27T01:17:10.8614071Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:10.8616683Z ##[group]Disabling automatic garbage collection
+build	UNKNOWN STEP	2026-10-27T01:17:10.8618318Z [command]/usr/bin/git config --local gc.auto 0
+build	UNKNOWN STEP	2026-10-27T01:17:10.8644368Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:10.8645838Z ##[group]Setting up auth
+build	UNKNOWN STEP	2026-10-27T01:17:10.8652224Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	UNKNOWN STEP	2026-10-27T01:17:10.8692946Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	UNKNOWN STEP	2026-10-27T01:17:10.9102584Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	UNKNOWN STEP	2026-10-27T01:17:10.9142330Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	UNKNOWN STEP	2026-10-27T01:17:10.9377564Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+build	UNKNOWN STEP	2026-10-27T01:17:10.9418358Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+build	UNKNOWN STEP	2026-10-27T01:17:10.9652189Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+build	UNKNOWN STEP	2026-10-27T01:17:10.9696692Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:10.9698972Z ##[group]Fetching the repository
+build	UNKNOWN STEP	2026-10-27T01:17:10.9709662Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +344e3352e2f1106846e1ec3cbef0b04bff99e187:refs/remotes/origin/brian/issue-10-blocked-verification-draft-20261026
+build	UNKNOWN STEP	2026-10-27T01:17:11.7484667Z From https://github.com/derekblair/math-proofs
+build	UNKNOWN STEP	2026-10-27T01:17:11.7486550Z  * [new ref]         344e3352e2f1106846e1ec3cbef0b04bff99e187 -> origin/brian/issue-10-blocked-verification-draft-20261026
+build	UNKNOWN STEP	2026-10-27T01:17:11.7490354Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:11.7492579Z ##[group]Determining the checkout info
+build	UNKNOWN STEP	2026-10-27T01:17:11.7494633Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:11.7499243Z [command]/usr/bin/git sparse-checkout disable
+build	UNKNOWN STEP	2026-10-27T01:17:11.7556823Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+build	UNKNOWN STEP	2026-10-27T01:17:11.7593142Z ##[group]Checking out the ref
+build	UNKNOWN STEP	2026-10-27T01:17:11.7596803Z [command]/usr/bin/git checkout --progress --force -B brian/issue-10-blocked-verification-draft-20261026 refs/remotes/origin/brian/issue-10-blocked-verification-draft-20261026
+build	UNKNOWN STEP	2026-10-27T01:17:11.8092832Z Switched to a new branch 'brian/issue-10-blocked-verification-draft-20261026'
+build	UNKNOWN STEP	2026-10-27T01:17:11.8097907Z branch 'brian/issue-10-blocked-verification-draft-20261026' set up to track 'origin/brian/issue-10-blocked-verification-draft-20261026'.
+build	UNKNOWN STEP	2026-10-27T01:17:11.8107638Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:11.8168740Z [command]/usr/bin/git log -1 --format=%H
+build	UNKNOWN STEP	2026-10-27T01:17:11.8205062Z 344e3352e2f1106846e1ec3cbef0b04bff99e187
+build	UNKNOWN STEP	2026-10-27T01:17:11.8950089Z ##[group]Run leanprover/lean-action@v1
+build	UNKNOWN STEP	2026-10-27T01:17:11.8951240Z with:
+build	UNKNOWN STEP	2026-10-27T01:17:11.8952023Z   auto-config: true
+build	UNKNOWN STEP	2026-10-27T01:17:11.8952807Z   build: default
+build	UNKNOWN STEP	2026-10-27T01:17:11.8953589Z   test: default
+build	UNKNOWN STEP	2026-10-27T01:17:11.8954374Z   lint: default
+build	UNKNOWN STEP	2026-10-27T01:17:11.8955155Z   mk_all-check: false
+build	UNKNOWN STEP	2026-10-27T01:17:11.8955973Z   use-mathlib-cache: auto
+build	UNKNOWN STEP	2026-10-27T01:17:11.8956835Z   check-reservoir-eligibility: false
+build	UNKNOWN STEP	2026-10-27T01:17:11.8957697Z   leanchecker: false
+build	UNKNOWN STEP	2026-10-27T01:17:11.8958507Z   lean4checker: false
+build	UNKNOWN STEP	2026-10-27T01:17:11.8959300Z   nanoda: false
+build	UNKNOWN STEP	2026-10-27T01:17:11.8960087Z   nanoda-allow-sorry: true
+build	UNKNOWN STEP	2026-10-27T01:17:11.8961128Z   axiom-audit: false
+build	UNKNOWN STEP	2026-10-27T01:17:11.8962041Z   axiom-audit-allow: propext,Classical.choice,Quot.sound
+build	UNKNOWN STEP	2026-10-27T01:17:11.8963022Z   use-github-cache: true
+build	UNKNOWN STEP	2026-10-27T01:17:11.8963882Z   lake-package-directory: .
+build	UNKNOWN STEP	2026-10-27T01:17:11.8964753Z   reinstall-transient-toolchain: false
+build	UNKNOWN STEP	2026-10-27T01:17:11.8965640Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:11.9054711Z ##[start-action display=install elan;id=__leanprover_lean-action.__run]
+build	UNKNOWN STEP	2026-10-27T01:17:11.9147102Z ##[group]Run : Install Elan
+build	UNKNOWN STEP	2026-10-27T01:17:11.9148050Z ^[[36;1m: Install Elan^[[0m
+build	UNKNOWN STEP	2026-10-27T01:17:11.9148962Z ^[[36;1m${GITHUB_ACTION_PATH}/scripts/install_elan.sh^[[0m
+build	UNKNOWN STEP	2026-10-27T01:17:11.9410618Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+build	UNKNOWN STEP	2026-10-27T01:17:11.9411924Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:11.9562205Z ##[group]Elan Installation Output
+build	UNKNOWN STEP	2026-10-27T01:17:11.9997224Z info: downloading installer
+build	UNKNOWN STEP	2026-10-27T01:17:13.5290606Z info: downloading https://releases.lean-lang.org/lean4/v4.34.1/lean-4.34.1-linux.tar.zst
+build	UNKNOWN STEP	2026-10-27T01:17:17.7625332Z info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.34.1
+build	UNKNOWN STEP	2026-10-27T01:17:24.9016177Z Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)
+build	UNKNOWN STEP	2026-10-27T01:17:24.9437638Z Lake version 5.0.0-src+5045d00 (Lean version 4.34.1)
+build	UNKNOWN STEP	2026-10-27T01:17:24.9487707Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:24.9488119Z 
+build	UNKNOWN STEP	2026-10-27T01:17:24.9514649Z ##[end-action id=__leanprover_lean-action.__run;outcome=success;conclusion=success;duration_ms=13045]
+build	UNKNOWN STEP	2026-10-27T01:17:24.9526641Z ##[start-action display=configure `lean-action`;id=__leanprover_lean-action.config]
+build	UNKNOWN STEP	2026-10-27T01:17:24.9550172Z ##[group]Run : Configure Lean Action
+build	UNKNOWN STEP	2026-10-27T01:17:24.9550492Z ^[[36;1m: Configure Lean Action^[[0m
+build	UNKNOWN STEP	2026-10-27T01:17:24.9551092Z ^[[36;1m${GITHUB_ACTION_PATH}/scripts/config.sh^[[0m
+build	UNKNOWN STEP	2026-10-27T01:17:24.9616278Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+build	UNKNOWN STEP	2026-10-27T01:17:24.9616640Z env:
+build	UNKNOWN STEP	2026-10-27T01:17:24.9616855Z   AUTO_CONFIG: true
+build	UNKNOWN STEP	2026-10-27T01:17:24.9617085Z   BUILD: default
+build	UNKNOWN STEP	2026-10-27T01:17:24.9617310Z   TEST: default
+build	UNKNOWN STEP	2026-10-27T01:17:24.9617510Z   LINT: default
+build	UNKNOWN STEP	2026-10-27T01:17:24.9617704Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:24.9725655Z ##[group]Configure lean-action
+build	UNKNOWN STEP	2026-10-27T01:17:24.9751303Z auto-config: true
+build	UNKNOWN STEP	2026-10-27T01:17:24.9751908Z     -> will run lake build
+build	UNKNOWN STEP	2026-10-27T01:17:25.0197069Z lake check-test failed -> will not run lake test
+build	UNKNOWN STEP	2026-10-27T01:17:25.0649015Z lake check-lint failed -> will not run lake lint
+build	UNKNOWN STEP	2026-10-27T01:17:25.0686144Z ##[end-action id=__leanprover_lean-action.config;outcome=success;conclusion=success;duration_ms=115]
+build	UNKNOWN STEP	2026-10-27T01:17:25.0692006Z ##[start-action display=reinstall transient toolchain;id=__leanprover_lean-action.__run_2]
+build	UNKNOWN STEP	2026-10-27T01:17:25.0710275Z ##[end-action id=__leanprover_lean-action.__run_2;outcome=skipped;conclusion=skipped;duration_ms=0]
+build	UNKNOWN STEP	2026-10-27T01:17:25.0713629Z ##[start-action display=ensure all files are imported;id=__leanprover_lean-action.mk_all]
+build	UNKNOWN STEP	2026-10-27T01:17:25.0717340Z ##[end-action id=__leanprover_lean-action.mk_all;outcome=skipped;conclusion=skipped;duration_ms=0]
+build	UNKNOWN STEP	2026-10-27T01:17:25.0719545Z ##[start-action display=Run actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25;id=__leanprover_lean-action.cache-restore]
+build	UNKNOWN STEP	2026-10-27T01:17:25.3114814Z ##[group]Run actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25
+build	UNKNOWN STEP	2026-10-27T01:17:25.3115539Z with:
+build	UNKNOWN STEP	2026-10-27T01:17:25.3115797Z   path: ./.lake
+build	UNKNOWN STEP	2026-10-27T01:17:25.3116679Z   key: lake-Linux-X64-d791b020c21edcc7e9e22797f1d59fde59e8af8f675af62dc2f1fd7521bfef93-0a139aa29a84d34fa9cebab0acc8f738227d22b111af1aad244f9a8235514d3e-344e3352e2f1106846e1ec3cbef0b04bff99e187
+build	UNKNOWN STEP	2026-10-27T01:17:25.3118122Z   restore-keys: lake-Linux-X64-d791b020c21edcc7e9e22797f1d59fde59e8af8f675af62dc2f1fd7521bfef93-0a139aa29a84d34fa9cebab0acc8f738227d22b111af1aad244f9a8235514d3e
+build	UNKNOWN STEP	2026-10-27T01:17:25.3118923Z   enableCrossOsArchive: false
+build	UNKNOWN STEP	2026-10-27T01:17:25.3119189Z   fail-on-cache-miss: false
+build	UNKNOWN STEP	2026-10-27T01:17:25.3119435Z   lookup-only: false
+build	UNKNOWN STEP	2026-10-27T01:17:25.3119671Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:17:25.7281133Z Cache hit for restore-key: lake-Linux-X64-d791b020c21edcc7e9e22797f1d59fde59e8af8f675af62dc2f1fd7521bfef93-0a139aa29a84d34fa9cebab0acc8f738227d22b111af1aad244f9a8235514d3e-0b17820a79f969c883b363de670402512b47341d
+build	UNKNOWN STEP	2026-10-27T01:17:27.0094200Z Received 0 of 2681385536 (0.0%), 0.0 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:28.0102152Z Received 134217728 of 2681385536 (5.0%), 64.0 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:29.0109120Z Received 268435456 of 2681385536 (10.0%), 85.3 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:30.0159216Z Received 461373440 of 2681385536 (17.2%), 109.9 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:31.0191687Z Received 671088640 of 2681385536 (25.0%), 127.8 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:32.0182499Z Received 838860800 of 2681385536 (31.3%), 133.1 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:33.0193950Z Received 1019215872 of 2681385536 (38.0%), 138.6 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:34.0452054Z Received 1207959552 of 2681385536 (45.0%), 143.4 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:35.0444070Z Received 1384120320 of 2681385536 (51.6%), 146.1 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:36.0452091Z Received 1610612736 of 2681385536 (60.1%), 153.0 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:37.0492371Z Received 1761607680 of 2681385536 (65.7%), 152.2 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:38.0511942Z Received 1967128576 of 2681385536 (73.4%), 155.8 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:39.0491192Z Received 2139095040 of 2681385536 (79.8%), 156.4 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:40.0493595Z Received 2277507072 of 2681385536 (84.9%), 154.7 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:41.0542054Z Received 2420113408 of 2681385536 (90.3%), 153.4 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:42.0562101Z Received 2600468480 of 2681385536 (97.0%), 154.6 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:42.5295324Z Received 2681385536 of 2681385536 (100.0%), 154.8 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:17:42.5299075Z Cache Size: ~2557 MB (2681385536 B)
+build	UNKNOWN STEP	2026-10-27T01:17:42.5376256Z [command]/usr/bin/tar -xf /home/runner/work/_temp/c681b454-877d-4453-b4c7-9ee9790df212/cache.tzst -P -C /home/runner/work/math-proofs/math-proofs --use-compress-program unzstd
+build	UNKNOWN STEP	2026-10-27T01:18:03.0271587Z Cache restored successfully
+build	UNKNOWN STEP	2026-10-27T01:18:03.1502736Z Cache restored from key: lake-Linux-X64-d791b020c21edcc7e9e22797f1d59fde59e8af8f675af62dc2f1fd7521bfef93-0a139aa29a84d34fa9cebab0acc8f738227d22b111af1aad244f9a8235514d3e-0b17820a79f969c883b363de670402512b47341d
+build	UNKNOWN STEP	2026-10-27T01:18:03.1670414Z ##[end-action id=__leanprover_lean-action.cache-restore;outcome=success;conclusion=success;duration_ms=38094]
+build	UNKNOWN STEP	2026-10-27T01:18:03.1675207Z ##[start-action display=detect mathlib;id=__leanprover_lean-action.detect-mathlib]
+build	UNKNOWN STEP	2026-10-27T01:18:03.2102956Z ##[group]Run : Detect Mathlib
+build	UNKNOWN STEP	2026-10-27T01:18:03.2103445Z ^[[36;1m: Detect Mathlib^[[0m
+build	UNKNOWN STEP	2026-10-27T01:18:03.2103944Z ^[[36;1m${GITHUB_ACTION_PATH}/scripts/detect_mathlib.sh^[[0m
+build	UNKNOWN STEP	2026-10-27T01:18:03.5085660Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+build	UNKNOWN STEP	2026-10-27T01:18:03.5086073Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:18:03.5644116Z ##[group]Detect Mathlib Output
+build	UNKNOWN STEP	2026-10-27T01:18:03.5644495Z Trying to detect if project is downstream of Mathlib.
+build	UNKNOWN STEP	2026-10-27T01:18:03.6030007Z Detected Mathlib dependency in lake-manifest.json. Using Mathlib cache.
+build	UNKNOWN STEP	2026-10-27T01:18:03.6031124Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:18:03.6031269Z 
+build	UNKNOWN STEP	2026-10-27T01:18:03.6068536Z ##[end-action id=__leanprover_lean-action.detect-mathlib;outcome=success;conclusion=success;duration_ms=439]
+build	UNKNOWN STEP	2026-10-27T01:18:03.6071965Z ##[start-action display=get mathlib cache;id=__leanprover_lean-action.__run_3]
+build	UNKNOWN STEP	2026-10-27T01:18:03.6110330Z ##[group]Run : Get Mathlib Cache
+build	UNKNOWN STEP	2026-10-27T01:18:03.6110629Z ^[[36;1m: Get Mathlib Cache^[[0m
+build	UNKNOWN STEP	2026-10-27T01:18:03.6111186Z ^[[36;1mecho "::group::Mathlib Cache"^[[0m
+build	UNKNOWN STEP	2026-10-27T01:18:03.6111468Z ^[[36;1mlake exe cache get^[[0m
+build	UNKNOWN STEP	2026-10-27T01:18:03.6111726Z ^[[36;1mecho "::endgroup::"^[[0m
+build	UNKNOWN STEP	2026-10-27T01:18:03.6111961Z ^[[36;1mecho^[[0m
+build	UNKNOWN STEP	2026-10-27T01:18:03.6177030Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+build	UNKNOWN STEP	2026-10-27T01:18:03.6177385Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:18:03.6553679Z ##[group]Mathlib Cache
+build	UNKNOWN STEP	2026-10-27T01:18:11.4038019Z Current branch: HEAD
+build	UNKNOWN STEP	2026-10-27T01:18:11.4038607Z Using cache from origin: (some leanprover-community/mathlib4)
+build	UNKNOWN STEP	2026-10-27T01:18:11.4039690Z Attempting to download 8908 file(s) from leanprover-community/mathlib4 cache at https://cache.mathlib.org/mathlib4-master
+build	UNKNOWN STEP	2026-10-27T01:18:11.7364319Z 
+build	UNKNOWN STEP	2026-10-27T01:18:11.8365919Z Downloaded: 1 file(s) [attempted 1/8908 = 0%, 16 KB/s], Decompressed: 0
+build	UNKNOWN STEP	2026-10-27T01:18:11.9387913Z Downloaded: 103 file(s) [attempted 103/8908 = 1%, 361 KB/s], Decompressed: 96
+build	UNKNOWN STEP	2026-10-27T01:18:12.0386792Z Downloaded: 250 file(s) [attempted 250/8908 = 2%, 1905 KB/s], Decompressed: 248
+build	UNKNOWN STEP	2026-10-27T01:18:12.1522706Z Downloaded: 398 file(s) [attempted 398/8908 = 4%, 426 KB/s], Decompressed: 388
+build	UNKNOWN STEP	2026-10-27T01:18:12.2651366Z Downloaded: 530 file(s) [attempted 530/8908 = 5%, 1195 KB/s], Decompressed: 527
+build	UNKNOWN STEP	2026-10-27T01:18:12.3643395Z Downloaded: 611 file(s) [attempted 611/8908 = 6%, 290 KB/s], Decompressed: 604
+build	UNKNOWN STEP	2026-10-27T01:18:12.4644135Z Downloaded: 740 file(s) [attempted 740/8908 = 8%, 1546 KB/s], Decompressed: 734
+build	UNKNOWN STEP	2026-10-27T01:18:12.5660720Z Downloaded: 878 file(s) [attempted 878/8908 = 9%, 321 KB/s], Decompressed: 874
+build	UNKNOWN STEP	2026-10-27T01:18:12.6662326Z Downloaded: 1035 file(s) [attempted 1035/8908 = 11%, 313 KB/s], Decompressed: 1030
+build	UNKNOWN STEP	2026-10-27T01:18:12.7681079Z Downloaded: 1181 file(s) [attempted 1181/8908 = 13%, 1579 KB/s], Decompressed: 1179
+build	UNKNOWN STEP	2026-10-27T01:18:12.8675540Z Downloaded: 1335 file(s) [attempted 1335/8908 = 14%, 1889 KB/s], Decompressed: 1333
+build	UNKNOWN STEP	2026-10-27T01:18:12.9692748Z Downloaded: 1467 file(s) [attempted 1467/8908 = 16%, 1238 KB/s], Decompressed: 1464
+build	UNKNOWN STEP	2026-10-27T01:18:13.0687702Z Downloaded: 1609 file(s) [attempted 1609/8908 = 18%, 780 KB/s], Decompressed: 1607
+build	UNKNOWN STEP	2026-10-27T01:18:13.1694703Z Downloaded: 1766 file(s) [attempted 1766/8908 = 19%, 238 KB/s], Decompressed: 1758
+build	UNKNOWN STEP	2026-10-27T01:18:13.2794821Z Downloaded: 1917 file(s) [attempted 1917/8908 = 21%, 63 KB/s], Decompressed: 1914
+build	UNKNOWN STEP	2026-10-27T01:18:13.3809524Z Downloaded: 2049 file(s) [attempted 2049/8908 = 23%, 247 KB/s], Decompressed: 2042
+build	UNKNOWN STEP	2026-10-27T01:18:13.4804649Z Downloaded: 2126 file(s) [attempted 2126/8908 = 23%, 731 KB/s], Decompressed: 2123
+build	UNKNOWN STEP	2026-10-27T01:18:13.5803118Z Downloaded: 2248 file(s) [attempted 2248/8908 = 25%, 1957 KB/s], Decompressed: 2236
+build	UNKNOWN STEP	2026-10-27T01:18:13.6836585Z Downloaded: 2407 file(s) [attempted 2407/8908 = 27%, 4419 KB/s], Decompressed: 2393
+build	UNKNOWN STEP	2026-10-27T01:18:13.7849287Z Downloaded: 2563 file(s) [attempted 2563/8908 = 28%, 2113 KB/s], Decompressed: 2554
+build	UNKNOWN STEP	2026-10-27T01:18:13.8848355Z Downloaded: 2724 file(s) [attempted 2724/8908 = 30%, 238 KB/s], Decompressed: 2712
+build	UNKNOWN STEP	2026-10-27T01:18:13.9852242Z Downloaded: 2875 file(s) [attempted 2875/8908 = 32%, 248 KB/s], Decompressed: 2859
+build	UNKNOWN STEP	2026-10-27T01:18:14.0846812Z Downloaded: 3039 file(s) [attempted 3039/8908 = 34%, 298 KB/s], Decompressed: 3029
+build	UNKNOWN STEP	2026-10-27T01:18:14.1845067Z Downloaded: 3187 file(s) [attempted 3187/8908 = 35%, 5116 KB/s], Decompressed: 3181
+build	UNKNOWN STEP	2026-10-27T01:18:14.2846917Z Downloaded: 3351 file(s) [attempted 3351/8908 = 37%, 1250 KB/s], Decompressed: 3347
+build	UNKNOWN STEP	2026-10-27T01:18:14.3843780Z Downloaded: 3524 file(s) [attempted 3524/8908 = 39%, 1565 KB/s], Decompressed: 3510
+build	UNKNOWN STEP	2026-10-27T01:18:14.4851564Z Downloaded: 3638 file(s) [attempted 3638/8908 = 40%, 979 KB/s], Decompressed: 3630
+build	UNKNOWN STEP	2026-10-27T01:18:14.5940026Z Downloaded: 3721 file(s) [attempted 3721/8908 = 41%, 5449 KB/s], Decompressed: 3714
+build	UNKNOWN STEP	2026-10-27T01:18:14.6954409Z Downloaded: 3827 file(s) [attempted 3827/8908 = 42%, 1535 KB/s], Decompressed: 3820
+build	UNKNOWN STEP	2026-10-27T01:18:14.7961118Z Downloaded: 3981 file(s) [attempted 3981/8908 = 44%, 1612 KB/s], Decompressed: 3969
+build	UNKNOWN STEP	2026-10-27T01:18:14.8984146Z Downloaded: 4120 file(s) [attempted 4120/8908 = 46%, 1483 KB/s], Decompressed: 4113
+build	UNKNOWN STEP	2026-10-27T01:18:14.9998894Z Downloaded: 4255 file(s) [attempted 4255/8908 = 47%, 435 KB/s], Decompressed: 4238
+build	UNKNOWN STEP	2026-10-27T01:18:15.0996341Z Downloaded: 4416 file(s) [attempted 4416/8908 = 49%, 1457 KB/s], Decompressed: 4409
+build	UNKNOWN STEP	2026-10-27T01:18:15.2005341Z Downloaded: 4573 file(s) [attempted 4573/8908 = 51%, 2057 KB/s], Decompressed: 4558
+build	UNKNOWN STEP	2026-10-27T01:18:15.3006270Z Downloaded: 4741 file(s) [attempted 4741/8908 = 53%, 2039 KB/s], Decompressed: 4728
+build	UNKNOWN STEP	2026-10-27T01:18:15.4012150Z Downloaded: 4889 file(s) [attempted 4889/8908 = 54%, 516 KB/s], Decompressed: 4873
+build	UNKNOWN STEP	2026-10-27T01:18:15.5024290Z Downloaded: 5038 file(s) [attempted 5038/8908 = 56%, 405 KB/s], Decompressed: 5029
+build	UNKNOWN STEP	2026-10-27T01:18:15.6044036Z Downloaded: 5183 file(s) [attempted 5183/8908 = 58%, 194 KB/s], Decompressed: 5178
+build	UNKNOWN STEP	2026-10-27T01:18:15.7034018Z Downloaded: 5251 file(s) [attempted 5251/8908 = 58%, 225 KB/s], Decompressed: 5245
+build	UNKNOWN STEP	2026-10-27T01:18:15.8034528Z Downloaded: 5369 file(s) [attempted 5369/8908 = 60%, 973 KB/s], Decompressed: 5360
+build	UNKNOWN STEP	2026-10-27T01:18:15.9035273Z Downloaded: 5536 file(s) [attempted 5536/8908 = 62%, 8940 KB/s], Decompressed: 5529
+build	UNKNOWN STEP	2026-10-27T01:18:16.0039098Z Downloaded: 5709 file(s) [attempted 5709/8908 = 64%, 2375 KB/s], Decompressed: 5699
+build	UNKNOWN STEP	2026-10-27T01:18:16.1037257Z Downloaded: 5855 file(s) [attempted 5855/8908 = 65%, 787 KB/s], Decompressed: 5843
+build	UNKNOWN STEP	2026-10-27T01:18:16.2098425Z Downloaded: 5999 file(s) [attempted 5999/8908 = 67%, 1222 KB/s], Decompressed: 5994
+build	UNKNOWN STEP	2026-10-27T01:18:16.3092255Z Downloaded: 6137 file(s) [attempted 6137/8908 = 68%, 281 KB/s], Decompressed: 6134
+build	UNKNOWN STEP	2026-10-27T01:18:16.4104689Z Downloaded: 6266 file(s) [attempted 6266/8908 = 70%, 393 KB/s], Decompressed: 6254
+build	UNKNOWN STEP	2026-10-27T01:18:16.5161832Z Downloaded: 6399 file(s) [attempted 6399/8908 = 71%, 1315 KB/s], Decompressed: 6394
+build	UNKNOWN STEP	2026-10-27T01:18:16.6153804Z Downloaded: 6499 file(s) [attempted 6499/8908 = 72%, 248 KB/s], Decompressed: 6475
+build	UNKNOWN STEP	2026-10-27T01:18:16.7165357Z Downloaded: 6578 file(s) [attempted 6578/8908 = 73%, 1921 KB/s], Decompressed: 6564
+build	UNKNOWN STEP	2026-10-27T01:18:16.8175749Z Downloaded: 6675 file(s) [attempted 6675/8908 = 74%, 889 KB/s], Decompressed: 6674
+build	UNKNOWN STEP	2026-10-27T01:18:16.9177735Z Downloaded: 6766 file(s) [attempted 6766/8908 = 75%, 589 KB/s], Decompressed: 6757
+build	UNKNOWN STEP	2026-10-27T01:18:17.0186509Z Downloaded: 6918 file(s) [attempted 6918/8908 = 77%, 3399 KB/s], Decompressed: 6910
+build	UNKNOWN STEP	2026-10-27T01:18:17.1177579Z Downloaded: 7056 file(s) [attempted 7056/8908 = 79%, 1066 KB/s], Decompressed: 7050
+build	UNKNOWN STEP	2026-10-27T01:18:17.2201735Z Downloaded: 7200 file(s) [attempted 7200/8908 = 80%, 1505 KB/s], Decompressed: 7192
+build	UNKNOWN STEP	2026-10-27T01:18:17.3229971Z Downloaded: 7362 file(s) [attempted 7362/8908 = 82%, 2169 KB/s], Decompressed: 7353
+build	UNKNOWN STEP	2026-10-27T01:18:17.4225386Z Downloaded: 7502 file(s) [attempted 7502/8908 = 84%, 1017 KB/s], Decompressed: 7492
+build	UNKNOWN STEP	2026-10-27T01:18:17.5263174Z Downloaded: 7634 file(s) [attempted 7634/8908 = 85%, 141 KB/s], Decompressed: 7618
+build	UNKNOWN STEP	2026-10-27T01:18:17.8544394Z Downloaded: 7768 file(s) [attempted 7768/8908 = 87%, 321 KB/s], Decompressed: 7761
+build	UNKNOWN STEP	2026-10-27T01:18:17.9572159Z Downloaded: 7913 file(s) [attempted 7913/8908 = 88%, 1478 KB/s], Decompressed: 7908
+build	UNKNOWN STEP	2026-10-27T01:18:18.0564310Z Downloaded: 8038 file(s) [attempted 8038/8908 = 90%, 135 KB/s], Decompressed: 8030
+build	UNKNOWN STEP	2026-10-27T01:18:18.1639450Z Downloaded: 8153 file(s) [attempted 8153/8908 = 91%, 416 KB/s], Decompressed: 8143
+build	UNKNOWN STEP	2026-10-27T01:18:18.2637204Z Downloaded: 8232 file(s) [attempted 8232/8908 = 92%, 320 KB/s], Decompressed: 8227
+build	UNKNOWN STEP	2026-10-27T01:18:18.3645695Z Downloaded: 8376 file(s) [attempted 8376/8908 = 94%, 1493 KB/s], Decompressed: 8364
+build	UNKNOWN STEP	2026-10-27T01:18:18.4675238Z Downloaded: 8529 file(s) [attempted 8529/8908 = 95%, 755 KB/s], Decompressed: 8523
+build	UNKNOWN STEP	2026-10-27T01:18:18.5683785Z Downloaded: 8689 file(s) [attempted 8689/8908 = 97%, 1177 KB/s], Decompressed: 8686
+build	UNKNOWN STEP	2026-10-27T01:18:18.6169331Z Downloaded: 8835 file(s) [attempted 8835/8908 = 99%, 1450 KB/s], Decompressed: 8819
+build	UNKNOWN STEP	2026-10-27T01:18:18.6171127Z Downloaded: 8908 file(s) [attempted 8908/8908 = 100%, 1450 KB/s], Decompressed: 8905
+build	UNKNOWN STEP	2026-10-27T01:18:19.4217553Z Decompressed 8908 file(s)
+build	UNKNOWN STEP	2026-10-27T01:18:19.4218189Z Already decompressed 8908 file(s)
+build	UNKNOWN STEP	2026-10-27T01:18:19.4658949Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:18:19.4659198Z 
+build	UNKNOWN STEP	2026-10-27T01:18:19.4667702Z ##[end-action id=__leanprover_lean-action.__run_3;outcome=success;conclusion=success;duration_ms=15859]
+build	UNKNOWN STEP	2026-10-27T01:18:19.4682128Z ##[start-action display=build derekblair/math-proofs;id=__leanprover_lean-action.build]
+build	UNKNOWN STEP	2026-10-27T01:18:19.5041293Z ##[group]Run : Lake Build
+build	UNKNOWN STEP	2026-10-27T01:18:19.5041758Z ^[[36;1m: Lake Build^[[0m
+build	UNKNOWN STEP	2026-10-27T01:18:19.5042209Z ^[[36;1m${GITHUB_ACTION_PATH}/scripts/lake_build.sh^[[0m
+build	UNKNOWN STEP	2026-10-27T01:18:19.5116894Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+build	UNKNOWN STEP	2026-10-27T01:18:19.5117275Z env:
+build	UNKNOWN STEP	2026-10-27T01:18:19.5117474Z   BUILD_ARGS: 
+build	UNKNOWN STEP	2026-10-27T01:18:19.5117680Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:18:19.5591396Z ##[group]Lake Build Output
+build	UNKNOWN STEP	2026-10-27T01:18:23.7187783Z ⚠ [8926/8991] Replayed Mathproofs.ESBarrier
+build	UNKNOWN STEP	2026-10-27T01:18:23.7188836Z warning: Mathproofs/ESBarrier.lean:149:48: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:23.7189898Z warning: Mathproofs/ESBarrier.lean:151:6: try 'simp' instead of 'simpa'
+build	UNKNOWN STEP	2026-10-27T01:18:23.7190439Z 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7191204Z Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+build	UNKNOWN STEP	2026-10-27T01:18:23.7192332Z warning: Mathproofs/ESBarrier.lean:152:52: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:23.7193275Z warning: Mathproofs/ESBarrier.lean:161:4: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7193933Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:23.7194130Z 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7194447Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7195354Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7196277Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7196752Z 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7197145Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:23.7197967Z warning: Mathproofs/ESBarrier.lean:197:4: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7198561Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:23.7198766Z 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7199078Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7199909Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7200944Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7201435Z 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7201824Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:23.7202690Z warning: Mathproofs/ESBarrier.lean:226:4: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7203264Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:23.7203441Z 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7203760Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7204605Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7205485Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7205986Z 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7206371Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:23.7207398Z warning: Mathproofs/ESBarrier.lean:239:54: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:23.7208329Z warning: Mathproofs/ESBarrier.lean:252:4: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7208930Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:23.7209118Z 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7209425Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7210214Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7211267Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7212271Z 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7212926Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:23.7213956Z warning: Mathproofs/ESBarrier.lean:264:48: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:23.7215206Z warning: Mathproofs/ESBarrier.lean:267:52: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:23.7216185Z warning: Mathproofs/ESBarrier.lean:284:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7216782Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:23.7217094Z 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7217393Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7218253Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7219172Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7219664Z 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7220040Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:23.7221418Z warning: Mathproofs/ESBarrier.lean:288:6: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+build	UNKNOWN STEP	2026-10-27T01:18:23.7222487Z warning: Mathproofs/ESBarrier.lean:290:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7223101Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:23.7223294Z 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7223569Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7224397Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7225263Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:23.7225771Z 
+build	UNKNOWN STEP	2026-10-27T01:18:23.7226196Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:23.7227056Z ℹ [8931/8991] Replayed Mathproofs.ESBranchTwo
+build	UNKNOWN STEP	2026-10-27T01:18:23.7228047Z info: Mathproofs/ESBranchTwo.lean:208:0: 'ESBranchTwo.branch2_M_dvd_r' depends on axioms: [propext, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:23.7229622Z info: Mathproofs/ESBranchTwo.lean:209:0: 'ESBranchTwo.branch2_four_x_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:23.7231442Z info: Mathproofs/ESBranchTwo.lean:210:0: 'ESBranchTwo.branch2_collapse' depends on axioms: [propext, Classical.choice, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:23.7232995Z info: Mathproofs/ESBranchTwo.lean:211:0: 'ESBranchTwo.branch2_m_le_s' depends on axioms: [propext, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:23.7234344Z info: Mathproofs/ESBranchTwo.lean:212:0: 'ESBranchTwo.branch2_divisibility_shape' depends on axioms: [propext]
+build	UNKNOWN STEP	2026-10-27T01:18:23.7235924Z info: Mathproofs/ESBranchTwo.lean:213:0: 'ESBranchTwo.branch2_ab_dvd_XSTEP' depends on axioms: [propext, Classical.choice, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:23.7237438Z info: Mathproofs/ESBranchTwo.lean:214:0: 'ESBranchTwo.family_integrality' depends on axioms: [propext, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:23.7238994Z info: Mathproofs/ESBranchTwo.lean:215:0: 'ESBranchTwo.family_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:23.7240602Z info: Mathproofs/ESBranchTwo.lean:216:0: 'ESBranchTwo.branch2_witness_s49' depends on axioms: [propext, Classical.choice, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:23.7242383Z info: Mathproofs/ESBranchTwo.lean:217:0: 'ESBranchTwo.branch2_mod8_counterexample_hyps' depends on axioms: [propext]
+build	UNKNOWN STEP	2026-10-27T01:18:23.7244025Z info: Mathproofs/ESBranchTwo.lean:218:0: 'ESBranchTwo.branch2_mod8_counterexample_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:23.7245681Z info: Mathproofs/ESBranchTwo.lean:219:0: 'ESBranchTwo.branch2_m_mod8_refuted' depends on axioms: [propext]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0222333Z ⚠ [8933/8991] Replayed Mathproofs.VoidLock
+build	UNKNOWN STEP	2026-10-27T01:18:24.0232387Z warning: Mathproofs/VoidLock.lean:49:5: Variable name `hmem` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0249063Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0266759Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0267906Z   [apply] _hmem
+build	UNKNOWN STEP	2026-10-27T01:18:24.0268484Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0268891Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0270181Z ⚠ [8934/8991] Replayed Mathproofs.ESAbsorptionOrder
+build	UNKNOWN STEP	2026-10-27T01:18:24.0271717Z warning: Mathproofs/ESAbsorptionOrder.lean:79:0: automatically included section variable(s) unused in theorem `ESAbsorptionOrder.absorp_refl`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0272896Z   [DecidableEq Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0273280Z   [Fintype Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0274128Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0275207Z   omit [DecidableEq Cell] [Fintype Cell] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.0275566Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0275813Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0276616Z warning: Mathproofs/ESAbsorptionOrder.lean:83:0: automatically included section variable(s) unused in theorem `ESAbsorptionOrder.absorp_trans`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0277257Z   [DecidableEq Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0277477Z   [Fintype Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0277955Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0278547Z   omit [DecidableEq Cell] [Fintype Cell] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.0278784Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0279010Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0279794Z warning: Mathproofs/ESAbsorptionOrder.lean:88:0: automatically included section variable(s) unused in theorem `ESAbsorptionOrder.absorp_antisymm`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0280431Z   [DecidableEq Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0280642Z   [Fintype Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0281665Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0282692Z   omit [DecidableEq Cell] [Fintype Cell] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.0283097Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0283507Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0284932Z warning: Mathproofs/ESAbsorptionOrder.lean:155:0: automatically included section variable(s) unused in theorem `ESAbsorptionOrder.unionDatum_fst_union`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0285590Z   [Fintype Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0286053Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0286588Z   omit [Fintype Cell] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.0286770Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0286997Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0287785Z warning: Mathproofs/ESAbsorptionOrder.lean:159:0: automatically included section variable(s) unused in theorem `ESAbsorptionOrder.unionDatum_snd_union`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0288437Z   [Fintype Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0288905Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0289440Z   omit [Fintype Cell] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.0289621Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0289853Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0290658Z warning: Mathproofs/ESAbsorptionOrder.lean:165:0: automatically included section variable(s) unused in theorem `ESAbsorptionOrder.datum_eq_of_absorpLE`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0291469Z   [Fintype Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0291927Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0292459Z   omit [Fintype Cell] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.0292631Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0292858Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0293399Z warning: Mathproofs/ESAbsorptionOrder.lean:186:17: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0293809Z   hpH
+build	UNKNOWN STEP	2026-10-27T01:18:24.0293909Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0294024Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0294505Z   [apply] simp [hpG]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0294648Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0294984Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0295528Z warning: Mathproofs/ESAbsorptionOrder.lean:189:23: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0295920Z   hpG
+build	UNKNOWN STEP	2026-10-27T01:18:24.0296017Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0296128Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0296396Z   [apply] simp [hpH]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0296526Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0296735Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0297254Z warning: Mathproofs/ESAbsorptionOrder.lean:189:28: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0297646Z   hpH
+build	UNKNOWN STEP	2026-10-27T01:18:24.0297747Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0297848Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0298123Z   [apply] simp [hpG]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0298247Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0298455Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0298984Z warning: Mathproofs/ESAbsorptionOrder.lean:190:22: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0299373Z   hpG
+build	UNKNOWN STEP	2026-10-27T01:18:24.0299476Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0299583Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0299858Z   [apply] simp [hpH, hu]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0300007Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0300216Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0300874Z warning: Mathproofs/ESAbsorptionOrder.lean:190:27: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0301316Z   hpH
+build	UNKNOWN STEP	2026-10-27T01:18:24.0301421Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0301533Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0301809Z   [apply] simp [hpG, hu]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0301949Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0302160Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0302684Z warning: Mathproofs/ESAbsorptionOrder.lean:223:21: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0303157Z   hpG
+build	UNKNOWN STEP	2026-10-27T01:18:24.0303263Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0303369Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0303636Z   [apply] simp
+build	UNKNOWN STEP	2026-10-27T01:18:24.0303757Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0303965Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0304486Z warning: Mathproofs/ESAbsorptionOrder.lean:226:22: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0304876Z   hpG
+build	UNKNOWN STEP	2026-10-27T01:18:24.0304980Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0305082Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0305360Z   [apply] simp [hpH]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0305488Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0305694Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0306214Z warning: Mathproofs/ESAbsorptionOrder.lean:226:27: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0306606Z   hpH
+build	UNKNOWN STEP	2026-10-27T01:18:24.0306709Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0306818Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0307092Z   [apply] simp [hpG]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0307226Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0307429Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0308193Z warning: Mathproofs/ESAbsorptionOrder.lean:234:0: automatically included section variable(s) unused in theorem `ESAbsorptionOrder.dominance_prune`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0308827Z   [Fintype Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0309285Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0309814Z   omit [Fintype Cell] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.0309994Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0310218Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0311120Z warning: Mathproofs/ESAbsorptionOrder.lean:343:0: automatically included section variable(s) unused in theorem `ESAbsorptionOrder.exists_core_card_min`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0311761Z   [Fintype Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0312387Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0313026Z   omit [Fintype Cell] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.0313200Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0313423Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0314060Z warning: Mathproofs/ESAbsorptionOrder.lean:410:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0314737Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0315157Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.0315349Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.0315651Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.0316012Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.0316289Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.0316717Z warning: Mathproofs/ESAbsorptionOrder.lean:473:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0317394Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0317814Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.0318006Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.0318298Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.0318646Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.0318916Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.0319296Z ⚠ [8935/8991] Replayed Mathproofs.ESForcingSpectrum
+build	UNKNOWN STEP	2026-10-27T01:18:24.0319808Z warning: Mathproofs/ESForcingSpectrum.lean:69:46: Try `simp at hfc` instead of `simpa using hfc`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0320192Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0320411Z Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0321325Z warning: Mathproofs/ESForcingSpectrum.lean:61:0: automatically included section variable(s) unused in theorem `ESForcingSpectrum.pcov_subset_u`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0321957Z   [DecidableEq Fam]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0322162Z   [Fintype Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0322634Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0323218Z   omit [DecidableEq Fam] [Fintype Cell] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.0323444Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0323670Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0324267Z warning: Mathproofs/ESForcingSpectrum.lean:81:48: Try `simp at hfc` instead of `simpa using hfc`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0324645Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0324859Z Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0325613Z warning: Mathproofs/ESForcingSpectrum.lean:73:0: automatically included section variable(s) unused in theorem `ESForcingSpectrum.mem_pcov_iff`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0326231Z   [DecidableEq Fam]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0326436Z   [Fintype Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0326896Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0327462Z   omit [DecidableEq Fam] [Fintype Cell] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.0327679Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0327904Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0328516Z warning: Mathproofs/ESForcingSpectrum.lean:116:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0329262Z warning: Mathproofs/ESForcingSpectrum.lean:123:14: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0329955Z warning: Mathproofs/ESForcingSpectrum.lean:123:27: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0330676Z warning: Mathproofs/ESForcingSpectrum.lean:128:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0331625Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0332043Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.0332235Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.0332682Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.0333032Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.0333415Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.0333813Z warning: Mathproofs/ESForcingSpectrum.lean:142:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0334500Z warning: Mathproofs/ESForcingSpectrum.lean:142:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0335188Z warning: Mathproofs/ESForcingSpectrum.lean:156:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0335875Z warning: Mathproofs/ESForcingSpectrum.lean:163:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0336685Z warning: Mathproofs/ESForcingSpectrum.lean:148:0: automatically included section variable(s) unused in theorem `ESForcingSpectrum.s2b_pc`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0337289Z   [DecidableEq Fam]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0337499Z   [Fintype Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0337956Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0338548Z   omit [DecidableEq Fam] [Fintype Cell] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.0338780Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0339002Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0339622Z warning: Mathproofs/ESForcingSpectrum.lean:178:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0340313Z warning: Mathproofs/ESForcingSpectrum.lean:183:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0341144Z warning: Mathproofs/ESForcingSpectrum.lean:183:24: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0341827Z warning: Mathproofs/ESForcingSpectrum.lean:190:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0342516Z warning: Mathproofs/ESForcingSpectrum.lean:190:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0343348Z warning: Mathproofs/ESForcingSpectrum.lean:196:0: automatically included section variable(s) unused in theorem `ESForcingSpectrum.s2d_split`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0343965Z   [DecidableEq Fam]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0344173Z   [Fintype Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0344628Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0345188Z   omit [DecidableEq Fam] [Fintype Cell] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.0345409Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0345625Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0346408Z warning: Mathproofs/ESForcingSpectrum.lean:204:0: automatically included section variable(s) unused in theorem `ESForcingSpectrum.spectrum_partition`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0347057Z   [DecidableEq Fam]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0347256Z   [Fintype Cell]
+build	UNKNOWN STEP	2026-10-27T01:18:24.0347702Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0348261Z   omit [DecidableEq Fam] [Fintype Cell] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.0348474Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0348697Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0349303Z warning: Mathproofs/ESForcingSpectrum.lean:230:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0349996Z warning: Mathproofs/ESForcingSpectrum.lean:235:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0350676Z warning: Mathproofs/ESForcingSpectrum.lean:235:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0351492Z warning: Mathproofs/ESForcingSpectrum.lean:239:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0352176Z warning: Mathproofs/ESForcingSpectrum.lean:239:61: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.0352781Z ⚠ [8936/8991] Replayed Mathproofs.ESForcingDecomp
+build	UNKNOWN STEP	2026-10-27T01:18:24.0353451Z warning: Mathproofs/ESForcingDecomp.lean:110:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0354219Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0354643Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.0354839Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.0355131Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.0355475Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.0355744Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.0356160Z warning: Mathproofs/ESForcingDecomp.lean:124:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0356815Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0357234Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.0357418Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.0357709Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.0358056Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.0358320Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.0358702Z warning: Mathproofs/ESForcingDecomp.lean:142:36: Variable name `hpos` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0359091Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0359502Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0360091Z   [apply] _hpos
+build	UNKNOWN STEP	2026-10-27T01:18:24.0360214Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0360425Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0361170Z warning: Mathproofs/ESForcingDecomp.lean:172:5: Variable name `hpos` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0361557Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0361959Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0362545Z   [apply] _hpos
+build	UNKNOWN STEP	2026-10-27T01:18:24.0362667Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0362878Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.0363468Z warning: Mathproofs/ESForcingDecomp.lean:173:5: Variable name `hC` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.0363838Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0364238Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.0364814Z   [apply] _hC
+build	UNKNOWN STEP	2026-10-27T01:18:24.0364929Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.0365140Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1195580Z ⚠ [8943/8991] Replayed Mathproofs.CollatzGapC23
+build	UNKNOWN STEP	2026-10-27T01:18:24.1196922Z warning: Mathproofs/CollatzGapC23.lean:275:5: Variable name `hqp` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1198474Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1199474Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1201099Z   [apply] _hqp
+build	UNKNOWN STEP	2026-10-27T01:18:24.1201449Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1201812Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1202762Z warning: Mathproofs/CollatzGapC23.lean:275:20: Variable name `hsum` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1203353Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1204012Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1204934Z   [apply] _hsum
+build	UNKNOWN STEP	2026-10-27T01:18:24.1205113Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1205382Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1206152Z warning: Mathproofs/CollatzGapC23.lean:387:20: Variable name `hrho0` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1206626Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1207143Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1208227Z   [apply] _hrho0
+build	UNKNOWN STEP	2026-10-27T01:18:24.1208378Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1208772Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1209501Z warning: Mathproofs/CollatzGapC23.lean:387:38: Variable name `hrr` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1209973Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1210479Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1211354Z   [apply] _hrr
+build	UNKNOWN STEP	2026-10-27T01:18:24.1211498Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1211761Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1212480Z warning: Mathproofs/CollatzGapC23.lean:418:33: Variable name `hqpp` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1212951Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1213448Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1214180Z   [apply] _hqpp
+build	UNKNOWN STEP	2026-10-27T01:18:24.1214322Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1214591Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1215250Z ⚠ [8944/8991] Replayed Mathproofs.CollatzGapC22C25
+build	UNKNOWN STEP	2026-10-27T01:18:24.1215872Z warning: Mathproofs/CollatzGapC22C25.lean:266:5: Variable name `hm` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1216252Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1216656Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1217228Z   [apply] _hm
+build	UNKNOWN STEP	2026-10-27T01:18:24.1217346Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1217551Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1218131Z warning: Mathproofs/CollatzGapC22C25.lean:275:5: Variable name `hm` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1218499Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1218904Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1219491Z   [apply] _hm
+build	UNKNOWN STEP	2026-10-27T01:18:24.1219608Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1219827Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1220368Z warning: Mathproofs/CollatzGapC22C25.lean:798:19: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1220904Z   Set.mem_preimage
+build	UNKNOWN STEP	2026-10-27T01:18:24.1221034Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1221141Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1221491Z   [apply] simp only [Set.mem_compl_iff, Set.mem_singleton_iff]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1221733Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1221945Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1222420Z ⚠ [8946/8991] Replayed Mathproofs.CollatzGapC29
+build	UNKNOWN STEP	2026-10-27T01:18:24.1223009Z warning: Mathproofs/CollatzGapC29.lean:49:21: Variable name `hα` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1223385Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1223802Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1224415Z   [apply] _hα
+build	UNKNOWN STEP	2026-10-27T01:18:24.1224535Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1224750Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1225411Z warning: Mathproofs/CollatzGapC29.lean:49:41: Variable name `hα0` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1225916Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1226324Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1226925Z   [apply] _hα0
+build	UNKNOWN STEP	2026-10-27T01:18:24.1227046Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1227255Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1227714Z warning: Mathproofs/CollatzGapC29.lean:309:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1228043Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1228154Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1228320Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1228946Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1229530Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1229787Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1230002Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1230569Z warning: Mathproofs/CollatzGapC29.lean:497:14: Unused tactic linter: `push_cast` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1231090Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1231300Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1231774Z ⚠ [8951/8991] Replayed Mathproofs.ESQadicBranch1
+build	UNKNOWN STEP	2026-10-27T01:18:24.1232309Z warning: Mathproofs/ESQadicBranch1.lean:57:2: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1232962Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1233394Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1233600Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.1233896Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.1234252Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.1234531Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1234899Z warning: Mathproofs/ESQadicBranch1.lean:89:30: Variable name `hr0` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1235276Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1235680Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1236258Z   [apply] _hr0
+build	UNKNOWN STEP	2026-10-27T01:18:24.1236383Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1236600Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1237175Z warning: Mathproofs/ESQadicBranch1.lean:90:23: Variable name `hm0` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1237546Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1237943Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1238529Z   [apply] _hm0
+build	UNKNOWN STEP	2026-10-27T01:18:24.1238638Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1238852Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1239423Z warning: Mathproofs/ESQadicBranch1.lean:156:30: Variable name `hr0` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1239797Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1240201Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1240883Z   [apply] _hr0
+build	UNKNOWN STEP	2026-10-27T01:18:24.1241095Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1241327Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1241913Z warning: Mathproofs/ESQadicBranch1.lean:156:47: Variable name `hr0pos` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1242298Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1242699Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1243277Z   [apply] _hr0pos
+build	UNKNOWN STEP	2026-10-27T01:18:24.1243402Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1243611Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1244191Z warning: Mathproofs/ESQadicBranch1.lean:157:23: Variable name `hm0` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1244562Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1244966Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1245539Z   [apply] _hm0
+build	UNKNOWN STEP	2026-10-27T01:18:24.1245655Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1245859Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1246338Z ⚠ [8953/8991] Replayed Mathproofs.Girth5Floor3v
+build	UNKNOWN STEP	2026-10-27T01:18:24.1246930Z warning: Mathproofs/Girth5Floor3v.lean:68:8: automatically included section variable(s) unused in theorem `Girth5Floor3v.mem_N`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1247666Z   [DecidableEq V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1248233Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1248781Z   omit [DecidableEq V] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1248958Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1249184Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1249759Z warning: Mathproofs/Girth5Floor3v.lean:72:7: Variable name `G` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1250118Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1250519Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1251346Z   [apply] _G
+build	UNKNOWN STEP	2026-10-27T01:18:24.1251465Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1251671Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1252378Z warning: Mathproofs/Girth5Floor3v.lean:276:0: automatically included section variable(s) unused in theorem `Girth5Floor3v.P_subset`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1252962Z   [Fintype V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1253411Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1253936Z   omit [Fintype V] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1310617Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1311098Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1312371Z warning: Mathproofs/Girth5Floor3v.lean:280:0: automatically included section variable(s) unused in theorem `Girth5Floor3v.P_not_all_three`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1313456Z   [Fintype V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1314251Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1315235Z   omit [Fintype V] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1315533Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1315937Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1317029Z warning: Mathproofs/Girth5Floor3v.lean:385:6: Variable name `m` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1317723Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1318479Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1319558Z   [apply] _m
+build	UNKNOWN STEP	2026-10-27T01:18:24.1319761Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1320157Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1321526Z warning: Mathproofs/Girth5Floor3v.lean:405:23: `if_true` has been deprecated: Use `ite_true` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.1322766Z warning: Mathproofs/Girth5Floor3v.lean:407:23: `if_false` has been deprecated: Use `ite_false` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.1324223Z warning: Mathproofs/Girth5Floor3v.lean:401:0: automatically included section variable(s) unused in theorem `Girth5Floor3v.if_adj_symm`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1325321Z   [Fintype V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1325671Z   [DecidableEq V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1326529Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1327570Z   omit [Fintype V] [DecidableEq V] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1327959Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1328366Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1329681Z warning: Mathproofs/Girth5Floor3v.lean:439:0: automatically included section variable(s) unused in theorem `Girth5Floor3v.P_card`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1330990Z   [Fintype V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1331869Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1332876Z   omit [Fintype V] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1333204Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1333620Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1334757Z warning: Mathproofs/Girth5Floor3v.lean:439:62: Variable name `huw` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1335851Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1336888Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1338044Z   [apply] _huw
+build	UNKNOWN STEP	2026-10-27T01:18:24.1338283Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1338708Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1340118Z warning: Mathproofs/Girth5Floor3v.lean:546:0: automatically included section variable(s) unused in theorem `Girth5Floor3v.emitAdj_symm`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1341549Z   [Fintype V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1341921Z   [DecidableEq V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1342792Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1343836Z   omit [Fintype V] [DecidableEq V] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1344237Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1344641Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1346040Z warning: Mathproofs/Girth5Floor3v.lean:572:0: automatically included section variable(s) unused in theorem `Girth5Floor3v.emit_left_new`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1347188Z   [Fintype V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1347549Z   [DecidableEq V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1348385Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1349433Z   omit [Fintype V] [DecidableEq V] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1349828Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1350255Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1351647Z warning: Mathproofs/Girth5Floor3v.lean:739:53: Variable name `hC'W` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1352375Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1353142Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1354260Z   [apply] _hC'W
+build	UNKNOWN STEP	2026-10-27T01:18:24.1354481Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1354984Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1356643Z warning: Mathproofs/Girth5Floor3v.lean:1011:8: automatically included section variable(s) unused in theorem `_private.Mathproofs.Girth5Floor3v.0.Girth5Floor3v.locations`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1358086Z   [Fintype V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1358463Z   [DecidableEq V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1359394Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1360159Z   omit [Fintype V] [DecidableEq V] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1360385Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1360619Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1361545Z warning: Mathproofs/Girth5Floor3v.lean:1024:2: Try `simp at hm` instead of `simpa using hm`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1361911Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1362134Z Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1363086Z warning: Mathproofs/Girth5Floor3v.lean:1020:8: automatically included section variable(s) unused in theorem `_private.Mathproofs.Girth5Floor3v.0.Girth5Floor3v.guarded_inter_empty`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1363848Z   [Fintype V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1364301Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1364829Z   omit [Fintype V] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1365003Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1365231Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1365763Z warning: Mathproofs/Girth5Floor3v.lean:1052:15: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1366150Z   true_or
+build	UNKNOWN STEP	2026-10-27T01:18:24.1366262Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1366368Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1366844Z   [apply] simp_all only [emitAdj, and_true, true_and, and_false, false_and, or_true, or_false, false_or,
+build	UNKNOWN STEP	2026-10-27T01:18:24.1367519Z     not_false_eq_true, not_true_eq_false, ne_eq, eq_self, false_implies, implies_true, not_false_eq_true, or_self,
+build	UNKNOWN STEP	2026-10-27T01:18:24.1368191Z     eq_comm]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1368415Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1368639Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1369163Z warning: Mathproofs/Girth5Floor3v.lean:1053:22: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1369556Z   false_implies
+build	UNKNOWN STEP	2026-10-27T01:18:24.1369681Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1369789Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1370299Z   [apply] simp_all only [emitAdj, and_true, true_and, and_false, false_and, or_true, true_or, or_false, false_or,
+build	UNKNOWN STEP	2026-10-27T01:18:24.1371253Z     not_false_eq_true, not_true_eq_false, ne_eq, eq_self, implies_true, not_false_eq_true, or_self, eq_comm]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1371644Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1371859Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1372388Z warning: Mathproofs/Girth5Floor3v.lean:1053:37: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1372798Z   implies_true
+build	UNKNOWN STEP	2026-10-27T01:18:24.1372913Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1373034Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1373530Z   [apply] simp_all only [emitAdj, and_true, true_and, and_false, false_and, or_true, true_or, or_false, false_or,
+build	UNKNOWN STEP	2026-10-27T01:18:24.1374213Z     not_false_eq_true, not_true_eq_false, ne_eq, eq_self, false_implies, not_false_eq_true, or_self, eq_comm]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1374590Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1374804Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1375657Z warning: Mathproofs/Girth5Floor3v.lean:1063:8: automatically included section variable(s) unused in theorem `_private.Mathproofs.Girth5Floor3v.0.Girth5Floor3v.inter_no_two`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1376382Z   [Fintype V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1376843Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1377382Z   omit [Fintype V] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1377557Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1377783Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1378678Z warning: Mathproofs/Girth5Floor3v.lean:1069:8: automatically included section variable(s) unused in theorem `_private.Mathproofs.Girth5Floor3v.0.Girth5Floor3v.guarded_path_empty`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1379430Z   [Fintype V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1379877Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1380401Z   omit [Fintype V] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1380577Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1381068Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1381963Z warning: Mathproofs/Girth5Floor3v.lean:1076:8: automatically included section variable(s) unused in theorem `_private.Mathproofs.Girth5Floor3v.0.Girth5Floor3v.reverse_cross`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1382693Z   [Fintype V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1382891Z   [DecidableEq V]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1383357Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1383906Z   omit [Fintype V] [DecidableEq V] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1384120Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1384337Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1384868Z warning: Mathproofs/Girth5Floor3v.lean:1131:15: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1385251Z   true_or
+build	UNKNOWN STEP	2026-10-27T01:18:24.1385353Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1385464Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1385927Z   [apply] simp_all only [emitAdj, and_true, true_and, and_false, false_and, or_true, or_false, false_or,
+build	UNKNOWN STEP	2026-10-27T01:18:24.1386564Z     not_false_eq_true, not_true_eq_false, ne_eq, eq_self, false_implies, implies_true, or_self, eq_comm]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1386923Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1387137Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1387797Z warning: Mathproofs/Girth5Floor3v.lean:1132:22: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1388295Z   false_implies
+build	UNKNOWN STEP	2026-10-27T01:18:24.1388422Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1388533Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1389019Z   [apply] simp_all only [emitAdj, and_true, true_and, and_false, false_and, or_true, true_or, or_false, false_or,
+build	UNKNOWN STEP	2026-10-27T01:18:24.1389637Z     not_false_eq_true, not_true_eq_false, ne_eq, eq_self, implies_true, or_self, eq_comm]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1389966Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1390173Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1390695Z warning: Mathproofs/Girth5Floor3v.lean:1132:37: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1391353Z   implies_true
+build	UNKNOWN STEP	2026-10-27T01:18:24.1391479Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1391582Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1392066Z   [apply] simp_all only [emitAdj, and_true, true_and, and_false, false_and, or_true, true_or, or_false, false_or,
+build	UNKNOWN STEP	2026-10-27T01:18:24.1392691Z     not_false_eq_true, not_true_eq_false, ne_eq, eq_self, false_implies, or_self, eq_comm]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1393014Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1393221Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1393728Z warning: Mathproofs/Girth5Floor3v.lean:1135:52: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1394037Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1394256Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1394771Z warning: Mathproofs/Girth5Floor3v.lean:1135:108: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1395082Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1395293Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1395811Z warning: Mathproofs/Girth5Floor3v.lean:1135:164: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1396114Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1396326Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1396845Z warning: Mathproofs/Girth5Floor3v.lean:1135:226: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1397157Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1397365Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1397880Z warning: Mathproofs/Girth5Floor3v.lean:1136:52: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1398179Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1398392Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1398902Z warning: Mathproofs/Girth5Floor3v.lean:1136:108: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1399209Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1399421Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1399935Z warning: Mathproofs/Girth5Floor3v.lean:1136:164: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1400244Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1400450Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1401192Z warning: Mathproofs/Girth5Floor3v.lean:1136:226: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1401504Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1401716Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1402226Z warning: Mathproofs/Girth5Floor3v.lean:1137:52: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1402529Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1402736Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1403251Z warning: Mathproofs/Girth5Floor3v.lean:1137:108: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1403554Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1403766Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1404277Z warning: Mathproofs/Girth5Floor3v.lean:1137:164: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1404584Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1404793Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1405495Z warning: Mathproofs/Girth5Floor3v.lean:1137:226: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1405798Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1406120Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1406633Z warning: Mathproofs/Girth5Floor3v.lean:1138:52: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1406936Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1407148Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1407654Z warning: Mathproofs/Girth5Floor3v.lean:1138:108: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1407960Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1408167Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1408677Z warning: Mathproofs/Girth5Floor3v.lean:1138:164: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1408985Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1409199Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1409712Z warning: Mathproofs/Girth5Floor3v.lean:1139:52: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1410019Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1410229Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1410870Z warning: Mathproofs/Girth5Floor3v.lean:1139:108: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1411173Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1411387Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1411896Z warning: Mathproofs/Girth5Floor3v.lean:1139:164: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1412200Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1412412Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1412919Z warning: Mathproofs/Girth5Floor3v.lean:1140:52: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1413217Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1413429Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1413937Z warning: Mathproofs/Girth5Floor3v.lean:1140:108: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1414247Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1414465Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1414972Z warning: Mathproofs/Girth5Floor3v.lean:1140:164: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1415279Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1415486Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1415999Z warning: Mathproofs/Girth5Floor3v.lean:1141:108: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1416300Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1416514Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1417020Z warning: Mathproofs/Girth5Floor3v.lean:1141:164: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1417322Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1417528Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1418038Z warning: Mathproofs/Girth5Floor3v.lean:1142:52: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1418342Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1418561Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1419070Z warning: Mathproofs/Girth5Floor3v.lean:1142:164: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1419377Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1419588Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1420097Z warning: Mathproofs/Girth5Floor3v.lean:1143:52: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1420400Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1420609Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1421598Z warning: Mathproofs/Girth5Floor3v.lean:1143:108: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1421910Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1422125Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1422634Z warning: Mathproofs/Girth5Floor3v.lean:1144:108: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1423113Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1423322Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1423948Z warning: Mathproofs/Girth5Floor3v.lean:1144:164: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1424308Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1424522Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1425033Z warning: Mathproofs/Girth5Floor3v.lean:1144:226: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1425340Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1425553Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1426063Z warning: Mathproofs/Girth5Floor3v.lean:1145:52: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1426364Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1426577Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1427084Z warning: Mathproofs/Girth5Floor3v.lean:1145:164: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1427404Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1427627Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1428155Z warning: Mathproofs/Girth5Floor3v.lean:1145:226: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1428464Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1428676Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1429200Z warning: Mathproofs/Girth5Floor3v.lean:1146:52: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1429502Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1429717Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1430235Z warning: Mathproofs/Girth5Floor3v.lean:1146:108: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1430544Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1430895Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1431421Z warning: Mathproofs/Girth5Floor3v.lean:1146:226: this tactic is never executed
+build	UNKNOWN STEP	2026-10-27T01:18:24.1431725Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1431945Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1432576Z warning: Mathproofs/Girth5Floor3v.lean:1135:52: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1433004Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1433207Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1433823Z warning: Mathproofs/Girth5Floor3v.lean:1135:108: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1434255Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1434447Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1435058Z warning: Mathproofs/Girth5Floor3v.lean:1135:164: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1435485Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1435682Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1436289Z warning: Mathproofs/Girth5Floor3v.lean:1135:226: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1436717Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1436910Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1437524Z warning: Mathproofs/Girth5Floor3v.lean:1136:52: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1437938Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1438133Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1438738Z warning: Mathproofs/Girth5Floor3v.lean:1136:108: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1439160Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1439354Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1439958Z warning: Mathproofs/Girth5Floor3v.lean:1136:164: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1440377Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1440569Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1441711Z warning: Mathproofs/Girth5Floor3v.lean:1136:226: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1442147Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1442349Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1442956Z warning: Mathproofs/Girth5Floor3v.lean:1137:52: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1443384Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1443577Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1444203Z warning: Mathproofs/Girth5Floor3v.lean:1137:108: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1444617Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1444814Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1445421Z warning: Mathproofs/Girth5Floor3v.lean:1137:164: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1445847Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1446045Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1446652Z warning: Mathproofs/Girth5Floor3v.lean:1137:226: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1447074Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1447265Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1447870Z warning: Mathproofs/Girth5Floor3v.lean:1138:52: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1448289Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1448487Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1449094Z warning: Mathproofs/Girth5Floor3v.lean:1138:108: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1449516Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1449709Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1450313Z warning: Mathproofs/Girth5Floor3v.lean:1138:164: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1450859Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1451066Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1451673Z warning: Mathproofs/Girth5Floor3v.lean:1139:52: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1452089Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1452290Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1452909Z warning: Mathproofs/Girth5Floor3v.lean:1139:108: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1453333Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1453522Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1454129Z warning: Mathproofs/Girth5Floor3v.lean:1139:164: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1454588Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1454785Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1455396Z warning: Mathproofs/Girth5Floor3v.lean:1140:52: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1455817Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1456006Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1456623Z warning: Mathproofs/Girth5Floor3v.lean:1140:108: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1457040Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1457236Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1457843Z warning: Mathproofs/Girth5Floor3v.lean:1140:164: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1458264Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1458461Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1459064Z warning: Mathproofs/Girth5Floor3v.lean:1141:108: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1459613Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1459804Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1460516Z warning: Mathproofs/Girth5Floor3v.lean:1141:164: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1461207Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1461418Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1462037Z warning: Mathproofs/Girth5Floor3v.lean:1142:52: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1462462Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1462657Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1463274Z warning: Mathproofs/Girth5Floor3v.lean:1142:164: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1463696Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1463895Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1464504Z warning: Mathproofs/Girth5Floor3v.lean:1143:52: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1464921Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1465120Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1465733Z warning: Mathproofs/Girth5Floor3v.lean:1143:108: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1466157Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1466348Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1466960Z warning: Mathproofs/Girth5Floor3v.lean:1144:108: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1467376Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1467572Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1468182Z warning: Mathproofs/Girth5Floor3v.lean:1144:164: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1468602Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1468794Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1469411Z warning: Mathproofs/Girth5Floor3v.lean:1144:226: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1469825Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1470021Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1470624Z warning: Mathproofs/Girth5Floor3v.lean:1145:52: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1471161Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1471357Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1471961Z warning: Mathproofs/Girth5Floor3v.lean:1145:164: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1472383Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1472575Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1473186Z warning: Mathproofs/Girth5Floor3v.lean:1145:226: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1473607Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1473807Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1474411Z warning: Mathproofs/Girth5Floor3v.lean:1146:52: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1474833Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1475023Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1475637Z warning: Mathproofs/Girth5Floor3v.lean:1146:108: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1476055Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1476252Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1476856Z warning: Mathproofs/Girth5Floor3v.lean:1146:226: Unused tactic linter: `exact Ne.symm (by assumption)` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1477276Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1477479Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1478254Z ⚠ [8960/8991] Replayed Mathproofs.ESQRCoreCount
+build	UNKNOWN STEP	2026-10-27T01:18:24.1478750Z warning: Mathproofs/ESQRCoreCount.lean:38:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1479120Z   letI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1479238Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1479414Z The goal is a proposition, so `let` is preferred over `letI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1479866Z The difference between `let` and `letI` is that `letI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1480325Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1480591Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1481077Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1481543Z warning: Mathproofs/ESQRCoreCount.lean:71:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1481876Z   letI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1481983Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1482142Z The goal is a proposition, so `let` is preferred over `letI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1482583Z The difference between `let` and `letI` is that `letI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1483044Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1483302Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1483518Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1483965Z warning: Mathproofs/ESQRCoreCount.lean:99:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1484291Z   letI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1484390Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1484546Z The goal is a proposition, so `let` is preferred over `letI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1484977Z The difference between `let` and `letI` is that `letI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1485425Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1485681Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1485896Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1486493Z warning: Mathproofs/ESQRCoreCount.lean:153:30: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.1487068Z ℹ [8962/8991] Replayed Mathproofs.ESBranchSDREndgame
+build	UNKNOWN STEP	2026-10-27T01:18:24.1487692Z info: Mathproofs/ESBranchSDREndgame.lean:79:0: 'branch_sdr_endgame' depends on axioms: [propext, Classical.choice, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1488582Z info: Mathproofs/ESBranchSDREndgame.lean:80:0: 'branch_sdr_endgame_clique_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1489269Z ⚠ [8964/8991] Replayed Mathproofs.ESFiberCompat
+build	UNKNOWN STEP	2026-10-27T01:18:24.1489851Z warning: Mathproofs/ESFiberCompat.lean:117:0: automatically included section variable(s) unused in theorem `forced_digit_aux`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1490417Z   [Fact (Nat.Prime p)]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1491029Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1491573Z   omit [Fact (Nat.Prime p)] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1491770Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1491996Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1492457Z warning: Mathproofs/ESFiberCompat.lean:338:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1492793Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1492902Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1493069Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1493526Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1493992Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1494248Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1494463Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1494914Z warning: Mathproofs/ESFiberCompat.lean:339:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1495241Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1495344Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1495506Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1495952Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1496407Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1496666Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1497021Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1497579Z warning: Mathproofs/ESFiberCompat.lean:347:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1497905Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1498248Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1498519Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1499291Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1500100Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1500570Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1501193Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1502042Z warning: Mathproofs/ESFiberCompat.lean:382:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1502730Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1502926Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1503235Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1504103Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1505017Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1505525Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1505783Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1506250Z warning: Mathproofs/ESFiberCompat.lean:383:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1506622Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1506731Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1506899Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1507346Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1507818Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1508077Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1508290Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1508742Z warning: Mathproofs/ESFiberCompat.lean:405:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1509071Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1509181Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1509338Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1509800Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1510258Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1510515Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1510721Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1511432Z warning: Mathproofs/ESFiberCompat.lean:406:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1511764Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1511864Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1512025Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1512461Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1512913Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1513170Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1513381Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1513829Z warning: Mathproofs/ESFiberCompat.lean:416:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1514152Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1514257Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1514423Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1514862Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1515310Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1515567Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1515774Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1516225Z warning: Mathproofs/ESFiberCompat.lean:422:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1516545Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1516654Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1516810Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1517248Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1517701Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1518147Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1518360Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1519187Z warning: Mathproofs/ESFiberCompat.lean:414:0: automatically included section variable(s) unused in theorem `FiberCompatLift.Kquot_spec`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1519798Z   [Fact (Nat.Prime p)]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1520273Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1521043Z   omit [Fact (Nat.Prime p)] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1521245Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1521468Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1521939Z warning: Mathproofs/ESFiberCompat.lean:459:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1522270Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1522377Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1522536Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1522981Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1523446Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1523699Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1523917Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1524637Z warning: Mathproofs/ESFiberCompat.lean:457:0: automatically included section variable(s) unused in theorem `FiberCompatLift.Kquot_inv`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1525245Z   [Fact (Nat.Prime p)]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1525710Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1526247Z   omit [Fact (Nat.Prime p)] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1526442Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1526656Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1527118Z warning: Mathproofs/ESFiberCompat.lean:481:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1527444Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1527545Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1527708Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1528160Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1528628Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1528882Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1529098Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1529541Z warning: Mathproofs/ESFiberCompat.lean:482:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1529861Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1530167Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1530456Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1531513Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1532427Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1532928Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1533335Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1534216Z warning: Mathproofs/ESFiberCompat.lean:545:4: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1534885Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1535085Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1535392Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1536219Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1537058Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1537529Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1537929Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1538784Z warning: Mathproofs/ESFiberCompat.lean:546:4: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1539396Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1539507Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1539680Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1540131Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1540586Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1541330Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1541554Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1542169Z warning: Mathproofs/ESFiberCompat.lean:614:4: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1542516Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1542627Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1542793Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1543255Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1543710Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1543971Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1544184Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1544643Z warning: Mathproofs/ESFiberCompat.lean:615:4: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1544972Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1545073Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1545240Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1545685Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1546152Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1546405Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1546625Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1547154Z ⚠ [8965/8991] Replayed Mathproofs.ESFiberCompatComposite
+build	UNKNOWN STEP	2026-10-27T01:18:24.1547900Z warning: Mathproofs/ESFiberCompatComposite.lean:78:0: automatically included section variable(s) unused in theorem `ESFiberCompatComposite.A_mapC_injective`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1548577Z   [NeZero D]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1549029Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1549566Z   omit [NeZero D] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1549733Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1549962Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1550900Z warning: Mathproofs/ESFiberCompatComposite.lean:113:0: automatically included section variable(s) unused in theorem `ESFiberCompatComposite.A_mapC_invol`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1551569Z   [NeZero D]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1552016Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1552553Z   omit [NeZero D] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1552711Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1552930Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1553754Z warning: Mathproofs/ESFiberCompatComposite.lean:249:0: automatically included section variable(s) unused in theorem `ESFiberCompatComposite.proj_inv_closed_zmod`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1554510Z   [NeZero n]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1554703Z   [NeZero m]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1555141Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1555674Z   omit [NeZero n] [NeZero m] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1555873Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1556098Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1556885Z warning: Mathproofs/ESFiberCompatComposite.lean:283:0: automatically included section variable(s) unused in theorem `ESFiberCompatComposite.projC_val`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1557533Z   [NeZero n]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1557966Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1558492Z   omit [NeZero n] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1558649Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1558867Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1559664Z warning: Mathproofs/ESFiberCompatComposite.lean:288:0: automatically included section variable(s) unused in theorem `ESFiberCompatComposite.hdigitC_recon`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1560326Z   [NeZero D]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1561025Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1561713Z   omit [NeZero D] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1561880Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1562199Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1562833Z warning: Mathproofs/ESFiberCompatComposite.lean:288:37: Variable name `hn` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1563242Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1563652Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1564234Z   [apply] _hn
+build	UNKNOWN STEP	2026-10-27T01:18:24.1564354Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1564566Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1565058Z warning: Mathproofs/ESFiberCompatComposite.lean:332:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1565435Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1565547Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1565713Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1566179Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1566649Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1566912Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1567133Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1567943Z warning: Mathproofs/ESFiberCompatComposite.lean:374:0: automatically included section variable(s) unused in theorem `ESFiberCompatComposite.mem_digitSetC`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1568608Z   [NeZero n]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1568792Z   [NeZero D]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1568973Z   [NeZero m]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1569409Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1569985Z   omit [NeZero n] [NeZero D] [NeZero m] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1570206Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1570431Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1571395Z warning: Mathproofs/ESFiberCompatComposite.lean:389:0: automatically included section variable(s) unused in theorem `ESFiberCompatComposite.forced_digit_of_memC`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1572087Z   [NeZero D]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1572544Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1573074Z   omit [NeZero D] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1573250Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1573469Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1573973Z warning: Mathproofs/ESFiberCompatComposite.lean:488:2: Try this: 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1574337Z   haveI̵
+build	UNKNOWN STEP	2026-10-27T01:18:24.1574440Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1574607Z The goal is a proposition, so `have` is preferred over `haveI`.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1575059Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1575529Z But this is not relevant for proofs because of proof irrelevance.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1575790Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1576005Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1576498Z ⚠ [8970/8991] Replayed Mathproofs.HoleSuppression
+build	UNKNOWN STEP	2026-10-27T01:18:24.1577198Z warning: Mathproofs/HoleSuppression.lean:146:0: automatically included section variable(s) unused in theorem `HoleSuppression.subsingleton_of_card_le_one`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1577884Z   [DecidableEq α]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1578337Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1578902Z   omit [DecidableEq α] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1579084Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1579301Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1579781Z ⚠ [8972/8991] Replayed Mathproofs.AbsorbedBound
+build	UNKNOWN STEP	2026-10-27T01:18:24.1580269Z warning: Mathproofs/AbsorbedBound.lean:53:27: Variable name `hRpos` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1581026Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1581567Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1582162Z   [apply] _hRpos
+build	UNKNOWN STEP	2026-10-27T01:18:24.1582284Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1582508Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1583127Z warning: Mathproofs/AbsorbedBound.lean:101:2: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1583782Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1584206Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1584406Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.1584703Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.1585052Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.1585333Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1585744Z warning: Mathproofs/AbsorbedBound.lean:118:2: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1586392Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1586805Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1587000Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.1587289Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.1587638Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.1587906Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1588284Z warning: Mathproofs/AbsorbedBound.lean:138:33: Variable name `hRpos` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1588656Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1589064Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1589641Z   [apply] _hRpos
+build	UNKNOWN STEP	2026-10-27T01:18:24.1589767Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1589982Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1590607Z warning: Mathproofs/AbsorbedBound.lean:185:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1591389Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1591797Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1591990Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.1592275Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.1592617Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.1592883Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1593243Z warning: Mathproofs/AbsorbedBound.lean:159:44: Variable name `hb` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1593612Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1594017Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1594588Z   [apply] _hb
+build	UNKNOWN STEP	2026-10-27T01:18:24.1594704Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1594910Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1595401Z ⚠ [8974/8991] Replayed Mathproofs.CorrectedMarch
+build	UNKNOWN STEP	2026-10-27T01:18:24.1595886Z warning: Mathproofs/CorrectedMarch.lean:132:5: Variable name `hlam` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1596271Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1596666Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1597246Z   [apply] _hlam
+build	UNKNOWN STEP	2026-10-27T01:18:24.1597364Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1597574Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1598146Z warning: Mathproofs/CorrectedMarch.lean:145:18: Variable name `hMN` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1598520Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1598915Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1599488Z   [apply] _hMN
+build	UNKNOWN STEP	2026-10-27T01:18:24.1599601Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1599813Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1600505Z warning: Mathproofs/CorrectedMarch.lean:152:2: Unused tactic linter: `push_cast` does nothing
+build	UNKNOWN STEP	2026-10-27T01:18:24.1601251Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1601478Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1601994Z ⚠ [8975/8991] Replayed Mathproofs.TranslationMarchUnsat
+build	UNKNOWN STEP	2026-10-27T01:18:24.1602585Z warning: Mathproofs/TranslationMarchUnsat.lean:116:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1603271Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1603688Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1603884Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.1604175Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.1604522Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.1604798Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1605238Z warning: Mathproofs/TranslationMarchUnsat.lean:162:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1605931Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1606348Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1606546Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.1606837Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.1607179Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.1607454Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1607859Z warning: Mathproofs/TranslationMarchUnsat.lean:184:59: Variable name `ht` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1608258Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1608671Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1609250Z   [apply] _ht
+build	UNKNOWN STEP	2026-10-27T01:18:24.1609370Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1609584Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1610200Z warning: Mathproofs/TranslationMarchUnsat.lean:204:59: Variable name `ht` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1610604Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1611145Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1611716Z   [apply] _ht
+build	UNKNOWN STEP	2026-10-27T01:18:24.1611831Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1612042Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1612691Z warning: Mathproofs/TranslationMarchUnsat.lean:257:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1613366Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1613777Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1613975Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.1614268Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.1614613Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.1614889Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1615334Z warning: Mathproofs/TranslationMarchUnsat.lean:289:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1616015Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1616427Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1616619Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.1616910Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.1617247Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.1617515Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1617773Z ⚠ [8976/8991] Replayed Mathproofs.HoleTwinDip
+build	UNKNOWN STEP	2026-10-27T01:18:24.1618262Z warning: Mathproofs/HoleTwinDip.lean:244:5: Variable name `hcons` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1618635Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1619055Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1619647Z   [apply] _hcons
+build	UNKNOWN STEP	2026-10-27T01:18:24.1619906Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1620119Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1620691Z ⚠ [8977/8991] Replayed Mathproofs.DipMarch
+build	UNKNOWN STEP	2026-10-27T01:18:24.1621343Z warning: Mathproofs/DipMarch.lean:80:40: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1621717Z   eq_self_iff_true
+build	UNKNOWN STEP	2026-10-27T01:18:24.1621846Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1621953Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1622331Z   [apply] simp only [hW, not_false_eq_true, or_true, and_true, true_and]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1622607Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1622827Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1623324Z warning: Mathproofs/DipMarch.lean:80:77: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1623693Z   true_and
+build	UNKNOWN STEP	2026-10-27T01:18:24.1623797Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1623906Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1624287Z   [apply] simp only [hW, not_false_eq_true, eq_self_iff_true, or_true, and_true]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1624597Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1624804Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1625314Z warning: Mathproofs/DipMarch.lean:102:40: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1625686Z   eq_self_iff_true
+build	UNKNOWN STEP	2026-10-27T01:18:24.1625816Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1625920Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1626287Z   [apply] simp only [hW, not_false_eq_true, or_true, and_true, true_and]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1626567Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1626779Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1627275Z warning: Mathproofs/DipMarch.lean:102:77: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1627636Z   true_and
+build	UNKNOWN STEP	2026-10-27T01:18:24.1627742Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1627843Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1628224Z   [apply] simp only [hW, not_false_eq_true, eq_self_iff_true, or_true, and_true]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1628514Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1628722Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1629284Z warning: Mathproofs/DipMarch.lean:137:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.1629913Z warning: Mathproofs/DipMarch.lean:147:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.1630530Z warning: Mathproofs/DipMarch.lean:155:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.1631255Z warning: Mathproofs/DipMarch.lean:165:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.1631864Z warning: Mathproofs/DipMarch.lean:175:17: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.1632474Z warning: Mathproofs/DipMarch.lean:184:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.1633075Z warning: Mathproofs/DipMarch.lean:202:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.1633679Z warning: Mathproofs/DipMarch.lean:211:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.1634297Z warning: Mathproofs/DipMarch.lean:219:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+build	UNKNOWN STEP	2026-10-27T01:18:24.1634847Z ⚠ [8978/8991] Replayed Mathproofs.ESSubfamilyExtended
+build	UNKNOWN STEP	2026-10-27T01:18:24.1635374Z warning: Mathproofs/ESSubfamilyExtended.lean:52:35: Variable name `hmod4` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1635781Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1636190Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1636780Z   [apply] _hmod4
+build	UNKNOWN STEP	2026-10-27T01:18:24.1636900Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1637119Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1637726Z warning: Mathproofs/ESSubfamilyExtended.lean:316:48: Variable name `hA` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1638133Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1638687Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1639368Z   [apply] _hA
+build	UNKNOWN STEP	2026-10-27T01:18:24.1639490Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1639699Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1640299Z warning: Mathproofs/ESSubfamilyExtended.lean:442:34: Variable name `hp` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1640888Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1641355Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1641933Z   [apply] _hp
+build	UNKNOWN STEP	2026-10-27T01:18:24.1642053Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1642263Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1642862Z warning: Mathproofs/ESSubfamilyExtended.lean:472:5: Variable name `hex` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1643260Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1643668Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1644243Z   [apply] _hex
+build	UNKNOWN STEP	2026-10-27T01:18:24.1644360Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1644567Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1645165Z warning: Mathproofs/ESSubfamilyExtended.lean:474:13: Variable name `hm` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1645554Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1645954Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1646529Z   [apply] _hm
+build	UNKNOWN STEP	2026-10-27T01:18:24.1646648Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1646868Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1647512Z warning: Mathproofs/ESSubfamilyExtended.lean:519:8: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1648197Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1648612Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1648821Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.1649120Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.1649474Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.1649745Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1650186Z warning: Mathproofs/ESSubfamilyExtended.lean:569:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1650975Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1651388Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1651575Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.1651865Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.1652202Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.1652468Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1652759Z ⚠ [8979/8991] Replayed Mathproofs.MarchLadderCeiling
+build	UNKNOWN STEP	2026-10-27T01:18:24.1653324Z warning: Mathproofs/MarchLadderCeiling.lean:58:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1653990Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1654394Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1654617Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.1654906Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.1655242Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.1655508Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1655929Z warning: Mathproofs/MarchLadderCeiling.lean:66:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1656590Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1657000Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1657193Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.1657479Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.1657971Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.1658240Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1658735Z warning: Mathproofs/MarchLadderCeiling.lean:45:5: Variable name `hI` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1659126Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1659527Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1660110Z   [apply] _hI
+build	UNKNOWN STEP	2026-10-27T01:18:24.1660220Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1660434Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1661290Z warning: Mathproofs/MarchLadderCeiling.lean:46:5: Variable name `hg` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1661687Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1662100Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1674651Z   [apply] _hg
+build	UNKNOWN STEP	2026-10-27T01:18:24.1674831Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1675094Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1675656Z ℹ [8981/8991] Replayed Mathproofs.FiberOverlap
+build	UNKNOWN STEP	2026-10-27T01:18:24.1676304Z info: Mathproofs/FiberOverlap.lean:157:0: 'FiberOverlap.autocorr_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1677223Z info: Mathproofs/FiberOverlap.lean:158:0: 'FiberOverlap.fiber_overlap_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1678126Z info: Mathproofs/FiberOverlap.lean:159:0: 'FiberOverlap.fiber_overlap' depends on axioms: [propext, Classical.choice, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1678946Z info: Mathproofs/FiberOverlap.lean:160:0: 'FiberOverlap.f_iff_f1_f2' depends on axioms: [propext, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1679715Z info: Mathproofs/FiberOverlap.lean:161:0: 'FiberOverlap.top_interval_sparsity' depends on axioms: [propext, Quot.sound]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1680336Z ⚠ [8984/8991] Replayed Mathproofs.VoidUnion
+build	UNKNOWN STEP	2026-10-27T01:18:24.1681143Z warning: Mathproofs/VoidUnion.lean:117:5: Variable name `hforced_union` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1681546Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1681967Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1682563Z   [apply] _hforced_union
+build	UNKNOWN STEP	2026-10-27T01:18:24.1682714Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1682929Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1683491Z warning: Mathproofs/VoidUnion.lean:168:5: Variable name `hpc` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1683850Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1684257Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1684838Z   [apply] _hpc
+build	UNKNOWN STEP	2026-10-27T01:18:24.1684962Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1685172Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1685747Z warning: Mathproofs/VoidUnion.lean:168:31: Variable name `hcov` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1686104Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1686507Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1687091Z   [apply] _hcov
+build	UNKNOWN STEP	2026-10-27T01:18:24.1687223Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1687441Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1688014Z warning: Mathproofs/VoidUnion.lean:168:53: Variable name `hes` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1688368Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1688781Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1689353Z   [apply] _hes
+build	UNKNOWN STEP	2026-10-27T01:18:24.1689476Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1689693Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1690406Z ⚠ [8985/8991] Replayed Mathproofs.VoidMonoidParam
+build	UNKNOWN STEP	2026-10-27T01:18:24.1691374Z warning: Mathproofs/VoidMonoidParam.lean:82:0: automatically included section variable(s) unused in theorem `VoidMonoidParam.Nprime.subset_empty_eq`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1692052Z   [Fintype α]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1692285Z   [DecidableEq α]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1692757Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1693350Z   omit [Fintype α] [DecidableEq α] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1693564Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1693797Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1694603Z warning: Mathproofs/VoidMonoidParam.lean:86:0: automatically included section variable(s) unused in theorem `VoidMonoidParam.Nprime.inter_eq_self_of_subset`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1695291Z   [Fintype α]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1695743Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1696323Z   omit [Fintype α] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1696497Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1696729Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1697512Z warning: Mathproofs/VoidMonoidParam.lean:92:0: automatically included section variable(s) unused in theorem `VoidMonoidParam.Nprime.inter_union_distrib`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1698179Z   [Fintype α]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1698636Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1699195Z   omit [Fintype α] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1699368Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1699588Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1700377Z warning: Mathproofs/VoidMonoidParam.lean:99:0: automatically included section variable(s) unused in theorem `VoidMonoidParam.Nprime.union_inter_distrib`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1701329Z   [Fintype α]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1701789Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1702346Z   omit [Fintype α] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1702518Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1702740Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1703274Z warning: Mathproofs/VoidMonoidParam.lean:128:50: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1703680Z   Finset.union_self
+build	UNKNOWN STEP	2026-10-27T01:18:24.1703815Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1703923Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1704221Z   [apply] simp [mul_A, mul_B]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1704378Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1704596Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1705186Z warning: Mathproofs/VoidMonoidParam.lean:276:8: Variable name `b` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1705566Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1705984Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1706579Z   [apply] _b
+build	UNKNOWN STEP	2026-10-27T01:18:24.1706703Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1706918Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1707584Z warning: Mathproofs/VoidMonoidParam.lean:279:8: Variable name `b` is not explicitly referenced.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1707959Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1708362Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1708942Z   [apply] _b
+build	UNKNOWN STEP	2026-10-27T01:18:24.1709059Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1709270Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1710090Z warning: Mathproofs/VoidMonoidParam.lean:292:0: automatically included section variable(s) unused in theorem `VoidMonoidParam.Nprime.preimage_inl_image_union`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1711172Z   [Fintype α]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1711391Z   [Fintype β]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1711965Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1712562Z   omit [Fintype α] [Fintype β] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1712762Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1712990Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1713802Z warning: Mathproofs/VoidMonoidParam.lean:306:0: automatically included section variable(s) unused in theorem `VoidMonoidParam.Nprime.preimage_inr_image_union`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1714500Z   [Fintype α]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1714710Z   [Fintype β]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1715162Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1715738Z   omit [Fintype α] [Fintype β] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1715940Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1716172Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1716944Z warning: Mathproofs/VoidMonoidParam.lean:321:0: automatically included section variable(s) unused in theorem `VoidMonoidParam.Nprime.sum_split`:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1717588Z   [Fintype α]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1717804Z   [Fintype β]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1718250Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1718820Z   omit [Fintype α] [Fintype β] in theorem ...
+build	UNKNOWN STEP	2026-10-27T01:18:24.1719022Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1719240Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1719775Z warning: Mathproofs/VoidMonoidParam.lean:343:10: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1720192Z   Finset.mem_preimage
+build	UNKNOWN STEP	2026-10-27T01:18:24.1720332Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1720449Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1721055Z   [apply] simp [Finset.mem_union]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1721253Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1721475Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1722000Z warning: Mathproofs/VoidMonoidParam.lean:350:10: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1722403Z   Finset.mem_preimage
+build	UNKNOWN STEP	2026-10-27T01:18:24.1722542Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1722648Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1722944Z   [apply] simp [Finset.mem_union]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1723107Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1723321Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1723833Z warning: Mathproofs/VoidMonoidParam.lean:354:42: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1724221Z   e1
+build	UNKNOWN STEP	2026-10-27T01:18:24.1724330Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1724446Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1724762Z   [apply] simp [Phi, mul_A, mul_B, hpre, hpre', e2]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1724985Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1725191Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1725717Z warning: Mathproofs/VoidMonoidParam.lean:354:46: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1726103Z   e2
+build	UNKNOWN STEP	2026-10-27T01:18:24.1726202Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1726312Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1726619Z   [apply] simp [Phi, mul_A, mul_B, hpre, hpre', e1]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1726838Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1727044Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1727561Z warning: Mathproofs/VoidMonoidParam.lean:408:50: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1727947Z   e1
+build	UNKNOWN STEP	2026-10-27T01:18:24.1728049Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1728153Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1728491Z   [apply] simp [Rho, mul_A, mul_B, union_inter_distrib, e2]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1728726Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1728939Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1729458Z warning: Mathproofs/VoidMonoidParam.lean:408:54: This simp argument is unused:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1730357Z   e2
+build	UNKNOWN STEP	2026-10-27T01:18:24.1730529Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1731045Z Hint: Omit it from the simp argument list.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1731532Z   [apply] simp [Rho, mul_A, mul_B, union_inter_distrib, e1]
+build	UNKNOWN STEP	2026-10-27T01:18:24.1731781Z 
+build	UNKNOWN STEP	2026-10-27T01:18:24.1731994Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+build	UNKNOWN STEP	2026-10-27T01:18:24.1732491Z ⚠ [8986/8991] Replayed Mathproofs.VoidMonoid
+build	UNKNOWN STEP	2026-10-27T01:18:24.1733005Z warning: Mathproofs/VoidMonoid.lean:157:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+build	UNKNOWN STEP	2026-10-27T01:18:24.1733648Z If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+build	UNKNOWN STEP	2026-10-27T01:18:24.1734062Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:24.1734261Z open Lean.Parser.Tactic in
+build	UNKNOWN STEP	2026-10-27T01:18:24.1734563Z macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+build	UNKNOWN STEP	2026-10-27T01:18:24.1734909Z   `(tactic| push $cfg:optConfig Not $[$loc]?)
+build	UNKNOWN STEP	2026-10-27T01:18:24.1735190Z ```
+build	UNKNOWN STEP	2026-10-27T01:18:26.9442643Z Build completed successfully (17966 jobs).
+build	UNKNOWN STEP	2026-10-27T01:18:26.9815452Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:18:26.9815657Z 
+build	UNKNOWN STEP	2026-10-27T01:18:26.9826239Z ##[end-action id=__leanprover_lean-action.build;outcome=success;conclusion=success;duration_ms=7514]
+build	UNKNOWN STEP	2026-10-27T01:18:26.9831835Z ##[start-action display=test derekblair/math-proofs;id=__leanprover_lean-action.test]
+build	UNKNOWN STEP	2026-10-27T01:18:26.9836300Z ##[end-action id=__leanprover_lean-action.test;outcome=skipped;conclusion=skipped;duration_ms=0]
+build	UNKNOWN STEP	2026-10-27T01:18:26.9840417Z ##[start-action display=lint derekblair/math-proofs;id=__leanprover_lean-action.lint]
+build	UNKNOWN STEP	2026-10-27T01:18:26.9845028Z ##[end-action id=__leanprover_lean-action.lint;outcome=skipped;conclusion=skipped;duration_ms=0]
+build	UNKNOWN STEP	2026-10-27T01:18:26.9847134Z ##[start-action display=Run actions/cache/save@caa296126883cff596d87d8935842f9db880ef25;id=__leanprover_lean-action.__actions_cache]
+build	UNKNOWN STEP	2026-10-27T01:18:27.1132254Z ##[group]Run actions/cache/save@caa296126883cff596d87d8935842f9db880ef25
+build	UNKNOWN STEP	2026-10-27T01:18:27.1132653Z with:
+build	UNKNOWN STEP	2026-10-27T01:18:27.1132850Z   path: ./.lake
+build	UNKNOWN STEP	2026-10-27T01:18:27.1133729Z   key: lake-Linux-X64-d791b020c21edcc7e9e22797f1d59fde59e8af8f675af62dc2f1fd7521bfef93-0a139aa29a84d34fa9cebab0acc8f738227d22b111af1aad244f9a8235514d3e-344e3352e2f1106846e1ec3cbef0b04bff99e187
+build	UNKNOWN STEP	2026-10-27T01:18:27.1134672Z   enableCrossOsArchive: false
+build	UNKNOWN STEP	2026-10-27T01:18:27.1134922Z ##[endgroup]
+build	UNKNOWN STEP	2026-10-27T01:18:27.2714459Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/math-proofs/math-proofs --files-from manifest.txt --use-compress-program zstdmt
+build	UNKNOWN STEP	2026-10-27T01:18:50.7865199Z Sent 0 of 2680390311 (0.0%), 0.0 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:18:51.7851635Z Sent 0 of 2680390311 (0.0%), 0.0 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:18:52.7892025Z Sent 536870912 of 2680390311 (20.0%), 170.6 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:18:53.7881994Z Sent 939524096 of 2680390311 (35.1%), 223.8 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:18:54.7868251Z Sent 1140850688 of 2680390311 (42.6%), 217.5 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:18:55.7892042Z Sent 1610612736 of 2680390311 (60.1%), 255.9 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:18:56.7875922Z Sent 2080374784 of 2680390311 (77.6%), 283.3 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:18:57.7932721Z Sent 2214592512 of 2680390311 (82.6%), 263.8 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:18:58.5022119Z Sent 2680390311 of 2680390311 (100.0%), 293.2 MBs/sec
+build	UNKNOWN STEP	2026-10-27T01:18:58.9788078Z Cache saved with key: lake-Linux-X64-d791b020c21edcc7e9e22797f1d59fde59e8af8f675af62dc2f1fd7521bfef93-0a139aa29a84d34fa9cebab0acc8f738227d22b111af1aad244f9a8235514d3e-344e3352e2f1106846e1ec3cbef0b04bff99e187
+build	UNKNOWN STEP	2026-10-27T01:18:58.9892067Z ##[end-action id=__leanprover_lean-action.__actions_cache;outcome=success;conclusion=success;duration_ms=32004]
+build	UNKNOWN STEP	2026-10-27T01:18:58.9895093Z ##[start-action display=check reservoir eligibility;id=__leanprover_lean-action.__run_4]
+build	UNKNOWN STEP	2026-10-27T01:18:58.9900187Z ##[end-action id=__leanprover_lean-action.__run_4;outcome=skipped;conclusion=skipped;duration_ms=0]
+build	UNKNOWN STEP	2026-10-27T01:18:58.9903673Z ##[start-action display=check environment with leanchecker;id=__leanprover_lean-action.__run_5]
+build	UNKNOWN STEP	2026-10-27T01:18:58.9908578Z ##[end-action id=__leanprover_lean-action.__run_5;outcome=skipped;conclusion=skipped;duration_ms=0]
+build	UNKNOWN STEP	2026-10-27T01:18:58.9911547Z ##[start-action display=check environment with nanoda;id=__leanprover_lean-action.nanoda]
+build	UNKNOWN STEP	2026-10-27T01:18:58.9915309Z ##[end-action id=__leanprover_lean-action.nanoda;outcome=skipped;conclusion=skipped;duration_ms=0]
+build	UNKNOWN STEP	2026-10-27T01:18:58.9917848Z ##[start-action display=audit axioms with axiom-audit;id=__leanprover_lean-action.axiom-audit]
+build	UNKNOWN STEP	2026-10-27T01:18:58.9921867Z ##[end-action id=__leanprover_lean-action.axiom-audit;outcome=skipped;conclusion=skipped;duration_ms=0]
+build	UNKNOWN STEP	2026-10-27T01:18:59.0088689Z Post job cleanup.
+build	UNKNOWN STEP	2026-10-27T01:18:59.1071932Z [command]/usr/bin/git version
+build	UNKNOWN STEP	2026-10-27T01:18:59.1115706Z git version 2.55.0
+build	UNKNOWN STEP	2026-10-27T01:18:59.1158077Z Temporarily overriding HOME='/home/runner/work/_temp/8cd8911e-0111-4a4a-871c-87cb64d37752' before making global git config changes
+build	UNKNOWN STEP	2026-10-27T01:18:59.1161811Z Adding repository directory to the temporary git global config as a safe directory
+build	UNKNOWN STEP	2026-10-27T01:18:59.1164972Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/math-proofs/math-proofs
+build	UNKNOWN STEP	2026-10-27T01:18:59.1208373Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	UNKNOWN STEP	2026-10-27T01:18:59.1248825Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	UNKNOWN STEP	2026-10-27T01:18:59.1528801Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	UNKNOWN STEP	2026-10-27T01:18:59.1558512Z http.https://github.com/.extraheader
+build	UNKNOWN STEP	2026-10-27T01:18:59.1570700Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+build	UNKNOWN STEP	2026-10-27T01:18:59.1620052Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	UNKNOWN STEP	2026-10-27T01:18:59.1889447Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+build	UNKNOWN STEP	2026-10-27T01:18:59.1947184Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+build	UNKNOWN STEP	2026-10-27T01:18:59.2364482Z Cleaning up orphan processes
