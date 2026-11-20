@@ -52,7 +52,7 @@ A systematic literature audit (`SCOPING-C037.md` §3; 29 logged queries across O
    - **Closed-access discipline:** Closed-access monographs and paywalled articles (Andrews & Berndt, *Ramanujan's Lost Notebook, Part I*, 2005; Fine, *Basic Hypergeometric Series and Applications*, 1988; Andrews, *Math. Mag.* 1983; Berndt, Kim, & Yee, *JCTA* 2010) were neither accessed nor cited as unproved lemmas; every step below is proved unconditionally from scratch in $\mathbb{Z}\llbracket x \rrbracket$.
 
 2. **Two adjacent OEIS slips that do NOT affect `C037`:**
-   - **`OEIS A143062` line 32 (`n >= 0` typo):** Seven days before his `A203568` note, Bala posted on `A143062` (Feb 4, 2021) the conjectural formula $\sum_{n \ge 0} (-1)^n x^{2n-1} / \prod_{k=1}^n (1 + x^{2k-1})$, whose $n = 0$ summand is the Laurent pole $x^{-1} \notin \mathbb{Z}\llbracket x \rrbracket$. Bala corrected the lower limit to $n \ge 1$ when posting `C036` and `C037` on `A203568` on Feb 11, 2021.
+   - **`OEIS A143062` line 30 (`n >= 0` typo):** Seven days before his `A203568` note, Bala posted on `A143062` (Feb 4, 2021) the conjectural formula $1 + \sum_{n \ge 0} (-1)^n x^{2n-1} / \prod_{k=1}^n (1 + x^{2k-1})$, whose $n = 0$ summand is the Laurent pole $x^{-1} \notin \mathbb{Z}\llbracket x \rrbracket$. Bala corrected the lower limit to $n \ge 1$ when posting `C036` and `C037` on `A203568` on Feb 11, 2021.
    - **`OEIS A186424` (`"Cf. A186424"`, $N = 0$ constant-term discrepancy):** Two days after `A203568`, Bala posted an analogous $N$-family conjecture (Feb 13, 2021) on `A186424` for a *different* series ($1 - x - x^3 + x^{11} + x^{17} - \cdots$, with polynomial degree $N^2 - 1$). Changing $\sum_{n \ge 0}$ to $\sum_{n \ge 1}$ there while writing $P_{A186424}(0, x) = 0$ introduced a constant-term slip at $N = 0$ (the true polynomial at $N = 0$ is $Q_0(x) = 1$, matching Bala's $P(1)..P(4)$ for $N \ge 1$). Entry `A186424` is **not** a dependency of `C037`, and `C037` on `A203568` ($N \ge 1$) has **zero** index or constant-term discrepancies.
 
 ### 1.3 Summary of Main Results
@@ -103,7 +103,7 @@ Four design invariants govern the formalization:
 1. **Unit reciprocals in `ℤ⟦X⟧` (`no junk division`):** Every denominator product $\prod_{j=1}^{N-1} (1 + X^{2j})$ and $\prod_{k=1}^{m+1} (1 + X^{2k-1})$ has constant coefficient $1 \in \mathbb{Z}^\times$ and is inverted exclusively via `PowerSeries.invOfUnit φ (1 : ℤˣ)` (`Mathlib.RingTheory.PowerSeries.Inverse`), satisfying $\varphi \cdot \operatorname{invOfUnit}(\varphi, 1) = 1$ in `ℤ⟦X⟧`.
 2. **Locally finite infinite sums (`no tsum = 0 trap`):** Infinite sums over $n \ge 1$ are reindexed by $m \in \mathbb{N}$ ($n = m + 1$) and stated as `HasSum` propositions under `PowerSeries.WithPiTopology` (`Mathlib.RingTheory.PowerSeries.PiTopology`) with discrete topology on $\mathbb{Z}$. By `PowerSeries.WithPiTopology.hasSum_iff_hasSum_coeff`, `HasSum f S` holds in $\mathbb{Z}\llbracket X \rrbracket$ if and only if for every degree $d \in \mathbb{N}$, `[X^d] (f m)` has finite support in $m$ and sums to `[X^d] S`.
 3. **Exact `WithBot ℕ` polynomial degree (`no natDegree 0 = 0 trap`):** Degree is stated via `Polynomial.degree : ℤ[X] → WithBot ℕ`. At $N = 1$, $P(1, X) = 0$ has exact degree $\bot \in \operatorname{WithBot}\;\mathbb{N}$ (matching Bala's explicit guard $N > 1$ on $N^2 - N - 1$, since $1^2 - 1 - 1 = -1$), and $\prod_{j \in \mathrm{Icc}\; 1\; 0} (1 + X^{2j}) = 1$, so `C037` at $N = 1$ reduces syntactically to `C036`. For $N > 1$, $N^2 - N - 1 \ge 1$ in $\mathbb{N}$ without truncation underflow.
-4. **Universal telescoping principle (`hasSum_of_sub_eq_and_coeff_zero`):** Steps 0, Link 1, and Link 3 all share a single 12-line formal telescoping lemma in `ℤ⟦X⟧`: if a remainder sequence $(R_M)_{M \ge 0}$ in $\mathbb{Z}\llbracket X \rrbracket$ satisfies $R_M - R_{M+1} = f(M)$ for all $M \ge 0$ and for every $d \in \mathbb{N}$ there exists $B$ such that $[X^d] R_M = 0$ for all $M \ge B$, then $\operatorname{HasSum}(f, R_0)$. Indeed, summing telescopically over $0 \le m < B$ gives $\sum_{m=0}^{B-1} [X^d] f(m) = [X^d] R_0 - [X^d] R_B = [X^d] R_0$, and since this holds for every $B' \ge B$, `[X^d] f(B') = 0` for all $B' \ge B$, establishing `hasSum_fintype`-style finite support at every degree $d$ without touching `ENat` valuation limits.
+4. **Universal telescoping principle (`hasSum_of_sub_eq_and_coeff_zero`):** Steps 0, Link 1, and Link 3 all share a single 21-line formal telescoping lemma in `ℤ⟦X⟧` (lines 172–192): if a remainder sequence $(R_M)_{M \ge 0}$ in $\mathbb{Z}\llbracket X \rrbracket$ satisfies $R_M - R_{M+1} = t(M)$ for all $M \ge 0$ and $[X^d] R_M = 0$ for all $d < M$, then $\operatorname{HasSum}(t, R_0)$. Indeed, for every degree $d \in \mathbb{N}$ and every $M \ge d + 1$, both $[X^d] R_M$ and $[X^d] R_{M+1}$ vanish, so $[X^d] t(M) = 0$; hence `hasSum_sum_of_ne_finset_zero` reduces the sum at degree $d$ to `Finset.range (d + 1)`, where telescoping (`Finset.sum_range_sub'`) gives $\sum_{M=0}^{d} [X^d] t(M) = [X^d] R_0 - [X^d] R_{d+1} = [X^d] R_0$ without touching `ENat` valuation limits.
 
 ---
 
@@ -117,23 +117,24 @@ For $n \ge 1$, every partition $p \in \mathrm{distincts}(n)$ has nonempty nodup 
 $$\mathcal{M}(n, k + 1) := \bigl\{p \in \mathrm{distincts}(n) \;\big|\; k + 1 \in p.\mathrm{parts} \land \forall x \in p.\mathrm{parts},\; x \le k + 1\bigr\}$$
 and the subset-sum family
 $$\mathcal{S}(k, n - (k + 1)) := \Bigl\{s \subseteq \{1, \dots, k\} \;\Big|\; \sum_{j \in s} j = n - (k + 1)\Bigr\}.$$
-On the algebra side, expanding $\prod_{j=1}^k (1 + X^j) = \sum_{s \subseteq \{1, \dots, k\}} X^{\sum_{j \in s} j}$ via `Finset.prod_one_add` shows `[X^m] \prod_{j=1}^k (1 + X^j) = \#\mathcal{S}(k, m)` (`coeff_prod_one_add_Icc`). Because $k + 1$ is odd if and only if $k$ is even (`(-1)^k = +1` for odd $k + 1$ and `-1` for even $k + 1$), summing over $k \ge 0$ yields the formal generating-function identity (`hasSum_distinctMax_a203568Series`):
+On the algebra side, expanding $\prod_{j=1}^k (1 + X^j) = \sum_{s \subseteq \{1, \dots, k\}} X^{\sum_{j \in s} j}$ via `Finset.prod_one_add` and applying `maxPartDistincts_card_eq_subsetSum` shows $[X^n]\bigl(X^{k+1}\prod_{j=1}^k (1 + X^j)\bigr) = \#\mathcal{M}(n, k + 1)$ (`coeff_X_pow_mul_prod_range`, equal to $\#\mathcal{S}(k, n - (k + 1))$ for $k + 1 \le n$ and $0$ otherwise). Because $k + 1$ is odd if and only if $k$ is even (`(-1)^k = +1` for odd $k + 1$ and `-1` for even $k + 1$), summing over $k \ge 0$ yields the formal generating-function identity (`hasSum_distincts_a203568Series`):
 $$A(X) = \sum_{k=0}^{\infty} (-1)^k X^{k+1} \prod_{j=1}^k (1 + X^j).$$
 
 ### 3.2 Telescoping to the Generalized Pentagonal Series
 
-Following the algebraic spine of Mathlib's `Combinatorics/Enumerative/Pentagonal/Ring.lean`, define for each $k \ge 0$ the shifted series
-$$D_k(X) := \sum_{m=0}^{\infty} (-1)^m X^{(k+1)m} \prod_{i=0}^{m-1} \bigl(1 + X^{k+1+i}\bigr) \in \mathbb{Z}\llbracket X \rrbracket,$$
-so that $X D_0(X) = A(X)$ (`X_mul_step0D_zero`). Separating $m = 0$ (which contributes $1$), reindexing $m = r + 1$, and splitting the first factor $(1 + X^{k+1}) = 1 + X^{k+1}$ splits $D_k(X) - 1$ into two sums:
-$$D_k(X) - 1 = \sum_{r=0}^{\infty} (-1)^{r+1} X^{(k+1)(r+1)} \prod_{j=0}^{r-1} \bigl(1 + X^{k+2+j}\bigr) + \sum_{r=0}^{\infty} (-1)^{r+1} X^{(k+1)(r+2)} \prod_{j=0}^{r-1} \bigl(1 + X^{k+2+j}\bigr).$$
-Further separating $r = 0$ ($-X^{k+1}$) from the first sum and reindexing its $r \ge 1$ tail by $r = s + 1$ ($s \ge 0$), expand the top factor $(1 + X^{k+2+s})$ of $\prod_{j=0}^s (1 + X^{k+2+j})$ to split the $s$-th term into two pieces:
-- $(-1)^{s+2} X^{(k+1)(s+2)} \prod_{j=0}^{s-1} (1 + X^{k+2+j})$, which **cancels identically** against the $r = s$ term $(-1)^{s+1} X^{(k+1)(s+2)} \prod_{j=0}^{s-1} (1 + X^{k+2+j})$ of the second sum; and
-- $(-1)^{s+2} X^{(k+1)(s+2) + (k + 2 + s)} \prod_{j=0}^{s-1} (1 + X^{k+2+j}) = (-1)^s X^{3k + 4 + (k+2)s} \prod_{j=0}^{s-1} (1 + X^{k+2+j})$, which equals $X^{3k+4}$ times the $s$-th summand of $D_{k+1}(X)$.
+Following the algebraic spine of Mathlib's `Combinatorics/Enumerative/Pentagonal/Ring.lean`, Lean §3 skips defining an unshifted auxiliary series and works directly with the shifted remainder `step0Rem k` ($R_k^{\mathrm{pent}}(X) \in \mathbb{Z}\llbracket X \rrbracket$, $k \ge 0$), defined as the formal sum of
+$$a_k(m) := (-1)^m X^{\omega(k+1) + (k+1)m} \prod_{i=0}^{m-1} \bigl(1 + X^{k+1+i}\bigr) \qquad (\omega(k+1) = (k+1)(3k+2)/2).$$
+At $k = 0$, $\omega(1) = 1$, so $a_0(m)$ coincides term-by-term with the summand in `hasSum_distincts_a203568Series`, giving $R_0^{\mathrm{pent}}(X) = A(X)$ (`step0Rem_zero_eq_a203568Series`). To compare $R_k^{\mathrm{pent}}(X)$ with $R_{k+1}^{\mathrm{pent}}(X)$, introduce the inner telescoping sequence (`step0Aux`)
+$$u_k(r) := (-1)^r X^{\omega(k+1) + (k+1)(r+2)} \prod_{i=0}^{r-1} \bigl(1 + X^{k+2+i}\bigr) \qquad (r \ge 0).$$
+In $a_k(r + 2)$, factoring out both ends of $\prod_{i=0}^{r+1}(1 + X^{k+1+i}) = (1 + X^{k+1})\bigl(\prod_{i=0}^{r-1}(1 + X^{k+2+i})\bigr)(1 + X^{k+2+r})$ and expanding $(1 + X^{k+1})(1 + X^{k+2+r}) = 1 + X^{k+2+r} + X^{k+1}(1 + X^{k+2+r})$ splits $a_k(r + 2)$ into three pieces:
+- the $1$ term, which equals $u_k(r)$;
+- the $X^{k+2+r}$ term, whose exponent satisfies $\omega(k+1) + (k+1)(r+2) + (k+2+r) = \omega(k+2) + (k+2)r$ (using $\omega(k+1) + (3k+4) = \omega(k+2)$), reproducing $a_{k+1}(r)$ identically; and
+- the $X^{k+1}(1 + X^{k+2+r})$ term, which carries exponent $\omega(k+1) + (k+1)(r+3)$, extends the product to $r + 1$ factors, and has sign $(-1)^r = -(-1)^{r+1}$, equalling $-u_k(r + 1)$.
 
-This yields the exact one-step recurrence (`step0D_recurrence`):
-$$D_k(X) = 1 - X^{k+1} + X^{3k+4} D_{k+1}(X) \qquad (\forall k \ge 0).$$
-Multiplying by $X^{\omega(k+1)}$, where $\omega(k+1) = (k+1)(3k+2)/2$ satisfies $\omega(1) = 1$, $\omega(k+1) + (k+1) = \omega(-(k+1))$, and $\omega(k+1) + (3k+4) = \omega(k+2)$, gives for $R_k^{\mathrm{pent}}(X) := X^{\omega(k+1)} D_k(X)$:
-$$R_k^{\mathrm{pent}}(X) - R_{k+1}^{\mathrm{pent}}(X) = X^{\omega(k+1)} - X^{\omega(-(k+1))}, \qquad [X^d] R_k^{\mathrm{pent}}(X) = 0 \text{ for } k \ge d.$$
+Rearranging yields the exact inner telescoping identity (`step0_telescoping_term`):
+$$a_k(r + 2) - a_{k+1}(r) = u_k(r) - u_k(r + 1) \qquad (\forall k, r \ge 0).$$
+Applying `hasSum_of_sub_eq_and_coeff_zero` in $r$ sums $a_k(r + 2) - a_{k+1}(r)$ to $u_k(0) = X^{\omega(k+1) + 2(k+1)}$. On the other hand, peeling off $m = 0$ and $m = 1$ from $R_k^{\mathrm{pent}}(X)$ shows that the same series sums to $R_k^{\mathrm{pent}}(X) - a_k(0) - a_k(1) - R_{k+1}^{\mathrm{pent}}(X)$. By uniqueness of `HasSum` limits, and because $a_k(0) = X^{\omega(k+1)}$ while $a_k(1) = -X^{\omega(k+1)+(k+1)}(1 + X^{k+1}) = -X^{\omega(-(k+1))} - u_k(0)$ (using $\omega(k+1) + (k+1) = \omega(-(k+1))$), the $u_k(0)$ terms cancel to give (`step0Rem_sub_succ`):
+$$R_k^{\mathrm{pent}}(X) - R_{k+1}^{\mathrm{pent}}(X) = X^{\omega(k+1)} - X^{\omega(-(k+1))}, \qquad [X^d] R_k^{\mathrm{pent}}(X) = 0 \text{ for } d < k.$$
 Applying our universal telescoping lemma gives $A(X) = R_0^{\mathrm{pent}}(X) = \sum_{k=0}^\infty \bigl(X^{\omega(k+1)} - X^{\omega(-(k+1))}\bigr)$ (`hasSum_pentagonal_a203568Series`). Extracting $[X^n]$ and using `pentagonal_injective` proves Theorem 1.1 (`a203568_eq_pentagonal`). $\square$
 
 ---
@@ -148,15 +149,15 @@ Every summand of $\mathcal{L}_M$ has valuation $\ge E(M, r) \ge E(M, 0) = \frac{
 $$S_{\mathrm{Somos}}(X) := \sum_{m=1}^{\infty} (-1)^{m+1} X^{m(m+1)/2} \left(\prod_{j=1}^m (1 + X^j)\right)^{\!-1}.$$
 Using the exact integer exponent identities $E(M + 1, s) = E(M, s + 1) + M + s + 1$ and $E(M, u + 1) = E(M, u) + 2M + u + 1$, multiply each $s$-th summand of $\mathcal{L}_{M+1}$ by $(1 + X^{M+1})(1 + X^{M+1})^{-1}$ to restore the $j = M + 1$ denominator factor:
 $$\mathcal{L}_{M+1}(X) = \sum_{s=0}^{\infty} \frac{(-1)^s X^{E(M, s+1) + (M+s+1)}}{\prod_{j=M+1}^{M+s+1} (1 + X^j)} + \sum_{s=0}^{\infty} \frac{(-1)^s X^{E(M, s+1) + (2M+s+2)}}{\prod_{j=M+1}^{M+s+1} (1 + X^j)}.$$
-Adding the first sum to the $r = s + 1 \ge 1$ tail of $\mathcal{L}_M(X)$ produces numerator $(-1)^{s+1} X^{E(M, s+1)}(1 + X^{M+s+1})$, cancelling the top denominator factor $(1 + X^{M+s+1})$ to leave $\sum_{s=0}^\infty (-1)^{s+1} X^{E(M, s+1)} / \prod_{j=M+1}^{M+s} (1 + X^j)$. Since $E(M, 0) = M(3M+1)/2 = \omega(-M)$ and $E(M, 1) = \frac{(M+1)(M+2)}{2} + M^2 + M = \frac{3M^2 + 5M + 2}{2} = \omega(M+1)$, its $s = 0$ term is $-X^{E(M, 1)} = -X^{\omega(M+1)}$ and its $s = u + 1 \ge 1$ tail cancels the second sum of $\mathcal{L}_{M+1}(X)$ term-by-term, leaving (`link1L_sub_succ`):
+Subtracting the first sum of $\mathcal{L}_{M+1}(X)$ from the $r = s + 1 \ge 1$ tail of $\mathcal{L}_M(X)$ (in computing $\mathcal{L}_M(X) - \mathcal{L}_{M+1}(X)$) produces numerator $(-1)^{s+1} X^{E(M, s+1)}(1 + X^{M+s+1})$, cancelling the top denominator factor $(1 + X^{M+s+1})$ to leave $\sum_{s=0}^\infty (-1)^{s+1} X^{E(M, s+1)} / \prod_{j=M+1}^{M+s} (1 + X^j)$. Since $E(M, 0) = M(3M+1)/2 = \omega(-M)$ and $E(M, 1) = \frac{(M+1)(M+2)}{2} + M^2 + M = \frac{3M^2 + 5M + 2}{2} = \omega(M+1)$, its $s = 0$ term is $-X^{E(M, 1)} = -X^{\omega(M+1)}$ and its $s = u + 1 \ge 1$ tail cancels the negated second sum of $\mathcal{L}_{M+1}(X)$ term-by-term (formalized via the inner telescoping identity `link1_telescoping_term`), leaving (`link1Rem_sub_succ`):
 $$\mathcal{L}_M(X) - \mathcal{L}_{M+1}(X) = X^{E(M, 0)} - X^{E(M, 1)} = X^{\omega(-M)} - X^{\omega(M+1)}.$$
 Telescoping over $M \ge 0$: the $M = 0$ term is $X^0 - X^{\omega(1)} = 1 - X$, and for $M \ge 1$ the terms rearrange via $(1 - X^{\omega(1)}) + \sum_{M=1}^\infty (X^{\omega(-M)} - X^{\omega(M+1)}) = 1 - \sum_{k=1}^\infty (X^{\omega(k)} - X^{\omega(-k)}) = 1 - A(X)$. Thus $1 - S_{\mathrm{Somos}}(X) = \mathcal{L}_0(X) = 1 - A(X)$, proving $S_{\mathrm{Somos}}(X) = A(X)$ (`hasSum_somos_a203568Series`).
 
 ### 4.2 Link 2: Pairwise Grouping to Entry 9.4.4
 
-For any locally finite sequence $(g_r)_{r \ge 0}$ in $\mathbb{Z}\llbracket X \rrbracket$, splitting `Finset.range (2K)` into even and odd indices (or checking coefficientwise on finite supports, `hasSum_pair_nat`) gives $\sum_{r=0}^\infty g_r = \sum_{m=0}^\infty (g_{2m} + g_{2m+1})$. Applying this to Somos's series ($n = m + 1 \ge 1$, pairing indices $2m + 1$ and $2m + 2$):
+For any locally finite sequence $(g_r)_{r \ge 0}$ in $\mathbb{Z}\llbracket X \rrbracket$, constructing the even-indexed and odd-indexed formal sums separately and combining them via Mathlib's `HasSum.even_add_odd` and `HasSum.add` gives $\sum_{r=0}^\infty g_r = \sum_{m=0}^\infty (g_{2m} + g_{2m+1})$. Applying this to Somos's series ($n = m + 1 \ge 1$, pairing indices $2m + 1$ and $2m + 2$):
 $$\frac{X^{(2m+1)(m+1)}}{\prod_{j=1}^{2m+1} (1 + X^j)} - \frac{X^{(m+1)(2m+3)}}{\prod_{j=1}^{2m+2} (1 + X^j)} = \frac{X^{(m+1)(2m+1)}(1 + X^{2m+2}) - X^{(m+1)(2m+3)}}{\prod_{j=1}^{2m+2} (1 + X^j)} = \frac{X^{(m+1)(2m+1)}}{\prod_{j=1}^{2m+2} (1 + X^j)}.$$
-Writing $n = m + 1 \ge 1$ establishes Ramanujan's Entry 9.4.4 in $\mathbb{Z}\llbracket X \rrbracket$ (`hasSum_ramanujan944_a203568Series`):
+Writing $n = m + 1 \ge 1$ establishes Ramanujan's Entry 9.4.4 in $\mathbb{Z}\llbracket X \rrbracket$ (`hasSum_entry944_a203568Series`):
 $$A(X) = \sum_{n=1}^{\infty} \frac{X^{n(2n-1)}}{\prod_{j=1}^{2n} (1 + X^j)}.$$
 
 ---
@@ -185,7 +186,7 @@ For each $M \ge 0$, since $\beta^M \tau^{M+r} = (-X^3)^M (-X^2)^{M+r} = (-1)^{2M
 $$\mathcal{R}_M(X) := \sum_{r=0}^{\infty} (-1)^r X^{2M^2 + 3M + (2M+2)r} \cdot U_{\mathrm{odd}}(M + r)^{-1} \cdot U_{\mathrm{even}}(M)^{-1},$$
 where $U_{\mathrm{odd}}(k) := \prod_{i=1}^k (1 + X^{2i+1})$ and $U_{\mathrm{even}}(M) := \prod_{i=1}^M (1 + X^{2i})$. Note two immediate facts:
 1. At $M = 0$, $2M^2 + 3M + (2M+2)r = 2r$ and $U_{\mathrm{even}}(0) = 1$, so $X(1 + X)^{-1} \mathcal{R}_0(X) = S_1(X)$.
-2. Every summand of $\mathcal{R}_M(X)$ has valuation $\ge 2M^2 + 3M$, so $[X^d] \mathcal{R}_M(X) = 0$ whenever $d < 2M^2 + 3M$ (`rfRem_coeff_zero`).
+2. Every summand of $\mathcal{R}_M(X)$ has valuation $\ge 2M^2 + 3M \ge M$, so $[X^d] \mathcal{R}_M(X) = 0$ whenever $d < 2M^2 + 3M$—in particular for all $d < M$, which is the simpler sufficient hypothesis formalized in `rfRem_coeff_zero`.
 
 To prove $\mathcal{R}_M(X) - \mathcal{R}_{M+1}(X) = X^{2M^2 + 3M} U_{\mathrm{odd}}(M)^{-1} U_{\mathrm{even}}(M + 1)^{-1}$, multiply the target equation by the unit $1 - \tau q^M = 1 + X^{2M+2}$. Because $U_{\mathrm{even}}(M + 1) = (1 + X^{2M+2}) U_{\mathrm{even}}(M)$, multiplying $\mathcal{R}_{M+1}(X)$ by $(1 + X^{2M+2})$ cancels the newly adjoined $(1 + X^{2M+2})$ factor from $U_{\mathrm{even}}(M + 1)^{-1}$, leaving the **same** even-product inverse $U_{\mathrm{even}}(M)^{-1}$ on all terms:
 $$(1 + X^{2M+2})\bigl(\mathcal{R}_M(X) - \mathcal{R}_{M+1}(X)\bigr) = \bigl(1 + X^{2M+2}\bigr) \mathcal{R}_M(X) - \sum_{s=0}^{\infty} (-1)^s X^{E_{\mathrm{RF}}(M+1, s)} U_{\mathrm{odd}}(M + 1 + s)^{-1} U_{\mathrm{even}}(M)^{-1},$$
@@ -199,7 +200,7 @@ $$(-1)^{s+1} X^{E_{\mathrm{RF}}(M, s+1)} + X^{2M+2} (-1)^s X^{E_{\mathrm{RF}}(M,
 Thus $(1 + X^{2M+2})(\mathcal{R}_M(X) - \mathcal{R}_{M+1}(X)) = u_0(M) = X^{2M^2 + 3M} U_{\mathrm{odd}}(M)^{-1} U_{\mathrm{even}}(M)^{-1}$. Multiplying both sides by $(1 + X^{2M+2})^{-1}$ immediately gives (`rfRem_sub_succ`):
 $$\mathcal{R}_M(X) - \mathcal{R}_{M+1}(X) = X^{2M^2 + 3M} U_{\mathrm{odd}}(M)^{-1} U_{\mathrm{even}}(M + 1)^{-1}.$$
 
-Applying the universal telescoping lemma yields $\mathcal{R}_0(X) = \sum_{m=0}^\infty X^{2m^2 + 3m} U_{\mathrm{odd}}(m)^{-1} U_{\mathrm{even}}(m + 1)^{-1}$. Multiplying by $X(1 + X)^{-1}$ merges $(1 + X)$ with $U_{\mathrm{odd}}(m)$ into $\prod_{k=1}^{m+1} (1 + X^{2k-1})$, combines $X \cdot X^{2m^2 + 3m} = X^{(m+1)(2m+1)}$, and merges the odd and even factorials via the parity partition of $\{1, \dots, 2m+2\}$ (`oddProd_mul_evenProd`) into $\prod_{j=1}^{2m+2} (1 + X^j)$. By uniqueness of `HasSum` limits against Link 2 (`hasSum_ramanujan944_a203568Series`), $S_1(X) = A(X)$, completing Theorem 1.3 (`c036_a203568_gf`). $\square$
+Applying the universal telescoping lemma yields $\mathcal{R}_0(X) = \sum_{m=0}^\infty X^{2m^2 + 3m} U_{\mathrm{odd}}(m)^{-1} U_{\mathrm{even}}(m + 1)^{-1}$. Multiplying by $X(1 + X)^{-1}$ merges $(1 + X)$ with $U_{\mathrm{odd}}(m)$ into $\prod_{k=1}^{m+1} (1 + X^{2k-1})$, combines $X \cdot X^{2m^2 + 3m} = X^{(m+1)(2m+1)}$, and merges the odd and even factorials via the parity partition of $\{1, \dots, 2m+2\}$ (`odd_even_prod_eq_link1Prod`) into $\prod_{j=1}^{2m+2} (1 + X^j)$. By uniqueness of `HasSum` limits against Link 2 (`hasSum_entry944_a203568Series`), $S_1(X) = A(X)$, completing Theorem 1.3 (`c036_a203568_gf`). $\square$
 
 ---
 
@@ -209,7 +210,7 @@ Applying the universal telescoping lemma yields $\mathcal{R}_0(X) = \sum_{m=0}^\
 
 For each integer $N \ge 1$, let $S_N(X) \in \mathbb{Z}\llbracket X \rrbracket$ (`c037Tail N`) be the unique formal sum of
 $$m \longmapsto (-1)^{m+1+N} X^{2N(m+1) - N} \left(\prod_{k=1}^{m+1} (1 + X^{2k-1})\right)^{\!-1}.$$
-Adding $S_{N+1}(X)$ to $-S_N(X)$ (or equivalently subtracting $S_{N+1}(X)$ from $S_N(X)$) combines the $m$-th numerators into
+Subtracting $S_{N+1}(X)$ from $S_N(X)$ (equivalently, adding $-S_{N+1}(X)$ to $S_N(X)$) combines the $m$-th numerators into
 $$(-1)^{m+1+N} X^{N(2m+1)} - (-1)^{m+2+N} X^{(N+1)(2m+1)} = (-1)^{m+1+N} X^{N(2m+1)} \bigl(1 + X^{2m+1}\bigr).$$
 Cancelling the top odd factor $(1 + X^{2m+1})$ (`k = m + 1`) from $\prod_{k=1}^{m+1} (1 + X^{2k-1})$ leaves:
 - at $m = 0$: $(-1)^{N+1} X^N \cdot 1^{-1} = (-1)^{N+1} X^N$;
@@ -292,7 +293,7 @@ $$P(N, X) = \sum_{m=1}^{N-1} (-1)^{m+1} X^m \prod_{j=m+1}^{N-1} (1 + X^{2j}).$$
 ### 8.2 Recorded Trust, Axiom, Non-Vacuity, and Provenance Audit
 
 1. **Artifact source digests bound to toolchain pin (`leanprover/lean4:v4.34.1`, Mathlib `d13f23b723b8a846827a245b89c10fc7d3f11612`, base `master` `a63c611f85afb848f43b78cae509dd47b6a47295`):**
-   - Step 0 frozen statement stub (`Mathproofs/A203568RogersFineFamily.lean` at local commit `7ade8c82f397caeeadfe5938493b5a26685b36d3`, remote branch commit `501c82ec91a5cace871dd22133d9f2f337796406`): SHA-256 `81ffa5649a10cee6be4b9402d47fbcbdee964773017f2e694ec831e04f785abc` (`lake build` exit `0`, `17,996` jobs; log SHA-256 `2b132bd20e0c816a60a2648c90d47dd1f133c17dbf3a86c3cdc2a922746b0bdd`).
+   - Step 0 frozen statement stub (`Mathproofs/A203568RogersFineFamily.lean` at commit `501c82ec91a5cace871dd22133d9f2f337796406`, merged into `master` via PR #32 merge commit `6f2adbe9b438d46c582c49cdd9012f7bdf126f44`): SHA-256 `81ffa5649a10cee6be4b9402d47fbcbdee964773017f2e694ec831e04f785abc` (`lake build` exit `0`, `17,996` jobs; log SHA-256 `2b132bd20e0c816a60a2648c90d47dd1f133c17dbf3a86c3cdc2a922746b0bdd`).
    - Completed module `Mathproofs/A203568RogersFineFamily.lean` (`2,175` lines): SHA-256 `557d5472c2a1c0cb60138421531bd0f81f9d10d38ce9adcca2098379a2ec89d4` (**`0 diff chars`** across all 5 pinned definitions and all 8 pinned theorem signatures against `PIN-C037.md` v1 / Step 0; audit log SHA-256 `96eb7553a7f30dafcedb84157b9ab3b114d051f3bdf836c6f2a21af2dc270c0f`).
    - Root import barrel `Mathproofs.lean` (`90` lines; single line `import Mathproofs.A203568RogersFineFamily` appended at EOF): SHA-256 `84ab214c1ae3b645f958aeff949517c953162f689a229ce6364ae6c96ed8f059`.
    - `lakefile.toml` (`23` lines, unchanged from `master`): SHA-256 `12ca95376177738d3d2dc45c4bd083e78fbd80994d2447af3bf1201abec9eba9`.
@@ -309,7 +310,7 @@ $$P(N, X) = \sum_{m=1}^{N-1} (-1)^{m+1} X^m \prod_{j=m+1}^{N-1} (1 + X^{2j}).$$
    - **Verified via independent Python recomputation (not claimed as kernel `rfl` reductions):** `evidence/recompute_c037.py` independently re-derives `A026837`/`A026838`/`A203568` for $n = 0..200$, checks Links 1–4 through degree $500$, confirms the `b = -x^(-1)` discrepancy (`1 - x S_1(x)`), and verifies `C037` across $N = 1..20$ and degrees $0..500$ (`10,020` coefficient comparisons, `0` mismatches).
 4. **Provenance and review status:**
    - Route (`Step 0 + Links 1–4`, including the positive-valuation Rogers–Fine parameter correction) derived and audited in Seam B scoping (`SCOPING-C037.md` §2.2, `carbon-c037-scoping-20261114`), target contract frozen in `PIN-C037.md` v1, and Lean 4 formalization authored in `carbon-c037-proof-20261116` (`nibbles`, Gemini 4 Carbon High; coordinator route-around on `derekblair/math-proofs#6`).
-   - Crossed-review status at initial draft PR opening: **`NOT YET RUN (PENDING)`** (awaiting review by a fresh Gemini 4 Carbon High session disjoint from this author session — session-level independence).
+   - Crossed-review status: **COMPLETE — `PASS WITH ISSUES`** (`0` blocking findings, `4` non-blocking prose/citation findings addressed in this revision), performed by an independent fresh Gemini 4 Neon XHigh session on `dominic`; PR #32 merged into `master` on `2026-11-19` (merge commit `6f2adbe9b438d46c582c49cdd9012f7bdf126f44`, PR head `e23795a03b094ae22d5446acc335d9acd78071a4`).
 
 ---
 
