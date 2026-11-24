@@ -1,0 +1,465 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{
+  pdftitle={Refutation of Hilko Koning's Composite Characterization of OEIS A294912 and Proof of the Salvaged Characterization},
+  pdfauthor={Derek Blair}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\seq}[1]{\texttt{#1}}
+\newcommand{\inA}{\operatorname{inA294912}}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\setlength{\emergencystretch}{2em}
+
+\title{Refutation of Hilko Koning's Composite Characterization\\of OEIS \seq{A294912} and Proof of the Salvaged Characterization:\\[2pt]
+\large A Kernel-Clean Lean~4 Formalization via Cyclotomic Odd-Quotient Certificates}
+\author{Derek Blair}
+\date{24 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+In November~2017, Jonas Kaiser introduced OEIS~\seq{A294912} as the integers $n$ satisfying four simultaneous congruences modulo~$n$:
+\[
+2^{n-1} \equiv 1, \quad (2n - 1)\,2^{(n-1)/2} \equiv 1, \quad 4\lceil \tfrac{3}{4}n \rceil - 2 \equiv 1, \quad 2^{(n+1)/2} + \lfloor \tfrac{1}{4}n \rfloor\,2^{(n+1)/2 + 1} \equiv 1 \pmod{n}.
+\]
+After confirming numerically up to $2.5 \times 10^7$ that the $29$ composite terms of \seq{A294912} match OEIS~\seq{A244628} (composite $n \equiv 3 \pmod 8$ with $2^{(n-1)/2} \equiv -1 \pmod n$), Hilko Koning posted a composite characterization on \seq{A294912} (December~9, 2019):
+\emph{``It appears that composites of the form $2k+1$ such that $3(2k+1)$ divides $2^k+1$ are the composite terms of this sequence.''}
+
+We formally \textbf{refute} Koning's December~9, 2019 biconditional and \textbf{prove} the salvaged true characterization (Koning's uncorrupted December~5, 2019 / January~27, 2022 \seq{A244628} conjecture, omitting the spurious factor of~$3$). First, using division-free identities purely over $\N$, we prove that for every $k > 1$ (prime or composite),
+\[
+\inA(2k + 1) \iff \bigl(k \equiv 1 \pmod 2 \;\land\; (2k + 1) \mid (2^k + 1)\bigr),
+\]
+and upgrade the parity condition automatically to $2k + 1 \equiv 3 \pmod 8$ via quadratic reciprocity for $(-2/p)$, establishing exact set equality between the composite terms of \seq{A294912} and \seq{A244628}. Second, we establish the exact $3$-adic dichotomy for Koning's factor-of-$3$ condition: for all $k > 1$, the biconditional $\inA(2k+1) \iff 3(2k+1) \mid (2^k+1)$ holds unconditionally whenever $3 \nmid (2k+1)$, whereas whenever $3 \mid (2k+1)$ the divisibility $3(2k+1) \mid (2^k+1)$ \emph{always fails} because $k \equiv 1 \pmod 6$ forces $2^k + 1 \equiv 3 \not\equiv 0 \pmod 9$. Thus counterexamples are precisely the members of \seq{A294912} divisible by~$3$. We prove structurally that no counterexample has the form $3p$ or $3p^2$ ($p > 3$ prime), explaining why Koning's search to $2.5 \times 10^7$ missed them.
+
+Third, using the smallest counterexample identified in the prior scoping computation (14~November~2026; \seq{A244628}(1138) $= \seq{A376255}(2)$), namely
+\[
+k = 93{,}041{,}293{,}345, \qquad n = 2k + 1 = 186{,}082{,}586{,}691 = 3 \cdot 131 \cdot 281 \cdot 617 \cdot 2731,
+\]
+we formally verify both $\inA(n)$ and $\neg\bigl(3n \mid (2^k + 1)\bigr)$ (with exact remainder $(2^k + 1) \bmod 3n = 2n = 372{,}165{,}173{,}382$). To avoid expanding the $93$-billion-bit integer $2^k$, we certify $p \mid (2^k + 1)$ for each of the five prime factors using small-modulus squaring at $u_p \in \{1, 65, 35, 77, 13\}$ and odd-quotient cyclotomic lifting $2^{u_p} + 1 \mid 2^{u_p q} + 1$. Every theorem is machine-checked in Lean~4 (\texttt{v4.34.1}, Mathlib \texttt{d13f23b7}) with zero \texttt{sorry}s, allowlist-only axioms, independent \texttt{leanchecker} kernel replay, and zero computational trust escapes.
+\end{abstract}
+
+\section{Introduction, Primary Sources, and Convention Audit}
+
+\subsection{OEIS \texorpdfstring{\seq{A294912}}{A294912}, \texorpdfstring{\seq{A244628}}{A244628}, and Hilko Koning's Two Conjectures}
+
+In November~2017, Jonas Kaiser submitted OEIS~\seq{A294912}~\cite{oeis294912} (motivated by his Collatz-matrix study~\cite{kaiser2016}):
+\begin{quote}\itshape
+\texttt{\%N A294912}: Numbers $n$ such that $2^{n-1}$, $(2n - 1)(2^{(n-1)/2})$, $(4\lceil(3/4)n\rceil - 2)$, and $(2^{(n+1)/2} + \lfloor(1/4)n\rfloor 2^{((n+1)/2)+1})$ are all congruent to $1 \pmod n$.
+\end{quote}
+Its initial terms are all primes congruent to $3 \pmod 8$ (\seq{A007520}~\cite{oeis007520}): $3, 11, 19, 43, 59, 67, \dots$. On the same day, Alois~P.\ Heinz identified the first composite term, $a(9969) = 476{,}971 = 11 \cdot 131 \cdot 331$. In December~2019, Hilko Koning extended the composite search to $2.5 \times 10^7$, finding $29$ composite terms in total and observing that all $29$ matched OEIS~\seq{A244628}~\cite{oeis244628} (composite integers $n \equiv 3 \pmod 8$ with $2^{(n-1)/2} \equiv -1 \pmod n$, introduced by Gary Detlefs in July~2014 and tabulated to $10{,}000$ terms in \texttt{b244628.txt} by Jens Kruse Andersen~\cite{b244628}).
+
+Koning subsequently recorded two closely related characterizations:
+\begin{itemize}
+\item On \seq{A244628} (December~5, 2019 and January~27, 2022~\cite{oeis244628}):
+  \emph{``It appears that the terms of the sequence are also the composite numbers of \seq{A294912}.''} and \emph{``Also composite numbers $2k+1$ with $k$ odd such that $2k+1 \mid 2^k+1$.''}
+\item On \seq{A294912} (\texttt{\%C} line~48, December~9, 2019~\cite{oeis294912}, three days after proving on \seq{A007520} that primes $p = 2k+1 > 3$ satisfy $p \equiv 3 \pmod 8 \iff 3(2k+1) \mid (2^k+1)$):
+  \begin{quote}\itshape
+  It appears that composites of the form $2k+1$ such that $3(2k+1)$ divides $2^k+1$ are the composite terms of this sequence. --- \emph{Hilko Koning}, Dec 09 2019.
+  \end{quote}
+\end{itemize}
+Because every prime $p > 3$ is coprime to~$3$, inserting the factor~$3$ into $(2k+1) \mid (2^k+1)$ is harmless on primes $p > 3$---and automatically enforces $k$ odd since $3 \mid (2^k + 1) \iff 2 \nmid k$. None of the $29$ composites below $2.5 \times 10^7$ is divisible by~$3$, so the factor of~$3$ appeared equally valid on composites. However, once a composite multiple of~$3$ enters \seq{A294912}, the extra factor of~$3$ creates a $3$-adic clash: $9 \mid 3(2k+1)$ while $v_3(2^k+1) = 1$, breaking the biconditional.
+
+\paragraph{Attribution of the counterexample and certificate.}
+The counterexample search and cyclotomic odd-quotient certificate formalized in this paper originate from the prior scoping investigation (\texttt{SCOPING-C085.md}~\S4.3, conducted and independently re-verified on 14~November~2026), which combined a Carmichael-style subset-product construction at $L = 5005 = 5 \cdot 7 \cdot 11 \cdot 13$ with a full audit of Andersen's $10{,}000$-term table \texttt{b244628.txt}~\cite{b244628}, surfacing six composite multiples of~$3$ below $3 \times 10^{13}$ beginning at $\seq{A244628}(1138) = 186{,}082{,}586{,}691 = 3 \cdot 131 \cdot 281 \cdot 617 \cdot 2731$ (independently listed without reference to \seq{A294912} as $\seq{A376255}(2)$ by Shyam Sunder Gupta in September~2024~\cite{oeis376255}). Likewise, the salvaged true characterization proved in Theorem~\ref{thm:main}(3) is Koning's own uncorrupted \seq{A244628} conjecture~\cite{oeis244628}. The contribution of the present work is the complete, self-contained mathematical proof and kernel-clean Lean~4 formalization of the refutation, the salvaged characterization, the exact $3$-adic dichotomy, the quadratic-reciprocity identity with \seq{A244628}, and the structural exclusions for $3p$ and $3p^2$.
+
+\subsection{Exact \texorpdfstring{$\N$}{N}-Division Audit and Domain Guard}
+\label{sec:conventions}
+
+To formalize \seq{A294912} faithfully in Lean~4 over $\N$ without floating-point or rational coercions, we pin the defining predicate directly from \texttt{\%N}, Jean-Fran\c{c}ois Alcover's Mathematica program (\texttt{\%t}), and the PARI/GP program (\texttt{\%o}) on OEIS~\seq{A294912}~\cite{oeis294912}.
+
+\begin{definition}[Defining predicate $\inA$]
+\label{def:inA294912}
+For $n \in \N$, define $\inA(n)$ as the conjunction of four congruences modulo~$n$ (\texttt{Nat.ModEq n \textperiodcentered{} 1}):
+\begin{align*}
+\text{(C1)} &\quad 2^{n - 1} \equiv 1 \pmod n, \\
+\text{(C2)} &\quad (2n - 1) \cdot 2^{(n - 1)/2} \equiv 1 \pmod n, \\
+\text{(C3)} &\quad 4 \cdot \lfloor (3n + 3)/4 \rfloor - 2 \equiv 1 \pmod n, \\
+\text{(C4)} &\quad 2^{(n + 1)/2} + \lfloor n / 4 \rfloor \cdot 2^{((n + 1)/2) + 1} \equiv 1 \pmod n,
+\end{align*}
+where all divisions and subtractions are standard natural-number Euclidean division and truncated subtraction.
+\end{definition}
+
+Four arithmetic checks confirm exact faithfulness to OEIS~\seq{A294912}:
+\begin{enumerate}
+\item \textbf{Ceiling and floor translations:} Writing $3n = 4q + r$ with $r \in \{0, 1, 2, 3\}$, we have $\lceil \frac{3}{4}n \rceil = q = \lfloor (4q + 3)/4 \rfloor$ when $r = 0$, and $\lceil \frac{3}{4}n \rceil = q + 1 = \lfloor (4q + r + 3)/4 \rfloor$ when $r \in \{1, 2, 3\}$. Thus $\lfloor(3n + 3)/4\rfloor = \lceil \frac{3}{4}n \rceil$ and $\lfloor n/4 \rfloor = \lfloor \frac{1}{4}n \rfloor$ identically for all $n \in \N$.
+\item \textbf{Zero subtraction underflow for $n \ge 1$:} For every $n \ge 1$, $n - 1 \ge 0$, $2n - 1 \ge 1$, and $4\lfloor(3n+3)/4\rfloor \ge 4 > 2$, so every $\N$-subtraction agrees identically with exact $\Z$-subtraction.
+\item \textbf{Automatic exclusion of even $n \ge 2$:} For any even $n = 2m \ge 2$, $2 \mid 2^{n-1}$ and $2 \mid n$ force $2^{n-1} \bmod n$ to be even, whereas $1 \bmod n = 1$ is odd; hence (C1) rejects every even integer $n \ge 2$ automatically (Proposition~\ref{prop:boundaries}(a)). On odd $n = 2k + 1$, $(n-1)/2 = k$ and $(n+1)/2 = k + 1$ are exact divisions.
+\item \textbf{Exactness of the guard $1 < k$:} In Mathlib, $\neg\mathrm{Nat.Prime}(1)$ is true because $1$ is a unit, yet $\mathrm{Nat.ModEq}\ 1\ x\ 1$ holds trivially for every $x$, so $\inA(1)$ holds while $3 \cdot 1 \nmid (2^0 + 1) = 2$ (Proposition~\ref{prop:boundaries}(b)). At $k = 1$, $n = 3$ is prime and satisfies $\inA(3)$ while $9 \nmid (2^1 + 1) = 3$ (Proposition~\ref{prop:boundaries}(c)). Requiring $1 < k$ ($k \ge 2$, i.e., $2k + 1 \ge 5$) together with $\neg\mathrm{Nat.Prime}(2k + 1)$ selects the exact set of odd composite integers $n \in \{9, 15, 21, 25, 27, \dots\}$ with zero missing terms and zero degenerate cases.
+\end{enumerate}
+
+Table~\ref{tab:edge-cases} records representative small values together with the first positive composite ($n = 476{,}971$) and the smallest counterexample ($n = 186{,}082{,}586{,}691$).
+
+\begin{table}[ht]
+\centering
+\caption{Selected values of $n = 2k + 1$ illustrating guard boundaries ($k = 0, 1$), small primes and odd composites, the first positive composite in \seq{A294912}, and the smallest refutation witness.}
+\label{tab:edge-cases}
+\smallskip
+{\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}r r c c l c c >{\raggedright\arraybackslash}p{3.4cm}@{}}
+\toprule
+$n$ & $k$ & Prime & $\bmod 4$ & Residues mod $n$ & $\inA$ & $3n \mid 2^k{+}1$ & Role \\
+\midrule
+$1$ & $0$ & No & $1$ & $(0, 0, 0, 0)$ & True & False & Unit ($k = 0$, excluded by $1 < k$) \\
+$3$ & $1$ & Yes & $3$ & $(1, 1, 1, 1)$ & True & False & Prime $3$ ($k = 1$, $9 \nmid 3$) \\
+$5$ & $2$ & Yes & $1$ & $(1, 1, 4, 4)$ & False & False & Prime $\equiv 5 \pmod 8$ \\
+$7$ & $3$ & Yes & $3$ & $(1, 6, 1, 6)$ & False & False & Prime $\equiv 7 \pmod 8$ \\
+$9$ & $4$ & No & $1$ & $(4, 2, 8, 7)$ & False & False & 1st odd composite ($k = 4$) \\
+$11$ & $5$ & Yes & $3$ & $(1, 1, 1, 1)$ & True & True & Prime $\equiv 3 \pmod 8$, $3 \nmid 11$ \\
+$15$ & $7$ & No & $3$ & $(4, 7, 1, 7)$ & False & False & 2nd odd composite ($3 \mid 15$) \\
+$27$ & $13$ & No & $3$ & $(13, 16, 1, 16)$ & False & False & Composite $\equiv 3 \pmod 8$, $9 \mid 27$ \\
+$476{,}971$ & $238{,}485$ & No & $3$ & $(1, 1, 1, 1)$ & True & True & 1st positive composite ($11{\cdot}131{\cdot}331$) \\
+$186{,}082{,}586{,}691$ & $93{,}041{,}293{,}345$ & No & $3$ & $(1, 1, 1, 1)$ & \textbf{True} & \textbf{False} & \textbf{Smallest counterexample} ($3 \mid n$) \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\subsection{Prior-Art Boundary}
+
+Live database and literature audits performed during scoping (14~November~2026) and independently re-verified live on 24~November~2026 confirm that neither a proof nor a refutation of Koning's December~9, 2019 \seq{A294912} assertion---nor a proof of the equivalence between Kaiser's four congruences and \seq{A244628}---appears in published literature or OEIS:
+\begin{itemize}
+\item On OEIS, \seq{A294912} remains unchanged at revision~\#57 (February~13, 2020) with Koning's December~9, 2019 comment still open; \seq{A244628} remains at revision~\#70 (March~22, 2026) with zero mention of the $3 \mid n$ contradiction; and \seq{A376255} remains at revision~\#8 (October~2, 2024), citing only \seq{A001262} and \seq{A008585}.
+\item Live queries on arXiv, OpenAlex, Crossref, and Zenodo return zero papers mentioning \seq{A294912}, \seq{A244628}, Hilko Koning, or $186{,}082{,}586{,}691$; the sole arXiv preprint linked from \seq{A294912} is Kaiser's 2016 paper~\cite{kaiser2016}, which predates both \seq{A294912} and Koning's comment.
+\item Live web search and GitHub code search confirm zero published proofs, refutations, or formalizations of Koning's biconditional or of the four-congruence reduction.
+\end{itemize}
+
+\subsection{Main Results}
+
+\begin{theorem}[Main Theorem --- Refutation of Koning's Biconditional and Salvaged Characterization]
+\label{thm:main}
+Let $\inA : \N \to \mathrm{Prop}$ be as in Definition~\ref{def:inA294912}. Then:
+\begin{enumerate}
+\item[\textup{(1)}] \textbf{Salvaged positive characterization} (\textup{\texttt{c085\_positive\_characterization}})\textbf{:} For every $k \in \N$ with $1 < k$ and $\neg\mathrm{Nat.Prime}(2k + 1)$,
+\[
+\inA(2k + 1) \iff \bigl(k \bmod 2 = 1 \;\land\; (2k + 1) \mid (2^k + 1)\bigr).
+\]
+In fact, this equivalence holds for all $k > 1$ regardless of primality, and implies $(2k + 1) \equiv 3 \pmod 8$, identifying the composite terms of \seq{A294912} with OEIS~\seq{A244628}.
+\item[\textup{(2)}] \textbf{Smallest counterexample witness} (\textup{\texttt{c085\_witness}})\textbf{:} At $k = 93{,}041{,}293{,}345$ and $n = 2k + 1 = 186{,}082{,}586{,}691 = 3 \cdot 131 \cdot 281 \cdot 617 \cdot 2731$,
+\[
+\inA(186{,}082{,}586{,}691) \;\land\; \neg\Bigl((3 \cdot 186{,}082{,}586{,}691) \mid \bigl(2^{93{,}041{,}293{,}345} + 1\bigr)\Bigr).
+\]
+Moreover, $(2^k + 1) \bmod 3n = 2n = 372{,}165{,}173{,}382$.
+\item[\textup{(3)}] \textbf{Refutation of Koning's biconditional} (\textup{\texttt{c085\_refutation}})\textbf{:}
+\[
+\neg\Bigl(\forall k \in \N,\; 1 < k \to \neg\mathrm{Nat.Prime}(2k + 1) \to \bigl(\inA(2k + 1) \iff 3(2k + 1) \mid (2^k + 1)\bigr)\Bigr).
+\]
+\end{enumerate}
+\end{theorem}
+
+\section{Division-Free Collapse of Kaiser's Four Congruences and Equivalence with \texorpdfstring{\seq{A244628}}{A244628}}
+\label{sec:reduction}
+
+We establish Theorem~\ref{thm:main}(1) using exact additive identities over $\N$, avoiding both modular inverses and $\Z$-casts in the congruence equivalences.
+
+\begin{lemma}[Four-congruence reduction over $\N$]
+\label{lem:four-congruences}
+Let $k \in \N$ and set $n = 2k + 1$.
+\begin{enumerate}
+\item[\textup{(a)}] \emph{Congruence (C2):} For every $k \in \N$, $(2n - 1) \cdot 2^{(n-1)/2} \equiv 1 \pmod n \iff n \mid (2^k + 1)$.
+\item[\textup{(b)}] \emph{Congruence (C3):} For every $k > 1$, $4 \lfloor (3n + 3)/4 \rfloor - 2 \equiv 1 \pmod n \iff k \bmod 2 = 1$.
+\item[\textup{(c)}] \emph{Congruence (C1):} If $n \mid (2^k + 1)$, then $2^{n-1} \equiv 1 \pmod n$.
+\item[\textup{(d)}] \emph{Congruence (C4):} If $k \bmod 2 = 1$ and $n \mid (2^k + 1)$, then $2^{(n+1)/2} + \lfloor n/4 \rfloor 2^{((n+1)/2)+1} \equiv 1 \pmod n$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Since $n = 2k + 1 \ge 1$, Euclidean division gives $(n - 1)/2 = k$, $n - 1 = 2k$, $(n + 1)/2 = k + 1$, and $((n + 1)/2) + 1 = k + 2$.
+\begin{enumerate}
+\item[\textup{(a)}] Since $2n \ge 2$, we have the exact $\N$-identity
+\[
+(2n - 1)2^k + (2^k + 1) = \bigl((2n - 1) + 1\bigr)2^k + 1 = 1 + n(2 \cdot 2^k) \equiv 1 \pmod n.
+\]
+If $(2n - 1)2^k \equiv 1 \pmod n$, then $1 + (2^k + 1) \equiv 1 + 0 \pmod n$, so cancelling~$1$ modulo~$n$ yields $2^k + 1 \equiv 0 \pmod n$, i.e., $n \mid (2^k + 1)$. Conversely, if $n \mid (2^k + 1)$, then $2^k + 1 \equiv 0 \pmod n$, whence $(2n - 1)2^k \equiv (2n - 1)2^k + (2^k + 1) \equiv 1 \pmod n$.
+\item[\textup{(b)}] Split on the parity of $k > 1$:
+\begin{itemize}
+\item If $k = 2m$ ($m \ge 1$), then $n = 4m + 1 \ge 5$, so $3n + 3 = 4(3m + 1) + 2$, giving $\lfloor (3n + 3)/4 \rfloor = 3m + 1$ and $4(3m + 1) - 2 = 12m + 2 = 4m + 2n \equiv 4m \pmod n$. Since $0 < 1 < 4m < n$, $(4m) \bmod n = 4m \ne 1 = 1 \bmod n$, so (C3) fails.
+\item If $k = 2m + 1$, then $n = 4m + 3$, so $3n + 3 = 4(3m + 3)$, giving $\lfloor (3n + 3)/4 \rfloor = 3m + 3$ and $4(3m + 3) - 2 = 12m + 10 = 1 + 3n \equiv 1 \pmod n$, so (C3) holds.
+\end{itemize}
+\item[\textup{(c)}] Because $2^k \ge 1$, $(2^k - 1)(2^k + 1) + 1 = 2^{2k}$ in $\N$. Since $n \mid (2^k + 1)$ divides $(2^k - 1)(2^k + 1)$, adding~$1$ gives $2^{2k} \equiv 1 \pmod n$.
+\item[\textup{(d)}] Write $k = 2m + 1$, so $n = 4m + 3$ and $\lfloor n/4 \rfloor = m$. Then we have the exact $\N$-identity
+\[
+2^{k+1} + m \cdot 2^{k+2} + (2^k + 1) = (2 + 4m + 1)2^k + 1 = (2k + 1)2^k + 1 = 1 + n \cdot 2^k \equiv 1 \pmod n.
+\]
+Since $n \mid (2^k + 1)$ implies $2^k + 1 \equiv 0 \pmod n$, we obtain $2^{k+1} + m \cdot 2^{k+2} \equiv 1 \pmod n$. \qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{theorem}[Universal reduction and automatic $n \equiv 3 \pmod 8$ upgrade]
+\label{thm:reduction-a244628}
+For every $k \in \N$ with $1 < k$:
+\begin{enumerate}
+\item[\textup{(a)}] $\inA(2k + 1) \iff \bigl(k \bmod 2 = 1 \;\land\; (2k + 1) \mid (2^k + 1)\bigr)$.
+\item[\textup{(b)}] If $\inA(2k + 1)$, then $(2k + 1) \equiv 3 \pmod 8$.
+\item[\textup{(c)}] For every odd composite $2k + 1$ ($1 < k$, $\neg\mathrm{Nat.Prime}(2k + 1)$),
+\[
+\inA(2k + 1) \iff \bigl((2k + 1) \bmod 8 = 3 \;\land\; (2k + 1) \mid (2^k + 1)\bigr),
+\]
+i.e., the composite terms of \seq{A294912} coincide identically with OEIS~\seq{A244628}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(a) is immediate from Lemma~\ref{lem:four-congruences}(a)--(d), and specializing~(a) to composite $2k+1$ proves Theorem~\ref{thm:main}(1) (\texttt{c085\_positive\_characterization}).
+
+For part~(b), assume $\inA(2k + 1)$; by~(a), $k = 2m + 1$ is odd and $n = 2k + 1 \mid (2^{2m+1} + 1)$. Let $p$ be any prime divisor of~$n$. Because $2^{2m+1} + 1$ is odd, $p \ne 2$, and in $\Z/p\Z$ we have $2^{2m+1} = -1$. Multiplying by~$2$ gives
+\[
+\bigl(2^{m+1}\bigr)^2 = 2 \cdot 2^{2m+1} = -2 \qquad \text{in }\Z/p\Z,
+\]
+so $-2$ is a quadratic residue modulo~$p$. By the supplementary law of quadratic reciprocity (\texttt{ZMod.exists\_sq\_eq\_neg\_two\_iff}), $p \equiv 1 \text{ or } 3 \pmod 8$. Because $\{1, 3\} \pmod 8$ is closed under multiplication ($1 \cdot 1 = 1$, $1 \cdot 3 = 3$, $3 \cdot 3 \equiv 1 \pmod 8$), strong induction over prime factorizations implies $n \equiv 1 \text{ or } 3 \pmod 8$. Since $k$ is odd, $n = 2k + 1 \equiv 3 \pmod 4$, ruling out $n \equiv 1 \pmod 8$ and forcing $n \equiv 3 \pmod 8$. Part~(c) follows immediately from~(a) and~(b) because $(2k+1) \bmod 8 = 3$ implies $k \bmod 2 = 1$.
+\end{proof}
+
+\section{Exact \texorpdfstring{$3$}{3}-Adic Dichotomy and Structural Exclusions}
+\label{sec:dichotomy}
+
+We next compare Theorem~\ref{thm:reduction-a244628}(a) against Koning's strengthened divisibility condition $3(2k + 1) \mid (2^k + 1)$, isolating the exact mechanism of failure.
+
+\begin{proposition}[Exact $3$-adic dichotomy for Koning's biconditional]
+\label{prop:dichotomy}
+Let $k \in \N$.
+\begin{enumerate}
+\item[\textup{(a)}] $3 \mid (2^k + 1) \iff k \bmod 2 = 1$.
+\item[\textup{(b)}] If $k > 1$ and $3(2k + 1) \mid (2^k + 1)$, then $\inA(2k + 1)$ holds unconditionally.
+\item[\textup{(c)}] If $k > 1$ and $3 \nmid (2k + 1)$, then $\inA(2k + 1) \iff 3(2k + 1) \mid (2^k + 1)$.
+\item[\textup{(d)}] If $k \equiv 1 \pmod 6$, then $2^k + 1 \equiv 3 \pmod 9$. Consequently, for every $k \in \N$ with $3 \mid (2k + 1)$, we have $\neg\bigl(3(2k + 1) \mid (2^k + 1)\bigr)$.
+\item[\textup{(e)}] For every $k > 1$, Koning's biconditional fails at~$k$ if and only if $\inA(2k + 1) \land 3 \mid (2k + 1)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}
+\item[\textup{(a)}] Since $2^2 = 4 \equiv 1 \pmod 3$, we have $2^{2q} \equiv 1 \pmod 3$ for all $q \in \N$. Thus $2^{2q} + 1 \equiv 2 \not\equiv 0 \pmod 3$ while $2^{2q+1} + 1 \equiv 2 + 1 \equiv 0 \pmod 3$.
+\item[\textup{(b)}] If $3(2k + 1) \mid (2^k + 1)$, then both $3 \mid (2^k + 1)$ (giving $k \bmod 2 = 1$ by~(a)) and $(2k + 1) \mid (2^k + 1)$, whence $\inA(2k + 1)$ by Theorem~\ref{thm:reduction-a244628}(a).
+\item[\textup{(c)}] The backward implication is~(b). Forward: $\inA(2k + 1)$ gives $k \bmod 2 = 1$ and $(2k + 1) \mid (2^k + 1)$; by~(a), $3 \mid (2^k + 1)$. Since $3$ is prime and $3 \nmid (2k + 1)$, $\gcd(3, 2k + 1) = 1$, so $3(2k + 1) \mid (2^k + 1)$.
+\item[\textup{(d)}] Write $k = 6q + 1$. Because $2^6 = 64 \equiv 1 \pmod 9$, we have $2^k + 1 = (2^6)^q \cdot 2 + 1 \equiv 1^q \cdot 2 + 1 = 3 \pmod 9$. Now suppose $3 \mid (2k + 1)$ and $3(2k + 1) \mid (2^k + 1)$. If $k$ is even, then $3 \nmid (2^k + 1)$ by~(a), contradiction. If $k$ is odd, then $3 \mid (2k + 1)$ forces $k \equiv 1 \pmod 3$, hence $k \equiv 1 \pmod 6$, so $9 \nmid (2^k + 1)$ by the congruence modulo~$9$; yet $3 \mid (2k + 1)$ gives $9 \mid 3(2k + 1) \mid (2^k + 1)$, contradiction.
+\item[\textup{(e)}] Combine~(c) and~(d): when $3 \nmid (2k + 1)$ the biconditional holds, and when $3 \mid (2k + 1)$ its right-hand side is false, so the biconditional fails iff its left-hand side $\inA(2k + 1)$ holds. \qedhere
+\end{enumerate}
+\end{proof}
+
+Proposition~\ref{prop:dichotomy}(c) explains why Koning's criterion holds for every prime $p > 3$ and for all $29$ composites below $2.5 \times 10^7$ (none of which is divisible by~$3$). The next proposition explains structurally why no small composite multiple of~$3$ belongs to \seq{A294912}.
+
+\begin{proposition}[Impossibility of $3p$ and $3p^2$ counterexamples]
+\label{prop:no-3p}
+Let $p > 3$ be prime. Then:
+\begin{enumerate}
+\item[\textup{(a)}] $\neg \inA(3p)$.
+\item[\textup{(b)}] $\neg \inA(3p^2)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Since $p > 3$ is prime, $p = 2r + 1$ with $r \ge 2$, and $2 \ne 0$ in $\Z/p\Z$, so Fermat's Little Theorem gives $2^{p-1} = 1$ in $\Z/p\Z$.
+\begin{enumerate}
+\item[\textup{(a)}] Write $3p = 2k + 1$ with $k = 3r + 1 > 1$. Assume $\inA(3p)$; by Theorem~\ref{thm:reduction-a244628}(a), $p \mid 3p \mid (2^k + 1)$, so $2^k + 1 = 0$ in $\Z/p\Z$. Writing $k = (p - 1) + (r + 1)$, we get $2^k = 2^{p-1} \cdot 2 \cdot 2^r = 2 \cdot 2^r$ in $\Z/p\Z$. Since $(2^r)^2 = 2^{p-1} = 1$ in the field $\Z/p\Z$, either $2^r = 1$ or $2^r = -1$. If $2^r = 1$, then $3 = 2 + 1 = 2^k + 1 = 0$ in $\Z/p\Z$, so $p \mid 3$, contradicting $p > 3$. If $2^r = -1$, then $-1 = -2 + 1 = 2^k + 1 = 0$ in $\Z/p\Z$, contradicting $1 \ne 0$.
+\item[\textup{(b)}] Write $3p^2 = 2k + 1$ with $k = 6r^2 + 6r + 1 = (p - 1)(3r + 3) + 1 > 1$. Assume $\inA(3p^2)$; then $p \mid 3p^2 \mid (2^k + 1)$, so $2^k + 1 = 0$ in $\Z/p\Z$. Yet $2^k = (2^{p-1})^{3r+3} \cdot 2 = 2$ in $\Z/p\Z$, yielding $3 = 2^k + 1 = 0$ in $\Z/p\Z$ and hence $p \mid 3$, contradicting $p > 3$. \qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{remark}[Why four-factor Carmichael-style products escape]
+By Proposition~\ref{prop:dichotomy}(d), $9 \mid n$ is also impossible because $k \equiv 1 \pmod 6$ implies $v_3(2^k + 1) = 1$. Together with Proposition~\ref{prop:no-3p}, any counterexample $n = 3m$ must have $3 \nmid m$ and $m \equiv 1 \pmod 8$ (since $n \equiv 3 \pmod 8$) with $m$ composite and not a prime square. In fact, because every prime divisor $p \mid m$ satisfies $p \equiv 1 \text{ or } 3 \pmod 8$ and $m \equiv 1 \pmod 8$, taking $r \ge 3$ distinct odd primes $p_1, \dots, p_r > 3$ dividing $2^L + 1$ for an odd modulus $L$ with $3 \nmid L$ such that $m = \prod_{i=1}^r p_i \equiv 1 \pmod 4$ and $3m \equiv 1 \pmod L$ makes $k = (3m - 1)/2$ an odd multiple of~$L$, forcing $3 p_1 \cdots p_r \mid (2^L + 1) \mid (2^k + 1)$. This subset-product construction (executed at $L = 5005 = 5 \cdot 7 \cdot 11 \cdot 13$ in the scoping investigation) yields the smallest counterexample below.
+\end{remark}
+
+\section{The Smallest Counterexample and Kernel-Clean Cyclotomic Refutation}
+\label{sec:witness}
+
+To verify $n \mid (2^k + 1)$ at $k = 93{,}041{,}293{,}345$ inside Lean's kernel without ever materializing the $93$-billion-bit numeral $2^k$ (indeed, Lean's runtime panics on \texttt{Nat.pow} with exponents exceeding $2^{32} - 1$), we lift small prime divisibilities via the cyclotomic odd-quotient identity.
+
+\begin{lemma}[Cyclotomic odd-quotient lifting]
+\label{lem:odd-quot}
+For all $p, u, q \in \N$, if $p \mid (2^u + 1)$ and $q$ is odd, then $p \mid (2^{uq} + 1)$.
+\end{lemma}
+
+\begin{proof}
+Since $q$ is odd, $x + y \mid x^q + y^q$ in $\N$ (\texttt{Odd.nat\_add\_dvd\_pow\_add\_pow}). Taking $x = 2^u$ and $y = 1$ gives $p \mid (2^u + 1) \mid (2^u)^q + 1^q = 2^{uq} + 1$.
+\end{proof}
+
+\begin{proposition}[Divisibility certificate and exact remainder at $k = 93{,}041{,}293{,}345$]
+\label{prop:witness-cert}
+Let $k = 93{,}041{,}293{,}345$ and $n = 2k + 1 = 186{,}082{,}586{,}691 = 3 \cdot 131 \cdot 281 \cdot 617 \cdot 2731$. Then:
+\begin{enumerate}
+\item[\textup{(a)}] $n \mid (2^k + 1)$;
+\item[\textup{(b)}] $\inA(n)$ holds, while $\neg\bigl((3n) \mid (2^k + 1)\bigr)$;
+\item[\textup{(c)}] $(2^k + 1) \bmod (3n) = 2n = 372{,}165{,}173{,}382$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}
+\item[\textup{(a)}] Table~\ref{tab:cert} exhibits, for each of the five prime factors $p \in \{3, 131, 281, 617, 2731\}$, a small odd exponent $u_p \le 77$ such that $p \mid (2^{u_p} + 1)$ and an odd integer $q_p = k / u_p$. To avoid even $24$-digit intermediate numerals in the kernel, the base congruences $2^{u_p} \equiv -1 \pmod p$ for $p \in \{131, 281, 617\}$ are verified by repeated modular squaring in which every intermediate integer is below $617^2 = 380{,}689$:
+\begin{itemize}
+\item $p = 3$, $u_3 = 1$: $2^1 + 1 = 3$.
+\item $p = 2731$, $u_{2731} = 13$: $2^{13} + 1 = 8193 = 2731 \cdot 3$.
+\item $p = 281$, $u_{281} = 35$: $2^8 \equiv 256$, $2^{16} \equiv 63$, $2^{32} \equiv 35$, $2^{35} = 2^{32} \cdot 8 \equiv 280 \pmod{281}$.
+\item $p = 131$, $u_{131} = 65$: $2^8 \equiv 125$, $2^{16} \equiv 36$, $2^{32} \equiv 117$, $2^{64} \equiv 65$, $2^{65} \equiv 130 \pmod{131}$.
+\item $p = 617$, $u_{617} = 77$: $2^8 \equiv 256$, $2^{16} \equiv 134$, $2^{32} \equiv 63$, $2^{64} \equiv 267$, $2^{72} = 2^{64} \cdot 2^8 \equiv 482$, $2^{77} = 2^{72} \cdot 32 \equiv 616 \pmod{617}$.
+\end{itemize}
+Applying Lemma~\ref{lem:odd-quot} to each row yields $p \mid (2^k + 1)$ for all five primes. Since the five factors are pairwise coprime and satisfy $3 \cdot 131 \cdot 281 \cdot 617 \cdot 2731 = 186{,}082{,}586{,}691 = n$, iterating \texttt{Nat.Coprime.mul\_dvd\_of\_dvd\_of\_dvd} gives $n \mid (2^k + 1)$.
+\item[\textup{(b)}] Since $k > 1$, $k \bmod 2 = 1$, and $n \mid (2^k + 1)$ by~(a), Theorem~\ref{thm:reduction-a244628}(a) gives $\inA(n)$. Meanwhile $n = 3 \cdot 62{,}027{,}528{,}897$ is divisible by~$3$, so Proposition~\ref{prop:dichotomy}(d) gives $\neg\bigl(3n \mid (2^k + 1)\bigr)$. This establishes Theorem~\ref{thm:main}(2) (\texttt{c085\_witness}).
+\item[\textup{(c)}] Write $2^k + 1 = nq$ from~(a). Since $n \equiv 6 \pmod 9$ and $k \equiv 1 \pmod 6$, Proposition~\ref{prop:dichotomy}(d) gives $6q \equiv nq = 2^k + 1 \equiv 3 \pmod 9$, forcing $q \equiv 2 \pmod 3$. Writing $q = 3t + 2$ yields $2^k + 1 = 2n + (3n)t$, whence $(2^k + 1) \bmod 3n = 2n = 372{,}165{,}173{,}382$. \qedhere
+\end{enumerate}
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\caption{Five-prime cyclotomic odd-quotient certificate for $n = 186{,}082{,}586{,}691 = 3 \cdot 131 \cdot 281 \cdot 617 \cdot 2731$ and $k = 93{,}041{,}293{,}345$ (scoping audit \texttt{SCOPING-C085.md}~\S4.3; formalized as \texttt{C085.witness\_dvd}).}
+\label{tab:cert}
+\smallskip
+{\small
+\begin{tabular}{@{}r r r r c@{}}
+\toprule
+Prime $p$ & $p \bmod 8$ & $u_p$ & Odd quotient $q_p = k / u_p$ & $u_p \cdot q_p = k$ \\
+\midrule
+$3$ & $3$ & $1$ & $93{,}041{,}293{,}345$ & $1 \cdot 93{,}041{,}293{,}345$ \\
+$131$ & $3$ & $65$ & $1{,}431{,}404{,}513$ & $65 \cdot 1{,}431{,}404{,}513$ \\
+$281$ & $1$ & $35$ & $2{,}658{,}322{,}667$ & $35 \cdot 2{,}658{,}322{,}667$ \\
+$617$ & $1$ & $77$ & $1{,}208{,}328{,}485$ & $77 \cdot 1{,}208{,}328{,}485$ \\
+$2731$ & $3$ & $13$ & $7{,}157{,}022{,}565$ & $13 \cdot 7{,}157{,}022{,}565$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}(3) (\texttt{c085\_refutation})]
+Suppose for contradiction that for all $k > 1$ with $\neg\mathrm{Nat.Prime}(2k + 1)$, $\inA(2k + 1) \iff 3(2k + 1) \mid (2^k + 1)$. Instantiate at $k = 93{,}041{,}293{,}345$: we have $1 < k$, and $2k + 1 = 186{,}082{,}586{,}691 = 3 \cdot 62{,}027{,}528{,}897$ is composite since neither factor equals~$1$. The hypothesized forward implication applied to $\inA(186{,}082{,}586{,}691)$ from Proposition~\ref{prop:witness-cert}(b) yields $(3 \cdot 186{,}082{,}586{,}691) \mid (2^{93{,}041{,}293{,}345} + 1)$, contradicting Proposition~\ref{prop:witness-cert}(b).
+\end{proof}
+
+\begin{remark}[All six counterexamples below $3 \times 10^{13}$]
+Auditing all $10{,}000$ terms of Andersen's table \texttt{b244628.txt}~\cite{b244628} (up to $a(10000) = 29{,}639{,}336{,}777{,}851$) during scoping (\texttt{SCOPING-C085.md}~\S4.3) surfaced exactly six composite multiples of~$3$, listed in Table~\ref{tab:six-witnesses}. Note that three of the six ($a(2024)$, $a(3532)$, $a(4628)$) are four-prime products $3pqr$, showing that the structural exclusion of Proposition~\ref{prop:no-3p} (ruling out $3p$ and $3p^2$) is best possible in terms of prime-factor count. Only the smallest counterexample $a(1138)$ is pinned and formalized in Lean~4; the remaining five are recorded as numerical companions from the scoping audit.
+\end{remark}
+
+\begin{table}[ht]
+\centering
+\caption{All six counterexamples to Koning's December~9, 2019 biconditional among the first $10{,}000$ terms of OEIS~\seq{A244628} (\texttt{b244628.txt}, up to $2.96 \times 10^{13}$). Only $a(1138)$ is formalized in Lean~4.}
+\label{tab:six-witnesses}
+\smallskip
+{\small
+\begin{tabular}{@{}l r l r l@{}}
+\toprule
+\seq{A244628} & $n = 2k + 1$ & Factorization & $k = (n-1)/2$ & $(2^k+1) \bmod 3n$ \\
+\midrule
+$a(1138)$ & $186{,}082{,}586{,}691$ & $3 \cdot 131 \cdot 281 \cdot 617 \cdot 2731$ & $93{,}041{,}293{,}345$ & $2n$ (Lean-proved) \\
+$a(2024)$ & $719{,}565{,}156{,}651$ & $3 \cdot 11 \cdot 124769 \cdot 174763$ & $359{,}782{,}578{,}325$ & $n$ \\
+$a(3298)$ & $2{,}266{,}886{,}795{,}811$ & $3 \cdot 11 \cdot 43 \cdot 18539 \cdot 86171$ & $1{,}133{,}443{,}397{,}905$ & $2n$ \\
+$a(3328)$ & $2{,}307{,}208{,}917{,}651$ & $3 \cdot 11 \cdot 251 \cdot 5051 \cdot 55147$ & $1{,}153{,}604{,}458{,}825$ & $2n$ \\
+$a(3532)$ & $2{,}641{,}415{,}618{,}451$ & $3 \cdot 251 \cdot 31817 \cdot 110251$ & $1{,}320{,}707{,}809{,}225$ & $n$ \\
+$a(4628)$ & $5{,}115{,}406{,}263{,}771$ & $3 \cdot 8081 \cdot 11731 \cdot 17987$ & $2{,}557{,}703{,}131{,}885$ & $n$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\section{Boundary Sharpness, Even Exclusion, and Positive Non-Vacuity}
+\label{sec:boundaries}
+
+To confirm that our specification of $\inA$ and the domain guard $1 < k$ are non-vacuous and sharp at every boundary, we also formalize four companion propositions.
+
+\begin{proposition}[Even exclusion, guard sharpness, and first positive composite]
+\label{prop:boundaries}
+\mbox{}
+\begin{enumerate}
+\item[\textup{(a)}] \emph{Even exclusion (\texttt{inA294912\_even\_false}):} For every $m \ge 1$, $\neg\inA(2m)$.
+\item[\textup{(b)}] \emph{Guard sharpness at $k = 0$ (\texttt{inA294912\_one}):} $\inA(1) \land \neg\mathrm{Nat.Prime}(1) \land \neg\bigl(3 \cdot 1 \mid (2^0 + 1)\bigr)$.
+\item[\textup{(c)}] \emph{Guard sharpness at $k = 1$ (\texttt{inA294912\_three}):} $\inA(3) \land \mathrm{Nat.Prime}(3) \land \neg\bigl(3 \cdot 3 \mid (2^1 + 1)\bigr)$.
+\item[\textup{(d)}] \emph{Positive composite non-vacuity (\texttt{c085\_first\_positive\_composite}):} At $k = 238{,}485$, $n = 2k + 1 = 476{,}971 = 11 \cdot 131 \cdot 331$ satisfies $1 < k$, $\neg\mathrm{Nat.Prime}(n)$, $\inA(n)$, and $3n \mid (2^k + 1)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(a) follows from (C1) since $2 \mid 2^{2m-1}$ and $2 \mid 2m$ force $2 \mid (2^{2m-1} \bmod 2m)$, contradicting $1 \bmod 2m = 1$. Part~(b) follows from $x \bmod 1 = 0 = 1 \bmod 1$, $\neg\mathrm{Nat.Prime}(1)$, and $3 \nmid 2$; part~(c) follows by direct arithmetic modulo~$3$ and $9 \nmid 3$. Part~(d) uses Lemma~\ref{lem:odd-quot} with the three-prime certificate $(p, u_p, k/u_p) \in \{(11, 5, 47697), (131, 65, 3669), (331, 15, 15899)\}$ (reusing $131 \mid 2^{65} + 1$ from Proposition~\ref{prop:witness-cert}(a), alongside $2^5 + 1 = 11 \cdot 3$ and $2^{15} + 1 = 331 \cdot 99$), combines pairwise coprime factors to obtain $476{,}971 \mid (2^{238485} + 1)$, applies Theorem~\ref{thm:reduction-a244628}(a) to get $\inA(476{,}971)$, and applies Proposition~\ref{prop:dichotomy}(c) (since $3 \nmid 476{,}971$) to obtain $(3 \cdot 476{,}971) \mid (2^{238485} + 1)$.
+\end{proof}
+
+\section{Lean 4 Formalization and Verification Record}
+\label{sec:lean}
+
+The formalization resides in \texttt{derekblair/math-proofs} under Lean~\texttt{v4.34.1} (\nolinkurl{leanprover/lean4:v4.34.1}) and Mathlib revision {\small\nolinkurl{d13f23b723b8a846827a245b89c10fc7d3f11612}}, following the live Seam~B layout specified in \texttt{PIN-C085.md} v2 (zero path deviation):
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \nolinkurl{MathProofs/SeamB/C085/Statement.lean} (51 lines): verbatim transcription of frozen \texttt{PIN-C085.md} v2.\\
+Statement SHA-256: {\small\nolinkurl{dd7d31598cc866cc95105ea08face63cf668d71e5da8c24531b7f146785b2ae7}}.\\
+Pin v2 SHA-256: {\small\nolinkurl{a40073c9a7a613f93535ebe7506920f188aba9ee31820696dbebd3072717d154}}.
+\item \nolinkurl{MathProofs/SeamB/C085/Solution.lean} (674 lines): reproduces \texttt{C085.inA294912} and all three pinned theorem signatures verbatim in \texttt{namespace C085}, proving all pinned and structural theorems with zero \texttt{sorry}s, zero warnings, and allowlist-only axioms.\\
+Solution SHA-256: {\small\nolinkurl{c79ac32aa4085c8d630462d7619f243a4b730df439174158bceed88c951a6504}}.
+\item \nolinkurl{Mathproofs.lean} (101 lines; adds one import for \nolinkurl{MathProofs.SeamB.C085.Solution}).\\
+Root SHA-256: {\small\nolinkurl{bf513f97f968c0adae7e90a075823cd12a3ebdc97147806e196fa9f93c415ccc}}.
+\end{itemize}
+
+Table~\ref{tab:lean-map} maps every theorem in this paper to its Lean~4 declaration.
+
+\begin{table}[ht]
+\centering
+\caption{Correspondence between paper results and Lean~4 declarations in \nolinkurl{namespace C085}.}
+\label{tab:lean-map}
+\smallskip
+{\small
+\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{8.4cm} l@{}}
+\toprule
+Paper Result & Lean~4 Declaration(s) & Status \\
+\midrule
+Definition~\ref{def:inA294912} & \texttt{inA294912} (pinned verbatim) & Exported \\
+Lemma~\ref{lem:four-congruences} & \texttt{c2\_iff\_dvd}, \texttt{c3\_iff\_odd}, \texttt{c1\_of\_dvd}, \texttt{c4\_of\_odd\_and\_dvd} & Exported, proved \\
+Theorem~\ref{thm:reduction-a244628} & \texttt{inA294912\_odd\_iff}, \texttt{prime\_dvd\_two\_pow\_odd\_add\_one\_mod\_eight}, \texttt{inA294912\_mod\_eight}, \texttt{c085\_a244628\_iff} & Exported, proved \\
+Theorem~\ref{thm:main}(1) & \texttt{c085\_positive\_characterization} (pinned verbatim) & Exported, proved \\
+Proposition~\ref{prop:dichotomy} & \texttt{three\_dvd\_two\_pow\_add\_one\_iff}, \texttt{koning\_backward}, \texttt{koning\_iff\_of\_not\_three\_dvd}, \texttt{mod\_nine\_of\_mod\_six\_eq\_one}, \texttt{not\_three\_mul\_dvd\_of\_three\_dvd}, \texttt{koning\_fails\_iff} & Exported, proved \\
+Proposition~\ref{prop:no-3p} & \texttt{c085\_no\_3p}, \texttt{c085\_no\_3p\_sq} & Exported, proved \\
+Lemma~\ref{lem:odd-quot} & \texttt{dvd\_two\_pow\_add\_one\_of\_dvd\_odd\_quot} & Exported, proved \\
+Proposition~\ref{prop:witness-cert} & \texttt{witness\_dvd}, \texttt{c085\_witness} (pinned verbatim), \texttt{c085\_witness\_mod\_3n} & Exported, proved \\
+Theorem~\ref{thm:main}(3) & \texttt{c085\_refutation} (pinned verbatim) & Exported, proved \\
+Proposition~\ref{prop:boundaries} & \texttt{inA294912\_even\_false}, \texttt{inA294912\_one}, \texttt{inA294912\_three}, \texttt{c085\_first\_positive\_composite} & Exported, proved \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\noindent\textbf{Audit summary.}
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \emph{Clean build:} Clearing the compiled artifacts (\texttt{.olean}, \texttt{.ilean}, \texttt{.c}) and running \texttt{lake build} on \nolinkurl{MathProofs.SeamB.C085.Solution} exits with code~$0$, zero warnings, and $2{,}895$ jobs ($2.5\text{ s}$ module build, $4.21\text{ s}$ wall).
+\item \emph{Independent kernel replay:} Running \texttt{lake env leanchecker} with \texttt{-{}-fresh -{}-verbose} on \nolinkurl{MathProofs.SeamB.C085.Solution} exits with code~$0$ ($297.94\text{ s}$ wall).
+\item \emph{Axiom audit:} \texttt{\#print axioms} on all $18$ exported theorems and a programmatic \texttt{MetaM} \texttt{collectAxioms} sweep across all $77$ \texttt{C085.*} declarations confirm \texttt{disallowed = []}: every declaration uses only subsets of \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound} (with \nolinkurl{not_three_mul_dvd_of_three_dvd} and \nolinkurl{inA294912_even_false} using only \texttt{propext} and \texttt{Quot.sound}).
+\item \emph{Statement fidelity:} A programmatic Lean \texttt{Environment} audit comparing \texttt{Statement.lean} and \texttt{Solution.lean} confirms exact \texttt{Expr} equality on $1/1$ definition (\texttt{C085.inA294912}, type and body) and $3/3$ pinned theorem types (\texttt{c085\_refutation}, \texttt{c085\_witness}, and \texttt{c085\_positive\_}\allowbreak\texttt{characterization}). The external \texttt{comparator} tool (Lean~\texttt{v4.36.0}) was not run because the repository pins \texttt{v4.34.1} and \texttt{comparator} is not installed on the build host; this gap is documented explicitly in \texttt{VERIFICATION.md}.
+\item \emph{Lexical trust-escape scan:} Zero raw hits and zero comment-stripped hits in \texttt{Solution.lean} and \texttt{Mathproofs.lean} for \texttt{sorry}, \texttt{admit}, \texttt{sorryAx}, \texttt{axiom}, \texttt{native\_decide}, \texttt{ofReduceBool}, \texttt{ofReduceNat}, \texttt{implemented\_by}, \texttt{@[extern}, and \texttt{unsafe}.
+\end{enumerate}
+
+{\small
+\begin{thebibliography}{99}\setlength{\itemsep}{2pt}
+\raggedright
+
+\bibitem{oeis294912}
+J.\ Kaiser, \emph{OEIS sequence \seq{A294912}}: Numbers $n$ such that $2^{n-1}$, $(2n-1)(2^{(n-1)/2})$, $(4\lceil(3/4)n\rceil - 2)$, and $(2^{(n+1)/2} + \lfloor(1/4)n\rfloor 2^{((n+1)/2)+1})$ are all congruent to $1 \pmod n$. Includes composite search by A.~P.\ Heinz (November~10, 2017) and comments by H.\ Koning (December~3--9, 2019); live revision \#57 (February~13, 2020). \url{https://oeis.org/A294912}.
+
+\bibitem{oeis244628}
+G.\ Detlefs, \emph{OEIS sequence \seq{A244628}}: Composite numbers $k$ such that $k \equiv 3 \pmod 8$ and $2^{(k-1)/2} \equiv -1 \pmod k$. Includes comments by H.\ Koning (December~5, 2019; January~27, 2022; February~4, 2022) and PARI code by A.\ Eldar (March~21, 2026); live revision \#70 (March~22, 2026). \url{https://oeis.org/A244628}.
+
+\bibitem{b244628}
+J.~K.\ Andersen, \emph{Table of $n$, $a(n)$ for $n = 1..10000$ for OEIS \seq{A244628}} (first $132$ terms from R.~G.\ Wilson~v), \texttt{b244628.txt} (July~27, 2014). \url{https://oeis.org/A244628/b244628.txt}.
+
+\bibitem{oeis007520}
+N.~J.~A.\ Sloane (ed.), \emph{OEIS sequence \seq{A007520}}: Primes $\equiv 3 \pmod 8$. Includes comments by H.\ Koning (December~6, 2019; November~24, 2021); live revision \#92 (August~21, 2026). \url{https://oeis.org/A007520}.
+
+\bibitem{oeis376255}
+S.~S.\ Gupta, \emph{OEIS sequence \seq{A376255}}: Strong pseudoprimes to base~$2$ which are multiples of~$3$. Live revision \#8 (October~2, 2024). \url{https://oeis.org/A376255}.
+
+\bibitem{kaiser2016}
+J.\ Kaiser, \emph{On the relationship between the Collatz conjecture and Mersenne prime numbers}, arXiv:1608.00862v2 [math.GM] (August~8, 2016). \url{https://arxiv.org/abs/1608.00862}.
+
+\end{thebibliography}
+}
+
+\end{document}
