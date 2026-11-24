@@ -95,3 +95,4 @@ import MathProofs.SeamB.C051.Solution
 import MathProofs.SeamB.C057.Solution
 import MathProofs.SeamB.C052.Solution
 import MathProofs.SeamB.C054.Solution
+import MathProofs.SeamB.C053.Solution
