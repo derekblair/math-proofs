@@ -91,3 +91,4 @@ import Mathproofs.A203568RogersFineFamily
 import MathProofs.SeamB.C042.Solution
 import MathProofs.SeamB.C018.Solution
 import MathProofs.SeamB.C056.Solution
+import MathProofs.SeamB.C051.Solution
