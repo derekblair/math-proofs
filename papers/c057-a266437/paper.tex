@@ -1,0 +1,444 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\llbracket}{[\![}
+\newcommand{\rrbracket}{]\!]}
+
+\hypersetup{
+  pdftitle={One-Step Global Uniformity and Formal Generating Functions for Wolfram's Rule 23 Cellular Automaton: Proof and Lean 4 Formalization of OEIS A266437},
+  pdfauthor={Derek Blair}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\seq}[1]{\texttt{#1}}
+\newcommand{\ca}{\mathrm{ca}}
+\newcommand{\ruleTwoThree}{\mathrm{rule23}}
+\newcommand{\btrue}{\mathtt{true}}
+\newcommand{\bfalse}{\mathtt{false}}
+
+\setlength{\emergencystretch}{2em}
+
+\title{One-Step Global Uniformity and Formal Generating Functions for Wolfram's Rule~23 Cellular Automaton:\\[2pt]
+\large Proof and Lean~4 Formalization of Colin Barker's and Michael De Vlieger's OEIS \seq{A266437} Bundle}
+\author{Derek Blair}
+\date{24 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $\ca : \N \to \Z \to \{\bfalse, \btrue\}$ denote the global evolution on all of $\Z$ of Wolfram's Elementary Cellular Automaton Rule~23 ($23 = 0\mathrm{b}00010111$, local transition $\ruleTwoThree(l, c, r) = (\neg l \land \neg c \land \neg r) \lor (\neg l \land \neg c \land r) \lor (\neg l \land c \land \neg r) \lor (l \land \neg c \land \neg r)$, i.e., negated three-input majority) initialized at generation $n = 0$ with a single ON ($\btrue$) cell at $j = 0$ and OFF ($\bfalse$) cells at every $j \ne 0$. Let $a(n) = \seq{A266437}(n)$ (authored by Robert Price, December~29, 2015) count the ON cells inside the active light-cone window $[-n, n] \cap \Z$ of length $2n + 1$. Because Rule~23 maps $(0, 0, 0) \mapsto 1$ and $(1, 1, 1) \mapsto 0$, the infinite exterior $|j| > n$ flips globally at every generation; rules of this class were excluded from Sloane's global ON-cell census (\texttt{arXiv:1503.01168}), and Michael De Vlieger's empirical generating function (December~29, 2015) together with Colin Barker's closed-form and recurrence conjectures (December~30, 2015 and April~15, 2019) on OEIS \seq{A266437} have remained open-labeled conjectures.
+
+We give a self-contained elementary proof and a complete machine-checked Lean~4 formalization of the initial value $a(0) = 1$ and the full three-part conjecture bundle: (1) $2a(n) = (1 - (-1)^n)(2n + 1)$ for all $n > 0$; (2) $a(n) = 2a(n - 2) - a(n - 4)$ in $\Z$ for all $n > 4$; and (3) $((1 - X)^2(1 + X)^2)\sum_{n \ge 0} a(n) X^n = 1 + 3X - 2X^2 + X^3 + X^4$ in $\Q\llbracket X \rrbracket$, matching De Vlieger's denominator $(-1 + X^2)^2$ identically and inverting losslessly since $Q(X) = (1 - X)^2(1 + X)^2$ is a unit in $\Q\llbracket X \rrbracket$. Unlike Rule~7 (which carries an OFF defect at $j = 1$ through generation~$1$ and reaches uniformity at $n = 2$), Rule~23 achieves global spatial uniformity across all of $\Z$ already at generation~$1$ ($\ca(1, j) = \btrue$ for all $j \in \Z$) because every three-cell neighborhood of the single-ON seed contains at most one $\btrue$ cell; hence $\ca(n, j) = \mathrm{decide}(\mathrm{Odd}\; n)$ for every $n \ge 1$ and $j \in \Z$. We also prove the exact ON/OFF complement law $a(n) + a_{\mathrm{OFF}}(n) = 2n + 1$ (linking \seq{A266439}), weight-$2$ neighborhood avoidance establishing that all eight rules $\{23, 31, 55, 63, 87, 95, 119, 127\}$ generate identical spacetime lattices from a single ON seed, sharpness of both index guards ($n > 0$ and $n > 4$, highlighting the Lean $\N$-subtraction trap at $n = 4$), formal separation from naive growing-window zero-padding ($a_{\mathrm{zp}}(2) = 2 \ne 0 = a(2)$), and a formally equivalent $O(n^2)$ causal-cone mirror yielding pure kernel \texttt{rfl} verification on $n = 0, \dots, 12$. The proof is checked in Lean~4 (\texttt{v4.34.1}, Mathlib \texttt{d13f23b7}) with zero \texttt{sorry}s, allowlist-only axioms across all $52$ declarations, kernel environment-to-environment statement-identity verification, fresh \texttt{leanchecker} replay, and zero computational trust escapes.
+\end{abstract}
+
+\section{Introduction, Primary Sources, and Prior-Art Boundary}
+
+\subsection{Wolfram's Rule 23 on \texorpdfstring{$\Z$}{Z} and OEIS \texorpdfstring{\seq{A266437}}{A266437}}
+
+In Stephen Wolfram's classification of one-dimensional, radius-$1$, two-state elementary cellular automata (ECAs)~\cite{wolfram2002}, a configuration $\ca(n, \cdot) : \Z \to \{0, 1\}$ ($0 = \bfalse =$ OFF/white, $1 = \btrue =$ ON/black) advances synchronously to generation $n + 1$ by reading each cell's three-cell neighborhood $(l, c, r) = (\ca(n, j - 1), \ca(n, j), \ca(n, j + 1))$ and looking up bit $\mathrm{idx}(l, c, r) = 4l + 2c + r \in \{0, \dots, 7\}$ of the $8$-bit Wolfram rule code. For \textbf{Rule~23} ($23 = 16 + 4 + 2 + 1 = 0\mathrm{b}00010111$), the output is $1$ on indices $\{0, 1, 2, 4\}$ and $0$ on indices $\{3, 5, 6, 7\}$ (Table~\ref{tab:rule23}), i.e., negated three-input majority (outputting $\btrue$ if and only if at most one of $l, c, r$ is $\btrue$):
+\begin{equation}
+\label{eq:rule23}
+\ruleTwoThree(l, c, r) := (\neg l \land \neg c \land \neg r) \lor (\neg l \land \neg c \land r) \lor (\neg l \land c \land \neg r) \lor (l \land \neg c \land \neg r).
+\end{equation}
+
+\begin{table}[ht]
+\centering
+\caption{Wolfram ECA Rule~23 ($23 = 0\mathrm{b}00010111$) truth table with neighborhood $(l, c, r) = (\ca(n, j - 1), \ca(n, j), \ca(n, j + 1))$, Hamming weight $w = l + c + r$, and Wolfram index $\mathrm{idx} = 4l + 2c + r$.}
+\label{tab:rule23}
+\smallskip
+{\small
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$(l, c, r)$ (\texttt{Bool}) & $(l, c, r)$ ($0/1$) & Weight $w$ & $\mathrm{idx}$ & Bit $\mathrm{idx}$ of $23$ & $\ruleTwoThree(l, c, r)$ \\
+\midrule
+$(\btrue, \btrue, \btrue)$   & $(1, 1, 1)$ & $3$ & $7$ & $0$ & $\bfalse$ \\
+$(\btrue, \btrue, \bfalse)$  & $(1, 1, 0)$ & $2$ & $6$ & $0$ & $\bfalse$ \\
+$(\btrue, \bfalse, \btrue)$  & $(1, 0, 1)$ & $2$ & $5$ & $0$ & $\bfalse$ \\
+$(\btrue, \bfalse, \bfalse)$ & $(1, 0, 0)$ & $1$ & $4$ & $1$ & $\btrue$  \\
+$(\bfalse, \btrue, \btrue)$  & $(0, 1, 1)$ & $2$ & $3$ & $0$ & $\bfalse$ \\
+$(\bfalse, \btrue, \bfalse)$ & $(0, 1, 0)$ & $1$ & $2$ & $1$ & $\btrue$  \\
+$(\bfalse, \bfalse, \btrue)$ & $(0, 0, 1)$ & $1$ & $1$ & $1$ & $\btrue$  \\
+$(\bfalse, \bfalse, \bfalse)$& $(0, 0, 0)$ & $0$ & $0$ & $1$ & $\btrue$  \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+In his systematic 2015 census of ON-cell counts in cellular automata~\cite{sloane2015}, N.~J.~A.\ Sloane restricted attention to rules leaving the all-zero background quiescent ($(0, 0, 0) \mapsto 0$), explicitly setting aside rules in which infinitely many cells turn ON at some generation~\cite[\S6.1]{sloane2015}. Rule~23 lies outside that census because $(0, 0, 0) \mapsto 1$ and $(1, 1, 1) \mapsto 0$ force the infinite exterior $|j| > n$ to alternate globally between $0$ and $1$. To assign canonical integer sequences to such rules, Robert Price introduced a coordinated family of OEIS entries in December~2015 (\seq{A266434}--\seq{A266440} for Rule~23)~\cite{oeis266437,oeis266439,oeis266434}, defined by evolving the automaton on all of $\Z$ from a single ON cell at $j = 0$ and then truncating generation $n$ to the active light-cone window $[-n, n]$ of width $2n + 1$:
+\begin{quote}\small\ttfamily
+rule=23; rows=20; ca=CellularAutomaton[rule,\{\{1\},0\},rows-1,\{All,All\}];\\
+catri=Table[Take[ca[[k]],\{rows-k+1,rows+k-1\}],\{k,1,rows\}];\\
+Table[Total[catri[[k]]],\{k,1,rows\}]
+\end{quote}
+Entry OEIS \seq{A266437} records the resulting ON-cell count $a(n)$ at offset $0$ (\texttt{\%O A266437 0,2}), beginning
+\[
+(a(n))_{n \ge 0} = (1, 3, 0, 7, 0, 11, 0, 15, 0, 19, 0, 23, 0, 27, 0, 31, \dots).
+\]
+On December~29--30, 2015 and April~15, 2019, Michael De Vlieger and Colin Barker posted the following empirical generating function and conjecture bundle on \seq{A266437} (\texttt{\%F} lines 16--20, live revision \#30 dated February~16, 2025~\cite{oeis266437}):
+\begin{quote}\itshape
+Empirical g.f.\ (Michael De Vlieger, Dec 29 2015) and Conjectures from Colin Barker (Dec 30 2015 and Apr 15 2019):
+\begin{enumerate}
+\item $a(n) = \tfrac{1}{2}(1 - (-1)^n)(2n + 1)$ for $n > 0$.
+\item $a(n) = 2a(n - 2) - a(n - 4)$ for $n > 4$.
+\item $\mathrm{G.f.:}\; \dfrac{1 + 3x - 2x^2 + x^3 + x^4}{(-1 + x^2)^2}$.
+\end{enumerate}
+\end{quote}
+
+Table~\ref{tab:small-n} summarizes generations $n = 0, \dots, 6$, showing the truncated light-cone rows matching \seq{A266434}, the ON count $a(n) = \seq{A266437}(n)$, the complementary OFF count $a_{\mathrm{OFF}}(n) = \seq{A266439}(n)$, and the exact boundary where both index guards engage.
+
+\begin{table}[ht]
+\centering
+\caption{Generations $n = 0, \dots, 6$ of Rule~23 on $[-n, n]$: row state (\seq{A266434}), ON count $a(n)$ (\seq{A266437}), OFF count $a_{\mathrm{OFF}}(n)$ (\seq{A266439}), closed-form evaluation, and $4$-step recurrence evaluation in $\Z$.}
+\label{tab:small-n}
+\smallskip
+{\small
+\begin{tabular}{@{}r l r r c c@{}}
+\toprule
+$n$ & Window $[-n, n]$ ($0$/$1$) & $a(n)$ & $a_{\mathrm{OFF}}(n)$ & $\frac{1}{2}(1-(-1)^n)(2n+1)$ & $2a(n-2)-a(n-4)$ \\
+\midrule
+$0$ & \texttt{1} & $1$ & $0$ & $0$ (fails; $n = 0$) & --- \\
+$1$ & \texttt{1 1 1} & $3$ & $0$ & $3$ (holds) & --- \\
+$2$ & \texttt{0 0 0 0 0} & $0$ & $5$ & $0$ (holds) & --- \\
+$3$ & \texttt{1 1 1 1 1 1 1} & $7$ & $0$ & $7$ (holds) & --- \\
+$4$ & \texttt{0 0 0 0 0 0 0 0 0} & $0$ & $9$ & $0$ (holds) & $-1$ (fails; $n = 4$) \\
+$5$ & \texttt{1 1 1 1 1 1 1 1 1 1 1} & $11$ & $0$ & $11$ (holds) & $11$ (holds) \\
+$6$ & $\mathtt{0}^{13}$ & $0$ & $13$ & $0$ (holds) & $0$ (holds) \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\subsection{Convention Audit and Formalization Pitfalls}
+\label{sec:conventions}
+
+Faithful formalization of \seq{A266437} requires resolving five semantic details frozen in \texttt{PIN-C057.md} (v1):
+\begin{enumerate}
+\item \textbf{Seed and offset ($n = 0$):} Offset $0$ gives $\ca(0, j) = \mathrm{decide}(j = 0)$ on $\Z$, so $a(0) = 1$ on $[0, 0]$. Because Barker's closed form applies only for $n > 0$ (giving $0 \ne 1$ at $n = 0$) while the generating function depends on the full sequence from $n = 0$, $a(0) = 1$ is pinned explicitly as \texttt{a\_zero}.
+\item \textbf{Evolve-on-$\Z$-first semantics vs.\ the zero-padding trap:} Mathematica's \texttt{\{All, All\}} mode in \texttt{CellularAutomaton[23, \{\{1\}, 0\}, rows-1, \{All, All\}]} evolves on the full integer lattice $\Z$ (where $|j| > n$ flips globally at every step) and restricts to $[-n, n]$ only inside the count $a(n)$. Resetting cells outside $[-n, n]$ to $0$ at each step is \emph{wrong}: at $n = 1$ the window is \texttt{1 1 1}, and at $n = 2$ clamping $|j| > 1$ to $0$ exposes sites $j = -2$ and $j = +2$ to $(0, 0, 1) \mapsto 1$ and $(1, 0, 0) \mapsto 1$, giving row \texttt{1 0 0 0 1} and ON count $2 \ne 0$. Section~\ref{sec:trap} formalizes this separation inside Lean's kernel.
+\item \textbf{Sharpness of index guards and the $\N$-subtraction trap:} The closed form fails at $n = 0$ ($2a(0) = 2 \ne 0$), making $n > 0$ sharp. The $4$-step recurrence fails at $n = 4$ because $a(4) = 0$ whereas $2a(2) - a(0) = 0 - 1 = -1$ in $\Z$, making $n > 4$ sharp. Stating the recurrence over $\N$ with saturating subtraction would silently evaluate $(2 \cdot 0 - 1 : \N) = 0 = a(4)$ and mask the $n = 4$ failure; casting the recurrence into $\Z$ prevents this trap.
+\item \textbf{Exact algebraic normalizations:} Clearing $/2$ in $(a(n) : \Z) \cdot 2 = (1 - (-1)^n)(2n + 1)$ avoids Euclidean division truncation while proving exact evenness of the right-hand side. In $\Q\llbracket X \rrbracket$, De Vlieger's denominator $(-1 + X^2)^2$ equals $(1 - X)^2(1 + X)^2 = 1 - 2X^2 + X^4$ identically (no sign flip on the numerator), $\gcd(1 + 3x - 2x^2 + x^3 + x^4, (1 - x)^2(1 + x)^2) = 1$ in $\Q[x]$ (since $P(1) = 4$ and $P(-1) = -4$), and $\mathrm{constantCoeff}(Q) = 1 \in \Q^\times$, making $Q(X)$ a unit in $\Q\llbracket X \rrbracket$.
+\item \textbf{Self-contained scope:} Cross-sequence equalities such as $a(n) = \seq{A266220}(n)$ ($n > 1$, noted by R.~J.\ Mathar) and $a(n) = 2n + 1 - \seq{A266439}(n)$ are kept out of the pinned contract so \texttt{MathProofs/SeamB/C057/Solution.lean} has zero cross-module sequence dependencies, while the self-contained complement law $a(n) + a_{\mathrm{OFF}}(n) = 2n + 1$ is proved directly inside \texttt{namespace A266437}.
+\end{enumerate}
+
+\subsection{Prior-Art Boundary}
+
+Comprehensive literature and database audits conducted on 14~November~2026 (scoping lane) and re-verified live on 24~November~2026 across live Google web search, Firecrawl SERPs, OEIS (\seq{A266437} revision \#30 and all seven ON/OFF ECA siblings \seq{A266439}, \seq{A266220}, \seq{A266222}, \seq{A266256}, \seq{A266258}, \seq{A266662}, \seq{A266664}, all unchanged since February~16, 2025), arXiv live search (including full TeX inspection of \texttt{arXiv:1503.01168v1} and \texttt{arXiv:2603.27799}), OpenAlex, Zenodo, Crossref, and GitHub code search establish the exact prior-art boundary:
+\begin{itemize}
+\item \textbf{Unproved on OEIS and in the literature:} Entry \seq{A266437} retains the explicit headings \texttt{Empirical g.f.} (De Vlieger) and \texttt{Conjectures from \_Colin Barker\_}, and zero preprints on arXiv, OpenAlex, Zenodo, or Crossref mention \seq{A266437} or prove its single-seed ON-cell count formulas. Sloane~\cite{sloane2015} explicitly omits $(0, 0, 0) \mapsto 1$ rules, and Mu\~noz--Nu\~no (\texttt{arXiv:2603.27799}) study probabilistic mixtures of Rules~23, 77, 178, and 232 on finite cyclic rings from random initial density~$0.5$.
+\item \textbf{Adjacent non-proof computational artifacts:} In \nolinkurl{provables/sequencelib}~\cite{sequencelib}, the synthetic entry \nolinkurl{Sequencelib/Synthetic/A266/A266437.lean} transcribes an AAAI-23 program-synthesis arithmetic loop (\texttt{loop2}) checked finitely on $n \le 100$ without defining Rule~23 or cellular automata and without proving Barker's or De Vlieger's formulas. Similarly, \nolinkurl{pb/A266437.smt2} in \nolinkurl{ai4reason/oeis-atp-benchmark}~\cite{oeisatp} poses a UFNIA SMT equivalence between two synthesized arithmetic loops matching the first $100$ terms, again with zero cellular-automaton semantics. On the distinct binary/decimal row-encoding entries \seq{A266435} and \seq{A266436}, Karl~V.\ Keller, Jr.\ contributed unproved parity formulas in July--August~2021 without accompanying proof or paper citation.
+\item \textbf{Companion ECA formalizations in this repository:} Sibling Seam~B entries in \texttt{derekblair/math-proofs} formalize Rule~7 OFF (\seq{A266222}, \texttt{C050}), Rule~7 ON (\seq{A266220}, \texttt{C056}), and Rule~23 OFF (\seq{A266439}, \texttt{C051}, draft PR~\#37). The present work provides a completely standalone formalization of \seq{A266437} (\texttt{C057}) from first principles with zero cross-module dependency on any sibling entry.
+\end{itemize}
+
+\subsection{Main Results}
+
+\begin{theorem}[Main Theorem --- Pinned \texttt{C057} Bundle]
+\label{thm:main}
+Let $\ruleTwoThree$, $\ca : \N \to \Z \to \{\bfalse, \btrue\}$, and $a : \N \to \N$ be defined by~\eqref{eq:rule23},
+\[
+\ca(0, j) := \mathrm{decide}(j = 0), \qquad \ca(n + 1, j) := \ruleTwoThree(\ca(n, j - 1), \ca(n, j), \ca(n, j + 1)),
+\]
+and $a(n) := \#\{j \in \Z : -n \le j \le n \text{ and } \ca(n, j) = \btrue\}$. Then:
+\begin{enumerate}
+\item[\textup{(0)}] \textbf{Initial value:} $a(0) = 1$.
+\item[\textup{(1)}] \textbf{Closed form:} For every $n \in \N$ with $n > 0$,
+\[
+2\,a(n) = \bigl(1 - (-1)^n\bigr)(2n + 1) \qquad \text{in } \Z.
+\]
+\item[\textup{(2)}] \textbf{Four-step recurrence:} For every $n \in \N$ with $n > 4$,
+\[
+a(n) = 2\,a(n - 2) - a(n - 4) \qquad \text{in } \Z.
+\]
+\item[\textup{(3)}] \textbf{Rational ordinary generating function:} In $\Q\llbracket X \rrbracket$,
+\[
+\bigl((1 - X)^2(1 + X)^2\bigr)\sum_{n=0}^{\infty} a(n)\,X^n = 1 + 3X - 2X^2 + X^3 + X^4,
+\]
+where $(-1 + X^2)^2 = (1 - X)^2(1 + X)^2 =: Q(X)$ is a unit in $\Q\llbracket X \rrbracket$, so equivalently $\sum_{n=0}^{\infty} a(n)\,X^n = (1 + 3X - 2X^2 + X^3 + X^4)\,Q(X)^{-1}$.
+\end{enumerate}
+\end{theorem}
+
+\section{One-Step Global Uniformity and the Eight-Rule Equivalence Class}
+
+\begin{lemma}[Bitmask agreement, negated majority, reflection symmetry, and uniform flip]
+\label{lem:rule23}
+For all $l, c, r, b \in \{\bfalse, \btrue\}$:
+\begin{enumerate}
+\item[\textup{(a)}] $\ruleTwoThree(l, c, r) = \mathrm{testBit}(23,\, 4\,l.\mathrm{toNat} + 2\,c.\mathrm{toNat} + r.\mathrm{toNat})$.
+\item[\textup{(b)}] $\ruleTwoThree(l, c, r) = \mathrm{decide}(l.\mathrm{toNat} + c.\mathrm{toNat} + r.\mathrm{toNat} \le 1)$.
+\item[\textup{(c)}] $\ruleTwoThree(l, c, r) = \ruleTwoThree(r, c, l)$ (amphichiral symmetry).
+\item[\textup{(d)}] $\ruleTwoThree(b, b, b) = \neg b$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Each identity holds by exhaustive check over the $2^3 = 8$ triples $(l, c, r) \in \{\bfalse, \btrue\}^3$ (Table~\ref{tab:rule23}) and $2$ values $b \in \{\bfalse, \btrue\}$.
+\end{proof}
+
+\begin{proposition}[Base count and one-step global uniformity on $\Z$]
+\label{prop:early}
+\leavevmode
+\begin{enumerate}
+\item[\textup{(a)}] $a(0) = 1$.
+\item[\textup{(b)}] For every $j \in \Z$, $\ca(1, j) = \btrue$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) At $n = 0$, $[-0, 0] \cap \Z = \{0\}$ and $\ca(0, 0) = \mathrm{decide}(0 = 0) = \btrue$, so $\{j \in \{0\} : \ca(0, j) = \btrue\} = \{0\}$ has cardinality $1$.
+
+(b) Fix $j \in \Z$. By definition, $\ca(1, j) = \ruleTwoThree(\mathrm{decide}(j - 1 = 0), \mathrm{decide}(j = 0), \mathrm{decide}(j + 1 = 0))$. Partition $\Z$ into five disjoint linear-arithmetic cases:
+\begin{itemize}
+\item $j \le -2$ or $j \ge 2$: none of $j - 1, j, j + 1$ equals $0$, so $(l, c, r) = (\bfalse, \bfalse, \bfalse)$ (bit~$0$) $\mapsto \btrue$.
+\item $j = -1$: $(l, c, r) = (\bfalse, \bfalse, \btrue)$ (bit~$1$) $\mapsto \btrue$.
+\item $j = 0$: $(l, c, r) = (\bfalse, \btrue, \bfalse)$ (bit~$2$) $\mapsto \btrue$.
+\item $j = 1$: $(l, c, r) = (\btrue, \bfalse, \bfalse)$ (bit~$4$) $\mapsto \btrue$.
+\end{itemize}
+Conceptually, because $\ca(0, \cdot)$ is $\btrue$ at the single site $j = 0$, every three-cell neighborhood has Hamming weight $0$ or $1$, so Lemma~\ref{lem:rule23}(b) returns $\btrue$ everywhere on $\Z$.
+\end{proof}
+
+\begin{theorem}[Spatially constant parity invariant for $n \ge 1$]
+\label{thm:invariant}
+For every $n \in \N$ with $n \ge 1$ and every $j \in \Z$,
+\[
+\ca(n, j) = \mathrm{decide}(\mathrm{Odd}\; n).
+\]
+\end{theorem}
+
+\begin{proof}
+Write $n = k + 1$ ($k \in \N$) and induct on $k$ with $\forall j \in \Z$ inside the induction hypothesis.
+\begin{itemize}
+\item \emph{Base ($k = 0$, $n = 1$):} $\mathrm{Odd}(1)$ holds, so $\mathrm{decide}(\mathrm{Odd}\; 1) = \btrue = \ca(1, j)$ for all $j \in \Z$ by Proposition~\ref{prop:early}(b).
+\item \emph{Step ($k \mapsto k + 1$, writing $m := k + 1$):} Assume $\ca(m, i) = \mathrm{decide}(\mathrm{Odd}\; m)$ for every $i \in \Z$. Applying the induction hypothesis at $i = j - 1, j, j + 1$ and Lemma~\ref{lem:rule23}(d) gives
+\[
+\ca(m + 1, j) = \ruleTwoThree(b, b, b) = \neg b, \qquad b := \mathrm{decide}(\mathrm{Odd}\; m).
+\]
+If $m$ is even, then $b = \bfalse$ and $\mathrm{Odd}(m + 1)$ holds, so $\neg b = \btrue = \mathrm{decide}(\mathrm{Odd}(m + 1))$. If $m$ is odd, then $b = \btrue$ and $\neg\mathrm{Odd}(m + 1)$ holds, so $\neg b = \bfalse = \mathrm{decide}(\mathrm{Odd}(m + 1))$. \qedhere
+\end{itemize}
+\end{proof}
+
+Notice that Theorem~\ref{thm:invariant} fails at $(n, j) = (0, 0)$ ($\ca(0, 0) = \btrue \ne \bfalse = \mathrm{decide}(\mathrm{Odd}\; 0)$), so $n \ge 1$ is sharp. Compared to Rule~7 (\seq{A266220}/\seq{A266222}), where bit~$4$ is $0$ and creates a transient OFF defect at $(n, j) = (1, 1)$ that is only annihilated at $n = 2$, Rule~23 has bit~$4 = 1$ and achieves global uniformity one generation earlier.
+
+\begin{proposition}[Weight-$2$ neighborhood avoidance and the eight-rule equivalence class]
+\label{prop:equiv-class}
+Let $\ca_{\mathrm{code}} : \N \to \Z \to \{\bfalse, \btrue\}$ denote the $\Z$-evolution from $\ca_{\mathrm{code}}(0, j) = \mathrm{decide}(j = 0)$ under an arbitrary Wolfram ECA code $\mathrm{code} \in \N$. Whenever $\mathrm{code}$ matches Rule~23 on bits $\{0, 1, 2, 4, 7\}$---that is, $\mathrm{testBit}(\mathrm{code}, i) = \btrue$ for $i \in \{0, 1, 2, 4\}$ and $\mathrm{testBit}(\mathrm{code}, 7) = \bfalse$---we have $\ca_{\mathrm{code}}(n, j) = \ca(n, j)$ for all $n \in \N$ and $j \in \Z$. In particular, all eight rules
+\[
+\mathrm{code} \in \{23, 31, 55, 63, 87, 95, 119, 127\}
+\]
+generate the exact same spacetime lattice (\seq{A266434}) and ON-cell count sequence (\seq{A266437}).
+\end{proposition}
+
+\begin{proof}
+Induct on $n$. For $n = 0$, both evolutions equal $\mathrm{decide}(j = 0)$. From $n = 0$ to $n = 1$, the proof of Proposition~\ref{prop:early}(b) shows every neighborhood $(j - 1, j, j + 1)$ has index in $\{0, 1, 2, 4\}$, where $\mathrm{code}$ and Rule~23 agree. For $n = m + 1 \ge 1$, Theorem~\ref{thm:invariant} shows $\ca(m + 1, \cdot)$ is spatially constant on $\Z$, so every neighborhood at step $m + 1 \to m + 2$ is either $(0, 0, 0)$ (index~$0$) or $(1, 1, 1)$ (index~$7$), where $\mathrm{code}$ and Rule~23 again agree. Weight-$2$ neighborhoods (indices $3, 5, 6$) never occur; varying those three bits freely yields the $2^3 = 8$ codes $23 + 8\alpha + 32\beta + 64\gamma$ ($\alpha, \beta, \gamma \in \{0, 1\}$), namely $\{23, 31, 55, 63, 87, 95, 119, 127\}$.
+\end{proof}
+
+\section{Window Counting, Closed Form, and Recurrence}
+
+\begin{proposition}[Parity counts and ON/OFF complement law]
+\label{prop:counts}
+\leavevmode
+\begin{enumerate}
+\item[\textup{(a)}] For every odd $n \in \N$, $a(n) = 2n + 1$; equivalently, $a(2m + 1) = 4m + 3$ for all $m \ge 0$. For every positive even $n \ge 1$, $a(n) = 0$; equivalently, $a(2m) = 0$ for all $m \ge 1$ (giving $a(1) = 3$, $a(2) = 0$, $a(3) = 7$, $a(4) = 0$).
+\item[\textup{(b)}] Defining $a_{\mathrm{OFF}}(n) := \#\{j \in [-n, n] \cap \Z : \neg\ca(n, j)\}$ (which coincides definitionally with \seq{A266439}), we have $a(n) + a_{\mathrm{OFF}}(n) = 2n + 1$ for every $n \in \N$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For every $n \in \N$, the integer interval $[-n, n] \cap \Z$ has cardinality $n + 1 - (-n) = 2n + 1$.
+(a) If $n$ is odd, then $n \ge 1$ and Theorem~\ref{thm:invariant} gives $\ca(n, j) = \btrue$ for every $j \in [-n, n]$, so every cell passes the filter and $a(n) = \#([-n, n] \cap \Z) = 2n + 1$. If $n \ge 1$ is even, then Theorem~\ref{thm:invariant} gives $\ca(n, j) = \bfalse$ for every $j \in [-n, n]$, so the ON-filtered finset is empty and $a(n) = 0$.
+(b) For every $j \in [-n, n] \cap \Z$, $(\neg\ca(n, j)) = \btrue \iff \neg(\ca(n, j) = \btrue)$, so partitioning $[-n, n] \cap \Z$ by $\ca(n, j) = \btrue$ and its negation yields $a(n) + a_{\mathrm{OFF}}(n) = 2n + 1$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}(0)--(2)]
+Part~(0) is Proposition~\ref{prop:early}(a).
+
+\emph{Part~(1) (Closed form, $n > 0$):} Let $n \ge 1$.
+\begin{itemize}
+\item If $n = 2m$ ($m \ge 1$), then $a(n) = 0$ by Proposition~\ref{prop:counts}(a) and $(-1)^{2m} = 1$, so $2a(n) = 0 = (1 - 1)(2n + 1) = (1 - (-1)^n)(2n + 1)$.
+\item If $n = 2m + 1$ ($m \ge 0$), then $a(n) = 2n + 1$ by Proposition~\ref{prop:counts}(a) and $(-1)^{2m+1} = -1$, so $2a(n) = 2(2n + 1) = (1 - (-1))(2n + 1) = (1 - (-1)^n)(2n + 1)$.
+\end{itemize}
+
+\emph{Part~(2) (Four-step recurrence, $n > 4$):} Let $n \ge 5$. Then $n > 0$, $n - 2 \ge 3 > 0$, and $n - 4 \ge 1 > 0$ with exact subtraction in $\N$, and $(-1)^n = (-1)^{n-2} = (-1)^{n-4}$. Applying Part~(1) at $n$, $n - 2$, and $n - 4$ in $\Z$ gives
+\begin{align*}
+2\bigl(a(n) - (2a(n - 2) - a(n - 4))\bigr)
+&= 2a(n) - 2\bigl(2a(n - 2)\bigr) + 2a(n - 4) \\
+&= \bigl(1 - (-1)^{n-4}\bigr)\Bigl((2n + 1) - 2\bigl(2(n - 2) + 1\bigr) + \bigl(2(n - 4) + 1\bigr)\Bigr) \\
+&= \bigl(1 - (-1)^{n-4}\bigr)\cdot 0 = 0.
+\end{align*}
+Since $\Z$ is torsion-free, cancelling $2$ gives $a(n) = 2a(n - 2) - a(n - 4)$.
+\end{proof}
+
+\begin{remark}[Exactness of the index guards $n > 0$ and $n > 4$]
+Both guards are sharp and cannot be relaxed even by one index:
+\begin{itemize}
+\item At $n = 0$: $2a(0) = 2 \ne 0 = (1 - (-1)^0)(2\cdot 0 + 1)$ (\texttt{a\_closed\_form\_false\_zero}).
+\item At $n = 4$: $a(4) = 0 \ne -1 = 2a(2) - a(0)$ in $\Z$ (\texttt{a\_recurrence\_false\_four}), where the $-1$ residual directly produces the $+X^4$ term in the generating function numerator. In Lean~4, omitting the cast to $\Z$ would evaluate $(2 \cdot a(2) - a(0) : \N) = 0 = a(4)$ by saturating subtraction, silently hiding this boundary failure.
+\end{itemize}
+\end{remark}
+
+\section{Coefficient-Wise Proof of the Formal Generating Function}
+
+Let $F := \sum_{n=0}^{\infty} (a(n) : \Q)\,X^n \in \Q\llbracket X \rrbracket$, and define the polynomials
+\[
+Q(X) := (1 - X)^2 (1 + X)^2, \qquad P(X) := 1 + 3X - 2X^2 + X^3 + X^4 \in \Q\llbracket X \rrbracket.
+\]
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}(3)]
+In the commutative ring $\Q\llbracket X \rrbracket$, De Vlieger's denominator satisfies $(-1 + X^2)^2 = (1 - X^2)^2 = (1 - X)^2(1 + X)^2 = Q(X)$ (\texttt{a\_gf\_denom\_eq\_devlieger}), and expanding the product yields
+\[
+Q(X)\,F = (1 - 2X^2 + X^4)\,F = F - 2\,(X^2 F) + X^4 F.
+\]
+By formal power series extensionality (\texttt{PowerSeries.ext}), $Q(X)\,F = P(X)$ holds if and only if $[X^n](Q(X)\,F) = [X^n]P(X)$ for every $n \in \N$. Using linearity of $[X^n]$ and the shift rule $[X^n](X^d F) = \mathbf{1}_{d \le n}\,[X^{n - d}]F$, this coefficient identity reads
+\begin{equation}
+\label{eq:coeff-goal}
+a(n) - 2\cdot\mathbf{1}_{2 \le n}\,a(n - 2) + \mathbf{1}_{4 \le n}\,a(n - 4) = [X^n]P(X) \qquad \text{in } \Q.
+\end{equation}
+\begin{enumerate}
+\item \emph{Initial transient ($n = 0, \dots, 4$):} Substituting $a(0) = 1$, $a(1) = 3$, $a(2) = 0$, $a(3) = 7$, $a(4) = 0$ (Proposition~\ref{prop:early} and Proposition~\ref{prop:counts}(a)) verifies all five degrees directly in $\Q$ (Table~\ref{tab:gf-transient}).
+\item \emph{Recurrence tail ($n = k + 5 \ge 5$):} Here $2 \le k + 5$, $4 \le k + 5$, and $k + 5 \notin \{0, 1, 2, 3, 4\}$, so $[X^{k+5}]P(X) = 0$, while Theorem~\ref{thm:main}(2) at $n = k + 5 > 4$ cast from $\Z$ to $\Q$ yields $a(k + 5) - 2a(k + 3) + a(k + 1) = 0$.
+\end{enumerate}
+Finally, $\mathrm{constantCoeff}(Q) = (1 - 0)^2(1 + 0)^2 = 1 \in \Q^\times$, so $Q(X)$ is a unit in $\Q\llbracket X \rrbracket$ (\texttt{a\_gf\_denom\_isUnit}). Multiplying $Q(X)\,F = P(X)$ on the right by $Q(X)^{-1}$ yields the equivalent inverse form $F = P(X)\,Q(X)^{-1}$ (\texttt{a\_gf\_unit\_inv}).
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\caption{Degree-by-degree verification of $[X^n](Q(X)\,F) = [X^n]P(X)$ on the transient $n = 0, \dots, 4$.}
+\label{tab:gf-transient}
+\smallskip
+{\small
+\begin{tabular}{@{}r l c r l@{}}
+\toprule
+$n$ & LHS $[X^n](Q(X)\,F)$ & Evaluation & $[X^n]P(X)$ & Origin \\
+\midrule
+$0$ & $a(0)$ & $1$ & $+1$ & Seed $a(0) = 1$ \\
+$1$ & $a(1)$ & $3$ & $+3$ & Uniform row $a(1) = 3$ \\
+$2$ & $a(2) - 2a(0)$ & $0 - 2 = -2$ & $-2$ & First even flip $a(2) = 0$ \\
+$3$ & $a(3) - 2a(1)$ & $7 - 6 = 1$ & $+1$ & Second odd row $a(3) = 7$ \\
+$4$ & $a(4) - 2a(2) + a(0)$ & $0 - 0 + 1 = 1$ & $+1$ & Recurrence residual at $n = 4$ ($0 - (-1)$) \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\begin{remark}[Algebraic cross-check with \seq{A266439}]
+Adding our numerator $P(X) = 1 + 3X - 2X^2 + X^3 + X^4$ to the complementary \seq{A266439} numerator $X^2(5 - X^2) = 5X^2 - X^4$ gives $1 + 3X + 3X^2 + X^3 = (1 + X)^3$, so
+\[
+\frac{P(X) + X^2(5 - X^2)}{(1 - X)^2(1 + X)^2} = \frac{(1 + X)^3}{(1 - X)^2(1 + X)^2} = \frac{1 + X}{(1 - X)^2} = \sum_{n=0}^{\infty} (2n + 1) X^n,
+\]
+confirming Proposition~\ref{prop:counts}(b) at the level of formal power series.
+\end{remark}
+
+\section{Causal-Cone Mirror and Formalization of the Zero-Padding Trap}
+\label{sec:trap}
+
+Direct evaluation of $\ca(n, j)$ from its unmemoized recursive definition triggers $3^n$ recursive calls per cell, and \texttt{Finset.Icc} / \texttt{Finset.filter} over $\Z$ in Mathlib depends on \texttt{Classical.choice} and \texttt{Quot.sound}, preventing direct kernel \texttt{rfl} reduction on $a(n)$. To provide non-vacuity checks inside Lean's kernel without computational trust escapes, we formalize a polynomial-time ($O(n^2)$) shrinking causal-cone mirror \texttt{a\_dp}:
+\begin{itemize}
+\item Initialize the length-$(4n + 1)$ Boolean list $\mathrm{initCone}(n) = \bfalse^{2n} \mathbin{\Vert} [\btrue] \mathbin{\Vert} \bfalse^{2n}$, proved equal to the specification slice $[\ca(0, -2n), \dots, \ca(0, 2n)]$ (\texttt{initCone\_eq\_caRow}).
+\item Iterate the sliding $3$-window contraction $\mathrm{coneStep}$ exactly $n$ times, reducing length by $2$ per step (\texttt{coneIter\_caRow}) to yield $[\ca(n, -n), \dots, \ca(n, n)]$ of length $2n + 1$, and count $\btrue$ entries (\texttt{filter\_caRow\_length}).
+\end{itemize}
+This yields the formal theorem $\forall n \in \N,\ \mathtt{a\_dp}\; n = a(n)$ (\texttt{a\_dp\_eq\_a}). Pure kernel \texttt{rfl} then evaluates $(\mathtt{List.range}\; 13).\mathtt{map}\; \mathtt{a\_dp} = [1, 3, 0, 7, 0, 11, 0, 15, 0, 19, 0, 23, 0]$ (\texttt{a\_dp\_spot\_0\_to\_12}), transferring immediately to the pinned $a$ (\texttt{a\_spot\_0\_to\_12}).
+
+In parallel, we formalize the erroneous growing-window zero-padded operator $\ca_{\mathrm{zp}}$ (\texttt{caZeroPad}) that forces cells outside $[-m, m]$ to $\bfalse$ at every generation $m$, together with its ON-cell count $a_{\mathrm{zp}}(n)$ (\texttt{aZeroPad}). Pure kernel reduction verifies \texttt{aZeroPad\_two\_eq\_two}: $a_{\mathrm{zp}}(2) = 2 \ne 0 = a(2)$, confirming formally that per-step zero-padding produces window \texttt{1 0 0 0 1} ($2$ ON cells) at $n = 2$ instead of the true all-OFF row ($0$ ON cells).
+
+\section{Lean 4 Formalization and Verification Record}
+
+The formalization resides in the repository \texttt{derekblair/math-proofs} under Lean~\texttt{v4.34.1} (\nolinkurl{leanprover/lean4:v4.34.1}) and Mathlib revision {\small\nolinkurl{d13f23b723b8a846827a245b89c10fc7d3f11612}}:
+\begin{itemize}
+\item \nolinkurl{MathProofs/SeamB/C057/Statement.lean} (48 lines; SHA-256:\\
+{\small\nolinkurl{8c24bbd7f3d1921f9485c189ddca7996b91ef50084e956c503712746802ff1b4}}):\\
+transcribed verbatim from the frozen manifest \texttt{PIN-C057.md} v1 (\texttt{delta\_vs\_source: NONE}): full-file SHA-256\\
+{\small\nolinkurl{fd1ba2551dcd430f6745e899ae570414a2f12060f958a0b5ae1dc2d7c8bd8378}},\\
+embedded Lean block SHA-256\\
+{\small\nolinkurl{0dc4e4f77401a170b7a04efe7f20a9c065c957082570b3b84dbc0b390e805d05}}.\\
+In accordance with the live repository's Seam~B directory convention (superseding the pre-Seam-B path \nolinkurl{Mathproofs/A266437Rule23On.lean} in \texttt{PIN-C057.md}), the files live under \nolinkurl{MathProofs/SeamB/C057/} while preserving \texttt{namespace A266437} and all pinned names, definitions, and theorem signatures byte-for-byte.
+\item \nolinkurl{MathProofs/SeamB/C057/Solution.lean} (602 lines; SHA-256:\\
+{\small\nolinkurl{a00209ac55fcd60cd97ba524e10cfaf16fe56de6d2a098526b518adf82495c10}}):\\
+contains the verbatim definitions (\texttt{rule23}, \texttt{ca}, \texttt{a}) and all four pinned theorem signatures (\texttt{a\_zero}, \texttt{a\_closed\_form}, \texttt{a\_recurrence}, \texttt{a\_gf}) inside \texttt{namespace A266437}, proved with zero \texttt{sorry}s, zero warnings, and allowlist-only axioms, plus the bundle conjunction (\texttt{c057\_a266437\_bundle}), De Vlieger denominator equality, unit-invertibility equivalence, ON/OFF complement law, eight-rule equivalence class, causal-cone mirror, guard-sharpness theorems, and zero-padding separation.
+\item \nolinkurl{Mathproofs.lean} (94 lines; SHA-256:\\
+{\small\nolinkurl{9d80feace56a73a030d851669fde7b2f0ab13a324e3d09d8e4aa8b095b11a87f}}):\\
+registers \texttt{import MathProofs.SeamB.C057.Solution}.
+\end{itemize}
+
+Table~\ref{tab:lean-map} maps each mathematical result in this paper to its verified Lean~4 declaration in \texttt{namespace A266437}.
+
+\begin{table}[ht]
+\centering
+\caption{Correspondence between paper results and verified Lean~4 declarations in \nolinkurl{MathProofs/SeamB/C057/Solution.lean} (\texttt{namespace A266437}).}
+\label{tab:lean-map}
+\smallskip
+{\small
+\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{6.5cm} >{\raggedright\arraybackslash}p{4.3cm}@{}}
+\toprule
+Paper Result & Lean~4 Declaration(s) & Status / Axioms \\
+\midrule
+Definitions~\eqref{eq:rule23}, $\ca$, $a$ & \texttt{rule23}, \texttt{ca}, \texttt{a} (pinned) & $0$ axioms (\texttt{rule23}, \texttt{ca}); allowlist (\texttt{a}) \\
+Lemma~\ref{lem:rule23} & \texttt{rule23\_eq\_testBit}, \texttt{rule23\_eq\_at\_most\_one\_true}, \texttt{rule23\_symm}, \texttt{rule23\_const} & Proved ($0$ axioms / \texttt{[propext]}) \\
+Proposition~\ref{prop:early} & \texttt{ca\_zero}, \texttt{a\_zero} (pinned), \texttt{ca\_one} & Proved (allowlist) \\
+Theorem~\ref{thm:invariant} & \texttt{ca\_eq\_decide\_odd} & Proved (allowlist) \\
+Proposition~\ref{prop:equiv-class} & \texttt{evalRule}, \texttt{caRule}, \texttt{caRule\_eq\_ca}, \texttt{caRule\_equiv\_class} & Proved (allowlist) \\
+Proposition~\ref{prop:counts} & \texttt{a\_odd}, \texttt{a\_even\_of\_pos}, \texttt{a\_two\_mul\_add\_one}, \texttt{a\_two\_mul}, \texttt{a\_add\_off} & Proved (allowlist) \\
+Theorem~\ref{thm:main}(1) & \texttt{a\_closed\_form} (pinned, guard $n > 0$) & Proved (allowlist) \\
+Theorem~\ref{thm:main}(2) & \texttt{a\_recurrence} (pinned, guard $n > 4$) & Proved (allowlist) \\
+Theorem~\ref{thm:main}(3) & \texttt{a\_gf} (pinned), \texttt{a\_gf\_denom\_eq\_devlieger}, \texttt{a\_gf\_denom\_isUnit}, \texttt{a\_gf\_unit\_inv} & Proved (allowlist) \\
+Theorem~\ref{thm:main} (bundle) & \texttt{c057\_a266437\_bundle} & Proved (allowlist) \\
+Guard sharpness & \texttt{a\_closed\_form\_false\_zero}, \texttt{a\_recurrence\_false\_four} & Proved in kernel \\
+Section~\ref{sec:trap} mirror & \texttt{a\_dp}, \texttt{a\_dp\_eq\_a}, \texttt{a\_dp\_spot\_0\_to\_12}, \texttt{a\_spot\_0\_to\_12} & Kernel \texttt{rfl} + proof \\
+Zero-padding trap & \texttt{caZeroPad}, \texttt{aZeroPad}, \texttt{aZeroPad\_two\_eq\_two} & Proved in kernel \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\noindent\textbf{Audit summary.}
+\begin{enumerate}
+\item \emph{Clean-slate module build:} \texttt{rm -rf .lake/build \&\& lake build} on module \nolinkurl{MathProofs.SeamB.C057.Solution} completes with exit code~$0$, $1{,}795$ jobs, $1.9\text{ s}$ build time ($3.30\text{ s}$ wall clock), and zero warnings.
+\item \emph{Independent kernel replay:} Verified via \texttt{lake env leanchecker} with \texttt{--fresh --verbose} on \nolinkurl{MathProofs.SeamB.C057.Solution} (exit code~$0$, $155.99\text{ s}$ wall clock).
+\item \emph{Axiom audit:} Both \texttt{\#print axioms} and a \texttt{CoreM} \texttt{Lean.collectAxioms} sweep over all $52$ user-visible declarations in \texttt{namespace A266437} confirm zero disallowed axioms: \texttt{rule23} and \texttt{ca} depend on no axioms, and all pinned theorems depend strictly on the allowlist \texttt{[propext, Classical.choice, Quot.sound]}.
+\item \emph{Statement fidelity \& lexical trust-escape scan:} Automated verification confirms $18/18$ exact verbatim lines across \texttt{PIN-C057.md}, \texttt{Statement.lean}, and \texttt{Solution.lean}, exact kernel \texttt{Expr} equality (\texttt{type\_eq=true}, \texttt{value\_eq=true}, \texttt{levelParams\_eq=true}) across compiled \texttt{Statement.olean} and \texttt{Solution.olean} environments, and $0$ raw and $0$ comment/string-stripped occurrences of \texttt{sorry}, \texttt{admit}, \texttt{sorryAx}, \texttt{axiom}, \texttt{native\_decide}, \texttt{ofReduceBool}, \texttt{ofReduceNat}, \texttt{implemented\_by}, \texttt{unsafe}, \texttt{@[extern}, or \texttt{partial} in \texttt{Solution.lean} and \texttt{Mathproofs.lean}. (The external \texttt{comparator} \texttt{v4.36.0} tool was not run because this repository pins Lean~\texttt{v4.34.1} and \texttt{comparator} is not installed on this host; the gap and fallback verification are recorded in \texttt{VERIFICATION.md}.)
+\item \emph{Computation boundary:} Kernel \texttt{rfl} proves \texttt{a\_spot\_0\_to\_12} on $n = 0, \dots, 12$ via \texttt{a\_dp\_eq\_a}; outside the kernel, Lean VM \texttt{\#eval} checks \texttt{a\_dp} on $n = 0, \dots, 100$ and independent Python infinite-background simulation checks $n = 0, \dots, 500$ against live OEIS \texttt{b266437.txt} with $0$ mismatches.
+\end{enumerate}
+
+\begin{thebibliography}{99}
+\raggedright
+
+\bibitem{oeis266437}
+R.\ Price, M.\ De Vlieger, and C.\ Barker, \emph{OEIS sequence \seq{A266437}}: Number of ON (black) cells in the $n$-th iteration of the ``Rule~23'' elementary cellular automaton starting with a single ON (black) cell. Authored by R.\ Price (December~29, 2015); empirical g.f.\ by M.\ De Vlieger (December~29, 2015); \texttt{\%F} conjectures by C.\ Barker (December~30, 2015 and April~15, 2019); live revision \#30 (February~16, 2025). \url{https://oeis.org/A266437}.
+
+\bibitem{oeis266439}
+R.\ Price and C.\ Barker, \emph{OEIS sequence \seq{A266439}}: Number of OFF (white) cells in the $n$-th iteration of the ``Rule~23'' elementary cellular automaton starting with a single ON (black) cell. Live revision \#24 (February~16, 2025). \url{https://oeis.org/A266439}.
+
+\bibitem{oeis266434}
+R.\ Price, \emph{OEIS sequences \seq{A266434}--\seq{A266440}}: Rule~23 elementary cellular automaton triangle, row encodings, and ON/OFF cell counts. Submitted December~29, 2015. \url{https://oeis.org/A266434}.
+
+\bibitem{wolfram2002}
+S.\ Wolfram, \emph{A New Kind of Science}, Wolfram Media, Champaign, IL, 2002, p.~55.
+
+\bibitem{sloane2015}
+N.~J.~A.\ Sloane, \emph{On the Number of ON Cells in Cellular Automata}, arXiv:1503.01168v1 [math.CO], March~4, 2015. \url{https://arxiv.org/abs/1503.01168}.
+
+\bibitem{sequencelib}
+\texttt{provables/sequencelib}, \emph{Sequencelib/Synthetic/A266/A266437.lean} (AAAI-23 Gauthier--Urban program-synthesis arithmetic loop checked finitely on $n \le 100$ without cellular-automaton definition or symbolic proof). \url{https://github.com/provables/sequencelib}.
+
+\bibitem{oeisatp}
+\texttt{ai4reason/oeis-atp-benchmark}, \emph{pb/A266437.smt2} (UFNIA SMT equivalence problem between two synthesized arithmetic loops verified on the first $100$ terms without cellular-automaton definition). \url{https://github.com/ai4reason/oeis-atp-benchmark}.
+
+\bibitem{mathlib4}
+The mathlib Community, \emph{The Lean Mathematical Library (\texttt{Mathlib4})}, revision \texttt{d13f23b723b8a846827a245b89c10fc7d3f11612} (Lean~\texttt{v4.34.1}), 2026.
+
+\end{thebibliography}
+
+\end{document}
