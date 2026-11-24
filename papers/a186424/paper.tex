@@ -1,0 +1,573 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\llbracket}{[\![}
+\newcommand{\rrbracket}{]\!]}
+
+\hypersetup{
+  pdftitle={Formal Rogers-Fine Telescoping, Order-3 False-Theta Reduction, and Shift-and-Cancel Invariance for OEIS A186424: Proof and Lean 4 Formalization of Peter Bala's Polynomial Family},
+  pdfauthor={Derek Blair}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\seq}[1]{\texttt{#1}}
+\newcommand{\inv}{\operatorname{inv}_1}
+
+\setlength{\emergencystretch}{2em}
+
+\title{Formal Rogers--Fine Telescoping, Order-$3$ False-Theta Reduction,\\
+and Shift-and-Cancel Invariance for OEIS \seq{A186424}:\\[2pt]
+\large Proof and Lean~4 Formalization of Peter Bala's Polynomial Family}
+\author{Derek Blair}
+\date{24 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $a(n) = \seq{A186424}(n)$ ($n \ge 0$) denote the sequence of odd terms in the partial sums $\seq{A186423}$ of $\seq{A186421}$ (Reinhard Zumkeller, 2011), whose values are $1, 3, 11, 17, 33, 43, 67, 81, \dots$, and let
+\[
+F(X) := 1 + \sum_{m=0}^{\infty} (-1)^{\lfloor m/2 \rfloor + 1} X^{a(m)}
+= 1 - X - X^3 + X^{11} + X^{17} - X^{33} - X^{43} + \cdots \in \Z\llbracket X \rrbracket
+\]
+be the associated lacunary order-$3$ false-theta series. On February~13, 2021, Peter Bala posted a two-part conjectural formula block on OEIS~\seq{A186424}: the base series expansion $S(X) := \sum_{n \ge 0} (-1)^n X^n / \prod_{k=1}^n (1 - X^{2k-1}) = F(X)$ and, more generally, an $N$-parameterized family asserting that for every integer $N \ge 0$,
+\[
+\left(\prod_{j=1}^{N} \frac{1}{1 + X^{2j-1}}\right)\!\left(P(N, X) + \sum_{n=1}^{\infty} \frac{(-1)^n X^{(2N+1)n - N}}{\prod_{k=1}^n (1 - X^{2k-1})}\right) = F(X)
+\]
+for a polynomial $P(N, X) \in \Z[X]$ of degree $N^2 - 1$, listing $P(0, X) = 0$, $P(1, X) = 1$, $P(2, X) = 1 - X^2 + X^3$, $P(3, X) = 1 - X^2 + X^5 - X^7 + X^8$, and $P(4, X) = 1 - X^2 - X^4 + X^5 + X^8 - X^9 + X^{12} - X^{14} + X^{15}$ empirically.
+
+While the base series $S(X) = F(X)$ is classically equivalent under $q = -X$ to open-access results of Andrews~(1979), Chen~(2014, Corollary~3.14, Eq.~(22)), and Rogers~(1917, p.~333~(4)), Bala's $N$-parameterized polynomial family has remained open. We give a completely self-contained algebraic proof in $\Z[X]$ and $\Z\llbracket X \rrbracket$---using zero Laurent series, zero analytic limits, and zero external axioms---together with a complete Lean~4 formalization (\texttt{v4.34.1}, Mathlib \texttt{d13f23b7}). First, from the primary \texttt{\%N} chain $\seq{A186421} \to \seq{A186423} \to \seq{A186424}$, we prove strict monotonicity and the quadratic closed forms $a(2r) = 6r^2 + 4r + 1$ and $a(2r + 1) = 6r^2 + 8r + 3$. Second, we prove the base identity $S(X) = F(X)$ from scratch via a positive-valuation Rogers--Fine telescoping at $(q, \alpha, \beta, \tau) = (X^2, 0, X^3, -X)$ (bypassing double-sum Fubini swaps by unit clearing of $1 + X^{2M+1}$) composed with a direct formal telescoping proof of Rogers's order-$3$ identity in $\Z\llbracket X \rrbracket$. Third, via the shift-and-cancel identity $(1 + X^{2N+1}) S_N(X) = -X^{N+1} + S_{N+1}(X)$, we prove Bala's $N$-family for every $N \ge 0$ in both verbatim existential and strengthened unique-polynomial form, pinning $Q_N(X) \in \Z[X]$ by $Q_0(X) = 1$ and $Q_{N+1}(X) = (1 + X^{2N+1}) Q_N(X) - X^{N+1}$, with closed form
+\[
+Q_N(X) = \prod_{j=1}^N (1 + X^{2j-1}) - \sum_{m=1}^N X^m \prod_{j=m+1}^N (1 + X^{2j-1}).
+\]
+We confirm and formally prove Bala's $N = 0$ constant-term slip ($P(0, X) = 0$ misses $+1$ because the tail sum begins at $n = 1$, forcing $Q_0(X) = 1$ of degree~$0$), while for every $N \ge 1$ we prove that $Q_N(X)$ is monic of exact degree $N^2 - 1$ with constant term~$1$, matches $P(1), \dots, P(4)$ verbatim, remains in $\{-1, 0, +1\}$ through $N = 5$, and first leaves $\{-1, 0, +1\}$ at $N = 6$ via $[X^{13}] Q_6(X) = -2$. Every theorem is machine-checked with zero \texttt{sorry}s, allowlist-only axioms, and independent \texttt{leanchecker} kernel replay.
+\end{abstract}
+
+\section{Introduction, Primary Sources, and Prior-Art Boundary}
+
+\subsection{Primary OEIS Definitions and Peter Bala's Conjecture}
+
+In February~2011, Reinhard Zumkeller defined the integer sequence \seq{A186424}~\cite{oeis186424} through a three-step chain of primary (\texttt{\%N}) specifications with offset~$0$:
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \seq{A186421}~\cite{oeis186421} (\emph{even numbers interleaved with repeated odd numbers}):
+\[
+a_{186421}(n) := \begin{cases} n & \text{if } n \text{ is even}, \\ 2\lfloor n/4 \rfloor + 1 & \text{if } n \text{ is odd}, \end{cases}
+\qquad (0, 1, 2, 1, 4, 3, 6, 3, 8, 5, 10, 5, \dots).
+\]
+\item \seq{A186423}~\cite{oeis186423} (\emph{partial sums of \seq{A186421}}):
+\[
+a_{186423}(n) := \sum_{i=0}^{n} a_{186421}(i)
+\qquad (0, 1, 3, 4, 8, 11, 17, 20, 28, 33, 43, 48, \dots).
+\]
+\item \seq{A186424}~\cite{oeis186424} (\emph{odd terms in \seq{A186423}}):
+\[
+a(n) = a_{186424}(n) := a_{186423}\!\bigl(\operatorname{nth}(j \mapsto \operatorname{Odd}(a_{186423}(j)),\, n)\bigr)
+\qquad (1, 3, 11, 17, 33, 43, 67, 81, \dots).
+\]
+\end{enumerate}
+
+On February~13, 2021, Peter Bala contributed a formula block to OEIS~\seq{A186424} (\texttt{\%F} lines~20--25, live revision~\#52 dated December~29, 2025~\cite{oeis186424}, unchanged when re-verified live on November~24, 2026) containing two conjectural assertions:
+\begin{quote}\itshape
+From Peter Bala, Feb 13 2021: (Start)\\
+Appears to be the sequence of exponents in the following series expansion:\\
+$\sum_{n \ge 0} (-1)^n x^n / \prod_{k = 1}^{n} (1 - x^{2k-1}) = 1 - x - x^3 + x^{11} + x^{17} - x^{33} - x^{43} + + - - \cdots$. Cf.~\seq{A053253}.\\
+More generally, for nonnegative integer $N$, we appear to have the identity\\
+$\prod_{j = 1}^{N} \frac{1}{1 + x^{2j-1}} \Bigl(P(N, x) + \sum_{n \ge 1} \frac{(-1)^n x^{(2N+1)n - N}}{\prod_{k = 1}^{n} (1 - x^{2k-1})}\Bigr) = 1 - x - x^3 + x^{11} + x^{17} - x^{33} - x^{43} + + - - \cdots$,\\
+where $P(N, x)$ is a polynomial in $x$ of degree $N^2 - 1$, with the first few values given empirically by $P(0, x) = 0$, $P(1, x) = 1$, $P(2, x) = 1 - x^2 + x^3$, $P(3, x) = 1 - x^2 + x^5 - x^7 + x^8$, and $P(4, x) = 1 - x^2 - x^4 + x^5 + x^8 - x^9 + x^{12} - x^{14} + x^{15}$. Cf.~\seq{A203568}. (End)
+\end{quote}
+
+As in Bala's sibling conjecture on \seq{A203568}~\cite{oeis203568}, the polynomials $P(N, x)$ are stated purely existentially beyond $N = 4$: neither a recurrence, nor a closed form, nor uniqueness, nor a proof of the degree formula $N^2 - 1$ appears on \seq{A186424} or any cross-referenced entry.
+
+\subsection{Prior-Art Boundary: Classical Base Series vs.\ Open \texorpdfstring{$N$}{N}-Family}
+
+A careful prior-art audit (originally 55 queries on November~15, 2026 across OEIS, arXiv, OpenAlex, Crossref, Zenodo, and live web search, and re-verified live on November~24, 2026 across OEIS, arXiv, Zenodo, Google grounding, and Firecrawl web search) establishes a sharp attribution boundary:
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \textbf{Base series identity (\seq{A186424} lines~21--22, $S(X) = F(X)$) is classically proved.}
+Observe that $(a(m) - 1)/2 = \seq{A001082}(m + 1)$ ($0, 1, 5, 8, 16, 21, \dots$) are the generalized octagonal numbers $k(3k - 2)$ ($k \in \Z$)~\cite{oeis001082}. On November~26, 2024, Bala himself added a comment on \seq{A001082} citing Sandy~H.~L.\ Chen~\cite[Corollary~3.14, Eqs.~(22)--(23)]{chen2014} for
+\[
+\sum_{n=0}^{\infty} \frac{q^n}{\prod_{k=1}^{n+1} (1 + q^{2k-1})}
+= 1 + q^2 - q^{10} - q^{16} + q^{32} + q^{42} - \cdots
+= \sum_{n=0}^{\infty} \frac{(-1)^n q^{2n(n+1)}}{\prod_{k=1}^{n+1} (1 - q^{4k-2})}.
+\]
+Substituting $q = -X$, multiplying by $-X$, and adding~$1$ yields $S(X) = F(X)$ verbatim. Chen~\cite{chen2014} notes that this expansion was earlier proved by George~E.\ Andrews~\cite{andrews1979} from Ramanujan's Lost Notebook, and its transformed right-hand side is L.~J.\ Rogers's 1917 order-$3$ false-theta identity~\cite[p.~333~(4)]{rogers1917}, cataloged in open-access form by McLaughlin, Sills, and Zimmer~\cite[\S5.3, Eq.~(5.3.2)]{msz2022}:
+\[
+\Psi(-y^5, -y) = \sum_{n=0}^{\infty} \frac{(-1)^n y^{n(n+1)}}{(y; y^2)_{n+1}}
+= \sum_{M=0}^{\infty} (-1)^M \bigl(y^{3M^2 + 2M} + y^{3M^2 + 4M + 1}\bigr).
+\]
+Accordingly, we \emph{do not} claim standalone discovery or novelty for $S(X) = F(X)$; rather, we give a self-contained algebraic proof of $S(X) = F(X)$ inside $\Z\llbracket X \rrbracket$ from Mathlib primitives so that no external paper is assumed as an axiom.
+
+\item \textbf{The $N$-parameterized polynomial family (\seq{A186424} lines~23--25) is open and novel.}
+Across all database, preprint, and live web searches, zero works prove Bala's February~13, 2021 $N$-family on \seq{A186424}, or establish the recurrence $Q_{N+1}(X) = (1 + X^{2N+1}) Q_N(X) - X^{N+1}$, the closed form, monicity, constant term~$1$, exact degree $N^2 - 1$ for $N \ge 1$, unconditional uniqueness in $\Z[X]$, or the formal adjudication of the $N = 0$ constant-term slip ($P(0, X) = 0 \to Q_0(X) = 1$).
+\end{enumerate}
+
+\subsection{Relationship to \seq{A203568} (\texttt{C037}) and \seq{A053253} (\texorpdfstring{$\omega(q)$}{omega(q)})}
+
+Bala concludes his note with ``Cf.~\seq{A053253}'' and ``Cf.~\seq{A203568}''. Both cross-references reflect genuine structural contrasts rather than mere relabellings:
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{Mock theta partner \seq{A053253}:} On \seq{A053253}~\cite{oeis053253}, Watson's third-order mock theta function $\omega(q)$ has Michael Somos's generating function $\omega(x) = \sum_{k \ge 0} x^k / \prod_{j=1}^{k+1} (1 - x^{2j-1})$, whence $1 + x\,\omega(x) = \sum_{n \ge 0} x^n / \prod_{k=1}^n (1 - x^{2k-1})$. Inserting the alternating sign $(-1)^n$ in the numerator (which cannot be achieved by $x \mapsto -x$, because $x \mapsto -x$ simultaneously flips $1 - x^{2k-1} \mapsto 1 + x^{2k-1}$) converts the exponentially growing mock theta series $1 + x\,\omega(x)$ into the lacunary false-theta series $S(x) = F(x)$.
+\item \textbf{Comparison with sibling \seq{A203568} (\texttt{C037}):} Table~\ref{tab:comparison} contrasts \seq{A186424} with Bala's February~11, 2021 family on \seq{A203568}~\cite{oeis203568}. No monomial substitution $x \mapsto c x^\alpha$ can carry the pentagonal exponents $\{1, 2, 5, 7, \dots\}$ to the octagonal exponents $\{1, 3, 11, 17, \dots\}$. Moreover, in \seq{A186424} the outer product carries odd exponents with $+$ signs while the inner denominator carries odd exponents with $-$ signs (opposite signs!), the $N = 1$ outer product is already nontrivial ($(1+X)^{-1}$), the polynomial constant term is $+1$, the recurrence subtracts a non-alternating monomial $-X^{N+1}$, and the $\{-1, 0, +1\}$ coefficient regime persists through $N = 5$ before breaking at $N = 6$ (versus $N = 5$ in \seq{A203568}).
+\end{itemize}
+
+\begin{table}[ht]
+\centering
+\caption{Structural comparison between Bala's sibling $N$-families on OEIS \seq{A203568} (\texttt{C037}) and OEIS \seq{A186424}.}
+\label{tab:comparison}
+\smallskip
+{\small
+\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{5.5cm} >{\raggedright\arraybackslash}p{5.8cm}@{}}
+\toprule
+Feature & OEIS \seq{A203568} (\texttt{C037}, Feb 11 2021) & OEIS \seq{A186424} (this work, Feb 13 2021) \\
+\midrule
+False-theta target & Order-$3/2$ pentagonal $\sum_{k \ge 1} X^{k(3k-1)/2}(1 - X^k)$ & Order-$3$ octagonal $1 - \sum_{r \ge 0} (-1)^r (X^{6r^2+4r+1} + X^{6r^2+8r+3})$ \\
+Outer product & $\prod_{j=1}^{N-1} (1 + X^{2j})^{-1}$ (even, empty at $N=1$) & $\prod_{j=1}^{N} (1 + X^{2j-1})^{-1}$ (odd, empty at $N=0$) \\
+Inner denominator & $\prod_{k=1}^{n} (1 + X^{2k-1})$ ($+$ signs) & $\prod_{k=1}^{n} (1 - X^{2k-1})$ ($-$ signs) \\
+Recurrence & $P_{N+1} = (1 + X^{2N}) P_N + (-1)^{N+1} X^N$ & $Q_{N+1} = (1 + X^{2N+1}) Q_N - X^{N+1}$ \\
+Boundary & $P_1 = 0$ ($\deg = \bot$), $N \ge 1$ & $Q_0 = 1$ ($\deg = 0$, slip fixed), $Q_1 = 1$, $N \ge 0$ \\
+Exact degree & $N^2 - N - 1$ ($N > 1$), monic, $P_N(0) = 0$ & $N^2 - 1$ ($N \ge 1$), monic, $Q_N(0) = 1$ \\
+First $|\text{coeff}| > 1$ & $N = 5$: $[X^{11}] P_5 = +2$ & $N = 6$: $[X^{13}] Q_6 = -2$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\subsection{Summary of Main Results}
+
+In \nolinkurl{MathProofs/SeamB/A186424/Solution.lean} (\nolinkurl{namespace Mathproofs.A186424}), we prove:
+
+\begin{theorem}[Primary \texttt{\%N} closed form --- \texttt{a186424\_closed\_form}]
+\label{thm:closed-form}
+The sequence $a = \seq{A186424}$ is strictly increasing (\texttt{StrictMono a186424}), and for every $r \in \N$,
+\[
+a(2r) = 6r^2 + 4r + 1, \qquad a(2r + 1) = 6r^2 + 8r + 3.
+\]
+\end{theorem}
+
+\begin{theorem}[Base false-theta identity --- \texttt{a186424\_base\_series}]
+\label{thm:base}
+In $\Z\llbracket X \rrbracket$ equipped with the product (\texttt{WithPiTopology}) topology over discrete $\Z$,
+\[
+\operatorname{HasSum}\!\left(n \mapsto (-1)^n X^n \left(\prod_{k=1}^{n} (1 - X^{2k-1})\right)^{\!-1},\; F(X)\right).
+\]
+\end{theorem}
+
+\begin{theorem}[Explicit polynomial family --- \texttt{a186424Poly\_closed\_form}, \texttt{\_empirical\_values}, \texttt{\_degree\_and\_monic}]
+\label{thm:poly}
+Define $Q_N(X) \in \Z[X]$ recursively for all $N \in \N$ by $Q_0(X) = 1$ and $Q_{N+1}(X) = (1 + X^{2N+1}) Q_N(X) - X^{N+1}$. Then:
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item[\textup{(a)}] For every $N \in \N$,
+\[
+Q_N(X) = \prod_{j=1}^{N} (1 + X^{2j-1}) - \sum_{m=1}^{N} X^m \prod_{j=m+1}^{N} (1 + X^{2j-1}).
+\]
+\item[\textup{(b)}] $Q_0(X) = 1$, $Q_1(X) = 1$, $Q_2(X) = 1 - X^2 + X^3$, $Q_3(X) = 1 - X^2 + X^5 - X^7 + X^8$, and $Q_4(X) = 1 - X^2 - X^4 + X^5 + X^8 - X^9 + X^{12} - X^{14} + X^{15}$.
+\item[\textup{(c)}] $Q_0(X)$ is monic of degree~$0$, and for every $N \ge 1$, $Q_N(X)$ is monic of exact $\operatorname{WithBot}\N$ degree $\deg Q_N = N^2 - 1$ with constant term $Q_N(0) = 1$.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[$N$-parameterized family, uniqueness, and $N = 0$ adjudication]
+\label{thm:family}
+For every $N \in \N$, there exists a \textbf{unique} polynomial $P \in \Z[X]$---namely $P = Q_N(X)$---satisfying both $(N = 0 \implies P = 1)$ and $(1 \le N \implies \deg P = N^2 - 1)$ together with the existence of $S \in \Z\llbracket X \rrbracket$ such that
+\[
+\operatorname{HasSum}\!\left(m \mapsto (-1)^{m+1} X^{(2N+1)(m+1) - N} \left(\prod_{k=1}^{m+1} (1 - X^{2k-1})\right)^{\!-1},\; S\right)
+\]
+and
+\[
+\left(\prod_{j=1}^{N} (1 + X^{2j-1})\right)^{\!-1} \bigl(P(X) + S\bigr) = F(X) \qquad \text{in } \Z\llbracket X \rrbracket.
+\]
+Furthermore, uniqueness holds unconditionally in $\Z[X]$ without assuming the degree constraint, whereas Bala's printed $P(0, X) = 0$ fails at $N = 0$ (constant term $0 \ne 1$).
+\end{theorem}
+
+\section{Formal Power Series Framework in \texorpdfstring{$\Z[X]$}{Z[X]} and \texorpdfstring{$\Z\llbracket X \rrbracket$}{Z[[X]]}}
+
+To eliminate all standard formalization hazards (junk field inversion $0^{-1} = 0$, junk $\operatorname{tsum} = 0$ on non-summable families, and $\operatorname{natDegree} 0 = 0$ conflating the zero polynomial with nonzero constants), we work exclusively in $\Z[X]$ and $\Z\llbracket X \rrbracket$:
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \textbf{Unit reciprocals ($\inv$):} Every denominator product $\varphi \in \Z\llbracket X \rrbracket$ occurring in our proofs has constant coefficient $[X^0]\varphi = 1 \in \Z^\times$ and is inverted solely via $\inv(\varphi) := \mathrm{PowerSeries.invOfUnit}\;\varphi\;(1 : \Z^\times)$, satisfying $\varphi \cdot \inv(\varphi) = \inv(\varphi) \cdot \varphi = 1$ and $\inv(\varphi \psi) = \inv(\varphi)\inv(\psi)$ whenever $[X^0]\varphi = [X^0]\psi = 1$.
+\item \textbf{Locally finite sums (\texttt{HasSum}):} Under the product topology (\texttt{WithPiTopology}) on $\Z\llbracket X \rrbracket$ with discrete $\Z$, coefficientwise summability at every degree $d \in \N$ characterizes $\operatorname{HasSum}(f, S)$ (\texttt{hasSum\_iff\_hasSum\_coeff}). Whenever there exists $B : \N \to \N$ with $[X^d] f(m) = 0$ for all $m \ge B(d)$, the series $S := \sum_{d \ge 0} \bigl(\sum_{m < B(d)} [X^d] f(m)\bigr) X^d$ satisfies $\operatorname{HasSum}(f, S)$ (\texttt{hasSum\_mk\_of\_coeff\_vanish}). For every $N, m \in \N$, $(2N + 1)(m + 1) - N = 2Nm + N + m + 1 \ge m + 1$, avoiding natural-number subtraction underflow and giving $B(d) = d + 1$ uniformly.
+\item \textbf{Universal telescoping principle (\texttt{hasSum\_of\_sub\_eq\_and\_coeff\_zero}):}
+\end{enumerate}
+
+\begin{lemma}[Formal telescoping in $\Z\llbracket X \rrbracket$]
+\label{lem:telescoping}
+Let $R, t : \N \to \Z\llbracket X \rrbracket$ satisfy $R(M) - R(M + 1) = t(M)$ for all $M \in \N$ and $[X^d] R(M) = 0$ for all $d < M$. Then $\operatorname{HasSum}(t, R(0))$ in $\Z\llbracket X \rrbracket$.
+\end{lemma}
+
+\begin{proof}
+Fix $d \in \N$. For every $M \ge d + 1$, both $d < M$ and $d < M + 1$ hold, so $[X^d] t(M) = [X^d] R(M) - [X^d] R(M + 1) = 0$. Hence the coefficient family $M \mapsto [X^d] t(M)$ is supported on $\{0, \dots, d\}$, and its finite sum telescopes:
+\[
+\sum_{M=0}^{d} [X^d] t(M) = \sum_{M=0}^{d} \bigl([X^d] R(M) - [X^d] R(M + 1)\bigr) = [X^d] R(0) - [X^d] R(d + 1) = [X^d] R(0).
+\]
+By \texttt{hasSum\_iff\_hasSum\_coeff}, $\operatorname{HasSum}(t, R(0))$.
+\end{proof}
+
+\section{Step 0: From the Primary \texttt{\%N} Chain to Quadratic Exponents}
+
+We prove Theorem~\ref{thm:closed-form} directly from the OEIS \texttt{\%N} definitions without taking any quadratic formula as given.
+
+\begin{lemma}[Mod-$4$ block partial sums of \seq{A186421}]
+\label{lem:mod4}
+For every $r \in \N$:
+\begin{align*}
+a_{186421}(4r) &= 4r, & a_{186421}(4r + 1) &= 2r + 1, \\
+a_{186421}(4r + 2) &= 4r + 2, & a_{186421}(4r + 3) &= 2r + 1, \\[3pt]
+a_{186423}(4r) &= 6r^2 + 2r, & a_{186423}(4r + 1) &= 6r^2 + 4r + 1, \\
+a_{186423}(4r + 2) &= 6r^2 + 8r + 3, & a_{186423}(4r + 3) &= 6r^2 + 10r + 4.
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+The four values of $a_{186421}$ follow directly from parity and Euclidean division $\lfloor (4r + 1)/4 \rfloor = \lfloor (4r + 3)/4 \rfloor = r$. For $a_{186423}(4r)$, we induct on $r$: at $r = 0$, $a_{186423}(0) = a_{186421}(0) = 0$; for $r \mapsto r + 1$,
+\[
+a_{186423}(4(r + 1)) = (6r^2 + 2r) + (2r + 1) + (4r + 2) + (2r + 1) + (4r + 4) = 6(r + 1)^2 + 2(r + 1).
+\]
+Adding the remaining block entries $2r + 1$, $4r + 2$, and $2r + 1$ sequentially yields the other three residue classes.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:closed-form}]
+Since $a_{186421}(n) \ge 1$ for all $n \ge 1$, the partial-sum sequence $a_{186423}$ is strictly increasing. Reading Lemma~\ref{lem:mod4} modulo~$2$, we have
+\[
+\operatorname{Odd}\bigl(a_{186423}(j)\bigr) \iff j \equiv 1 \text{ or } 2 \pmod{4} \qquad (\forall j \in \N).
+\]
+In particular, $S_{\mathrm{odd}} := \{j \in \N : \operatorname{Odd}(a_{186423}(j))\}$ is infinite (containing $4n + 1$ for all $n \in \N$). Define $g : \N \to \N$ by $g(n) := 4\lfloor n/2 \rfloor + (n \bmod 2) + 1$. Then $g$ is strictly increasing ($g(2r) = 4r + 1$, $g(2r + 1) = 4r + 2$), maps $\N$ into $S_{\mathrm{odd}}$, and surjects onto $S_{\mathrm{odd}}$ (sending $2\lfloor j/4 \rfloor \mapsto j$ when $j \equiv 1 \pmod 4$ and $2\lfloor j/4 \rfloor + 1 \mapsto j$ when $j \equiv 2 \pmod 4$). By uniqueness of the strictly monotone enumeration of an infinite subset of $\N$ (\texttt{Nat.eq\_nth\_of\_strictMonoOn\_of\_mapsTo\_of\_surjOn}), $\operatorname{nth}(j \mapsto \operatorname{Odd}(a_{186423}(j)), n) = g(n)$ for all $n \in \N$. Composing with the strictly increasing function $a_{186423}$ establishes strict monotonicity of $a = a_{186424}$, and evaluating at $2r$ and $2r + 1$ via Lemma~\ref{lem:mod4} gives $a(2r) = a_{186423}(4r + 1) = 6r^2 + 4r + 1$ and $a(2r + 1) = a_{186423}(4r + 2) = 6r^2 + 8r + 3$.
+\end{proof}
+
+\section{Link 1: Positive-Valuation Rogers--Fine Telescoping without Double-Sum Fubini}
+
+Define the finite unit products in $\Z\llbracket X \rrbracket$:
+\[
+U_k := \prod_{i=0}^{k-1} (1 - X^{2i+3}), \qquad V_M := \prod_{i=0}^{M-1} (1 + X^{2i+1}), \qquad W_{M,r} := \prod_{i=0}^{r} (1 - X^{4(M + i) + 2}),
+\]
+and set $e_{\mathrm{rf}}(M, r) := 2M(M + 1) + (2M + 1)r$ (the exact exponent of the $\alpha = 0$ Rogers--Fine remainder specialized at $q = X^2, \beta = X^3, \tau = -X$, written with zero natural-number subtraction). Define
+\[
+\rho(M, r) := (-1)^{M+r} X^{e_{\mathrm{rf}}(M, r)} \inv(U_{M+r}) \inv(V_M),
+\qquad \mathcal{R}_M := \sum_{r=0}^{\infty} \rho(M, r) \in \Z\llbracket X \rrbracket.
+\]
+Since $e_{\mathrm{rf}}(M, r) \ge r$ and $e_{\mathrm{rf}}(M, r) \ge 2M(M + 1) \ge M$, each $\mathcal{R}_M$ is locally finite with $[X^d] \mathcal{R}_M = 0$ for all $d < M$.
+
+\begin{lemma}[Unit-cleared Rogers--Fine step]
+\label{lem:rf-step}
+For all $M, s \in \N$,
+\begin{equation}
+\label{eq:rf-term}
+\rho(M, s + 1) + X^{2M+1} \rho(M, s) = (1 + X^{2M+1})\, \rho(M + 1, s),
+\end{equation}
+and consequently
+\begin{equation}
+\label{eq:rf-diff}
+\mathcal{R}_M - \mathcal{R}_{M+1} = (-1)^M X^{2M(M+1)} \inv(U_M) \inv(V_{M+1}).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Observe the two exact polynomial exponent identities
+\[
+(2M + 1) + e_{\mathrm{rf}}(M, s) = e_{\mathrm{rf}}(M, s + 1), \qquad e_{\mathrm{rf}}(M, s + 1) + (2M + 2s + 3) = e_{\mathrm{rf}}(M + 1, s),
+\]
+together with the denominator unit identities $\inv(U_{M+s}) = (1 - X^{2(M+s)+3}) \inv(U_{M+s+1})$ and $(1 + X^{2M+1}) \inv(V_{M+1}) = \inv(V_M)$. Substituting these into the left-hand side of~\eqref{eq:rf-term} gives
+\begin{align*}
+\rho(M, s + 1) &+ X^{2M+1} \rho(M, s) \\
+&= (-1)^{M+s+1} X^{e_{\mathrm{rf}}(M, s+1)} \bigl(1 - (1 - X^{2M+2s+3})\bigr) \inv(U_{M+s+1}) \inv(V_M) \\
+&= (-1)^{(M+1)+s} X^{e_{\mathrm{rf}}(M+1, s)} \inv(U_{M+s+1}) \cdot (1 + X^{2M+1}) \inv(V_{M+1}),
+\end{align*}
+which is the right-hand side of~\eqref{eq:rf-term}. Summing~\eqref{eq:rf-term} over $s \ge 0$ via \texttt{HasSum.add}, \texttt{HasSum.mul\_left}, and the index shift $\sum_{s \ge 0} \rho(M, s + 1) = \mathcal{R}_M - \rho(M, 0)$ yields
+\[
+(\mathcal{R}_M - \rho(M, 0)) + X^{2M+1} \mathcal{R}_M = (1 + X^{2M+1}) \mathcal{R}_{M+1},
+\]
+so $(1 + X^{2M+1})(\mathcal{R}_M - \mathcal{R}_{M+1}) = \rho(M, 0)$. Multiplying both sides by $\inv(1 + X^{2M+1})$ and using $\inv(V_M)\inv(1 + X^{2M+1}) = \inv(V_{M+1})$ gives~\eqref{eq:rf-diff}.
+\end{proof}
+
+\begin{proposition}[Link 1 reduction]
+\label{prop:link1}
+In $\Z\llbracket X \rrbracket$,
+\[
+\inv(1 - X)\,\mathcal{R}_0 = \sum_{m=0}^{\infty} (-1)^m X^{2m(m+1)} \inv(W_{0, m})
+= \sum_{m=0}^{\infty} \frac{(-1)^m X^{2m(m+1)}}{\prod_{k=1}^{m+1} (1 - X^{4k-2})}.
+\]
+\end{proposition}
+
+\begin{proof}
+Applying Lemma~\ref{lem:telescoping} to~\eqref{eq:rf-diff} yields
+\[
+\operatorname{HasSum}\!\left(m \mapsto (-1)^m X^{2m(m+1)} \inv(U_m) \inv(V_{m+1}),\; \mathcal{R}_0\right).
+\]
+Multiplying on the left by $\inv(1 - X)$ and applying the finite product identity
+\[
+(1 - X) U_m V_{m+1}
+= \left(\prod_{k=1}^{m+1} (1 - X^{2k-1})\right)\!\left(\prod_{k=1}^{m+1} (1 + X^{2k-1})\right)
+= \prod_{k=1}^{m+1} (1 - X^{4k-2}) = W_{0, m}
+\]
+(proved by induction on $m$ via $(1 - X^{2m+3})(1 + X^{2m+3}) = 1 - X^{4m+6}$) gives the claim.
+\end{proof}
+
+Notice how clearing the unit $(1 + X^{2M+1})$ in Lemma~\ref{lem:rf-step} completely eliminates the infinite double-sum Fubini swap normally required to expand $(1 + X^{2M+1})^{-1}$ as a geometric series.
+
+\section{Link 2: Direct Formal Proof of Rogers's Order-3 Identity and the Base Series}
+
+Working directly in $\Z\llbracket X \rrbracket$ (replacing $y$ by $X^2$ throughout so no formal substitution homomorphism is needed), set
+\[
+E(M, r) := 2\bigl(r(r + 1) + 3M^2 + 4Mr + 2M\bigr),
+\]
+\[
+\kappa(M, r) := (-1)^{M+r} X^{E(M, r)} \inv(W_{M, r}), \qquad
+\mathcal{K}_M := \sum_{r=0}^{\infty} \kappa(M, r) \in \Z\llbracket X \rrbracket.
+\]
+Note that $E(M, r) \ge 2r(r + 1) \ge r$ and $E(M, r) \ge 4M \ge M$, so each $\mathcal{K}_M$ is locally finite with $[X^d] \mathcal{K}_M = 0$ for $d < M$, and $\mathcal{K}_0 = \inv(1 - X)\mathcal{R}_0$ by Proposition~\ref{prop:link1}.
+
+\begin{lemma}[Order-$3$ false-theta telescoping]
+\label{lem:link2-step}
+For every $M \in \N$,
+\begin{equation}
+\label{eq:k-diff}
+\mathcal{K}_M - \mathcal{K}_{M+1} = (-1)^M \bigl(X^{6M^2 + 4M} + X^{6M^2 + 8M + 2}\bigr).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Define the auxiliary sequence $\alpha(M, s) := (-1)^{M+s+1} X^{E(M, s+1)} \inv(W_{M, s})$. We check the two exact polynomial identities
+\[
+E(M + 1, s) = E(M, s + 1) + \bigl(4(M + s + 1) + 2\bigr),
+\qquad E(M + 1, s) + (4M + 2) = E(M, s + 2),
+\]
+and the two denominator splits $W_{M, s+1} = (1 - X^{4M+2}) W_{M+1, s} = W_{M, s} (1 - X^{4(M+s+1)+2})$. Passing to unit reciprocals $\inv(W_{M+1, s}) = (1 - X^{4M+2}) \inv(W_{M, s+1})$ and $\inv(W_{M, s}) = (1 - X^{4(M+s+1)+2}) \inv(W_{M, s+1})$, direct ring expansion gives for every $s \in \N$:
+\begin{align*}
+\kappa(M, s + 1) &- \kappa(M + 1, s) \\
+&= (-1)^{M+s+1} \Bigl(X^{E(M, s+1)} - X^{E(M+1, s)}(1 - X^{4M+2})\Bigr) \inv(W_{M, s+1}) \\
+&= (-1)^{M+s+1} \Bigl(X^{E(M, s+1)}(1 - X^{4(M+s+1)+2}) + X^{E(M, s+2)}\Bigr) \inv(W_{M, s+1}) \\
+&= \alpha(M, s) - \alpha(M, s + 1).
+\end{align*}
+Since $E(M, s + 1) \ge 2(s + 1)(s + 2) > s$, we have $[X^d] \alpha(M, s) = 0$ for all $d < s$, so Lemma~\ref{lem:telescoping} yields
+\[
+\operatorname{HasSum}\bigl(s \mapsto \kappa(M, s + 1) - \kappa(M + 1, s),\; \alpha(M, 0)\bigr).
+\]
+On the other hand, $\sum_{s \ge 0} \bigl(\kappa(M, s + 1) - \kappa(M + 1, s)\bigr) = (\mathcal{K}_M - \kappa(M, 0)) - \mathcal{K}_{M+1}$. By uniqueness of limits, $\mathcal{K}_M - \mathcal{K}_{M+1} = \kappa(M, 0) + \alpha(M, 0)$. Since $W_{M, 0} = 1 - X^{4M+2}$, $E(M, 0) = 6M^2 + 4M$, and $E(M, 1) = (6M^2 + 4M) + 2(4M + 2)$, factoring $1 - X^{8M+4} = (1 + X^{4M+2})(1 - X^{4M+2})$ cancels $\inv(1 - X^{4M+2})$:
+\begin{align*}
+\kappa(M, 0) + \alpha(M, 0)
+&= (-1)^M X^{6M^2 + 4M} (1 - X^{8M+4}) \inv(1 - X^{4M+2}) \\
+&= (-1)^M X^{6M^2 + 4M} (1 + X^{4M+2})
+= (-1)^M \bigl(X^{6M^2 + 4M} + X^{6M^2 + 8M + 2}\bigr). \qedhere
+\end{align*}
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:base}]
+By Lemma~\ref{lem:telescoping} applied to~\eqref{eq:k-diff},
+\[
+\operatorname{HasSum}\!\left(M \mapsto (-1)^M (X^{6M^2 + 4M} + X^{6M^2 + 8M + 2}),\; \mathcal{K}_0\right).
+\]
+Multiplying by $-X$ and substituting $a(2M) = 6M^2 + 4M + 1$ and $a(2M + 1) = 6M^2 + 8M + 3$ (Theorem~\ref{thm:closed-form}) yields
+\[
+\operatorname{HasSum}\!\left(M \mapsto (-1)^{M+1} (X^{a(2M)} + X^{a(2M+1)}),\; -X\mathcal{K}_0\right).
+\]
+We compare coefficients of $1 - X\mathcal{K}_0$ with $F(X)$ at every degree $d \in \N$. Since $a(m) \ge 1$ for all $m \in \N$, at $d = 0$ every summand vanishes, giving $[X^0](1 - X\mathcal{K}_0) = 1 = [X^0] F(X)$. For $d \ge 1$: if $d = a(m_0)$ for some $m_0 \in \N$, then strict monotonicity of $a$ makes $m_0$ unique; setting $r_0 := \lfloor m_0 / 2 \rfloor$, precisely one term ($M = r_0$) contributes $(-1)^{r_0 + 1} = [X^d] F(X)$, while all $M \ne r_0$ contribute~$0$. If $d \notin \operatorname{im}(a)$, every term vanishes, giving $0 = [X^d] F(X)$. Hence $1 - X\mathcal{K}_0 = F(X)$.
+
+Finally, multiplying $\operatorname{HasSum}(m \mapsto \rho(0, m), \mathcal{R}_0)$ by $-X \inv(1 - X)$ and using $\inv(1 - X)\mathcal{R}_0 = \mathcal{K}_0$ (Proposition~\ref{prop:link1}) together with $(1 - X) U_m = \prod_{k=1}^{m+1} (1 - X^{2k-1})$ yields
+\[
+\operatorname{HasSum}\!\left(m \mapsto (-1)^{m+1} X^{m+1} \inv\!\left(\prod_{k=1}^{m+1}(1 - X^{2k-1})\right),\; -X\mathcal{K}_0\right).
+\]
+Prepending the $n = 0$ term $(-1)^0 X^0 \inv(1) = 1$ via \texttt{HasSum.zero\_add} gives Theorem~\ref{thm:base}, since $1 - X\mathcal{K}_0 = F(X)$.
+\end{proof}
+
+\section{Link 3: Shift-and-Cancel Induction, Polynomial Structure, and \texorpdfstring{$N = 0$}{N = 0} Adjudication}
+
+For every $N \in \N$, define the unit outer product $C_N := \prod_{j=1}^N (1 + X^{2j-1}) \in \Z\llbracket X \rrbracket$, the unit inner denominator $D_m := \prod_{k=1}^{m+1} (1 - X^{2k-1}) \in \Z\llbracket X \rrbracket$, and Bala's tail series
+\[
+t_N(m) := (-1)^{m+1} X^{(2N+1)(m+1) - N} \inv(D_m), \qquad S_N := \sum_{m=0}^{\infty} t_N(m) \in \Z\llbracket X \rrbracket.
+\]
+
+\begin{lemma}[Shift-and-cancel recurrence for $S_N$]
+\label{lem:shift-cancel}
+For every $N \in \N$,
+\begin{equation}
+\label{eq:shift-cancel}
+(1 + X^{2N+1}) S_N = -X^{N+1} + S_{N+1}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+At $m = 0$, $D_0 = 1 - X$ and $(2N + 1) \cdot 1 - N = N + 1$, so
+\[
+t_N(0) - t_{N+1}(0)
+= -X^{N+1} \inv(1 - X) + X^{N+2} \inv(1 - X)
+= -X^{N+1} (1 - X) \inv(1 - X) = -X^{N+1}.
+\]
+For $m = r + 1$ ($r \in \N$), we have the exact exponent identities
+\begin{align*}
+(2N + 1)(r + 2) - N &= (2N + 1) + \bigl((2N + 1)(r + 1) - N\bigr), \\
+(2(N + 1) + 1)(r + 2) - (N + 1) &= (2N + 1) + \bigl((2N + 1)(r + 1) - N\bigr) + (2r + 3).
+\end{align*}
+Since $D_{r+1} = D_r (1 - X^{2r+3})$, canceling $(1 - X^{2r+3}) \inv(D_{r+1}) = \inv(D_r)$ gives
+\begin{align*}
+t_N(r + 1) - t_{N+1}(r + 1)
+&= (-1)^{r+2} X^{(2N+1)(r+2) - N} (1 - X^{2r+3}) \inv(D_{r+1}) \\
+&= -X^{2N+1} \cdot (-1)^{r+1} X^{(2N+1)(r+1) - N} \inv(D_r)
+= -X^{2N+1} t_N(r).
+\end{align*}
+Summing over $m \in \N$ via \texttt{HasSum.zero\_add} yields $S_N - S_{N+1} = -X^{N+1} - X^{2N+1} S_N$, which rearranges immediately to~\eqref{eq:shift-cancel}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:poly}]
+\emph{Part~(a) (closed form):} At $N = 0$, both sides equal~$1$. Assuming the closed form for $N$,
+\begin{align*}
+Q_{N+1}(X)
+&= (1 + X^{2N+1}) Q_N(X) - X^{N+1} \\
+&= \prod_{j=1}^{N+1} (1 + X^{2j-1}) - \sum_{m=1}^{N} X^m \prod_{j=m+1}^{N+1} (1 + X^{2j-1}) - X^{N+1} \cdot 1 \\
+&= \prod_{j=1}^{N+1} (1 + X^{2j-1}) - \sum_{m=1}^{N+1} X^m \prod_{j=m+1}^{N+1} (1 + X^{2j-1}).
+\end{align*}
+\emph{Part~(b) (empirical values):} Follows directly by unfolding $Q_0 = 1$ four times via the recurrence and simplifying in $\Z[X]$.
+
+\emph{Part~(c) (exact degree, monicity, constant term):} At $N = 0$, $Q_0 = 1$ is monic of degree~$0$. For $N \ge 1$, we induct on $N$: at $N = 1$, $Q_1 = (1 + X)\cdot 1 - X = 1$ is monic of degree $0 = 1^2 - 1$ with constant term~$1$. For $M \ge 1$, suppose $Q_M$ is monic of degree $M^2 - 1$ with $Q_M(0) = 1$. Then $1 + X^{2M+1}$ is monic of degree $2M + 1$, so $(1 + X^{2M+1}) Q_M$ is monic of degree $(2M + 1) + (M^2 - 1) = (M + 1)^2 - 1$. Because $M \ge 1$ implies $M + 1 < M^2 + 2M = (M + 1)^2 - 1$, adding $-X^{M+1}$ strictly below the leading term preserves both monicity and exact degree $(M + 1)^2 - 1$ (\texttt{Polynomial.degree\_add\_eq\_left\_of\_degree\_lt} and \texttt{Monic.add\_of\_left}). Evaluating the constant coefficient gives $[X^0] Q_{M+1} = 1 \cdot [X^0] Q_M - 0 = 1$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:family}]
+We first prove the cleared-denominator invariant
+\begin{equation}
+\label{eq:cleared}
+C_N \cdot F(X) = Q_N(X) + S_N \qquad (\forall N \in \N)
+\end{equation}
+by induction on $N$. At $N = 0$, $C_0 = 1$, $Q_0 = 1$, and shifting $n = m + 1$ in Theorem~\ref{thm:base} gives $S_0 = F(X) - 1$, so $1 \cdot F(X) = 1 + S_0$. For $N \mapsto N + 1$, using $C_{N+1} = (1 + X^{2N+1}) C_N$, the inductive hypothesis, and Lemma~\ref{lem:shift-cancel},
+\begin{align*}
+C_{N+1} \cdot F(X)
+&= (1 + X^{2N+1}) \bigl(Q_N(X) + S_N\bigr) \\
+&= (1 + X^{2N+1}) Q_N(X) + \bigl(-X^{N+1} + S_{N+1}\bigr)
+= Q_{N+1}(X) + S_{N+1}.
+\end{align*}
+Multiplying~\eqref{eq:cleared} on the left by $\inv(C_N)$ yields \texttt{a186424\_family\_explicit}.
+
+For uniqueness (\texttt{a186424\_family}), suppose $P \in \Z[X]$ and $S' \in \Z\llbracket X \rrbracket$ satisfy $\operatorname{HasSum}(t_N, S')$ and $\inv(C_N)(P(X) + S') = F(X)$. By Hausdorff uniqueness of \texttt{HasSum} limits in $\Z\llbracket X \rrbracket$, $S' = S_N$. Multiplying by the unit $C_N$ gives $P(X) + S_N = C_N F(X) = Q_N(X) + S_N$, whence $P(X) = Q_N(X)$ in $\Z\llbracket X \rrbracket$ and therefore $P = Q_N$ in $\Z[X]$ by injectivity of $\Z[X] \hookrightarrow \Z\llbracket X \rrbracket$ (\texttt{Polynomial.coe\_inj}). Note that the degree constraint is not needed for uniqueness.
+
+Finally, at $N = 0$, $C_0 = 1$ and $S_0 = F(X) - 1$, so substituting Bala's printed $P(0, X) = 0$ yields $\inv(C_0)(0 + S_0) = F(X) - 1 \ne F(X)$ (the constant coefficients are $0 \ne 1$). Thus Bala's $P(0, X) = 0$ is a genuine constant-term slip caused by shifting $\sum_{n \ge 0}$ (line~22) to $\sum_{n \ge 1}$ (line~24), and the unique corrected polynomial is $Q_0(X) = 1$.
+\end{proof}
+
+\subsection{Explicit Table of \texorpdfstring{$Q_0(X)$--$Q_6(X)$}{Q0--Q6} and the \texorpdfstring{$N = 6$}{N = 6} Coefficient Breakdown}
+
+Unlike \seq{A203568} (whose polynomials leave $\{-1, 0, +1\}$ already at $N = 5$), in \seq{A186424} the transition $Q_4 \mapsto Q_5 = (1 + X^9) Q_4 - X^5$ experiences three exact cancellations ($+X^5 - X^5$, $-X^9 + X^9$, and $-X^{14} + X^{14}$), keeping all coefficients of $Q_0, \dots, Q_5$ inside $\{-1, 0, +1\}$. At $N = 6$, however, the term $X^{11} \cdot (-X^2)$ collides with $1 \cdot (-X^{13})$ in $Q_5(X)$, producing the first coefficient of magnitude $> 1$: $[X^{13}] Q_6(X) = -2$ (machine-checked in \texttt{a186424Poly\_five\_and\_six}). Table~\ref{tab:polys} displays $Q_0(X)$ through $Q_6(X)$.
+
+\begin{table}[ht]
+\centering
+\caption{Explicit polynomials $Q_N(X) \in \Z[X]$ for $N = 0, \dots, 6$, showing the adjudicated $N = 0$ boundary, exact agreement with Bala's $P(1), \dots, P(4)$, persistence of $\{-1, 0, +1\}$ at $N = 5$, and first magnitude-$2$ collision at $N = 6$.}
+\label{tab:polys}
+\smallskip
+{\small
+\begin{tabular}{@{}r r r >{\raggedright\arraybackslash}p{10.5cm}@{}}
+\toprule
+$N$ & $\deg Q_N$ & $\max |c|$ & $Q_N(X)$ \\
+\midrule
+$0$ & $0$ & $1$ & $1$ \quad \emph{(adjudicated; Bala printed $0$)} \\
+$1$ & $0$ & $1$ & $1$ \\
+$2$ & $3$ & $1$ & $1 - X^2 + X^3$ \\
+$3$ & $8$ & $1$ & $1 - X^2 + X^5 - X^7 + X^8$ \\
+$4$ & $15$ & $1$ & $1 - X^2 - X^4 + X^5 + X^8 - X^9 + X^{12} - X^{14} + X^{15}$ \\
+$5$ & $24$ & $1$ & $1 - X^2 - X^4 + X^8 - X^{11} + X^{12} - X^{13} + X^{15} + X^{17} - X^{18} + X^{21} - X^{23} + X^{24}$ \\
+$6$ & $35$ & $2$ & $1 - X^2 - X^4 - X^6 + X^8 + X^{12} \mathbf{- 2X^{13}} + X^{17} - X^{18} + X^{19} + X^{21} - X^{22} + X^{26} + X^{28} - X^{29} + X^{32} - X^{34} + X^{35}$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\section{Scope Boundaries, Lean 4 Formalization, and Verification Record}
+
+\subsection{Scope Boundaries}
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \textbf{Attribution boundary:} As emphasized in Section~1.2, Theorem~\ref{thm:base} ($S(X) = F(X)$) is classically proved in open-access literature (Andrews 1979; Chen 2014 Eq.~(22); Rogers 1917 Eq.~(5.3.2)) and is proved here strictly as a self-contained foundation for the novel $N$-parameterized family (Theorems~\ref{thm:poly} and~\ref{thm:family}).
+\item \textbf{Single boundary delta vs.\ OEIS source:} At $N = 0$, Bala's printed $P(0, X) = 0$ is formally refuted (\texttt{a186424\_n0\_zero\_poly\_fails}) and replaced by the uniquely forced $Q_0(X) = 1$. For all $N \ge 1$, there is zero delta against Bala's printed identity, degree $N^2 - 1$, and empirical values $P(1), \dots, P(4)$.
+\item \textbf{Formal vs.\ analytic convergence:} All proofs live in the formal rings $\Z[X]$ and $\Z\llbracket X \rrbracket$ under \texttt{PowerSeries.WithPiTopology} rather than complex analytic functions on $\{z \in \mathbb{C} : |z| < 1\}$ (analytic equality on $|z| < 1$ follows directly by absolute convergence of every series involved).
+\end{enumerate}
+
+\subsection{Lean 4 Formalization and Audit Summary}
+
+The formalization resides in \texttt{derekblair/math-proofs} under Lean~\texttt{v4.34.1} (\nolinkurl{leanprover/lean4:v4.34.1}) and Mathlib revision {\small\nolinkurl{d13f23b723b8a846827a245b89c10fc7d3f11612}}~\cite{mathlib4}. Following the live Seam~B layout convention (reconciling the pre-Seam-B path \nolinkurl{Mathproofs/A186424.lean} from \texttt{PIN-A186424.md} while preserving \nolinkurl{namespace Mathproofs.A186424} and every pinned declaration verbatim):
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \nolinkurl{MathProofs/SeamB/A186424/Statement.lean} (151 lines): frozen verbatim specification from \texttt{PIN-A186424.md} v1.\\
+Statement SHA-256: {\small\nolinkurl{2978bbb21eab104406c097096a53d2bff4bf94caaa3b83d9790272cb2b014d39}}.\\
+Pin SHA-256: {\small\nolinkurl{f6ae3e2474f1dc176d46947879978a778ee914d8178a2acce70cab83860d7757}}.
+\item \nolinkurl{MathProofs/SeamB/A186424/Solution.lean} (1{,}404 lines): reproduces all 5 pinned definitions and 8 pinned theorem signatures verbatim in \nolinkurl{Mathproofs.A186424}, closing every theorem with zero \texttt{sorry}s and zero warnings.\\
+Solution SHA-256: {\small\nolinkurl{3a318d10f7e532836cc731a266558563a8e34f770b79e8951cf9e6e08ab0bd5f}}.
+\item \nolinkurl{Mathproofs.lean} (100 lines; adds \texttt{import MathProofs.SeamB.A186424.Solution}).\\
+Root SHA-256: {\small\nolinkurl{6eef04f209f87ee03836d060365415f39b3b1c89f23fe352b9b0e9a020076792}}.
+\end{itemize}
+
+Table~\ref{tab:lean-map} maps every paper result to its machine-checked declaration.
+
+\begin{table}[ht]
+\centering
+\caption{Correspondence between paper results and Lean~4 declarations in \nolinkurl{Mathproofs.A186424}.}
+\label{tab:lean-map}
+\smallskip
+{\small
+\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{7.8cm} l@{}}
+\toprule
+Paper Result & Lean~4 Declaration(s) & Status \\
+\midrule
+Primary \texttt{\%N} chain & \texttt{a186421}, \texttt{a186423}, \texttt{a186424} (pinned) & Exported \\
+False-theta series \& family & \texttt{a186424FalseTheta}, \texttt{a186424Poly} (pinned) & Exported \\
+Theorem~\ref{thm:closed-form} & \texttt{a186424\_closed\_form} (pinned), \texttt{a186424\_oeis\_spot\_20} & Exported, proved \\
+Theorem~\ref{thm:base} & \texttt{a186424\_base\_series} (pinned) & Exported, proved \\
+Theorem~\ref{thm:poly}(a)--(c) & \texttt{a186424Poly\_closed\_form}, \texttt{a186424Poly\_empirical\_values}, \texttt{a186424Poly\_degree\_and\_monic} (all pinned) & Exported, proved \\
+Theorem~\ref{thm:family} & \texttt{a186424\_family\_explicit}, \texttt{a186424\_family} ($\exists!$), \texttt{a186424\_family\_exists} ($\exists$) (all pinned) & Exported, proved \\
+$N = 0$ slip \& $N = 6$ & \texttt{a186424\_n0\_zero\_poly\_fails}, \texttt{a186424Poly\_five\_and\_six} & Exported, proved \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\noindent\textbf{Audit summary.}
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \emph{Clean module build:} Rebuilding \nolinkurl{MathProofs.SeamB.A186424.Solution} from clean module outputs exits with code~$0$ (1{,}937 jobs, $3.4\text{ s}$ module build, $0$ warnings, $0$ errors).
+\item \emph{Independent kernel replay:} Running \texttt{lake env leanchecker -{}-fresh -{}-verbose} on the compiled module \nolinkurl{MathProofs.SeamB.A186424.Solution} exits with code~$0$ ($170.37\text{ s}$ wall).
+\item \emph{Axiom audit:} \texttt{\#print axioms} on all 11 exported theorems and a programmatic \texttt{CoreM} \texttt{collectAxioms} sweep across all 216 module declarations (38 public and 178 private) confirm \texttt{DISALLOWED\_AXIOMS = []}: every theorem depends solely on \texttt{[propext, Classical.choice, Quot.sound]}.
+\item \emph{Statement identity:} Programmatic Lean \texttt{Environment} comparison confirms exact expression-level identity of both type and body across all 5 pinned definitions and byte-for-byte identical type expressions across all 8 pinned theorems between \texttt{Statement.lean} and \texttt{Solution.lean}. (The external \texttt{comparator} tool targeting Lean~\texttt{v4.36.0} was not run because this repository pins \texttt{v4.34.1} and \texttt{comparator} is not installed on the build host; this gap is recorded in \texttt{VERIFICATION.md}.)
+\item \emph{Lexical trust-escape scan:} $0$ hits in \texttt{Solution.lean} for \texttt{sorry}, \texttt{admit}, \texttt{axiom}, \texttt{native\_decide}, \texttt{ofReduceBool}, \texttt{implemented\_by}, \texttt{@[extern}, or \texttt{unsafe}.
+\end{enumerate}
+
+{\small
+\begin{thebibliography}{99}\setlength{\itemsep}{2pt}
+\raggedright
+
+\bibitem{oeis186424}
+R.\ Zumkeller and P.\ Bala, \emph{OEIS sequence \seq{A186424}}: Odd terms in \seq{A186423}. Authored by R.\ Zumkeller (February~21, 2011); conjectural series and $N$-parameterized polynomial family by P.\ Bala (February~13, 2021); live revision \#52 (December~29, 2025). \url{https://oeis.org/A186424}.
+
+\bibitem{oeis186423}
+R.\ Zumkeller, \emph{OEIS sequence \seq{A186423}}: Partial sums of \seq{A186421}. Live revision \#30 (September~22, 2025). \url{https://oeis.org/A186423}.
+
+\bibitem{oeis186421}
+R.\ Zumkeller, \emph{OEIS sequence \seq{A186421}}: Even numbers interleaved with repeated odd numbers. Live revision \#48 (January~31, 2023). \url{https://oeis.org/A186421}.
+
+\bibitem{oeis001082}
+N.~J.~A.\ Sloane, \emph{OEIS sequence \seq{A001082}}: Generalized octagonal numbers $k(3k - 2)$, $k = 0, \pm 1, \pm 2, \dots$. Includes comment by P.\ Bala (November~26, 2024) citing Chen~\cite{chen2014}; live revision \#214 (October~19, 2026). \url{https://oeis.org/A001082}.
+
+\bibitem{oeis053253}
+G.~E.\ Andrews and M.\ Somos, \emph{OEIS sequence \seq{A053253}}: Coefficients of the ``3rd-order'' mock theta function $\omega(q)$. Live revision \#71 (October~6, 2026). \url{https://oeis.org/A053253}.
+
+\bibitem{oeis203568}
+M.\ Somos and P.\ Bala, \emph{OEIS sequence \seq{A203568}}: $a(n) = \seq{A026837}(n) - \seq{A026838}(n)$. Formula and $N$-family conjecture by P.\ Bala (February~11, 2021); live revision \#52 (February~18, 2021). \url{https://oeis.org/A203568}.
+
+\bibitem{chen2014}
+S.~H.~L.\ Chen, \emph{Some identities for the false theta functions}, Open Journal of Discrete Mathematics \textbf{4}(2) (2014), 31--37, Corollary~3.14, Eqs.~(22)--(23). \url{https://doi.org/10.4236/ojdm.2014.42006}.
+
+\bibitem{andrews1979}
+G.~E.\ Andrews, \emph{An introduction to Ramanujan's ``Lost'' Notebook}, American Mathematical Monthly \textbf{86}(2) (1979), 89--108.
+
+\bibitem{rogers1917}
+L.~J.\ Rogers, \emph{On two theorems of combinatory analysis and some allied identities}, Proceedings of the London Mathematical Society \textbf{s2-16}(1) (1917), 315--336 (p.~333~(4)). \url{https://doi.org/10.1112/plms/s2-16.1.315}.
+
+\bibitem{msz2022}
+J.\ McLaughlin, A.~V.\ Sills, and P.\ Zimmer, \emph{Rogers--Ramanujan--Slater Type Identities}, Electronic Journal of Combinatorics, Dynamic Survey \#DS15 (2022), \S5.3, p.~38, Eq.~(5.3.2). \url{https://www.combinatorics.org/DS15}.
+
+\bibitem{mathlib4}
+The mathlib Community, \emph{The Lean Mathematical Library (\texttt{Mathlib4})}, commit \texttt{d13f23b723b8a846827a245b89c10fc7d3f11612} (\texttt{v4.34.1}), 2026.
+
+\end{thebibliography}
+}
+
+\end{document}
