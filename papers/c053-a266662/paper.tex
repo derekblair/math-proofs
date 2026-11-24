@@ -1,0 +1,555 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\llbracket}{[\![}
+\newcommand{\rrbracket}{]\!]}
+
+\hypersetup{
+  pdftitle={Transient Defect Widening and a Persistent Right-Edge Glider in Wolfram Rule 47: Proof and Lean 4 Formalization of Colin Barker's OEIS A266662 Conjectures},
+  pdfauthor={Derek Blair}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\seq}[1]{\texttt{#1}}
+\newcommand{\ruleFS}{\operatorname{rule}_{47}}
+\newcommand{\ca}{\operatorname{ca}}
+
+\setlength{\emergencystretch}{2em}
+
+\title{Transient Defect Widening and a Persistent Right-Edge Glider\\in Wolfram Rule 47:\\[2pt]
+\large Proof and Lean~4 Formalization of Colin Barker's OEIS \seq{A266662} Conjectures}
+\author{Derek Blair}
+\date{24 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $\ca : \N \times \Z \to \{0, 1\}$ denote the bi-infinite evolution of Wolfram's Elementary Cellular Automaton Rule~47 ($47 = 00101111_2$) starting from a single ON cell at the origin, $\ca(0, j) = \mathbf{1}_{j=0}$, and let $a(n) = \seq{A266662}(n)$ count the ON cells inside the active light-cone window $[-n, n]$ at generation $n \ge 0$. In January~2016 and April~2019, Colin Barker posted a three-part conjecture bundle on OEIS~\seq{A266662}: the closed form $a(n) = \bigl(-2(-1)^n n + 2n + 3(-1)^n + 1\bigr)/2$ for all $n > 1$, the four-step linear recurrence $a(n) = 2a(n-2) - a(n-4)$ for all $n > 5$, and the rational ordinary generating function $\sum_{n \ge 0} a(n)\,X^n = (1 + 2X + X^3 - X^4 + X^5)/\bigl((1 - X)^2(1 + X)^2\bigr)$.
+
+We prove Barker's full conjecture bundle unconditionally together with the bit-index truth-table identity, the explicit initial values $a(0) = 1$ and $a(1) = 2$, and exact sharpness of both domain guards (failing at $n = 0, 1$ for the closed form and at $n = 4, 5$ for the recurrence). Via the minimal Boolean normal form $\ruleFS(l, c, r) = (\neg l) \lor (\neg c \land r)$, Rule~47 breaks left-right symmetry and undergoes a two-step transient before locking onto a persistent glider: at $n = 1$ it forms a \emph{single-cell} OFF defect at $\{1\}$ against an all-ON exterior ($a(1) = 2$), and at $n = 2$ bit~$5$ ($101 \mapsto 1$) widens that defect into a \emph{persistent two-cell glider} at $\{n - 1, n\}$ moving rightward at speed~$1$ against a period-$2$ alternating exterior on all of $\Z$. Consequently, for every $n \ge 2$ and $j \in \Z$, $\ca(n, j) = \operatorname{xor}\bigl(\mathbf{1}_{2 \nmid n},\, \mathbf{1}_{j \in \{n-1, n\}}\bigr)$, yielding $a(2m) = 2$ and $a(2m + 1) = 4m + 1$ for all $m \ge 1$, from which Barker's closed form, four-step recurrence, and cleared-unit-denominator identity in $\Q\llbracket X \rrbracket$ follow directly. We further prove that all eight local triples occur during $n \in \{0, 1\}$---showing that Rule~47's single-seed equivalence class on $\Z$ is the singleton $\{47\}$, in sharp contrast to Rule~11's two-rule class $\{11, 43\}$---while both isolated-center triples $(0, 1, 0)$ and $(1, 0, 1)$ vanish permanently for $n \ge 2$, structurally explaining R.~J.\ Mathar's cross-identity $\seq{A266662}(n) = \seq{A266256}(n)$ ($n > 1$). We also construct an $O(n^2)$ causal-cone mirror verifying $a(0), \dots, a(12)$ by pure kernel reduction and formalize both light-cone and fixed-box zero-clamping traps (both failing already at $n = 2$ with count~$3 \ne 2$). Every theorem is machine-checked in Lean~4 (\texttt{v4.34.1}, Mathlib \texttt{d13f23b7}) with zero \texttt{sorry}s, allowlist-only axioms, independent \texttt{leanchecker} kernel replay, and zero computational trust escapes.
+\end{abstract}
+
+\section{Introduction, Primary Sources, and Convention Audit}
+
+\subsection{Wolfram Rule 47 and OEIS \texorpdfstring{\seq{A266662}}{A266662}}
+
+In January~2016, Robert Price cataloged the single-seed evolution of Wolfram's Elementary Cellular Automaton (ECA) Rule~47~\cite{wolfram2002,mathworldECA} across seven companion OEIS entries \seq{A266659}--\seq{A266665}. Specifically, \seq{A266659}~\cite{oeis266659} records the triangle of cell states in the active light-cone window $[-n, n]$, \seq{A266660} and \seq{A266661}~\cite{oeis266660,oeis266661} encode the row bitstrings in base~$2$ and base~$10$, \seq{A266664}~\cite{oeis266664} counts OFF (white) cells, and \seq{A266662}~\cite{oeis266662} counts ON (black) cells in row~$n$:
+\[
+a(n) = 1, 2, 2, 5, 2, 9, 2, 13, 2, 17, 2, 21, 2, 25, 2, 29, 2, 33, 2, 37, \dots \qquad (n \ge 0).
+\]
+
+Under Wolfram's standard binary rule numbering~\cite{wolfram2002}, an ECA rule code $c \in \{0, \dots, 255\}$ maps a binary neighborhood $(l, c_0, r) \in \{0, 1\}^3$ ($1 = \text{ON/black}$, $0 = \text{OFF/white}$) to bit $4l + 2c_0 + r$ of~$c$. For Rule~47,
+\[
+47 = 32 + 8 + 4 + 2 + 1 = 00101111_2,
+\]
+whose explicit $8$-entry truth table appears in Table~\ref{tab:rule47-tt}.
+
+\begin{table}[ht]
+\centering
+\caption{Wolfram Elementary Cellular Automaton Rule~47 ($47 = 00101111_2$) truth table. Output is~$1$ if and only if $l = 0$ or $(c = 0 \land r = 1)$, i.e., $\ruleFS(l, c, r) = (\neg l) \lor (\neg c \land r)$.}
+\label{tab:rule47-tt}
+\smallskip
+{\small
+\begin{tabular}{@{}c c c c@{}}
+\toprule
+Neighborhood $(l, c, r)$ & Binary index $4l + 2c + r$ & Bit of $47$ & $\ruleFS(l, c, r)$ \\
+\midrule
+$(1, 1, 1)$ & $7$ & $0$ & $0$ \\
+$(1, 1, 0)$ & $6$ & $0$ & $0$ \\
+$(1, 0, 1)$ & $5$ & $1$ & $1$ \\
+$(1, 0, 0)$ & $4$ & $0$ & $0$ \\
+$(0, 1, 1)$ & $3$ & $1$ & $1$ \\
+$(0, 1, 0)$ & $2$ & $1$ & $1$ \\
+$(0, 0, 1)$ & $1$ & $1$ & $1$ \\
+$(0, 0, 0)$ & $0$ & $1$ & $1$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+In the \texttt{\%F} section of OEIS~\seq{A266662} (live revision~\#20, February~16, 2025~\cite{oeis266662}), Colin Barker posted the following three-part conjecture bundle on January~3, 2016 and April~18, 2019:
+\begin{quote}\itshape
+Conjectures from Colin Barker, Jan 03 2016 and Apr 18 2019:\\
+$a(n) = (-2(-1)^n n + 2n + 3(-1)^n + 1)/2$ for $n > 1$.\\
+$a(n) = 2a(n - 2) - a(n - 4)$ for $n > 5$.\\
+G.f.: $(1 + 2x + x^3 - x^4 + x^5) / ((1 - x)^2(1 + x)^2)$.
+\end{quote}
+Table~\ref{tab:small-n} summarizes generations $n = 0, \dots, 7$, illustrating the single-cell transient defect at $n = 1$, the lock-in of the two-cell glider at $n = 2$, the period-$2$ alternating exterior, the ON-cell counts $a(n)$, Barker's three formulas, and the complementary OFF-cell counts $a_{\mathrm{OFF}}(n) = \seq{A266664}(n)$.
+
+\begin{table}[ht]
+\centering
+\caption{Generations $n = 0, \dots, 7$ of Rule~47 evolved on all of $\Z$ from the single ON cell at $j = 0$, alongside Barker's closed form, four-step recurrence, generating function coefficients, and companion OFF-cell count $a_{\mathrm{OFF}}(n) = \seq{A266664}(n)$.}
+\label{tab:small-n}
+\smallskip
+{\small
+\begin{tabular}{@{}r c l r r c r r@{}}
+\toprule
+$n$ & Exterior & Window $[-n, n]$ & $a(n)$ & Closed form & $2a(n-2) - a(n-4)$ & $[X^n]F(X)$ & $a_{\mathrm{OFF}}(n)$ \\
+\midrule
+$0$ & $0$ & \texttt{1} & $1$ & $2^*$ & --- & $1$ & $0$ \\
+$1$ & $1$ & \texttt{110} & $2$ & $1^*$ & --- & $2$ & $1$ \\
+$2$ & $0$ & \texttt{00011} & $2$ & $2$ & --- & $2$ & $3$ \\
+$3$ & $1$ & \texttt{1111100} & $5$ & $5$ & --- & $5$ & $2$ \\
+$4$ & $0$ & \texttt{000000011} & $2$ & $2$ & $3^\dagger$ & $2$ & $7$ \\
+$5$ & $1$ & \texttt{11111111100} & $9$ & $9$ & $8^\dagger$ & $9$ & $2$ \\
+$6$ & $0$ & \texttt{0000000000011} & $2$ & $2$ & $2$ & $2$ & $11$ \\
+$7$ & $1$ & \texttt{111111111111100} & $13$ & $13$ & $13$ & $13$ & $2$ \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+{\footnotesize ${}^*$\,$n = 0, 1$ are excluded by $n > 1$.\quad ${}^\dagger$\,$n = 4$ gives $2(2) - 1 = 3 \ne 2$ and $n = 5$ gives $2(5) - 2 = 8 \ne 9$; both are excluded by $n > 5$.}
+}
+\end{table}
+
+\subsection{Convention Audit and Formalization Traps}
+\label{sec:conventions}
+
+A first-hand audit of Robert Price's Mathematica program (\texttt{\%t}), offset (\texttt{\%O A266662 0,2}), companion triangle \seq{A266659}, and b-file \texttt{b266662.txt} ($n = 0, \dots, 1000$)~\cite{oeis266662} establishes five conventions that must be preserved verbatim in any faithful specification:
+\begin{enumerate}
+\item \textbf{Evolve-on-$\Z$-first semantics:} Price's program invokes \texttt{CellularAutomaton[47, \{\{1\},0\}, rows-1, \{All,All\}]} before slicing \texttt{Take[ca[[k]], \{rows-k+1, rows+k-1\}]}. Because $\ruleFS(0,0,0) = 1$ and $\ruleFS(1,1,1) = 0$, the uniform exterior $|j| > n$ alternates $0 \mapsto 1 \mapsto 0 \mapsto \cdots$ on every step. Both natural zero-clamping shortcuts fail immediately at $n = 2$:
+\begin{itemize}
+\item \emph{Trap~A (light-cone zero-clamping):} clamping $|j| > m$ to $0$ between steps feeds $(0,0,1) \mapsto 1$, $(0,1,1) \mapsto 1$, $(1,1,0) \mapsto 0$, $(1,0,0) \mapsto 0$, $(0,0,0) \mapsto 1$ into row~$2$ from row~$1 = \mathtt{110}$, turning row~$2$ from \texttt{00011} ($a(2) = 2$) into \texttt{11001} (count~$3$).
+\item \emph{Trap~B (fixed-box $[-n, n]$ zero-clamping):} evolving on the fixed box $[-2, 2]$ with zero exterior yields row~$1 = \mathtt{11101}$ and then row~$2 = \mathtt{10011}$ (count~$3 \ne 2 = a(2)$) because $j = -2$ reads $(0, 1, 1) \mapsto 1$ instead of $(1, 1, 1) \mapsto 0$.
+\end{itemize}
+Both traps are formalized in Proposition~\ref{prop:clamping-traps}. Hence $\ca : \N \to \Z \to \mathsf{Bool}$ must evolve on all of $\Z$ first and restrict to $\mathrm{Icc}(-n, n)$ only inside $a(n)$.
+\item \textbf{Wolfram bit ordering and chirality:} Bit $4l + 2c + r$ of $47$ is confirmed against \seq{A266659} rows $0\text{--}3$ (\texttt{1}, \texttt{110}, \texttt{00011}, \texttt{1111100}); reversing $l$ and $r$ gives mirror Rule~117 (\seq{A267272}--\seq{A267274}), which flips row profiles (\texttt{110} $\leftrightarrow$ \texttt{011}) while preserving symmetric window counts. Both the explicit $8$-branch truth table $\ruleFS$ and its equivalence with $\mathrm{Nat.testBit}\;47\;(4l + 2c + r)$ are pinned verbatim.
+\item \textbf{Exact guard boundaries:} Offset is $0$ with both $a(0) = 1$ and $a(1) = 2$ pinned explicitly. The guard $n > 1$ in the closed form is sharp at both excluded indices: Barker's formula yields $2 \ne 1 = a(0)$ at $n = 0$ and $1 \ne 2 = a(1)$ at $n = 1$. The guard $n > 5$ in the four-step recurrence is likewise sharp at both boundary indices: $2a(2) - a(0) = 3 \ne 2 = a(4)$ at $n = 4$ (producing the $-X^4$ term in the generating function numerator) and $2a(3) - a(1) = 8 \ne 9 = a(5)$ at $n = 5$ (producing the $+X^5$ term).
+\item \textbf{Non-truncating arithmetic and unit-denominator formal power series:} The closed form clears division by~$2$ in $\Z$ ($2 a(n) = -2(-1)^n n + 2n + 3(-1)^n + 1$), the recurrence casts $a(\cdot)$ to $\Z$ so $\N$-truncating subtraction cannot mask sign errors, and the generating function is stated in cleared-denominator form in $\Q\llbracket X \rrbracket$. Because $(1 - X)^2(1 + X)^2$ has constant coefficient $1 \ne 0$, it is a unit in $\Q\llbracket X \rrbracket$ (Corollary~\ref{cor:unit-inv}), making the cleared identity algebraically equivalent to the rational quotient.
+\item \textbf{Scope boundary (Mathar's cross-identity):} R.~J.\ Mathar's separate \texttt{\%F} line ``$a(n) = \seq{A266256}(n)$, $n > 1$'' (January~10, 2016) is excluded from the pinned standalone \seq{A266662} contract (\texttt{delta\_vs\_source: NONE} on Barker's bundle) so there are zero cross-module sequence dependencies; Section~\ref{sec:structure} explains its dynamical origin directly from Rule~47's post-transient neighborhood avoidance.
+\end{enumerate}
+
+\subsection{Prior-Art Boundary}
+\label{sec:prior-art}
+
+Comprehensive literature and database audits conducted on 14~November~2026 (OEIS \seq{A266662} plus seven ECA siblings, Rule~47 / Rule~117 clusters \seq{A266659}--\seq{A266665} and \seq{A267272}--\seq{A267274}, arXiv, OpenAlex, and web search) and re-verified live on 24~November~2026 (live Google web searches via \texttt{search\_web} and Firecrawl, live OEIS records, arXiv API, OpenAlex API, Zenodo API, and GitHub code search) confirm that Barker's \seq{A266662} conjecture bundle remains unproved in the published literature and formal proof libraries:
+\begin{itemize}
+\item On OEIS, \seq{A266662} remains at revision~\#20 (February~16, 2025) with Barker's block explicitly labeled \emph{Conjectures from Colin Barker}, as do \seq{A266663}, \seq{A266664} (\#21), and \seq{A266665}; companion triangle \seq{A266659} (\#12, August~8, 2025) lists rows with zero formulas or proofs.
+\item Sloane's survey on ON-cell counts in cellular automata~\cite{sloane2015} treats modulo-$2$ linear (``odd-rule'') automata and Rules~110, 614, 750, and 780, with zero mention of Rule~47 or \seq{A266662}.
+\item Zero hits for \seq{A266662} exist on arXiv, OpenAlex, Zenodo, or Mathlib~4. Public GitHub codebases referencing \seq{A266662} ({\small\nolinkurl{archmageirvine/joeis}}, {\small\nolinkurl{loda-lang/loda-programs}}, {\small\nolinkurl{provables/sequencelib}}, and {\small\nolinkurl{ai4reason/oeis-atp-benchmark}}) were inspected first-hand and hold only numerical CA simulators or term-fitting synthetic loop programs (checked at most to $n \le 100$), with no formal Rule~47 definition and no proof connecting Rule~47 evolution to Barker's formulas.
+\end{itemize}
+
+\subsection{Main Theorem}
+
+\begin{definition}[Rule~47, bi-infinite $\Z$-evolution, and $a(n) = \seq{A266662}(n)$]
+\label{def:c053}
+Define $\ruleFS : \mathsf{Bool}^3 \to \mathsf{Bool}$ by the explicit $8$-branch truth table mapping $(\mathtt{false}, \mathtt{false}, \mathtt{false})$, $(\mathtt{false}, \mathtt{false}, \mathtt{true})$, $(\mathtt{false}, \mathtt{true}, \mathtt{false})$, $(\mathtt{false}, \mathtt{true}, \mathtt{true})$, and $(\mathtt{true}, \mathtt{false}, \mathtt{true})$ to $\mathtt{true}$ and the remaining three triples to $\mathtt{false}$. Define the global evolution $\ca : \N \to \Z \to \mathsf{Bool}$ recursively by
+\[
+\ca(0, j) := \mathrm{decide}(j = 0), \qquad
+\ca(n + 1, j) := \ruleFS\bigl(\ca(n, j - 1),\, \ca(n, j),\, \ca(n, j + 1)\bigr).
+\]
+For every $n \in \N$, define the ON-cell count on the active window $[-n, n] \subset \Z$ by
+\[
+a(n) := \bigl|\{j \in \Z \cap [-n, n] : \ca(n, j) = \mathtt{true}\}\bigr|.
+\]
+\end{definition}
+
+\begin{theorem}[Main Theorem --- Resolution of Barker's \seq{A266662} Bundle]
+\label{thm:main}
+Let $\ruleFS$, $\ca$, and $a$ be as in Definition~\ref{def:c053}. Then:
+\begin{enumerate}
+\item[\textup{(0)}] \textbf{Bit-index truth table:} For all $l, c, r \in \mathsf{Bool}$,
+\[
+\ruleFS(l, c, r) = (47 : \N).\mathrm{testBit}\;\bigl(4 \cdot l.\mathrm{toNat} + 2 \cdot c.\mathrm{toNat} + r.\mathrm{toNat}\bigr).
+\]
+\item[\textup{(1)}] \textbf{Initial values:} $a(0) = 1$ and $a(1) = 2$.
+\item[\textup{(2)}] \textbf{Closed form:} For every $n \in \N$ with $n > 1$,
+\[
+2 a(n) = -2(-1)^n n + 2n + 3(-1)^n + 1 \qquad \text{in }\Z.
+\]
+\item[\textup{(3)}] \textbf{Four-step linear recurrence:} For every $n \in \N$ with $n > 5$,
+\[
+a(n) = 2a(n - 2) - a(n - 4) \qquad \text{in }\Z.
+\]
+\item[\textup{(4)}] \textbf{Ordinary generating function:} Let $F(X) := \sum_{n=0}^{\infty} a(n)\,X^n \in \Q\llbracket X \rrbracket$. Then
+\[
+(1 - X)^2 (1 + X)^2 \, F(X) = 1 + 2X + X^3 - X^4 + X^5 \qquad \text{in }\Q\llbracket X \rrbracket,
+\]
+and since $(1 - X)^2(1 + X)^2$ is a unit in $\Q\llbracket X \rrbracket$, equivalently $F(X) = (1 + 2X + X^3 - X^4 + X^5)\cdot \bigl((1 - X)^2(1 + X)^2\bigr)^{-1}$.
+\end{enumerate}
+Moreover, the guards $n > 1$ in \textup{(2)} (failing at $n = 0, 1$) and $n > 5$ in \textup{(3)} (failing at $n = 4, 5$) are both sharp.
+\end{theorem}
+
+\section{Transient Widening and Global \texorpdfstring{$\Z$}{Z}-Invariant}
+
+\begin{lemma}[Bit-index equivalence, Boolean normal form, and chirality]
+\label{lem:rule47}
+For all $(l, c, r) \in \mathsf{Bool}^3$:
+\begin{enumerate}
+\item[\textup{(a)}] $\ruleFS(l, c, r) = (47 : \N).\mathrm{testBit}\;(4 \cdot l.\mathrm{toNat} + 2 \cdot c.\mathrm{toNat} + r.\mathrm{toNat})$ (Theorem~\ref{thm:main}\textup{(0)});
+\item[\textup{(b)}] $\ruleFS(l, c, r) = (\neg l) \lor (\neg c \land r)$;
+\item[\textup{(c)}] $\ruleFS$ breaks left-right reflection symmetry:
+\[
+\ruleFS(\mathtt{false}, \mathtt{false}, \mathtt{true}) = \mathtt{true} \ne \mathtt{false} = \ruleFS(\mathtt{true}, \mathtt{false}, \mathtt{false}).
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Exhaustive evaluation over all $2^3 = 8$ Boolean triples $(l, c, r)$ checks (a) and (b) directly against $47 = 00101111_2$: all four triples with $l = \mathtt{false}$ map to $\mathtt{true}$, and among the four triples with $l = \mathtt{true}$, solely $(\mathtt{true}, \mathtt{false}, \mathtt{true})$ maps to $\mathtt{true}$, yielding $(\neg l) \lor (\neg c \land r)$. Part~(c) compares bit~$1$ ($1$) with bit~$4$ ($0$).
+\end{proof}
+
+\begin{proposition}[Transient generations $n = 1$ and $n = 2$ on $\Z$]
+\label{prop:ca-one-two}
+For every $j \in \Z$:
+\begin{align}
+\ca(1, j) &= \mathrm{decide}(j \ne 1), \label{eq:ca-one}\\
+\ca(2, j) &= \mathrm{decide}(j = 1 \lor j = 2). \label{eq:ca-two}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+For~\eqref{eq:ca-one}, by Definition~\ref{def:c053} and Lemma~\ref{lem:rule47}(b), $\ca(1, j) = (\neg \mathrm{decide}(j - 1 = 0)) \lor (\neg \mathrm{decide}(j = 0) \land \mathrm{decide}(j + 1 = 0))$.
+\begin{itemize}
+\item If $j = 1$, then $(j - 1, j, j + 1) = (0, 1, 2)$, so $(l, c, r) = (\mathtt{true}, \mathtt{false}, \mathtt{false}) \mapsto \mathtt{false} = \mathrm{decide}(1 \ne 1)$.
+\item If $j \ne 1$, then $j - 1 \ne 0$, so $l = \mathtt{false}$ and $(\neg \mathtt{false}) \lor (\neg c \land r) = \mathtt{true} = \mathrm{decide}(j \ne 1)$.
+\end{itemize}
+
+For~\eqref{eq:ca-two}, apply~\eqref{eq:ca-one} and Lemma~\ref{lem:rule47}(b) to $\ca(2, j) = (\neg \mathrm{decide}(j - 1 \ne 1)) \lor (\neg \mathrm{decide}(j \ne 1) \land \mathrm{decide}(j + 1 \ne 1))$:
+\begin{itemize}
+\item If $j = 1$, then $(l, c, r) = (\mathtt{true}, \mathtt{false}, \mathtt{true}) \mapsto \mathtt{true}$ (bit~$5$ fires at the isolated OFF cell $j = 1$).
+\item If $j = 2$, then $(l, c, r) = (\mathtt{false}, \mathtt{true}, \mathtt{true}) \mapsto \mathtt{true}$ (bit~$3$).
+\item If $j \notin \{1, 2\}$, then $j - 1 \ne 1$ and $j \ne 1$, so $l = \mathtt{true}$ and $c = \mathtt{true}$, whence $(\neg \mathtt{true}) \lor (\neg \mathtt{true} \land r) = \mathtt{false}$. \qedhere
+\end{itemize}
+\end{proof}
+
+Once the isolated-OFF triple $(1, 0, 1)$ at $n = 1, j = 1$ widens the defect from $\{1\}$ to the adjacent pair $\{1, 2\}$ at $n = 2$, the resulting two-cell defect never widens or annihilates: on every subsequent step it advances rightward by $+1$ while inverting polarity together with the uniform infinite exterior.
+
+\begin{lemma}[Single-step glider transitions on $\Z$]
+\label{lem:glider-steps}
+Let $n \in \N$.
+\begin{enumerate}
+\item[\textup{(a)}] \emph{Even-to-odd transition:} If $\ca(n, j) = \mathrm{decide}(j = n - 1 \lor j = n)$ for all $j \in \Z$, then
+\[
+\ca(n + 1, j) = !\mathrm{decide}(j = n \lor j = n + 1) \qquad (\forall j \in \Z).
+\]
+\item[\textup{(b)}] \emph{Odd-to-even transition:} If $\ca(n, j) = !\mathrm{decide}(j = n - 1 \lor j = n)$ for all $j \in \Z$, then
+\[
+\ca(n + 1, j) = \mathrm{decide}(j = n \lor j = n + 1) \qquad (\forall j \in \Z).
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Fix $j \in \Z$ and write $(l, c, r) = (\ca(n, j - 1), \ca(n, j), \ca(n, j + 1))$. By Lemma~\ref{lem:rule47}(b), $\ca(n + 1, j) = (\neg l) \lor (\neg c \land r)$.
+
+\emph{Part~(a).} Under the hypothesis, $\ca(n, i) = \mathtt{true} \iff i \in \{n - 1, n\}$.
+\begin{itemize}
+\item If $j = n$, then $(j - 1, j) = (n - 1, n)$, so $l = \mathtt{true}$ and $c = \mathtt{true}$, giving $(\neg \mathtt{true}) \lor (\neg \mathtt{true} \land r) = \mathtt{false}$.
+\item If $j = n + 1$, then $(j - 1, j, j + 1) = (n, n + 1, n + 2)$, so $(l, c, r) = (\mathtt{true}, \mathtt{false}, \mathtt{false}) \mapsto \mathtt{false}$.
+\item If $j \notin \{n, n + 1\}$, then $j - 1 \notin \{n - 1, n\}$, so $l = \mathtt{false}$ and $(\neg \mathtt{false}) \lor (\neg c \land r) = \mathtt{true}$.
+\end{itemize}
+Hence $\ca(n + 1, j) = !\mathrm{decide}(j = n \lor j = n + 1)$.
+
+\emph{Part~(b).} Under the hypothesis, $\ca(n, i) = \mathtt{false} \iff i \in \{n - 1, n\}$.
+\begin{itemize}
+\item If $j \in \{n, n + 1\}$, then $j - 1 \in \{n - 1, n\}$, so $l = \mathtt{false}$ and $\ca(n + 1, j) = \mathtt{true}$.
+\item If $j = n - 1$, then $(j - 1, j, j + 1) = (n - 2, n - 1, n)$, so $(l, c, r) = (\mathtt{true}, \mathtt{false}, \mathtt{false}) \mapsto \mathtt{false}$.
+\item If $j \notin \{n - 1, n, n + 1\}$, then $j - 1 \notin \{n - 1, n\}$ ($l = \mathtt{true}$) and $j \notin \{n - 1, n\}$ ($c = \mathtt{true}$), so $(\neg \mathtt{true}) \lor (\neg \mathtt{true} \land r) = \mathtt{false}$.
+\end{itemize}
+Hence $\ca(n + 1, j) = \mathrm{decide}(j = n \lor j = n + 1)$.
+\end{proof}
+
+\begin{theorem}[Global glider + alternating-exterior invariant on $\Z$ for $n \ge 2$]
+\label{thm:global-inv}
+For every $m \ge 1$ and every $j \in \Z$:
+\begin{align}
+\ca(2m, j) &= \mathrm{decide}(j = 2m - 1 \lor j = 2m), \label{eq:inv-even}\\
+\ca(2m + 1, j) &= !\mathrm{decide}(j = 2m \lor j = 2m + 1). \label{eq:inv-odd}
+\end{align}
+Equivalently, for every $n \in \N$ with $n \ge 2$ and every $j \in \Z$,
+\begin{equation}
+\label{eq:inv-xor}
+\ca(n, j) = \operatorname{xor}\bigl(\mathrm{decide}(\mathrm{Odd}(n)),\, \mathrm{decide}(j = n - 1 \lor j = n)\bigr).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Write $m = k + 1$ ($k \in \N$) and induct on $k$ for the coupled invariant at $(2k + 2, 2k + 3)$:
+\begin{itemize}
+\item \emph{Base case $k = 0$ ($m = 1$):} Equation~\eqref{eq:inv-even} at $2(1) = 2$ is Proposition~\ref{prop:ca-one-two}\eqref{eq:ca-two}, and applying Lemma~\ref{lem:glider-steps}(a) at $n = 2$ yields~\eqref{eq:inv-odd} at $2(1) + 1 = 3$.
+\item \emph{Inductive step $k \mapsto k + 1$:} Assume~\eqref{eq:inv-odd} holds at $2k + 3$, i.e., $\ca(2k + 3, j) = !\mathrm{decide}(j = (2k + 3) - 1 \lor j = 2k + 3)$ for all $j \in \Z$. Applying Lemma~\ref{lem:glider-steps}(b) at $n = 2k + 3$ gives~\eqref{eq:inv-even} at $2(k + 1) + 2 = 2k + 4$, and applying Lemma~\ref{lem:glider-steps}(a) at $n = 2k + 4$ gives~\eqref{eq:inv-odd} at $2(k + 1) + 3 = 2k + 5$.
+\end{itemize}
+For~\eqref{eq:inv-xor}, split $n \ge 2$ on parity: if $n = 2m$ ($m \ge 1$), $\mathrm{decide}(\mathrm{Odd}(n)) = \mathtt{false}$ and $\operatorname{xor}(\mathtt{false}, b) = b$, matching~\eqref{eq:inv-even}; if $n = 2m + 1$ ($m \ge 1$), $\mathrm{decide}(\mathrm{Odd}(n)) = \mathtt{true}$ and $\operatorname{xor}(\mathtt{true}, b) = !b$, matching~\eqref{eq:inv-odd}.
+\end{proof}
+
+\section{Window Counts, Closed Form, Recurrence, and Guard Sharpness}
+
+\begin{proposition}[Exact parity counts and ON/OFF complement law]
+\label{prop:counts}
+For every $n \in \N$, the integer interval $[-n, n] \cap \Z$ has cardinality $2n + 1$. Moreover:
+\begin{enumerate}
+\item[\textup{(a)}] $a(0) = 1$ and $a(1) = 2$.
+\item[\textup{(b)}] For every $m \ge 1$, $a(2m) = 2$.
+\item[\textup{(c)}] For every $m \ge 1$, $a(2m + 1) = 4m + 1 = 2(2m + 1) - 1$.
+\item[\textup{(d)}] Letting $a_{\mathrm{OFF}}(n) := |\{j \in [-n, n] \cap \Z : \ca(n, j) = \mathtt{false}\}|$ (\seq{A266664}), we have $a(n) + a_{\mathrm{OFF}}(n) = 2n + 1$ for every $n \in \N$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}
+\item[\textup{(a)}] At $n = 0$, $[-0, 0] \cap \Z = \{0\}$ and $\ca(0, 0) = \mathtt{true}$, giving $a(0) = |\{0\}| = 1$. At $n = 1$, by Proposition~\ref{prop:ca-one-two}\eqref{eq:ca-one}, $\{j \in [-1, 1] \cap \Z : \ca(1, j) = \mathtt{true}\} = \{j \in [-1, 1] \cap \Z : j \ne 1\} = \{-1, 0\}$, giving $a(1) = |\{-1, 0\}| = 2$.
+\item[\textup{(b)}] Let $m \ge 1$. By Theorem~\ref{thm:global-inv}, $\ca(2m, j) = \mathtt{true} \iff j \in \{2m - 1, 2m\}$. Since $m \ge 1$, we have $-2m \le 2m - 1 < 2m$, so $\{2m - 1, 2m\} \subseteq [-2m, 2m]$, giving $a(2m) = |\{2m - 1, 2m\}| = 2$.
+\item[\textup{(c)}] Let $m \ge 1$. By Theorem~\ref{thm:global-inv}, for $j \in \Z$,
+\[
+\bigl(-(2m + 1) \le j \le 2m + 1\bigr) \land \neg(j = 2m \lor j = 2m + 1) \iff -(2m + 1) \le j \le 2m - 1.
+\]
+Hence the filtered finset equals $[-(2m + 1), 2m - 1] \cap \Z$, whose cardinality is $(2m - 1) + 1 - (-(2m + 1)) = 4m + 1$.
+\item[\textup{(d)}] Every $j \in [-n, n] \cap \Z$ satisfies $\ca(n, j) = \mathtt{true}$ or $\ca(n, j) = \mathtt{false}$ exclusively, partitioning $[-n, n] \cap \Z$ into two disjoint subsets whose cardinalities sum to $|[-n, n] \cap \Z| = 2n + 1$. \qedhere
+\end{enumerate}
+\end{proof}
+
+From Proposition~\ref{prop:counts} we record the six initial values
+\begin{equation}
+\label{eq:init-vals}
+a(0) = 1, \quad a(1) = 2, \quad a(2) = 2, \quad a(3) = 5, \quad a(4) = 2, \quad a(5) = 9.
+\end{equation}
+
+\begin{theorem}[Closed form and sharpness at $n = 0, 1$]
+\label{thm:closed-form}
+For every $n \in \N$ with $n > 1$,
+\[
+2 a(n) = -2(-1)^n n + 2n + 3(-1)^n + 1 \qquad \text{in }\Z.
+\]
+The guard $n > 1$ is sharp at both excluded indices: at $n = 0$, $2a(0) = 2 \ne 4$; at $n = 1$, $2a(1) = 4 \ne 2$.
+\end{theorem}
+
+\begin{proof}
+Let $n > 1$ and split on parity.
+\begin{itemize}
+\item If $n = 2m$ ($m \ge 1$), then $(-1)^{2m} = 1$ and Proposition~\ref{prop:counts}(b) gives $a(2m) = 2$, so
+\[
+-2(1)(2m) + 2(2m) + 3(1) + 1 = 4 = 2 \cdot 2 = 2a(2m).
+\]
+\item If $n = 2m + 1$ ($m \ge 1$), then $(-1)^{2m+1} = -1$ and Proposition~\ref{prop:counts}(c) gives $a(2m + 1) = 4m + 1$, so
+\[
+-2(-1)(2m + 1) + 2(2m + 1) + 3(-1) + 1 = 4(2m + 1) - 2 = 8m + 2 = 2(4m + 1) = 2a(2m + 1).
+\]
+\end{itemize}
+Sharpness follows immediately from~\eqref{eq:init-vals}: at $n = 0$, $2a(0) = 2 \ne 0 + 0 + 3 + 1 = 4$; at $n = 1$, $2a(1) = 4 \ne 2 + 2 - 3 + 1 = 2$.
+\end{proof}
+
+\begin{theorem}[Four-step linear recurrence and sharpness at $n = 4, 5$]
+\label{thm:recurrence}
+For every $n \in \N$ with $n > 5$,
+\[
+a(n) = 2a(n - 2) - a(n - 4) \qquad \text{in }\Z.
+\]
+The guard $n > 5$ is sharp at both boundary indices: at $n = 4$, $a(4) = 2 \ne 3 = 2a(2) - a(0)$; at $n = 5$, $a(5) = 9 \ne 8 = 2a(3) - a(1)$.
+\end{theorem}
+
+\begin{proof}
+Since $n > 5$, we have $n \ge 6$, so $n - 2 \ge 4$ and $n - 4 \ge 2$ all satisfy the $n \ge 2$ regime and share the parity of~$n$:
+\begin{itemize}
+\item If $n = 2m$ ($m \ge 3$), then $n - 2 = 2(m - 1)$ and $n - 4 = 2(m - 2)$ with $m, m - 1, m - 2 \ge 1$. Proposition~\ref{prop:counts}(b) gives $a(n) = a(n - 2) = a(n - 4) = 2$, whence $2(2) - 2 = 2 = a(n)$.
+\item If $n = 2m + 1$ ($m \ge 3$), then $n - 2 = 2(m - 1) + 1$ and $n - 4 = 2(m - 2) + 1$ with $m, m - 1, m - 2 \ge 1$. Proposition~\ref{prop:counts}(c) gives
+\[
+2a(n - 2) - a(n - 4) = 2\bigl(4(m - 1) + 1\bigr) - \bigl(4(m - 2) + 1\bigr) = 4m + 1 = a(n).
+\]
+\end{itemize}
+Sharpness follows from~\eqref{eq:init-vals}: $2a(2) - a(0) = 2(2) - 1 = 3 \ne 2 = a(4)$ and $2a(3) - a(1) = 2(5) - 2 = 8 \ne 9 = a(5)$.
+\end{proof}
+
+\section{Rational Ordinary Generating Function in \texorpdfstring{$\Q\llbracket X \rrbracket$}{Q[[X]]}}
+
+\begin{theorem}[Cleared-denominator generating function]
+\label{thm:gf}
+Let $F(X) := \sum_{n=0}^{\infty} a(n)\,X^n \in \Q\llbracket X \rrbracket$. Then
+\begin{equation}
+\label{eq:gf-cleared}
+(1 - X)^2 (1 + X)^2 \, F(X) = 1 + 2X + X^3 - X^4 + X^5 \qquad \text{in }\Q\llbracket X \rrbracket.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+In the commutative ring $\Q\llbracket X \rrbracket$, expanding the polynomial prefactor before extracting coefficients avoids nested Cauchy products:
+\[
+(1 - X)^2 (1 + X)^2 \, F(X) = (1 - 2X^2 + X^4)\,F(X) = F(X) - 2(X^2 F(X)) + X^4 F(X).
+\]
+By extensionality of formal power series, it suffices to verify equality of the $n$-th coefficient $[X^n]$ for every $n \in \N$. Using $[X^n](X^d F(X)) = a(n - d)$ if $n \ge d$ and $0$ otherwise, we verify the seven cases $n = 0, 1, 2, 3, 4, 5$ and $n = k + 6$ ($k \ge 0$) directly via~\eqref{eq:init-vals} and Theorem~\ref{thm:recurrence}:
+\begin{align*}
+n = 0:\quad & a(0) = 1 = [X^0](1 + 2X + X^3 - X^4 + X^5), \\
+n = 1:\quad & a(1) = 2 = [X^1](1 + 2X + X^3 - X^4 + X^5), \\
+n = 2:\quad & a(2) - 2a(0) = 2 - 2(1) = 0 = [X^2](1 + 2X + X^3 - X^4 + X^5), \\
+n = 3:\quad & a(3) - 2a(1) = 5 - 2(2) = 1 = [X^3](1 + 2X + X^3 - X^4 + X^5), \\
+n = 4:\quad & a(4) - 2a(2) + a(0) = 2 - 2(2) + 1 = -1 = [X^4](1 + 2X + X^3 - X^4 + X^5), \\
+n = 5:\quad & a(5) - 2a(3) + a(1) = 9 - 2(5) + 2 = 1 = [X^5](1 + 2X + X^3 - X^4 + X^5), \\
+n = k + 6:\quad & a(k + 6) - 2a(k + 4) + a(k + 2) = 0 = [X^{k+6}](1 + 2X + X^3 - X^4 + X^5),
+\end{align*}
+where the last line follows by casting Theorem~\ref{thm:recurrence} at $n = k + 6 > 5$ from $\Z$ to $\Q$.
+\end{proof}
+
+\begin{corollary}[Unit invertibility and lossless inverse-series equivalence]
+\label{cor:unit-inv}
+The polynomial factor $D(X) := (1 - X)^2(1 + X)^2 \in \Q\llbracket X \rrbracket$ is a unit in $\Q\llbracket X \rrbracket$, and
+\[
+F(X) = (1 + 2X + X^3 - X^4 + X^5) \cdot \bigl((1 - X)^2(1 + X)^2\bigr)^{-1} \qquad \text{in }\Q\llbracket X \rrbracket.
+\]
+\end{corollary}
+
+\begin{proof}
+A formal power series over a field is a unit if and only if its constant coefficient is nonzero. Here $[X^0]D(X) = (1 - 0)^2(1 + 0)^2 = 1 \ne 0$, so $D(X) \cdot D(X)^{-1} = 1$ in $\Q\llbracket X \rrbracket$. Multiplying~\eqref{eq:gf-cleared} on the right by $D(X)^{-1}$ yields $F(X) = (D(X) F(X)) D(X)^{-1} = (1 + 2X + X^3 - X^4 + X^5)\,D(X)^{-1}$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Combine Lemma~\ref{lem:rule47}(a), Proposition~\ref{prop:counts}(a), Theorem~\ref{thm:closed-form}, Theorem~\ref{thm:recurrence}, Theorem~\ref{thm:gf}, and Corollary~\ref{cor:unit-inv}.
+\end{proof}
+
+\section{Structural Extensions: Rule~47 Uniqueness, Post-Transient Avoidance, and Zero-Clamping Traps}
+\label{sec:structure}
+
+\subsection{Complete Triple Coverage, Singleton Equivalence Class, and Mathar's Cross-Identity}
+
+For any Wolfram rule code $c \in \N$, let $\operatorname{rule}_c(l, c_0, r) := c.\mathrm{testBit}(4 \cdot l.\mathrm{toNat} + 2 \cdot c_0.\mathrm{toNat} + r.\mathrm{toNat})$ and let $\ca_c : \N \to \Z \to \mathsf{Bool}$ denote its bi-infinite single-seed evolution on $\Z$.
+
+\begin{theorem}[Triple coverage, Rule~47 uniqueness, and post-transient avoidance]
+\label{thm:uniqueness}
+\mbox{}
+\begin{enumerate}
+\item[\textup{(a)}] \emph{Complete early triple coverage:} Each of the eight triples $(l, c, r) \in \mathsf{Bool}^3$ occurs as a neighborhood $(\ca(n, j - 1),\allowbreak \ca(n, j),\allowbreak \ca(n, j + 1))$ for some $n \le 1$ and $j \in \Z$.
+\item[\textup{(b)}] \emph{Singleton single-seed equivalence class:} For any Wolfram ECA code $c < 256$, $\ca_c(n, j) = \ca(n, j)$ for all $n \in \N$ and $j \in \Z$ if and only if $c = 47$.
+\item[\textup{(c)}] \emph{Post-transient isolated-center avoidance:} For every $n \ge 2$ and every $j \in \Z$, neither the isolated-ON triple $(\mathtt{false}, \mathtt{true}, \mathtt{false})$ (bit~$2$) nor the isolated-OFF triple $(\mathtt{true}, \mathtt{false}, \mathtt{true})$ (bit~$5$) occurs in $\ca(n, \cdot)$:
+\begin{align*}
+&\neg\bigl(\ca(n, j - 1) = \mathtt{false} \land \ca(n, j) = \mathtt{true} \land \ca(n, j + 1) = \mathtt{false}\bigr),\\
+&\neg\bigl(\ca(n, j - 1) = \mathtt{true} \land \ca(n, j) = \mathtt{false} \land \ca(n, j + 1) = \mathtt{true}\bigr).
+\end{align*}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For (a), generation $n = 0$ exhibits $(0, 0, 0)$ at $j = 2$, $(0, 0, 1)$ at $j = -1$, $(0, 1, 0)$ at $j = 0$, and $(1, 0, 0)$ at $j = 1$; generation $n = 1$ ($\ca(1, j) = \mathrm{decide}(j \ne 1)$) exhibits $(0, 1, 1)$ at $j = 2$, $(1, 0, 1)$ at $j = 1$, $(1, 1, 0)$ at $j = 0$, and $(1, 1, 1)$ at $j = 3$.
+
+For (b), the reverse implication follows directly from Lemma~\ref{lem:rule47}(a) by induction on~$n$. Conversely, if $\ca_c = \ca$ identically on $\N \times \Z$, then for every $i \in \{0, \dots, 7\}$, picking $(l, c_0, r)$ with $4l + 2c_0 + r = i$ and $(n, j)$ witnessing $(l, c_0, r)$ in $\ca(n, \cdot)$ by part~(a) yields $c.\mathrm{testBit}(i) = \ca_c(n + 1, j) = \ca(n + 1, j) = 47.\mathrm{testBit}(i)$. Since $c < 256 = 2^8$ and $47 < 256$, all higher bits vanish and $c = 47$.
+
+For (c), let $n \ge 2$. If $n = 2m$ ($m \ge 1$), Theorem~\ref{thm:global-inv} shows $\ca(2m, \cdot)$ is $\mathtt{true}$ solely on the adjacent pair $\{2m - 1, 2m\}$: any ON site $j \in \{2m - 1, 2m\}$ has at least one ON neighbor in $\{j - 1, j + 1\}$ (forbidding $(0, 1, 0)$), and $j - 1, j + 1 \in \{2m - 1, 2m\}$ is impossible since $(j + 1) - (j - 1) = 2 > 1$ (forbidding $(1, 0, 1)$). Dually, if $n = 2m + 1$ ($m \ge 1$), $\ca(2m + 1, \cdot)$ is $\mathtt{false}$ solely on $\{2m, 2m + 1\}$: any OFF site has an OFF neighbor (forbidding $(1, 0, 1)$), and two OFF neighbors at distance~$2$ cannot both lie in $\{2m, 2m + 1\}$ (forbidding $(0, 1, 0)$).
+\end{proof}
+
+\begin{remark}[Structural explanation of Mathar's cross-identity and contrast with Rule~11]
+\label{rem:mathar}
+Unlike Wolfram Rule~11 ($11 = 00001011_2$, \seq{A266256}~\cite{oeis266256}), which avoids $(1, 0, 1)$ for all $n \ge 0$ and therefore shares its entire single-seed space-time diagram with Rule~43 ($43 = 11 + 2^5$), Rule~47 queries \emph{all eight} local triples in $n \le 1$ and has the singleton equivalence class $\{47\}$ (Theorem~\ref{thm:uniqueness}(b)). Nevertheless, $47 - 11 = 36 = 2^5 + 2^2$: Rule~47 and Rule~11 differ solely on bits~$2$ ($010$) and~$5$ ($101$). At $n = 1$, bit~$2$ yields the 1-cell defect $\{1\}$ ($a(1) = 2$) under Rule~47 instead of the 2-cell defect $\{0, 1\}$ ($\seq{A266256}(1) = 1$) under Rule~11; at $n = 2$, bit~$5$ widens $\{1\}$ into $\{1, 2\}$, synchronizing $\ca_{47}(2, \cdot) = \ca_{11}(2, \cdot)$ identically on $\Z$. By Theorem~\ref{thm:uniqueness}(c), neither bit~$2$ nor bit~$5$ is ever queried again for $n \ge 2$, explaining simultaneously R.~J.\ Mathar's cross-identity $\seq{A266662}(n) = \seq{A266256}(n)$ for $n > 1$ and why Rule~47's sharp guards shift up by~$+1$ ($n > 1$ and $n > 5$) relative to Rule~11 ($n > 0$ and $n > 4$).
+\end{remark}
+
+\subsection{Causal-Cone Mirror and Formalization of Both Zero-Clamping Traps}
+
+Direct unmemoized evaluation of $\ca(n, j)$ via Definition~\ref{def:c053} traverses a ternary tree of size $3^n$. To enable fast, pure-kernel spot-checking of $a(n)$ directly against OEIS~\seq{A266662} without any computational trust escape, we define an $O(n^2)$ causal-cone contraction mirror $a_{\mathrm{dp}}(n)$: initialize the length-$(4n + 1)$ Boolean list $[0^{2n}, 1, 0^{2n}]$ representing $\ca(0, j)$ on $[-2n, 2n]$, iterate the sliding-window map $(l, c, r, \dots) \mapsto (\ruleFS(l, c, r), \dots)$ exactly $n$ times (shrinking length by~$2$ per step down to $2n + 1$), and count the $\mathtt{true}$ entries.
+
+\begin{proposition}[Causal-cone mirror and both zero-clamping traps]
+\label{prop:clamping-traps}
+\begin{enumerate}
+\item[\textup{(a)}] For every $n \in \N$, $a_{\mathrm{dp}}(n) = a(n)$, and pure kernel reduction confirms
+\[
+\bigl(a(0), a(1), \dots, a(12)\bigr) = (1, 2, 2, 5, 2, 9, 2, 13, 2, 17, 2, 21, 2),
+\]
+matching OEIS~\seq{A266662}.
+\item[\textup{(b)}] \emph{Trap~A (light-cone zero-clamping):} Let $\ca_{\mathrm{cone}}$ evolve by Rule~47 while clamping every cell outside $[-m, m]$ to $\mathtt{false}$ after step~$m$, and let $a_{\mathrm{cone}}(n)$ count its ON cells on $[-n, n]$. Then $a_{\mathrm{cone}}(2) = 3 \ne 2 = a(2)$.
+\item[\textup{(c)}] \emph{Trap~B (fixed-box $[-n, n]$ zero-clamping):} Let $\ca_{\mathrm{box}}(R, \cdot, \cdot)$ evolve by Rule~47 on the fixed box $[-R, R]$ with exterior clamped to $\mathtt{false}$, and let $a_{\mathrm{box}}(n)$ count ON cells of $\ca_{\mathrm{box}}(n, n, \cdot)$ on $[-n, n]$. Then $a_{\mathrm{box}}(2) = 3 \ne 2 = a(2)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(a) follows by induction on the step count $k$: applying $k$ sliding-window steps to $[\ca(m, s), \dots, \ca(m, s + \ell + 2k - 1)]$ yields $[\ca(m + k, s + k), \dots, \ca(m + k, s + k + \ell - 1)]$; setting $m = 0$, $s = -2n$, $\ell = 2n + 1$, and $k = n$ recovers the exact window $[-n, n]$ at generation $n$. Parts~(b) and~(c) follow by direct kernel evaluation: under Trap~A, row~$1$ on $[-1, 1]$ is \texttt{110} with zero exterior, giving row~$2$ equal to \texttt{11001} (count~$3$); under Trap~B at $R = 2$, row~$1$ on $[-2, 2]$ is \texttt{11101} with zero exterior, giving row~$2$ equal to \texttt{10011} (count~$3 \ne 2 = a(2)$).
+\end{proof}
+
+\section{Lean 4 Formalization and Verification Record}
+
+The formalization resides in the repository \texttt{derekblair/math-proofs} under Lean~\texttt{v4.34.1} (\nolinkurl{leanprover/lean4:v4.34.1}) and Mathlib revision {\small\nolinkurl{d13f23b723b8a846827a245b89c10fc7d3f11612}}. Following the live Seam~B repository convention, the files reconcile the pre-Seam-B target path \nolinkurl{Mathproofs/A266662.lean} from \texttt{PIN-C053.md} while preserving the pinned namespace \nolinkurl{Mathproofs.A266662} and every definition and theorem signature verbatim:
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \nolinkurl{MathProofs/SeamB/C053/Statement.lean} (85 lines): verbatim transcription of frozen \texttt{PIN-C053.md} v1 (\texttt{delta\_vs\_source: NONE}).\\
+Statement SHA-256: {\small\nolinkurl{af94c40615b4f18f16283f5a5ff9198f630d41488a8880f7001a2aa5c3cdb3a2}}.\\
+Pin SHA-256: {\small\nolinkurl{8743cc387e9a8a91c21641408bf8ec20300f9cdc66484ef2324bf07815d5f056}}.
+\item \nolinkurl{MathProofs/SeamB/C053/Solution.lean} (826 lines): reproduces \texttt{rule47}, \texttt{ca}, \texttt{a}, and all seven pinned theorem signatures verbatim in \nolinkurl{Mathproofs.A266662}, proving every pinned, structural, and non-vacuity theorem with zero \texttt{sorry}s, zero warnings, and allowlist-only axioms.\\
+Solution SHA-256: {\small\nolinkurl{c35713be59bedf0b0230634864a7755c920b7b2f7216943a622cba700722cc5a}}.
+\item \nolinkurl{Mathproofs.lean} (98 lines; adds one import for \nolinkurl{MathProofs.SeamB.C053.Solution}).\\
+Root SHA-256: {\small\nolinkurl{21f0c2345cd0f5f0f1d2fe93d87259fb19d0c03881e797415ddbaa7baf4fa816}}.
+\end{itemize}
+
+Table~\ref{tab:lean-map} records the correspondence between the mathematical results in this paper and the machine-checked declarations in \nolinkurl{MathProofs/SeamB/C053/Solution.lean}.
+
+\begin{table}[ht]
+\centering
+\caption{Correspondence between paper results and Lean~4 declarations in \nolinkurl{Mathproofs.A266662}.}
+\label{tab:lean-map}
+\smallskip
+{\small
+\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{8.2cm} l@{}}
+\toprule
+Paper Result & Lean~4 Declaration(s) & Status \\
+\midrule
+Definition~\ref{def:c053} & \texttt{rule47}, \texttt{ca}, \texttt{a} (pinned verbatim) & Exported \\
+Lemma~\ref{lem:rule47} & \texttt{rule47\_eq\_testBit} (pinned), \texttt{rule47\_eq}, \texttt{rule47\_not\_symm} & Exported, proved \\
+Proposition~\ref{prop:ca-one-two} & \texttt{ca\_zero}, \texttt{ca\_one}, \texttt{ca\_two} & Exported, proved \\
+Lemma~\ref{lem:glider-steps} & \texttt{ca\_step\_even\_to\_odd}, \texttt{ca\_step\_odd\_to\_even} & Exported, proved \\
+Theorem~\ref{thm:global-inv} & \texttt{ca\_even\_odd\_shift}, \texttt{ca\_even\_pos}, \texttt{ca\_odd\_pos}, \texttt{ca\_eq\_xor} & Exported, proved \\
+Proposition~\ref{prop:counts} & \texttt{a\_zero} (pinned), \texttt{a\_one} (pinned), \texttt{a\_even\_pos}, \texttt{a\_odd\_pos}, \texttt{a\_add\_aOff} & Exported, proved \\
+Theorem~\ref{thm:closed-form} & \texttt{a\_closed\_form} (pinned, guard $1 < n$), \texttt{a\_closed\_form\_false\_zero}, \texttt{a\_closed\_form\_false\_one} & Exported, proved \\
+Theorem~\ref{thm:recurrence} & \texttt{a\_recurrence} (pinned, guard $5 < n$), \texttt{a\_recurrence\_false\_four}, \texttt{a\_recurrence\_false\_five} & Exported, proved \\
+Theorem~\ref{thm:gf} & \texttt{a\_gf} (pinned) & Exported, proved \\
+Corollary~\ref{cor:unit-inv} & \texttt{a\_gf\_denom\_isUnit}, \texttt{a\_gf\_unit\_inv} & Exported, proved \\
+Theorem~\ref{thm:main} & \texttt{c053\_bundle} (pinned) & Exported, proved \\
+Theorem~\ref{thm:uniqueness} & \texttt{ca\_all\_triples\_occur}, \texttt{caRule\_eq\_ca\_iff}, \texttt{ca\_no\_010\_ge2}, \texttt{ca\_no\_101\_ge2} & Exported, proved \\
+Proposition~\ref{prop:clamping-traps} & \texttt{a\_dp\_eq\_a}, \texttt{a\_dp\_spot\_0\_to\_12}, \texttt{a\_spot\_0\_to\_12}, \texttt{aConeClamp\_two\_eq\_three}, \texttt{aBoxClamp\_two\_eq\_three} & Exported, proved \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\noindent\textbf{Audit summary.}
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \emph{Clean-slate build:} Running \texttt{rm -rf .lake/build \&\& lake build} on \nolinkurl{MathProofs.SeamB.C053.Solution} exits with code~$0$, zero warnings, and 1{,}795 jobs ($2.3\text{ s}$ module build, $3.71\text{ s}$ wall).
+\item \emph{Independent kernel replay:} Running \texttt{lake env leanchecker -{}-fresh -{}-verbose} on the compiled module \nolinkurl{MathProofs.SeamB.C053.Solution} exits with code~$0$ ($156.13\text{ s}$ wall).
+\item \emph{Axiom audit:} \texttt{\#print axioms} and a programmatic \texttt{CoreM} \texttt{collectAxioms} sweep across all 240 namespace declarations confirm \texttt{DISALLOWED\_AXIOMS = []}: every declaration depends strictly on subsets of \texttt{[propext, Classical.choice, Quot.sound]} (\texttt{rule47} and \texttt{ca} depend on zero axioms \texttt{[]}; \texttt{rule47\_eq\_testBit} and \texttt{a\_dp\_spot\_0\_to\_12} depend solely on \texttt{[propext]}; \texttt{ca\_all\_triples\_occur} and \texttt{caRule\_eq\_ca\_iff} depend solely on \texttt{[propext, Quot.sound]}).
+\item \emph{Statement fidelity:} Automated diff confirms 10/10 verbatim definition and signature matches between \texttt{Statement.lean} and \texttt{Solution.lean}, and kernel \texttt{rfl} / structural definitional equality plus direct term-assignment type-identity verification (exit~$0$) confirms exact identity against \texttt{PIN-C053.md} v1. (The external \texttt{comparator} tool targeting Lean \texttt{v4.36.0} was not run because this repository pins \texttt{v4.34.1} and \texttt{comparator} is not installed on the build host; the gap is recorded explicitly in \texttt{VERIFICATION.md}.)
+\item \emph{Lexical trust-escape scan:} $0$ raw hits and $0$ comment/string-stripped hits for \texttt{sorry}, \texttt{admit}, \texttt{sorryAx}, \texttt{axiom}, \texttt{native\_decide}, \texttt{ofReduceBool}, \texttt{ofReduceNat}, \texttt{implemented\_by}, and \texttt{unsafe} in \texttt{Solution.lean} and \texttt{Mathproofs.lean}.
+\end{enumerate}
+
+{\small
+\begin{thebibliography}{99}\setlength{\itemsep}{2pt}
+\raggedright
+
+\bibitem{oeis266662}
+R.\ Price, \emph{OEIS sequence \seq{A266662}}: Number of ON (black) cells in the $n$-th iteration of the ``Rule~47'' elementary cellular automaton starting with a single ON (black) cell. Includes conjectures by C.\ Barker (January~3, 2016 and April~18, 2019) and comment by R.~J.\ Mathar (January~10, 2016); live revision \#20 (February~16, 2025). \url{https://oeis.org/A266662}.
+
+\bibitem{oeis266659}
+R.\ Price, \emph{OEIS sequence \seq{A266659}}: Triangle read by rows giving successive states of cellular automaton generated by ``Rule~47'' initiated by a single ON (black) cell. Live revision \#12 (August~8, 2025). \url{https://oeis.org/A266659}.
+
+\bibitem{oeis266660}
+R.\ Price, \emph{OEIS sequence \seq{A266660}}: Binary representation of the $n$-th iteration of the ``Rule~47'' elementary cellular automaton starting with a single ON (black) cell. Live revision \#37 (August~8, 2025). \url{https://oeis.org/A266660}.
+
+\bibitem{oeis266661}
+R.\ Price, \emph{OEIS sequence \seq{A266661}}: Decimal representation of the $n$-th iteration of the ``Rule~47'' elementary cellular automaton starting with a single ON (black) cell. Live revision \#33 (February~16, 2025). \url{https://oeis.org/A266661}.
+
+\bibitem{oeis266664}
+R.\ Price, \emph{OEIS sequence \seq{A266664}}: Number of OFF (white) cells in the $n$-th iteration of the ``Rule~47'' elementary cellular automaton starting with a single ON (black) cell. Live revision \#21 (February~16, 2025). \url{https://oeis.org/A266664}.
+
+\bibitem{oeis266256}
+R.\ Price, \emph{OEIS sequence \seq{A266256}}: Number of ON (black) cells in the $n$-th iteration of the ``Rule~11'' elementary cellular automaton starting with a single ON (black) cell. Live revision \#15 (February~16, 2025). \url{https://oeis.org/A266256}.
+
+\bibitem{wolfram2002}
+S.\ Wolfram, \emph{A New Kind of Science}, Wolfram Media, Champaign, IL, 2002 (Section~2, p.~55).
+
+\bibitem{mathworldECA}
+E.~W.\ Weisstein, \emph{Elementary Cellular Automaton}, from MathWorld---A Wolfram Web Resource. \url{https://mathworld.wolfram.com/ElementaryCellularAutomaton.html}.
+
+\bibitem{sloane2015}
+N.~J.~A.\ Sloane, \emph{On the Number of ON Cells in Cellular Automata}, arXiv:1503.01168 (2015). \url{https://arxiv.org/abs/1503.01168}.
+
+\end{thebibliography}
+}
+
+\end{document}
