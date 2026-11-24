@@ -97,3 +97,4 @@ import MathProofs.SeamB.C052.Solution
 import MathProofs.SeamB.C054.Solution
 import MathProofs.SeamB.C053.Solution
 import MathProofs.SeamB.C055.Solution
+import MathProofs.SeamB.A186424.Solution
