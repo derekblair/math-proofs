@@ -1,0 +1,7 @@
+Lean (version 4.27.0, x86_64-unknown-linux-gnu, commit db93fe1608548721853390a10cd40580fe7d22ae, Release)
+a3a10db0e9d66acbebf76c5e6a135066525ac900
+'QuorumBounds.nordhausGaddum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuorumBounds.conjecture9_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuorumBounds.sharp_on_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'QuorumBounds.subQuorum_iff_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+1098 labeled graphs checked exhaustively by order, and 80 larger examples.
