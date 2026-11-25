@@ -1,0 +1,9 @@
+Lean (version 4.27.0, x86_64-unknown-linux-gnu, commit db93fe1608548721853390a10cd40580fe7d22ae, Release)
+a3a10db0e9d66acbebf76c5e6a135066525ac900
+'TreeInfluence.fourPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TreeInfluence.scopesCard' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TreeInfluence.localSubview' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TreeInfluence.combine_literal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TreeInfluence.optimalLocalTreeTable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TreeInfluence.optimalTreeTable' depends on axioms: [propext, Classical.choice, Quot.sound]
+4624 rooted comparisons on 544 finite trees; all agree.
