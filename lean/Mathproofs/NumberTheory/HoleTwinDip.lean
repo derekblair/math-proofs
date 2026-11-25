@@ -48,7 +48,7 @@ machine-checked) for the shared W(A)/B(A)/holes definitions and rigidity.
 Checked: Lean 4.34.1 + Mathlib v4.34.1, `lake build`, zero sorrys,
 `#print axioms` standard-only.
 -/
-import Mathproofs.TranslationMarch
+import Mathproofs.NumberTheory.TranslationMarch
 
 namespace HoleTwinDip
 

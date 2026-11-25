@@ -1,5 +1,5 @@
 import Mathlib
-import Mathproofs.ESDescentTransfer
+import Mathproofs.NumberTheory.ESDescentTransfer
 
 /-!
 # Branch-1 q-adic type theorem (R116)

@@ -1,5 +1,5 @@
 import Mathlib
-import Mathproofs.ESX0S1S3
+import Mathproofs.NumberTheory.ESX0S1S3
 
 /-!
 # General Descent Transfer (R112; R108 proof)

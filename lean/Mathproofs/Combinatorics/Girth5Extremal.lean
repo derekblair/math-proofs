@@ -1,4 +1,4 @@
-import Mathproofs.Girth5Floor3v
+import Mathproofs.Combinatorics.Girth5Floor3v
 
 /-!
 Actual edge accounting and global extremality for three-vertex replacement.

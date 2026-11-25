@@ -1,4 +1,4 @@
-import Mathproofs.CollatzGapCF
+import Mathproofs.NumberTheory.CollatzGapCF
 
 /-!
 # C24 Lemma 2: the tail-mirror selector (R61 draft; R69 index fix)

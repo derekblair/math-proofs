@@ -1,6 +1,6 @@
-import Mathproofs.CollatzGapConvex
-import Mathproofs.CollatzGapC24
-import Mathproofs.CollatzGapSinh
+import Mathproofs.NumberTheory.CollatzGapConvex
+import Mathproofs.NumberTheory.CollatzGapC24
+import Mathproofs.NumberTheory.CollatzGapSinh
 import Mathlib.Analysis.Convex.Deriv
 
 open scoped Nat

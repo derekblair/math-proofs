@@ -1,4 +1,4 @@
-import Mathproofs.CollatzGapC22C25
+import Mathproofs.NumberTheory.CollatzGapC22C25
 
 /-!
 # The explicit gap factor and its logarithmic bridge

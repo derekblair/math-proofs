@@ -1,6 +1,6 @@
-import Mathproofs.Rule129ClosedForm
-import Mathproofs.Rule129Lucas
-import Mathproofs.Rule129Digits
+import Mathproofs.Dynamics.Rule129ClosedForm
+import Mathproofs.Dynamics.Rule129Lucas
+import Mathproofs.Dynamics.Rule129Digits
 import Mathlib.Data.Nat.Digits.Defs
 import Mathlib.Logic.Function.Iterate -- [Audit §3.2 Item 3 / §3.3 Hazard S1] Explicit import for Nat.iterate (f^[n])
 

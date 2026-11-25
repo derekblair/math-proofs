@@ -1,4 +1,4 @@
-import Mathproofs.CollatzGapCF
+import Mathproofs.NumberTheory.CollatzGapCF
 
 /-!
 # C24 Lemma 3: finite first-difference rule (R77 — machine-checked)

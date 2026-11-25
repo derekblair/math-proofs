@@ -3,7 +3,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathproofs.CollatzGapDelta
+import Mathproofs.NumberTheory.CollatzGapDelta
 
 /-!
 # C18b (Δ strict monotonicity) and C26 margin duality, discrete/exact form

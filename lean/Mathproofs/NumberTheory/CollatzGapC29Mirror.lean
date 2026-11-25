@@ -1,5 +1,5 @@
 import Mathlib
-import Mathproofs.CollatzGapC29
+import Mathproofs.NumberTheory.CollatzGapC29
 
 /-!
 # C29′: from-below mirror of C29 (R99)

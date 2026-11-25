@@ -1,4 +1,4 @@
-import Mathproofs.WitnessComplexThm13
+import Mathproofs.Topology.WitnessComplexThm13
 
 /-!
 # Constructive Erdős–Straus covering bridges

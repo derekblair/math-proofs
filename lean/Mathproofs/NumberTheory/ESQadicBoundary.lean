@@ -1,4 +1,4 @@
-import Mathproofs.ESQadicBranch1
+import Mathproofs.NumberTheory.ESQadicBranch1
 
 /-!
 # What branch-1 q-adic classification proves without the R74 sweep

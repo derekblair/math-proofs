@@ -6,7 +6,7 @@
   Verification: Lean 4.34.1 + Mathlib v4.34.1 (pinned d13f23b); R318: bakkie `lake build` exit 0, zero sorrys, axioms standard-only.
 -/
 
-import Mathproofs.VoidMonoidParam
+import Mathproofs.NumberTheory.VoidMonoidParam
 
 /-!
 # VoidMonoid: D2(c) repair + maximal-family tiling (R296/R299)

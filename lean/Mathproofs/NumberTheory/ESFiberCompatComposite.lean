@@ -7,7 +7,7 @@
 -/
 
 import Mathlib
-import Mathproofs.ESFiberCompat
+import Mathproofs.NumberTheory.ESFiberCompat
 
 /-!
 # R192 Composite Fiber-Compatibility Theorem (Round 198, Lean formalization lane)

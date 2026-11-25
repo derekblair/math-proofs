@@ -49,7 +49,7 @@ Requires hostile review clearance per PROGRAM.md rule 9 before [PROVED].
 Checked: Lean 4.34.1 + Mathlib v4.34.1, `lake build`, zero sorrys,
 `#print axioms` standard-only.
 -/
-import Mathproofs.TranslationMarch
+import Mathproofs.NumberTheory.TranslationMarch
 
 namespace TranslationMarchUnsat
 

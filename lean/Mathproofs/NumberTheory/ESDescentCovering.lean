@@ -1,5 +1,5 @@
-import Mathproofs.ESDescentTransfer
-import Mathproofs.ESCovering
+import Mathproofs.NumberTheory.ESDescentTransfer
+import Mathproofs.NumberTheory.ESCovering
 
 /-!
 # From branch-2 descent arithmetic to positive covering identities

@@ -1,4 +1,4 @@
-import Mathproofs.SidonSat184
+import Mathproofs.Combinatorics.SidonSat184
 
 /-!
 # The nine displayed one-hole Sidon sets

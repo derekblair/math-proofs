@@ -1,5 +1,5 @@
-import Mathproofs.ESIdentity
-import Mathproofs.ESCovering
+import Mathproofs.NumberTheory.ESIdentity
+import Mathproofs.NumberTheory.ESCovering
 
 /-!
 # The six identity subclasses modulo 9240

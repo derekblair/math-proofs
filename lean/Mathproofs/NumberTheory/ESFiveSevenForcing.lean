@@ -1,4 +1,4 @@
-import Mathproofs.ESCovering
+import Mathproofs.NumberTheory.ESCovering
 
 /-!
 # R140 5/7-forcing lemma (Round 162, Lean formalization lane)

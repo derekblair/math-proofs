@@ -1,5 +1,5 @@
-import Mathproofs.ESPrimeSquareT2
-import Mathproofs.EST1TwoCase
+import Mathproofs.NumberTheory.ESPrimeSquareT2
+import Mathproofs.NumberTheory.EST1TwoCase
 
 /-!
 # R140 QR-core theorem (Round 154, Lean formalization lane)

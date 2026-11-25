@@ -1,4 +1,4 @@
-import Mathproofs.Girth5Floor3v
+import Mathproofs.Combinatorics.Girth5Floor3v
 
 /-! Regression witnesses from the October 2026 hostile review. The old predicate
 accepted each of these invalid moves; the corrected local conditions reject them.

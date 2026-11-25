@@ -1,4 +1,4 @@
-import Mathproofs.CollatzGapC23
+import Mathproofs.NumberTheory.CollatzGapC23
 
 /-!
 # C22 / C25 / C26 assembly: the gap-factor argmin batch (R97)

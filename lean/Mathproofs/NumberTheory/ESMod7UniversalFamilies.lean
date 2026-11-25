@@ -22,7 +22,7 @@
   stays [PROVED*] (algebraic + JSON cross-check in the dossier).
 -/
 
-import Mathproofs.ESCovering
+import Mathproofs.NumberTheory.ESCovering
 
 namespace ESMod7UniversalFamilies
 
