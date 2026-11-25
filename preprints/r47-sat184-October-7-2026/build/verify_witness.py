@@ -2,7 +2,7 @@
 
 Run with --write-strip to regenerate strip.inc; otherwise only print the report.
 This script is a supplementary reproducibility check. The Lean proof is in
-Mathproofs/SidonSat184.lean and does not trust this script or its output.
+lean/Mathproofs/Combinatorics/SidonSat184.lean and does not trust this script or its output.
 """
 import argparse
 import json
