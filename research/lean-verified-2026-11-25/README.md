@@ -32,4 +32,4 @@ python3 research/lean-verified-2026-11-25/verify.py lean/.lake/packages/mathlib
 python3 research/lean-verified-2026-11-25/verify.py lean/.lake/packages/mathlib bks-separator
 ```
 
-The verifier uses a fresh temporary directory for each bundle, rebuilds its modules in dependency order, and replays each compiled module with Lean's kernel checker. The Python controls are supplementary and not proof dependencies.
+The verifier uses a fresh temporary directory for each bundle, rebuilds its modules in dependency order, and replays each compiled module with Lean's kernel checker. Two deliberately false cubic-chain Lean inputs are negative controls and must be rejected; they are not part of the proof build. The Python controls are supplementary and not proof dependencies.
