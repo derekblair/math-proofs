@@ -123,8 +123,158 @@ status:
     - Classical.choice
     - Quot.sound
   # Entries use source-qualified declaration names and the files containing them.
-  # Populated with ComparatorChallenges entries in Step 5.
-  main_results: []
+  main_results:
+    - comparator_config: ComparatorChallenges/AbsorbedBound.json
+      declaration: AbsorbedBound.t4_self_bound
+      file: Mathproofs/NumberTheory/AbsorbedBound.lean
+
+    - comparator_config: ComparatorChallenges/ESAbsorptionOrder.json
+      declaration: ESAbsorptionOrder.absorp_datum_iff
+      file: Mathproofs/NumberTheory/ESAbsorptionOrder.lean
+
+    - comparator_config: ComparatorChallenges/ESAbsorptionOrder.json
+      declaration: ESAbsorptionOrder.rho_absorption_collapse
+      file: Mathproofs/NumberTheory/ESAbsorptionOrder.lean
+
+    - comparator_config: ComparatorChallenges/ESAbsorptionOrder.json
+      declaration: ESAbsorptionOrder.absorption_collapse_unique_core
+      file: Mathproofs/NumberTheory/ESAbsorptionOrder.lean
+
+    - comparator_config: ComparatorChallenges/ESAbsorptionOrder.json
+      declaration: ESAbsorptionOrder.singleton_factorization
+      file: Mathproofs/NumberTheory/ESAbsorptionOrder.lean
+
+    - comparator_config: ComparatorChallenges/ESBarrier.json
+      declaration: es_crt_escape
+      file: Mathproofs/NumberTheory/ESBarrier.lean
+
+    - comparator_config: ComparatorChallenges/ESBranchTwo.json
+      declaration: ESBranchTwo.branch2_collapse
+      file: Mathproofs/NumberTheory/ESBranchTwo.lean
+
+    - comparator_config: ComparatorChallenges/ESBranchTwo.json
+      declaration: ESBranchTwo.family_identity
+      file: Mathproofs/NumberTheory/ESBranchTwo.lean
+
+    - comparator_config: ComparatorChallenges/ESBranchTwo.json
+      declaration: ESBranchTwo.branch2_m_mod8_refuted
+      file: Mathproofs/NumberTheory/ESBranchTwo.lean
+
+    - comparator_config: ComparatorChallenges/ESFiberCompat.json
+      declaration: fiber_compat_pair_iff
+      file: Mathproofs/NumberTheory/ESFiberCompat.lean
+
+    - comparator_config: ComparatorChallenges/ESIdentity.json
+      declaration: es_covering_217mod264
+      file: Mathproofs/NumberTheory/ESIdentity.lean
+
+    - comparator_config: ComparatorChallenges/ESIdentity.json
+      declaration: es_identity_217mod264
+      file: Mathproofs/NumberTheory/ESIdentity.lean
+
+    - comparator_config: ComparatorChallenges/ESMod7UniversalFamilies.json
+      declaration: ESMod7UniversalFamilies.fam1_covers
+      file: Mathproofs/NumberTheory/ESMod7UniversalFamilies.lean
+
+    - comparator_config: ComparatorChallenges/ESMod7UniversalFamilies.json
+      declaration: ESMod7UniversalFamilies.fam2_covers
+      file: Mathproofs/NumberTheory/ESMod7UniversalFamilies.lean
+
+    - comparator_config: ComparatorChallenges/ESMod7UniversalFamilies.json
+      declaration: ESMod7UniversalFamilies.fam3_covers
+      file: Mathproofs/NumberTheory/ESMod7UniversalFamilies.lean
+
+    - comparator_config: ComparatorChallenges/ESQRCoreCount.json
+      declaration: ESQRCoreCount.qr_residue_count
+      file: Mathproofs/NumberTheory/ESQRCoreCount.lean
+
+    - comparator_config: ComparatorChallenges/ESRefinedSieveInverse.json
+      declaration: ESRefinedSieve.crt44_iff
+      file: Mathproofs/NumberTheory/ESRefinedSieveInverse.lean
+
+    - comparator_config: ComparatorChallenges/ESRefinedSieveInverse.json
+      declaration: ESRefinedSieve.sixClasses_exact
+      file: Mathproofs/NumberTheory/ESRefinedSieveInverse.lean
+
+    - comparator_config: ComparatorChallenges/ESRefinedSieveInverse.json
+      declaration: ESRefinedSieve.sixClasses_inv_closed
+      file: Mathproofs/NumberTheory/ESRefinedSieveInverse.lean
+
+    - comparator_config: ComparatorChallenges/ESSubfamilyExtended.json
+      declaration: ESSubfamilyExtended.generalized_subfamily_identity
+      file: Mathproofs/NumberTheory/ESSubfamilyExtended.lean
+
+    - comparator_config: ComparatorChallenges/FiberOverlap.json
+      declaration: FiberOverlap.autocorr_le_one
+      file: Mathproofs/NumberTheory/FiberOverlap.lean
+
+    - comparator_config: ComparatorChallenges/FiberOverlap.json
+      declaration: FiberOverlap.fiber_overlap
+      file: Mathproofs/NumberTheory/FiberOverlap.lean
+
+    - comparator_config: ComparatorChallenges/Girth5Extremal.json
+      declaration: Girth5Floor3v.score_le_D_of_extremal
+      file: Mathproofs/Combinatorics/Girth5Extremal.lean
+
+    - comparator_config: ComparatorChallenges/Girth5Extremal.json
+      declaration: Girth5Floor3v.three_v_rigidity_of_extremal
+      file: Mathproofs/Combinatorics/Girth5Extremal.lean
+
+    - comparator_config: ComparatorChallenges/Girth5Extremal.json
+      declaration: Girth5Floor3v.three_v_gap_of_extremal
+      file: Mathproofs/Combinatorics/Girth5Extremal.lean
+
+    - comparator_config: ComparatorChallenges/Rule129MiddleColumn.json
+      declaration: Mathproofs.Rule129MiddleColumn.rule126_middle_column_iff
+      file: Mathproofs/Dynamics/Rule129MiddleColumn.lean
+
+    - comparator_config: ComparatorChallenges/Rule129MiddleColumn.json
+      declaration: Mathproofs.Rule129MiddleColumn.rule126_middle_column_eq_a036987
+      file: Mathproofs/Dynamics/Rule129MiddleColumn.lean
+
+    - comparator_config: ComparatorChallenges/Rule129MiddleColumn.json
+      declaration: Mathproofs.Rule129MiddleColumn.a267442_eq_a043545
+      file: Mathproofs/Dynamics/Rule129MiddleColumn.lean
+
+    - comparator_config: ComparatorChallenges/SidonSat184.json
+      declaration: SidonSat184.r47_sat184
+      file: Mathproofs/Combinatorics/SidonSat184.lean
+
+    - comparator_config: ComparatorChallenges/SidonSat184.json
+      declaration: SidonSat184.unique_extension_saturated
+      file: Mathproofs/Combinatorics/SidonSat184.lean
+
+    - comparator_config: ComparatorChallenges/TransDAG.json
+      declaration: TransDAG.no_dual_target_demote
+      file: Mathproofs/NumberTheory/TransDAG.lean
+
+    - comparator_config: ComparatorChallenges/TransDAG.json
+      declaration: TransDAG.no_dual_source_promote
+      file: Mathproofs/NumberTheory/TransDAG.lean
+
+    - comparator_config: ComparatorChallenges/TransDAG.json
+      declaration: TransDAG.dual_preserves_s_card
+      file: Mathproofs/NumberTheory/TransDAG.lean
+
+    - comparator_config: ComparatorChallenges/TranslationMarch.json
+      declaration: TranslationMarch.rigidity
+      file: Mathproofs/NumberTheory/TranslationMarch.lean
+
+    - comparator_config: ComparatorChallenges/TranslationMarch.json
+      declaration: TranslationMarch.march
+      file: Mathproofs/NumberTheory/TranslationMarch.lean
+
+    - comparator_config: ComparatorChallenges/TranslationMarch.json
+      declaration: TranslationMarch.march_neg
+      file: Mathproofs/NumberTheory/TranslationMarch.lean
+
+    - comparator_config: ComparatorChallenges/VoidDefectHom.json
+      declaration: VoidDefectHom.defect_hom_rigidity
+      file: Mathproofs/NumberTheory/VoidDefectHom.lean
+
+    - comparator_config: ComparatorChallenges/VoidDefectHom.json
+      declaration: VoidDefectHom.literal_product_never
+      file: Mathproofs/NumberTheory/VoidDefectHom.lean
 
 automation:
   methods:

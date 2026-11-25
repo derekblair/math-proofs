@@ -1,0 +1,14 @@
+{
+  "challenge_module": "ComparatorChallenges.ESSubfamilyExtended",
+  "solution_module": "Mathproofs.NumberTheory.ESSubfamilyExtended",
+  "theorem_names": [
+    "ESSubfamilyExtended.generalized_subfamily_identity"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

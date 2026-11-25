@@ -1,0 +1,16 @@
+{
+  "challenge_module": "ComparatorChallenges.TranslationMarch",
+  "solution_module": "Mathproofs.NumberTheory.TranslationMarch",
+  "theorem_names": [
+    "TranslationMarch.rigidity",
+    "TranslationMarch.march",
+    "TranslationMarch.march_neg"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

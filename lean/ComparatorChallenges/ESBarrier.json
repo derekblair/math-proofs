@@ -1,0 +1,14 @@
+{
+  "challenge_module": "ComparatorChallenges.ESBarrier",
+  "solution_module": "Mathproofs.NumberTheory.ESBarrier",
+  "theorem_names": [
+    "es_crt_escape"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

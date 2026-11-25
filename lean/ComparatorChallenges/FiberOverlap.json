@@ -1,0 +1,15 @@
+{
+  "challenge_module": "ComparatorChallenges.FiberOverlap",
+  "solution_module": "Mathproofs.NumberTheory.FiberOverlap",
+  "theorem_names": [
+    "FiberOverlap.autocorr_le_one",
+    "FiberOverlap.fiber_overlap"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

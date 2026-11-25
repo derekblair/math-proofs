@@ -1,0 +1,15 @@
+{
+  "challenge_module": "ComparatorChallenges.ESIdentity",
+  "solution_module": "Mathproofs.NumberTheory.ESIdentity",
+  "theorem_names": [
+    "es_covering_217mod264",
+    "es_identity_217mod264"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

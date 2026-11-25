@@ -1,0 +1,14 @@
+{
+  "challenge_module": "ComparatorChallenges.ESQRCoreCount",
+  "solution_module": "Mathproofs.NumberTheory.ESQRCoreCount",
+  "theorem_names": [
+    "ESQRCoreCount.qr_residue_count"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

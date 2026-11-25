@@ -1,0 +1,16 @@
+{
+  "challenge_module": "ComparatorChallenges.ESBranchTwo",
+  "solution_module": "Mathproofs.NumberTheory.ESBranchTwo",
+  "theorem_names": [
+    "ESBranchTwo.branch2_collapse",
+    "ESBranchTwo.family_identity",
+    "ESBranchTwo.branch2_m_mod8_refuted"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

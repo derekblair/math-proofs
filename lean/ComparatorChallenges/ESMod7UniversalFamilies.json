@@ -1,0 +1,16 @@
+{
+  "challenge_module": "ComparatorChallenges.ESMod7UniversalFamilies",
+  "solution_module": "Mathproofs.NumberTheory.ESMod7UniversalFamilies",
+  "theorem_names": [
+    "ESMod7UniversalFamilies.fam1_covers",
+    "ESMod7UniversalFamilies.fam2_covers",
+    "ESMod7UniversalFamilies.fam3_covers"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

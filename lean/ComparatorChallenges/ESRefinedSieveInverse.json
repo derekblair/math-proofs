@@ -1,0 +1,16 @@
+{
+  "challenge_module": "ComparatorChallenges.ESRefinedSieveInverse",
+  "solution_module": "Mathproofs.NumberTheory.ESRefinedSieveInverse",
+  "theorem_names": [
+    "ESRefinedSieve.crt44_iff",
+    "ESRefinedSieve.sixClasses_exact",
+    "ESRefinedSieve.sixClasses_inv_closed"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}
