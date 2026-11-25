@@ -1,14 +1,14 @@
 {"version": "1.2.0",
  "packagesDir": ".lake/packages",
  "packages":
- [{"url": "https://github.com/leanprover-community/mathlib4",
+ [{"url": "https://github.com/leanprover-community/mathlib4.git",
    "type": "git",
    "subDir": null,
-   "scope": "leanprover-community",
+   "scope": "",
    "rev": "d13f23b723b8a846827a245b89c10fc7d3f11612",
    "name": "mathlib",
    "manifestFile": "lake-manifest.json",
-   "inputRev": "v4.34.1",
+   "inputRev": "d13f23b723b8a846827a245b89c10fc7d3f11612",
    "inherited": false,
    "configFile": "lakefile.lean"},
   {"url": "https://github.com/leanprover-community/plausible",
@@ -93,4 +93,4 @@
    "configFile": "lakefile.toml"}],
  "name": "mathproofs",
  "lakeDir": ".lake",
- "fixedToolchain": false}
+ "fixedToolchain": true}
