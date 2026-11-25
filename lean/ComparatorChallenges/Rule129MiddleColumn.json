@@ -1,0 +1,16 @@
+{
+  "challenge_module": "ComparatorChallenges.Rule129MiddleColumn",
+  "solution_module": "Mathproofs.Dynamics.Rule129MiddleColumn",
+  "theorem_names": [
+    "Mathproofs.Rule129MiddleColumn.rule126_middle_column_iff",
+    "Mathproofs.Rule129MiddleColumn.rule126_middle_column_eq_a036987",
+    "Mathproofs.Rule129MiddleColumn.a267442_eq_a043545"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

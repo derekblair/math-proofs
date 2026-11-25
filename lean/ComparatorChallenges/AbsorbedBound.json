@@ -1,0 +1,14 @@
+{
+  "challenge_module": "ComparatorChallenges.AbsorbedBound",
+  "solution_module": "Mathproofs.NumberTheory.AbsorbedBound",
+  "theorem_names": [
+    "AbsorbedBound.t4_self_bound"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

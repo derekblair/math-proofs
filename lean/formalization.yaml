@@ -1,0 +1,289 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# Catalog of papers with a formalized main result. Paths are relative to lean/.
+version: "v0.4"
+
+project:
+  name: "math-proofs"
+  description: "Lean 4.34.1 + Mathlib v4.34.1 formalizations accompanying a mathematics manuscript collection, with explicit statement scope and remaining application boundaries."
+  authors: ["Derek Blair"]
+  license: "not specified"
+  lean_version: "4.34.1"
+  mathlib_version: "v4.34.1"
+
+status_definitions:
+  "[PROVED]": "The named Lean statement is kernel-checked using only standard axioms; this does not assert a broader application."
+  "[CONDITIONAL]": "The classification or application retains explicit mathematical inputs as theorem arguments; the conditional statement is kernel-checked."
+  "[PROVED*]": "Staged publication status for named kernel-checked statements; not an assertion of an unassembled larger claim."
+  "[COMPUTED]": "External computation without Lean kernel certification."
+  "supporting definitions": "Definitions or infrastructure with no listed flagship theorem."
+
+axioms_convention: "Standard Lean axioms only (propext, Classical.choice, Quot.sound). No sorrys, native_decide certificate axioms, or custom axioms appear in any exported result."
+
+artifact_policy:
+  correction_date: "2026-10-23"
+  authoritative_overview: "../overview.tex"
+  historical_pdf_paths:
+    - "../overview.pdf"
+    - "../preprints/erdos-straus-identity-217mod264-October-3-2026/paper.pdf"
+    - "../preprints/erdos-straus-finite-identity-barrier-October-4-2026/paper.pdf"
+    - "../preprints/sieve-inverse-branch-isolation-October-11-2026/paper.pdf"
+    - "../preprints/r47-sat184-October-7-2026/paper.pdf"
+    - "../preprints/es-absorption-forcing-October-11-2026/paper.pdf"
+  pdf_status: "historical_pre_correction"
+  note: "These PDFs were not regenerated in the October 23-24 corrections (nor during the November 25 layout restructure, where LaTeX/XeLaTeX was absent on the build host). Corrected TeX sources (../overview.tex and ../preprints/<slug>/build/main.tex) and per-family docs/ scope files are authoritative."
+
+sources:
+  - title: "An Erdős–Straus Covering Identity for n ≡ 217 (mod 264)"
+    authors: ["Derek Blair"]
+    id: ../preprints/erdos-straus-identity-217mod264-October-3-2026/paper.pdf
+    type: article
+
+  - title: "CRT Escape from Local Quadratic Obstructions on Square Classes Modulo 840"
+    authors: ["Derek Blair"]
+    id: ../preprints/erdos-straus-finite-identity-barrier-October-4-2026/paper.pdf
+    type: article
+
+  - title: "Continued-fraction identities and conditional gap-factor assemblies"
+    authors: ["Derek Blair"]
+    type: original-proof
+
+  - title: "The witness complex, square obstructions, and the QR-core"
+    authors: ["Derek Blair"]
+    type: original-proof
+
+  - title: "The 3v floor theorem for girth-5 graphs"
+    authors: ["Derek Blair"]
+    type: original-proof
+
+  - title: "Branch-1 q-adic type theorem"
+    authors: ["Derek Blair"]
+    type: original-proof
+
+  - title: "A Saturated 9-Element Sidon Set in [1,184]: A Kernel-Checked Finite Witness"
+    authors: ["Derek Blair"]
+    id: ../preprints/r47-sat184-October-7-2026/paper.pdf
+    type: article
+
+  - title: "Fiber-Compatibility and Composite Suppression in Erdős–Straus Covering Families"
+    authors: ["Derek Blair"]
+    id: ../preprints/fiber-compatibility-composite-suppression-October-11-2026/paper.pdf
+    type: article
+
+  - title: "Hole Suppression and Absorption in Saturated Sidon Families"
+    authors: ["Derek Blair"]
+    id: ../preprints/hole-suppression-absorption-October-11-2026/paper.pdf
+    type: article
+
+  - title: "Translation Marches, Hole-Twin Dips, and Dip-March Mechanics"
+    authors: ["Derek Blair"]
+    id: ../preprints/translation-march-dip-October-11-2026/paper.pdf
+    type: article
+
+  - title: "Sub-Family Dichotomy and Ladder Ceilings: Generalized Erdős–Straus Identities, Admission Pinning, and the March Ladder Bound"
+    authors: ["Derek Blair"]
+    id: ../preprints/subfamily-ladder-ceiling-October-11-2026/paper.pdf
+    type: article
+
+  - title: "Sigma Transfer and Fiber Overlap: Pareto Transitions of the March-Graph Spectrum and the Sidon Fiber-Overlap Bound"
+    authors: ["Derek Blair"]
+    id: ../preprints/sigma-transfer-fiber-overlap-October-11-2026/paper.pdf
+    type: article
+
+  - title: "Abstract Locks and Transition DAGs: Repaired Consecutive-Firing Laws, the Dual-Ascent Barrier, and Ascent-Depth Bounds"
+    authors: ["Derek Blair"]
+    id: ../preprints/abstract-lock-transdag-October-11-2026/paper.pdf
+    type: article
+
+  - title: "Void Frames, Defect Calculus, and Defect Homomorphisms"
+    authors: ["Derek Blair"]
+    id: ../preprints/void-frames-defect-October-11-2026/paper.pdf
+    type: article
+
+  - title: "Absorption Order and Forcing Spectrum in Erdős–Straus Families"
+    authors: ["Derek Blair"]
+    id: ../preprints/es-absorption-forcing-October-11-2026/paper.pdf
+    type: article
+
+  - title: "Sieve Inversion and Branch Isolation"
+    authors: ["Derek Blair"]
+    id: ../preprints/sieve-inverse-branch-isolation-October-11-2026/paper.pdf
+    type: article
+
+  - title: "Binary submasks and the middle column of Rules 126 and 129"
+    authors: ["Derek Blair"]
+    id: ../preprints/rule129/paper.pdf
+    type: article
+
+status:
+  scope: "All 15 catalogued result families (plus Rule 129 and post-scope Seam B / Seam C modules) have kernel-checked Lean 4 formalizations; explicit per-family boundaries and unformalized bridges are documented in docs/."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  # Entries use source-qualified declaration names and the files containing them.
+  main_results:
+    - comparator_config: ComparatorChallenges/AbsorbedBound.json
+      declaration: AbsorbedBound.t4_self_bound
+      file: Mathproofs/NumberTheory/AbsorbedBound.lean
+
+    - comparator_config: ComparatorChallenges/ESAbsorptionOrder.json
+      declaration: ESAbsorptionOrder.absorp_datum_iff
+      file: Mathproofs/NumberTheory/ESAbsorptionOrder.lean
+
+    - comparator_config: ComparatorChallenges/ESAbsorptionOrder.json
+      declaration: ESAbsorptionOrder.rho_absorption_collapse
+      file: Mathproofs/NumberTheory/ESAbsorptionOrder.lean
+
+    - comparator_config: ComparatorChallenges/ESAbsorptionOrder.json
+      declaration: ESAbsorptionOrder.absorption_collapse_unique_core
+      file: Mathproofs/NumberTheory/ESAbsorptionOrder.lean
+
+    - comparator_config: ComparatorChallenges/ESAbsorptionOrder.json
+      declaration: ESAbsorptionOrder.singleton_factorization
+      file: Mathproofs/NumberTheory/ESAbsorptionOrder.lean
+
+    - comparator_config: ComparatorChallenges/ESBarrier.json
+      declaration: es_crt_escape
+      file: Mathproofs/NumberTheory/ESBarrier.lean
+
+    - comparator_config: ComparatorChallenges/ESBranchTwo.json
+      declaration: ESBranchTwo.branch2_collapse
+      file: Mathproofs/NumberTheory/ESBranchTwo.lean
+
+    - comparator_config: ComparatorChallenges/ESBranchTwo.json
+      declaration: ESBranchTwo.family_identity
+      file: Mathproofs/NumberTheory/ESBranchTwo.lean
+
+    - comparator_config: ComparatorChallenges/ESBranchTwo.json
+      declaration: ESBranchTwo.branch2_m_mod8_refuted
+      file: Mathproofs/NumberTheory/ESBranchTwo.lean
+
+    - comparator_config: ComparatorChallenges/ESFiberCompat.json
+      declaration: fiber_compat_pair_iff
+      file: Mathproofs/NumberTheory/ESFiberCompat.lean
+
+    - comparator_config: ComparatorChallenges/ESIdentity.json
+      declaration: es_covering_217mod264
+      file: Mathproofs/NumberTheory/ESIdentity.lean
+
+    - comparator_config: ComparatorChallenges/ESIdentity.json
+      declaration: es_identity_217mod264
+      file: Mathproofs/NumberTheory/ESIdentity.lean
+
+    - comparator_config: ComparatorChallenges/ESMod7UniversalFamilies.json
+      declaration: ESMod7UniversalFamilies.fam1_covers
+      file: Mathproofs/NumberTheory/ESMod7UniversalFamilies.lean
+
+    - comparator_config: ComparatorChallenges/ESMod7UniversalFamilies.json
+      declaration: ESMod7UniversalFamilies.fam2_covers
+      file: Mathproofs/NumberTheory/ESMod7UniversalFamilies.lean
+
+    - comparator_config: ComparatorChallenges/ESMod7UniversalFamilies.json
+      declaration: ESMod7UniversalFamilies.fam3_covers
+      file: Mathproofs/NumberTheory/ESMod7UniversalFamilies.lean
+
+    - comparator_config: ComparatorChallenges/ESQRCoreCount.json
+      declaration: ESQRCoreCount.qr_residue_count
+      file: Mathproofs/NumberTheory/ESQRCoreCount.lean
+
+    - comparator_config: ComparatorChallenges/ESRefinedSieveInverse.json
+      declaration: ESRefinedSieve.crt44_iff
+      file: Mathproofs/NumberTheory/ESRefinedSieveInverse.lean
+
+    - comparator_config: ComparatorChallenges/ESRefinedSieveInverse.json
+      declaration: ESRefinedSieve.sixClasses_exact
+      file: Mathproofs/NumberTheory/ESRefinedSieveInverse.lean
+
+    - comparator_config: ComparatorChallenges/ESRefinedSieveInverse.json
+      declaration: ESRefinedSieve.sixClasses_inv_closed
+      file: Mathproofs/NumberTheory/ESRefinedSieveInverse.lean
+
+    - comparator_config: ComparatorChallenges/ESSubfamilyExtended.json
+      declaration: ESSubfamilyExtended.generalized_subfamily_identity
+      file: Mathproofs/NumberTheory/ESSubfamilyExtended.lean
+
+    - comparator_config: ComparatorChallenges/FiberOverlap.json
+      declaration: FiberOverlap.autocorr_le_one
+      file: Mathproofs/NumberTheory/FiberOverlap.lean
+
+    - comparator_config: ComparatorChallenges/FiberOverlap.json
+      declaration: FiberOverlap.fiber_overlap
+      file: Mathproofs/NumberTheory/FiberOverlap.lean
+
+    - comparator_config: ComparatorChallenges/Girth5Extremal.json
+      declaration: Girth5Floor3v.score_le_D_of_extremal
+      file: Mathproofs/Combinatorics/Girth5Extremal.lean
+
+    - comparator_config: ComparatorChallenges/Girth5Extremal.json
+      declaration: Girth5Floor3v.three_v_rigidity_of_extremal
+      file: Mathproofs/Combinatorics/Girth5Extremal.lean
+
+    - comparator_config: ComparatorChallenges/Girth5Extremal.json
+      declaration: Girth5Floor3v.three_v_gap_of_extremal
+      file: Mathproofs/Combinatorics/Girth5Extremal.lean
+
+    - comparator_config: ComparatorChallenges/Rule129MiddleColumn.json
+      declaration: Mathproofs.Rule129MiddleColumn.rule126_middle_column_iff
+      file: Mathproofs/Dynamics/Rule129MiddleColumn.lean
+
+    - comparator_config: ComparatorChallenges/Rule129MiddleColumn.json
+      declaration: Mathproofs.Rule129MiddleColumn.rule126_middle_column_eq_a036987
+      file: Mathproofs/Dynamics/Rule129MiddleColumn.lean
+
+    - comparator_config: ComparatorChallenges/Rule129MiddleColumn.json
+      declaration: Mathproofs.Rule129MiddleColumn.a267442_eq_a043545
+      file: Mathproofs/Dynamics/Rule129MiddleColumn.lean
+
+    - comparator_config: ComparatorChallenges/SidonSat184.json
+      declaration: SidonSat184.r47_sat184
+      file: Mathproofs/Combinatorics/SidonSat184.lean
+
+    - comparator_config: ComparatorChallenges/SidonSat184.json
+      declaration: SidonSat184.unique_extension_saturated
+      file: Mathproofs/Combinatorics/SidonSat184.lean
+
+    - comparator_config: ComparatorChallenges/TransDAG.json
+      declaration: TransDAG.no_dual_target_demote
+      file: Mathproofs/NumberTheory/TransDAG.lean
+
+    - comparator_config: ComparatorChallenges/TransDAG.json
+      declaration: TransDAG.no_dual_source_promote
+      file: Mathproofs/NumberTheory/TransDAG.lean
+
+    - comparator_config: ComparatorChallenges/TransDAG.json
+      declaration: TransDAG.dual_preserves_s_card
+      file: Mathproofs/NumberTheory/TransDAG.lean
+
+    - comparator_config: ComparatorChallenges/TranslationMarch.json
+      declaration: TranslationMarch.rigidity
+      file: Mathproofs/NumberTheory/TranslationMarch.lean
+
+    - comparator_config: ComparatorChallenges/TranslationMarch.json
+      declaration: TranslationMarch.march
+      file: Mathproofs/NumberTheory/TranslationMarch.lean
+
+    - comparator_config: ComparatorChallenges/TranslationMarch.json
+      declaration: TranslationMarch.march_neg
+      file: Mathproofs/NumberTheory/TranslationMarch.lean
+
+    - comparator_config: ComparatorChallenges/VoidDefectHom.json
+      declaration: VoidDefectHom.defect_hom_rigidity
+      file: Mathproofs/NumberTheory/VoidDefectHom.lean
+
+    - comparator_config: ComparatorChallenges/VoidDefectHom.json
+      declaration: VoidDefectHom.literal_product_never
+      file: Mathproofs/NumberTheory/VoidDefectHom.lean
+
+automation:
+  methods:
+    - method: agent
+      framework: "Multi-lane research, formalization, and cross-session review orchestrator"
+
+review:
+  status: "agent-reviewed"
+  notes: "Exported statements are machine-checked by Lean 4.34.1 + leanchecker with standard axioms only and gated on independent cross-session review."
+
+acknowledgements: >-
+  Thank you to the authors of Lean 4, Mathlib, Lake, leanchecker, and Comparator.

@@ -1,0 +1,14 @@
+{
+  "challenge_module": "ComparatorChallenges.ESFiberCompat",
+  "solution_module": "Mathproofs.NumberTheory.ESFiberCompat",
+  "theorem_names": [
+    "fiber_compat_pair_iff"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

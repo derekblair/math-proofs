@@ -1,0 +1,17 @@
+{
+  "challenge_module": "ComparatorChallenges.ESAbsorptionOrder",
+  "solution_module": "Mathproofs.NumberTheory.ESAbsorptionOrder",
+  "theorem_names": [
+    "ESAbsorptionOrder.absorp_datum_iff",
+    "ESAbsorptionOrder.rho_absorption_collapse",
+    "ESAbsorptionOrder.absorption_collapse_unique_core",
+    "ESAbsorptionOrder.singleton_factorization"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

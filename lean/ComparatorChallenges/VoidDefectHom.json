@@ -1,0 +1,15 @@
+{
+  "challenge_module": "ComparatorChallenges.VoidDefectHom",
+  "solution_module": "Mathproofs.NumberTheory.VoidDefectHom",
+  "theorem_names": [
+    "VoidDefectHom.defect_hom_rigidity",
+    "VoidDefectHom.literal_product_never"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

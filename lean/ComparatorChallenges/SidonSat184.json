@@ -1,0 +1,15 @@
+{
+  "challenge_module": "ComparatorChallenges.SidonSat184",
+  "solution_module": "Mathproofs.Combinatorics.SidonSat184",
+  "theorem_names": [
+    "SidonSat184.r47_sat184",
+    "SidonSat184.unique_extension_saturated"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}

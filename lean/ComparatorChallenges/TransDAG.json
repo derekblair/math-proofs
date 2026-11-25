@@ -1,0 +1,16 @@
+{
+  "challenge_module": "ComparatorChallenges.TransDAG",
+  "solution_module": "Mathproofs.NumberTheory.TransDAG",
+  "theorem_names": [
+    "TransDAG.no_dual_target_demote",
+    "TransDAG.no_dual_source_promote",
+    "TransDAG.dual_preserves_s_card"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}
