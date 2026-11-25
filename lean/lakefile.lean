@@ -21,7 +21,7 @@ lean_lib Mathproofs.Dynamics where
 lean_lib ComparatorChallenges where
   globs := #[.submodules `ComparatorChallenges]
 
--- Post-scope Seam B / Seam C libraries preserved without invented remapping (see DISCREPANCY.md)
+-- Post-scope Seam B / Seam C libraries preserved without invented remapping (PR #45, D1; see ../history.md)
 lean_lib MathProofs where
   globs := #[.submodules `MathProofs]
 
