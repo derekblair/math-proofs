@@ -2,6 +2,19 @@
 
 For any withdrawn or superseded papers, their README files explain the gap and link to the historical manuscript. For any updated papers, previously released editions remain accessible in git history and through the version notes in their README. Corrections are disclosed here rather than buried.
 
+## November 25, 2026
+
+**Repository Restructure**
+
+- Restructured the repository to mirror the `openai/math` layout (PR #45, `7f901baf`): moved the Lean project into [`lean/`](lean/) with discipline sub-libraries (`Mathproofs.NumberTheory`, `Mathproofs.Combinatorics`, `Mathproofs.Topology`, `Mathproofs.Dynamics`), upgraded [`lean/formalization.yaml`](lean/formalization.yaml) to v0.4 (`status.main_results`), added per-family scope docs ([`lean/docs/`](lean/docs/)), moved `papers/` to [`preprints/`](preprints/) (converting 13 mapped preprints to the OAI layout), rewrote [`CONTENTS.md`](CONTENTS.md) and [`README.md`](README.md), and renamed `CHANGELOG.md` to `history.md`. Post-scope Seam B / Seam C modules and preprints were preserved without invented remappings (D1); `LICENSE` (D3) and `overview.pdf` regeneration (D2) remain open items. All 102 moved non-root `.lean` files had `0` non-import diffs (`77` byte-identical, `25` import-path-only updates), intentionally retaining the 29 historical `Paper: papers/...` header comments in `lean/Mathproofs/NumberTheory/*.lean`.
+
+**Verification & Provenance Corrections**
+
+- **Full 114-module axiom audit:** PR #45's author-time `Lean.collectAxioms` sweep covered 96 of the 114 built `.olean` modules (`Mathproofs.*`, `MathProofs.*`, `SeamC.*`, omitting `Main` and `ComparatorChallenges.*`) and was overstated as "exhaustive" in the merged PR #45 description. Independent crossed review audited all **114/114** built `.olean`s: all **97/97** default-target modules (`Mathproofs` 79, `MathProofs` 12, `SeamC` 5, `Main` 1; `7,914` constants, `6,566` theorems) have `0` custom axioms and `0` disallowed violations (`0` `sorryAx`, `0` `ofReduceBool`, `0` `trustCompiler`), and all **17/17** non-default `ComparatorChallenges` modules (`194` constants, `90` theorems) have `0` custom axioms / `0` `ofReduceBool` / `0` `trustCompiler` and strictly the `39` deliberate `sorryAx` challenge placeholders.
+- **`ComparatorChallenges` provenance:** [`lean/ComparatorChallenges/`](lean/ComparatorChallenges/) (17 `.lean` + 17 `.json` files, `39` deliberate `sorry` stubs covering 38 flagship theorems plus helper `Girth5Floor3v.scores_nonempty`) did not exist prior to PR #45 (`b2e4a11`) and was newly authored in commit `b2f02d4` by extracting standalone definitions and theorem signatures from `Mathproofs/` (not assembled from pre-existing challenge files). Dual-environment kernel `Expr` comparison verified exact statement and definition-body identity across all 17/17 pairs; running official `leanprover/comparator` on Lean 4.34.1 remains pending compatible toolchain binaries.
+- **`*Statement.lean` census clarification:** The repository's **13** `*Statement.lean` files under `lean/` consist of **11** unbuilt `MathProofs/SeamB/*/Statement.lean` files (`70` pre-existing `sorry`s, excluded from default `lake build`) plus **2** built, sorry-free `SeamC/*/Statement.lean` files (`SeamC/A363166/Statement.lean`, `SeamC/A385590/Statement.lean`) — not 13 SeamB Statement files.
+- **PR #45 follow-up hygiene fixes:** Replaced dangling `(see DISCREPANCY.md)` comments in `lean/lakefile.lean` and `lean/Mathproofs.lean`, added helper `Girth5Floor3v.scores_nonempty` to `lean/ComparatorChallenges/Girth5Extremal.json`, fixed the `## Labeling convention` heading hierarchy in `CONTENTS.md`, scoped `sorry_count: 0` in `lean/formalization.yaml` to the 97 default-built modules, and dated the historical October 6, 2026 restructure entry below.
+
 ## October 24, 2026
 
 **Formalization Fix**
