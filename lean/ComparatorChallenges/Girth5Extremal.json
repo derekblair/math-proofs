@@ -2,6 +2,7 @@
   "challenge_module": "ComparatorChallenges.Girth5Extremal",
   "solution_module": "Mathproofs.Combinatorics.Girth5Extremal",
   "theorem_names": [
+    "Girth5Floor3v.scores_nonempty",
     "Girth5Floor3v.score_le_D_of_extremal",
     "Girth5Floor3v.three_v_rigidity_of_extremal",
     "Girth5Floor3v.three_v_gap_of_extremal"

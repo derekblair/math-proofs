@@ -261,6 +261,14 @@ Characterizes the refined sieve's six-class inverse-closed support modulo 3960 v
 
 ---
 
+## Labeling convention
+
+- **`[PROVED]`** — machine-checked by Lean, no extra axioms beyond Lean's standard ones (`propext`, `Classical.choice`, `Quot.sound`).
+- **`[CONDITIONAL]`** — the larger interpretation has explicit, unformalized inputs.
+- **`[PROVED*]`** — staged publication status; the scope docs state the checked scope.
+- **`[COMPUTED]`** — external computation not certified by the Lean kernel.
+- Nothing here is claimed on the basis of a `sorry`.
+
 ## Detailed family notes (per-paper index)
 
 ### Family 001 — Erdős–Straus identities and obstructions
@@ -290,14 +298,6 @@ The checked result is `es_crt_escape`: for progressions with `8 ∣ Aᵢ` and ex
   [corrected source](preprints/erdos-straus-finite-identity-barrier-October-4-2026/build/main.tex),
   [README / build / citation](preprints/erdos-straus-finite-identity-barrier-October-4-2026/README.md))
 - Lean: [`lean/Mathproofs/NumberTheory/ESBarrier.lean`](lean/Mathproofs/NumberTheory/ESBarrier.lean) (`es_crt_escape`), scope [`lean/docs/001.md`](lean/docs/001.md), comparator [`lean/ComparatorChallenges/ESBarrier.lean`](lean/ComparatorChallenges/ESBarrier.lean).
-
-## Labeling convention
-
-- **`[PROVED]`** — machine-checked by Lean, no extra axioms beyond Lean's standard ones (`propext`, `Classical.choice`, `Quot.sound`).
-- **`[CONDITIONAL]`** — the larger interpretation has explicit, unformalized inputs.
-- **`[PROVED*]`** — staged publication status; the scope docs state the checked scope.
-- **`[COMPUTED]`** — external computation not certified by the Lean kernel.
-- Nothing here is claimed on the basis of a `sorry`.
 
 ### Family 002 — Collatz convergent control (gap-factor theory)
 
@@ -436,7 +436,7 @@ Thirteen modules across [`lean/Mathproofs/Topology/`](lean/Mathproofs/Topology/)
 ## Additional preprints (family numbers pending)
 
 - [`preprints/rule129/`](preprints/rule129/) ([PDF](preprints/rule129/paper.pdf), [README](preprints/rule129/README.md)) — formalized under [`lean/Mathproofs/Dynamics/`](lean/Mathproofs/Dynamics/) (`Rule129ClosedForm`, `Rule129Lucas`, `Rule129Digits`, `Rule129MiddleColumn`; comparator [`Rule129MiddleColumn.lean`](lean/ComparatorChallenges/Rule129MiddleColumn.lean)).
-- 22 post-scope Seam B / Seam C OEIS preprints under [`preprints/`](preprints/) (`a186424`, `c018-a189640`, `c037-a203568`, `c042-a191579`, `c047-a317933`, `c049-a372556`, `c050-a266222`, `c051-a266439`, `c052-a266256`, `c053-a266662`, `c054-a266258`, `c055-a266664`, `c056-a266220`, `c057-a266437`, `c085-a294912`, `s001-a392002`, `s003-a385590`, `s006-a363166`, `s010-a401714`, `s012-a401496`, `s017-a401673`, `s019-a381494`), formalized under `lean/Mathproofs/`, `lean/MathProofs/SeamB/`, and `lean/SeamC/`.
+- 22 post-scope Seam B / Seam C OEIS preprints under [`preprints/`](preprints/) (`a186424`, `c018-a189640`, `c037-a203568`, `c042-a191579`, `c047-a317933`, `c049-a372556`, `c050-a266222`, `c051-a266439`, `c052-a266256`, `c053-a266662`, `c054-a266258`, `c055-a266664`, `c056-a266220`, `c057-a266437`, `c085-a294912`, `s001-a392002`, `s003-a385590`, `s006-a363166`, `s010-a401714`, `s012-a401496`, `s017-a401673`, `s019-a381494`), formalized under `lean/Mathproofs/`, `lean/MathProofs/SeamB/`, and `lean/SeamC/`. *(Of the 13 `*Statement.lean` files under `lean/`, 11 are unbuilt `MathProofs/SeamB/*/Statement.lean` stubs excluded from default `lake build`, and 2 are built, sorry-free `SeamC/*/Statement.lean` modules.)*
 
 ## Versions and citations
 

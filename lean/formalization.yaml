@@ -116,6 +116,9 @@ sources:
 
 status:
   scope: "All 15 catalogued result families (plus Rule 129 and post-scope Seam B / Seam C modules) have kernel-checked Lean 4 formalizations; explicit per-family boundaries and unformalized bridges are documented in docs/."
+  # Scope: covers all 97 default-built modules only (Mathproofs 79, MathProofs 12, SeamC 5, Main 1).
+  # Excludes the 17 non-default ComparatorChallenges stubs (39 deliberate sorrys) and the 11 unbuilt
+  # MathProofs/SeamB/*/Statement.lean files (70 pre-existing sorrys; the 2 SeamC Statement.lean files are built and sorry-free).
   sorry_count: 0
   sorry_in_definitions: 0
   axioms:

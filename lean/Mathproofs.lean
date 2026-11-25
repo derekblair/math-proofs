@@ -5,7 +5,7 @@ import Mathproofs.Combinatorics
 import Mathproofs.Topology
 import Mathproofs.Dynamics
 
--- Post-scope Seam B / Seam C modules preserved at original paths (see DISCREPANCY.md)
+-- Post-scope Seam B / Seam C modules preserved at original paths (PR #45, D1; see ../history.md)
 import Mathproofs.A266222
 import Mathproofs.A317933Records
 import Mathproofs.A392002TwoColorPartition
