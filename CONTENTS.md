@@ -261,6 +261,14 @@ Characterizes the refined sieve's six-class inverse-closed support modulo 3960 v
 
 ---
 
+## Labeling convention
+
+- **`[PROVED]`** — machine-checked by Lean, no extra axioms beyond Lean's standard ones (`propext`, `Classical.choice`, `Quot.sound`).
+- **`[CONDITIONAL]`** — the larger interpretation has explicit, unformalized inputs.
+- **`[PROVED*]`** — staged publication status; the scope docs state the checked scope.
+- **`[COMPUTED]`** — external computation not certified by the Lean kernel.
+- Nothing here is claimed on the basis of a `sorry`.
+
 ## Detailed family notes (per-paper index)
 
 ### Family 001 — Erdős–Straus identities and obstructions
@@ -290,14 +298,6 @@ The checked result is `es_crt_escape`: for progressions with `8 ∣ Aᵢ` and ex
   [corrected source](preprints/erdos-straus-finite-identity-barrier-October-4-2026/build/main.tex),
   [README / build / citation](preprints/erdos-straus-finite-identity-barrier-October-4-2026/README.md))
 - Lean: [`lean/Mathproofs/NumberTheory/ESBarrier.lean`](lean/Mathproofs/NumberTheory/ESBarrier.lean) (`es_crt_escape`), scope [`lean/docs/001.md`](lean/docs/001.md), comparator [`lean/ComparatorChallenges/ESBarrier.lean`](lean/ComparatorChallenges/ESBarrier.lean).
-
-## Labeling convention
-
-- **`[PROVED]`** — machine-checked by Lean, no extra axioms beyond Lean's standard ones (`propext`, `Classical.choice`, `Quot.sound`).
-- **`[CONDITIONAL]`** — the larger interpretation has explicit, unformalized inputs.
-- **`[PROVED*]`** — staged publication status; the scope docs state the checked scope.
-- **`[COMPUTED]`** — external computation not certified by the Lean kernel.
-- Nothing here is claimed on the basis of a `sorry`.
 
 ### Family 002 — Collatz convergent control (gap-factor theory)
 
