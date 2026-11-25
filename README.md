@@ -1,105 +1,47 @@
 # Math Proofs
 
-Lean 4.34.1 and Mathlib v4.34.1 formalizations, with accompanying manuscripts
-where available. The exact exported statements determine what is proved.
-Some larger research claims still require bridges or inputs that are not
-formalized; these limits are recorded in the catalogue.
+This repository contains Lean 4.34.1 and Mathlib v4.34.1 formalizations together with accompanying mathematical manuscripts where available. **The exact exported statements determine what is proved.**
 
-- [Contents](CONTENTS.md): manuscripts and result families.
-- [Formalization catalogue](FORMALIZATION_CATALOGUE.md): checked statements and scope.
-- [Machine-readable catalogue](formalization.yaml).
-- [Changelog](CHANGELOG.md): disclosed corrections, including the 2026-10-23 review fixes.
+Some larger research claims still require bridges, external computational sweeps, or mathematical inputs that are not formalized; these scope limits are stated explicitly in the per-family scope documents under [`lean/docs/`](lean/docs/) and in [`lean/formalization.yaml`](lean/formalization.yaml). Nothing in this collection is claimed on the basis of a `sorry`.
 
-## Complete finite and arithmetic results
+Status labels used across the collection:
 
-`es_covering_217mod264` in [ESIdentity.lean](Mathproofs/ESIdentity.lean)
-proves that every natural `n ≡ 217 (mod 264)` has positive natural
-denominators `x,y,z` satisfying `4x=n+3`, `y=n(n+3)`, `11z=n(n+3)` and
-`4/n=1/x+1/y+1/z`. The original rational equality remains available as
-`es_identity_217mod264`. [ESIdentityCRT.lean](Mathproofs/ESIdentityCRT.lean)
-proves the six covered subclasses modulo 9240 and the exact one-out-of-eleven
-residue count for each parent class. These use only standard Lean axioms.
+- **`[PROVED]`** — the named Lean statement is kernel-checked using only standard Lean axioms (`propext`, `Classical.choice`, `Quot.sound`).
+- **`[CONDITIONAL]`** — a larger interpretation whose remaining mathematical inputs are explicit theorem arguments.
+- **`[PROVED*]`** — staged publication status; never silently asserts end-to-end verification of a larger unassembled claim.
+- **`[COMPUTED]`** — external computation not certified by the Lean kernel.
 
-The identity's former novelty claim is withdrawn. Miguel Angel Lopez (2024),
-[arXiv:2206.10319v4](https://arxiv.org/html/2206.10319v4), already gives the
-same solution at 1009; the prime-progression identity specializes his construction.
-The corrected manuscript explains the specialization. No priority is claimed.
+## Navigating the collection
 
-`SidonSat184.r47_sat184` in [SidonSat184.lean](Mathproofs/SidonSat184.lean)
-proves that `{16,62,66,74,88,104,117,122,123}` has nine elements and is a
-Sidon subset of `[1,184]` with no admissible extension in that interval.
-The finite computations are checked by Lean's kernel. The nine displayed
-one-hole rows, their coverage counts, saturated ten-element extensions, and
-the two C28 gate counterexamples are now checked in
-[SidonSat184Census.lean](Mathproofs/SidonSat184Census.lean). Search exhaustiveness,
-minimality, and priority claims are not part of this theorem.
+The catalogued collection covers **15 result families** across **12 dated preprints** (plus 4 families with preprints in preparation), alongside `preprints/rule129/` and 22 additional OEIS/Seam B and Seam C preprints under [`preprints/`](preprints/) (35 manuscript folders total). A family groups a principal result with companion arguments, consequences, or alternative proofs.
 
-The refined-sieve residue theorems in
-[ESRefinedSieveInverse.lean](Mathproofs/ESRefinedSieveInverse.lean) now use
-kernel proofs; their former native-computation certificate axioms were removed.
+- Start with the [overview PDF](overview.pdf) ([LaTeX source](overview.tex)) for descriptions of the families.
+- Use the [manuscript map](CONTENTS.md) to find individual papers, abstracts, and their supporting Lean modules.
+- The [`preprints/`](preprints/) directory contains PDFs, LaTeX sources (`build/main.tex`), bibliographies (`build/references.bib`), and manuscript-specific citation and build instructions.
+- The [Lean library](lean/README.md), [per-family scope documents](lean/docs/), and [formalization catalogue](lean/formalization.yaml) describe the available formal proofs, their associated papers, and verification configurations. See the [Comparator instructions](lean/ComparatorChallenges/README.md) for statement-identity checking instructions. All 15 catalogued result families (100%) have Lean formalizations (13 families with `[PROVED]` flagship theorems and 2 `[CONDITIONAL]` classification/assembly families).
+- Updates and disclosed corrections are described in the [history](history.md).
+- Working research dossiers and audit reports live in [`research/`](research/).
 
-## Explicitly scoped kernels
+### Highlights and explicitly scoped kernels
 
-- `es_crt_escape` proves infinitely many escaping primes from explicit local
-  quadratic obstructions. It uses Mathlib's proved general Dirichlet theorem.
-  The old inconsistent axioms and false rational-polynomial `es_barrier`
-  statement were removed. The Schinzel–Mordell implication from integer
-  polynomial identities to those obstructions remains unformalized.
-- [ESAbsorptionOrder.lean](Mathproofs/ESAbsorptionOrder.lean) proves the
-  datum equivalence assuming `G.C.Nonempty`. For distinct `G ≼ H` with
-  `H.C.Nonempty`, collapse gives `ρ({G,H})=1` and `{H}` is the unique
-  minimum core. Singleton factorization uses a finite ambient family
-  `𝒢 ⊇ S` with no singleton footprint on `S0` within `𝒢`.
-- The Collatz modules prove analytic/continued-fraction identities and
-  conditional argmin assemblies. [CollatzGapFactor.lean](Mathproofs/CollatzGapFactor.lean)
-  defines the explicit Q-ratio times power-of-two-ratio, proves its logarithmic
-  difference bridge, and proves its unique odd-block minimum under C22's
-  quantitative hypotheses. Specialization to the continued fraction of log₂3
-  and Collatz dynamics remains outside these statements.
-- QR counting now proves `|Q|=|S|/2^k` for actual residues modulo
-  `24*∏p`: S consists of units congruent to 1 modulo 24, and Q consists of
-  squares in S. The CRT equivalences are constructed in the proof. Matching
-  an externally filtered frontier remains a separate task.
-- The three mod-7 families, T1 w=20 classes, and T2 q=7 fibers now produce
-  positive natural Egyptian-fraction witnesses for every progression member.
-  [ESDescentCovering.lean](Mathproofs/ESDescentCovering.lean) turns the
-  descended slope and intercept divisibilities into positive identities on
-  the parent progression. External normalization, class censuses, and R74
-  descent exclusions remain unverified.
-- Q-adic classification is conditional on the explicit QQ/M23/R74 inputs;
-  the external sweep has not been proved in this repository.
-  [ESQadicBoundary.lean](Mathproofs/ESQadicBoundary.lean) proves the independent
-  bounds α≤1 and ρ≤1 and supplies a concrete generic type-(0,1) witness showing
-  why the R74 premise cannot simply be deleted.
-- Girth-5 results use corrected local reattachment conditions and prove the
-  identity-score floor. `emittedGraph` constructs a simple girth-at-least-five
-  graph for every feasible move on a distinct triple.
-  [Girth5Extremal.lean](Mathproofs/Girth5Extremal.lean) counts unordered edges
-  and derives the score ceiling, rigidity, and gap −1 from global edge
-  maximality among all girth-at-least-five graphs on the same vertex type.
+- **Complete finite and arithmetic results:**
+  - `es_covering_217mod264` in [ESIdentity.lean](lean/Mathproofs/NumberTheory/ESIdentity.lean) proves positive natural denominators for `4/n = 1/x + 1/y + 1/z` whenever `n ≡ 217 (mod 264)` (with rational equality `es_identity_217mod264`); [ESIdentityCRT.lean](lean/Mathproofs/NumberTheory/ESIdentityCRT.lean) proves the six covered subclasses modulo 9240 and exact `1/11` residue count per parent class. The former novelty claim is withdrawn in light of Miguel Angel Lopez (2024), [arXiv:2206.10319v4](https://arxiv.org/html/2206.10319v4); no priority is claimed.
+  - `SidonSat184.r47_sat184` in [SidonSat184.lean](lean/Mathproofs/Combinatorics/SidonSat184.lean) kernel-checks that `{16, 62, 66, 74, 88, 104, 117, 122, 123}` is a 9-element saturated Sidon subset of `[1, 184]`; [SidonSat184Census.lean](lean/Mathproofs/Combinatorics/SidonSat184Census.lean) kernel-checks the nine displayed one-hole rows, coverage counts, saturated 10-element extensions, and both C28 gate counterexamples.
+  - The refined-sieve residue theorems in [ESRefinedSieveInverse.lean](lean/Mathproofs/NumberTheory/ESRefinedSieveInverse.lean) use pure kernel proofs (former `native_decide` certificate axioms were removed).
+- **Explicitly scoped kernels:**
+  - `es_crt_escape` ([ESBarrier.lean](lean/Mathproofs/NumberTheory/ESBarrier.lean)) proves infinitely many escaping primes from explicit local quadratic obstructions via Mathlib's Dirichlet theorem; the Schinzel–Mordell implication from integer polynomial identities remains unformalized.
+  - [ESAbsorptionOrder.lean](lean/Mathproofs/NumberTheory/ESAbsorptionOrder.lean) proves datum equivalence under `G.C.Nonempty`, absorption collapse and unique minimum core under `H.C.Nonempty`, and singleton factorization within a finite ambient family `𝒢 ⊇ S`.
+  - The Collatz gap-factor modules ([CollatzGapFactor.lean](lean/Mathproofs/NumberTheory/CollatzGapFactor.lean) and companions) prove analytic/continued-fraction identities and conditional odd-block argmin assemblies; specialization to `log₂ 3` and Collatz dynamics remains outside these statements.
+  - [ESQRCoreCount.lean](lean/Mathproofs/NumberTheory/ESQRCoreCount.lean), [ESCovering.lean](lean/Mathproofs/NumberTheory/ESCovering.lean), [ESDescentCovering.lean](lean/Mathproofs/NumberTheory/ESDescentCovering.lean), [ESQadicBoundary.lean](lean/Mathproofs/NumberTheory/ESQadicBoundary.lean), and [Girth5Extremal.lean](lean/Mathproofs/Combinatorics/Girth5Extremal.lean) carry explicit scope boundaries documented in [`lean/docs/`](lean/docs/).
 
-## Verification and labels
+## How the results were produced
 
-```bash
-lake exe cache get
-lake build
-```
+Results in this collection are produced through an orchestrated multi-lane research and verification programme run by Derek Blair. Problem exploration, literature prior-art checks, computational experiments, manuscript drafting, Lean 4 formalization, and adversarial review execute in separate specialized lanes across a dedicated build and verification fleet. Formalized statements are promoted only after passing clean Lean 4 kernel builds (`lake build` and `leanchecker`), zero-`sorry` checks, standard-axiom audits (`propext`, `Classical.choice`, `Quot.sound`), and independent cross-session review; refuted or over-scoped drafts are repaired or withdrawn openly in [`history.md`](history.md).
 
-`[PROVED]` means the named Lean statement is checked using only standard
-axioms. `[CONDITIONAL]` identifies a larger interpretation whose remaining
-inputs are explicit theorem arguments. `[PROVED*]` is reserved for staged
-publication status and never silently asserts end-to-end verification of a
-larger claim. `[COMPUTED]` identifies external computations not certified by
-the Lean kernel. No result is justified by a proof placeholder.
+## Versions and citations
 
-The 2026-10-23 correction updates the `.tex` sources. Existing PDFs for the
-overview, ES identity, ES barrier, r47, and sieve-inverse papers are historical
-pre-correction artifacts; they were not regenerated in that correction.
-Read the corrected sources and catalogues for current statements. Their BUILD
-files explain regeneration.
+Public release history and disclosed corrections are preserved in [`history.md`](history.md), with previously released editions accessible in git history.
 
-The absorption paper's two committed PDFs are also **SUPERSEDED** and
-predate the repaired local nonemptiness and ambient-family hypotheses;
-see its [supersession note](papers/es-absorption-forcing-October-11-2026/SUPERSEDED.md).
-The October 24 rebuild attempt failed because the installed Tectonic lacked
-the cached LaTeX format resources. The corrected TeX source governs.
+The October 23–24, 2026 corrections updated `overview.tex` and the LaTeX sources for the ES identity, ES barrier, `r47-sat184`, sieve-inverse, and absorption-forcing manuscripts. Their committed PDFs remain historical pre-correction artifacts pending TeX regeneration; the corrected `.tex` sources under `preprints/<slug>/build/main.tex`, the per-family scope docs under [`lean/docs/`](lean/docs/), and the Lean declarations under [`lean/`](lean/) are authoritative. See each paper's `preprints/<slug>/README.md` for supersession notices and rebuild notes.
+
+To cite an individual manuscript, use the BibTeX block in its `preprints/<slug>/README.md`.
