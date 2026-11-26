@@ -72,3 +72,18 @@ sharpness; independent direct graph census: `python check_asymm.py`.
 See [CLASS-SIX.md](CLASS-SIX.md) for the class-six 64 bound when group
 order is coprime to 6, the independent proof audit and the scope of the
 separate exact computational sharpness witness.
+
+## Class-seven extension
+
+See [CLASS-SEVEN.md](CLASS-SEVEN.md) for the Lean 128 upper bound
+through class seven, the exceptional quotient comparisons, and the
+scope of the separate exact example. This does not claim sharpness
+at 128.
+
+## All odd orders through class five
+
+[RibbonP3Odd.lean](RibbonP3Odd.lean) removes the earlier exclusion
+of 3 from the class-five theorem. The [character proof](CLASS-FIVE-ORDER-THREE.md)
+selects one of two short pairs of port words. This does not remove the
+coprime-to-3 restriction on the published class-six and class-seven
+bounds.
