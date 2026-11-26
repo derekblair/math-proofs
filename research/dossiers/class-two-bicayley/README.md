@@ -104,3 +104,16 @@ of 64 when the derived subgroup has nilpotency class at most two.
 See [RibbonMetaHeadline.lean](RibbonMetaHeadline.lean) and the independent
 audit. These results are for one-matching bi-Cayley graphs, not the
 full open conjecture.
+
+## Class eight for orders coprime to six
+
+[CLASS-EIGHT.md](CLASS-EIGHT.md) gives the Lean 128 upper bound through
+class eight, including explicit proofs for projected commutator orders
+5 and 7. Order divisible by 3 remains excluded for this class.
+
+## All finite odd-order metabelian groups, not just nilpotent groups
+
+[ALL-ODD-METABELIAN.md](ALL-ODD-METABELIAN.md) gives the sharp 32
+bound with no nilpotence assumption. The group-structure reduction,
+all affine alphabet cases, and actual closing identities are Lean
+verified in [RibbonAffineFinal.lean](RibbonAffineFinal.lean).
