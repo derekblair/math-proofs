@@ -66,3 +66,9 @@ group times C5, with a=(x,0) and b=(y,1). The two rim generators have orders 3 a
 on the a-rim but no triangle at the identity on the b-rim, and consequently is
 not vertex-transitive. `RibbonAsymm.lean` formalizes this control and checks
 sharpness; independent direct graph census: `python check_asymm.py`.
+
+## Class-six extension
+
+See [CLASS-SIX.md](CLASS-SIX.md) for the class-six 64 bound when group
+order is coprime to 6, the independent proof audit and the scope of the
+separate exact computational sharpness witness.
