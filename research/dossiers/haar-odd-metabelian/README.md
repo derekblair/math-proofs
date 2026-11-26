@@ -32,6 +32,16 @@ also provides the normalized-port form `HaarMetaFullOdd.normalized`.
    proof state. The checks use exact integer linear combinations and injectivity
    of doubling. A terminal witness has no repeated vertices.
 
+## Sharpness
+
+[The sharpness proof](HaarSharpOptimal.lean) constructs a cubic Haar graph of
+this class with a 32-cycle and no 4-, 8-, or 16-cycle. The group is
+`(F₃⁷ × F₃⁷) ⋊ C₇`, with circular shifts on its two lamp arrays.
+Rather than enumerate its vertices, the proof compares two reduced half
+paths from a common start. For cycles of length 4, 8, and 16, respectively,
+there are only 6, 24, and 384 half paths to check. Lean verifies the
+exclusions and an explicit 32-cycle independently of the upper bound.
+
 ## Prior work and scope
 
 [Burkhart, *Odd-ordered Cayley graphs satisfy Erdős–Gyárfás*, Theorem 1.1](https://arxiv.org/html/2611.05060v1)

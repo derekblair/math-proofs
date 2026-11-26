@@ -25,7 +25,7 @@ for line in (here/'sha256-lean.txt').read_text().splitlines():
 deps = {k:{x for line in data.splitlines() if line.startswith(('import ','public import '))
                for x in line.split('import ',1)[1].split('--',1)[0].split() if x in src}
         for k,(_,data) in src.items()}
-target = 'HaarMetaFullOddEnd'
+targets = {'HaarMetaFullOddEnd': 2, 'HaarSharpOptimal': 3}
 with tempfile.TemporaryDirectory(prefix='haar-meta-verify-') as tmp:
     dest = Path(tmp)
     env = dict(os.environ, LEAN_PATH=tmp)
@@ -53,11 +53,11 @@ with tempfile.TemporaryDirectory(prefix='haar-meta-verify-') as tmp:
                 k = running.pop(f)
                 log = f.result()
                 print(f'checked {k}', flush=True)
-                if k == target:
+                if k in targets:
                     axioms = re.findall(r'depends on axioms: \[([^\]]+)\]',log)
-                    if len(axioms) != 2 or any(set(x.split(', ')) - {'propext','Classical.choice','Quot.sound'} for x in axioms):
+                    if len(axioms) != targets[k] or any(set(x.split(', ')) - {'propext','Classical.choice','Quot.sound'} for x in axioms):
                         raise RuntimeError(log)
                     print(log, flush=True)
                 ready.add(k)
-    assert target in ready
+    assert targets.keys() <= ready
     print(f'cleanly checked {len(ready)} modules', flush=True)
