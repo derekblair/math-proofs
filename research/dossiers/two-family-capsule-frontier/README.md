@@ -1,5 +1,6 @@
 # Sharp capsule trade-off for two KEM families and endpoint outages
 
+The [many-family extension](many-families/README.md) gives the exact optimum for arbitrary numbers of families and explicitly handles unequal per-family capsule costs.
 An oracle-free theoretical envelope model, not a new KEM, FIPS-compatible threshold operation, active/CCA-secure wrapper, or deployment. The costs below count black-box key encapsulations and masked field payloads, not latency, certification or a performance record. No actual keys, ciphertexts, endpoints or transports were tested.
 
 ## Model
