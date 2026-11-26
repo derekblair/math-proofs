@@ -1,0 +1,11 @@
+# Independent statement and certificate audit
+
+The all-odd field, odd ambient graph theorem, and normal-2-kernel corollary have green pinned logs using only standard Lean axioms. This audit inspected the exact statements, source checks and logs, not a second from-scratch replay.
+
+The principal theorem assumes finite odd order, no ambient nilpotence, a derived subgroup of class at most two, and two nonidentity rim generators. The unconditional output is one of the five simple cycle lengths 4, 8, 16, 32 or 64 in the actual one-matching bi-Cayley graph. There is no hidden exclusion of multiples of 3 or generation assumption. The class-five example proves sharpness on the stated main class, not sharpness among nonnilpotent groups alone.
+
+All 76 slope branches are stitched as nine groups of eight plus four. Removing only powers of two is justified by odd multiplier order. The surface cases in characteristics 19 and 67 are excluded by separate modular joins. The F43 slope survivor (31,1) is resolved by checked finite geometry and transfer, not dropped. The field result returns at most the stated 28 labels as embedded prime-field scalars, without claiming arbitrary fields with those scalars are prime fields. For actual group residue fields the generation argument supplies the additional identification.
+
+Cross-prime chart pairs, dual-number jets and projected order-three comparisons are checked in the source graph. The sorted jet checker proves that the rank table is the inverse on every original vertex index and that sorted adjacent equal keys have equal owners. Thus equal keys have equal owners over the whole run, and unequal indices with one owner are literal checked mate pairs. The precomputed numeric rows are equated to real word positions. Distinct roots cannot escape the check through total indexing defaults. The actual closing identities are separate from these prefix separation checks.
+
+For the corollary, a finite normal 2-group N and finite odd quotient satisfying the derived-class condition suffice, with x²,y²≠1, and there is no separate class restriction on G. The bound is 64 times the exponent of N, not a claim of sharpness for that bound. A collapsed quotient port yields an actual rim of 2-power length. Otherwise the voltage repetition argument separates vertices by quotient phase and powers of the voltage.
