@@ -1,4 +1,8 @@
-# Dyadic cycles in cubic Haar graphs at low nilpotency class
+# Dyadic cycles in cubic Haar graphs of nilpotency class at most four
+
+**Main theorem.** For every finite group G of nilpotency class at most four and every three distinct ports, the corresponding cubic Haar graph contains a simple cycle whose length is a power of two, at least 4 and at most 32 times the size of a Sylow 2-subgroup of G. For odd-order G, this gives a cycle of length 4, 8, 16, or 32. The odd-order result does not require G to be a p-group. The statement with arbitrary (unnormalized) three-port input is [`HaarAnyPorts.finite_group`](HaarAnyPorts.lean). [`HaarAnyPorts.odd_order`](HaarAnyPorts.lean) gives the odd-order bound.
+
+In the class-four proof the first of two explicit 32-port words has exactly two potential collision relations after the quotient checks, and either collision implies the same group equality. If that equality fails, the first word works. If it holds, the nonidentity projected commutator has order exactly 3, regardless of other prime factors of |G|. The alternative word then closes in G, and modulo-3 detection separates all its vertices. This avoids decomposition into odd Sylow factors. The general finite statement uses the normal Sylow 2-subgroup and the existing two-primary lift. The raw normalized theorem is [`HaarClassFourAll.finite_class_four`](HaarClassFourAll.lean).
 
 ## Central commutator (class two)
 Let G be a group and let 1, x, y be three distinct elements.
@@ -45,7 +49,7 @@ Let G be a finite p-group for an odd prime p, with fourth nilpotency class or lo
 
 For class exactly four, the principal 32-port word closes by weight-four collecting. Quotients by the third and fourth lower-central subgroups eliminate all but two potential collisions. At p greater than 3, those two differences are detected by a nonzero third power in a p-group. At p = 3, both collisions imply the same relation, and a second 32-port word closes if that relation holds. Every vertex pair for the second word is separated in the class-two quotient. The two tables, the group identities, the quotient cases, and the subgroup embedding are all kernel-checked.
 
-This claim does not cover mixed odd primes at class four, a uniform length-32 bound for even-order groups, higher classes, or exact sharpness at class four. No stronger statement is inferred from finite searches.
+The p-group theorem is retained as a separately checked precursor. The main theorem above covers mixed odd primes and all finite groups through class four, but no uniform length-32 bound for even-order groups, higher classes, or exact sharpness at class four is claimed. No stronger statement is inferred from finite searches.
 
 ## Scope and related work
 This is a restricted case of the [Erdős–Gyárfás conjecture](https://arxiv.org/abs/2609.28594),
@@ -65,5 +69,5 @@ no absence claim for shorter non-dyadic cycles, and no graph-order bound.
 ## Reproduction
 Use Lean 4.34.1 and mathlib commit
 `d13f23b723b8a846827a245b89c10fc7d3f11612` with its dependencies built.
-Run `bash verify.sh /path/to/mathlib4`. This builds the thirty-one modules
+Run `bash verify.sh /path/to/mathlib4`. This builds the thirty-four modules
 in a fresh temporary directory; no repository build target is changed.
