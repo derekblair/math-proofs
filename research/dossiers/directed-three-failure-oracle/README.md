@@ -6,6 +6,8 @@ The [full-depth proof](REPORT.md) derives deterministic O(n³) preprocessing plu
 
 Lean checks the [bit isolation lemma](TagIsolation.lean), not the full reduction, oracle implementation, imported APSP runtime, or memory theorem. The Python tests check small exact instances and use Floyd–Warshall as their APSP stand-in. They are not asymptotic benchmarks.
 
+The [mixed-anchor extension](mixed-anchors/README.md) gives constant-time queries with subcubic preprocessing when the failed edges are covered by the fixed terminals and two further vertices. It also gives a parameterized bound for arbitrary triples on graphs with small support vertex cover. These are restricted-family bounds, not a faster unrestricted three-fault algorithm.
+
 With Lean 4.34.1 and compiled Mathlib at commit `d13f23b723b8a846827a245b89c10fc7d3f11612`, run:
 
 ```sh
