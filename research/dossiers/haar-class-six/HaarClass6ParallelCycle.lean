@@ -3,10 +3,11 @@ import HaarClass6ParallelPairs
 namespace HaarClass6ParallelCycle
 open HaarClass6ParallelWords HaarClass6ParallelPairs HaarClass6ParallelSeparationCore
 open HaarClass3Separation64 HaarClass5TemplateCycles HaarClass5TemplateClosure
-open HaarUniversal36 HaarAllNoncommuting HaarClass4Ports HaarReducedWalkCycle
+open HaarUniversal36 HaarAllNoncommuting HaarClass4Ports HaarReducedWalkCycle HaarHalfCollision
 variable {G : Type*} [Group G]
 
-theorem case_v (nil : L G 6=⊥) (odd : Odd (Nat.card G)) (x y : G)
+theorem case_v_with_close (odd : Odd (Nat.card G)) (x y : G)
+    (closeW : prodFrom x y 0 W=1)
     (nv : let f := QuotientGroup.mk' (L G 3); (portV (f x) (f y))^(3:ℕ) ≠ 1) :
     HasCycle x y 64 := by
   let S := L G 3
@@ -17,7 +18,7 @@ theorem case_v (nil : L G 6=⊥) (odd : Odd (Nat.card G)) (x y : G)
   have oddQ : Odd (Nat.card (G ⧸ S)) := Odd.of_dvd_nat odd S.card_quotient_dvd_card
   have oddQQ := odd_projection oddQ
   have nC := project_c_cube ni X Y nv
-  apply cycle_of_vertices x y W lenW (close nil x y)
+  apply cycle_of_vertices x y W lenW closeW
   intro I J e
   have side := congrArg Prod.fst e
   change decide (I.val%2=1)=decide (J.val%2=1) at side
@@ -46,6 +47,10 @@ theorem case_v (nil : L G 6=⊥) (odd : Odd (Nat.card G)) (x y : G)
     rw [u,sub_self,zpow_zero,one_mul] at htail
     have sep := pow_distinct oddQ nv (p:=b Q-b P) (q:=0) (by simpa only [sub_zero] using he)
     exact (sep (by simpa only [zpow_zero] using htail)).elim
+
+theorem case_v (nil : L G 6=⊥) (odd : Odd (Nat.card G)) (x y : G)
+    (nv : let f := QuotientGroup.mk' (L G 3); (portV (f x) (f y))^(3:ℕ) ≠ 1) :
+    HasCycle x y 64 := case_v_with_close odd x y (close nil x y) nv
 
 end HaarClass6ParallelCycle
 #print axioms HaarClass6ParallelCycle.case_v
