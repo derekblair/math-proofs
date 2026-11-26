@@ -34,12 +34,13 @@ also provides the normalized-port form `HaarMetaFullOdd.normalized`.
 
 ## Sharpness
  
-[An explicit 2,758-vertex example](HaarSharpAffine.lean#L90) shows the bound
-is sharp. Its group is the affine semidirect product of the additive field
-F₁₉₇ by C₇, with the generator acting by multiplication by 36. Lean checks
-an explicit simple 32-cycle and excludes simple cycles of lengths 4, 8,
-and 16. This is not a minimum-size claim.
+[An explicit 1,474-vertex example](HaarSharpAffine737.lean#L90) shows
+the bound is sharp. Its group is the affine semidirect product of the additive
+field F₆₇ by C₁₁, with the generator acting by multiplication by 25. Lean
+checks an explicit simple 32-cycle and excludes simple cycles of lengths 4,
+8, and 16. This is not a minimum-size claim.
 
+[A second affine example](HaarSharpAffine.lean#L90) uses F₁₉₇ and C₇.
 [The sharpness proof](HaarSharpOptimal.lean) constructs a cubic Haar graph of
 this class with a 32-cycle and no 4-, 8-, or 16-cycle. The group is
 `(F₃⁷ × F₃⁷) ⋊ C₇`, with circular shifts on its two lamp arrays.
