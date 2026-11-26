@@ -1,0 +1,9 @@
+# Independent statement and certificate audit
+
+The audited statement applies to finite groups of order coprime to six, assumes only that the derived subgroup is nilpotent of class at most two, and requires two nonidentity rim elements. It does not require that the rim pair generate the ambient group or that the group itself be nilpotent. The cycle lengths are precisely the five disjuncts in the theorem. The graph is the one-matching bi-Cayley graph, not an arbitrary cubic graph.
+
+The 76 branches are assembled as nine groups of eight plus the final four. Each checked predicate covers the geometry and integer identities and every modular row in its group. The separate surface proof uses three words and ordinary and modular identities; characteristic 43 is excluded and the remaining characteristic-11 cases are embedded scalars. The field adapter derives both power conditions from the group order and handles the order of the two normalized rim elements. It does not equate arbitrary finite fields containing those scalars with the prime field. The group-to-chart assembly separately proves that its modeled simple residue really equals the embedded field when needed.
+
+The two finite checks treat two distinct normalized charts and one chart over dual numbers. The 192 projective directions represent all 1,920 nonzero first-order parameter pairs by exact scaling. The scalar and derivative normalizations are in the local ring itself. The cycle witnesses close in the source group, and every coincident prefix in a chart is either separated by another chart or handled by a kernel-verified source-group mate identity.
+
+The source, exact statement and pinned module logs were inspected independently, not recompiled a second time in this audit. The composed theorem has only the standard reported Lean axioms.
