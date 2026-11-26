@@ -94,3 +94,13 @@ the class-seven bound.
 every odd group order. [The order-three proof](CLASS-SIX-ORDER-THREE.md)
 uses the same class-six port words and reverses one rim direction for
 three of the nine character choices.
+
+## No bound on ambient nilpotency class
+
+[DERIVED-SUBGROUP.md](DERIVED-SUBGROUP.md) describes two results
+for finite odd-order nilpotent groups without a class cap. The bound
+is a sharp 32 when the derived subgroup is abelian, and an upper bound
+of 64 when the derived subgroup has nilpotency class at most two.
+See [RibbonMetaHeadline.lean](RibbonMetaHeadline.lean) and the independent
+audit. These results are for one-matching bi-Cayley graphs, not the
+full open conjecture.
