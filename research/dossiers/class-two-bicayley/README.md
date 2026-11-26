@@ -6,6 +6,10 @@ join each g to its corresponding vertex in the other copy. This yields the
 standard simple cubic single-matching bi-Cayley graph
 BiCay(G, {a,a⁻¹}, {b,b⁻¹}, {1}). The graph is connected when a and b generate G.
 
+## Class-five extension
+
+[The class-five theorem](CLASS-FIVE.md) gives a 64 upper bound on the first dyadic cycle for finite groups of odd order not divisible by three. Its two linked words give a 32- or 64-cycle under the local quotient hypothesis. The exact class-five lower-bound example is computational, not fully Lean-verified yet.
+
 ## Class-four extension
 
 [The class-four result](CLASS-FOUR.md) keeps the same sharp 32 upper bound for groups of nilpotency class at most four with no involutions, including all finite odd-order groups. An explicit connected example from the exact class-four case has C32 and no C4, C8 or C16. The new short template uses consecutive rim edges as well as matching edges, rather than alternating at every step.
