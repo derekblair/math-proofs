@@ -6,6 +6,10 @@ join each g to its corresponding vertex in the other copy. This yields the
 standard simple cubic single-matching bi-Cayley graph
 BiCay(G, {a,a⁻¹}, {b,b⁻¹}, {1}). The graph is connected when a and b generate G.
 
+## Class-four extension
+
+[The class-four result](CLASS-FOUR.md) keeps the same sharp 32 upper bound for groups of nilpotency class at most four with no involutions, including all finite odd-order groups. An explicit connected example from the exact class-four case has C32 and no C4, C8 or C16. The new short template uses consecutive rim edges as well as matching edges, rather than alternating at every step.
+
 ## Class-three extension
 
 [The class-three follow-up](CLASS-THREE.md) proves a simple C4, C8, C16 or C32 for the same cubic construction over any group of nilpotency class at most three with no elements of order two, including infinite groups. In the class-three branch a selected triple commutator whose square differs from the identity forces C32 directly. An explicit connected example has C32 and no C4/C8/C16, so 32 is sharp. This is not a proof of the full Erdős–Gyárfás conjecture.
