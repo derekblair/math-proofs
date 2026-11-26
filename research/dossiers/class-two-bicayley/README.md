@@ -127,3 +127,12 @@ The [class-five sharp example](class-five-sharp/README.md) now has a
 full Lean certificate, including the exclusion of the four smaller
 power-of-two lengths. It uses an optional longer replay separate from
 the upper-bound theorems.
+
+## Derived subgroup of class at most three
+
+[DERIVED-CLASS-THREE.md](DERIVED-CLASS-THREE.md) and
+[RibbonDerived3Family.lean](RibbonDerived3Family.lean) give the bound
+of 128 for finite nilpotent groups of order coprime to six when the
+derived subgroup has nilpotency class at most three. There is no
+bound on the ambient nilpotency class. Sharpness at 128 and the
+case of orders divisible by three are not established here.
