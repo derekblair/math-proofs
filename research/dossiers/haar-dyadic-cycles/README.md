@@ -1,4 +1,4 @@
-# Dyadic cycle bounds for cubic Haar graphs at nilpotency class two and three
+# Dyadic cycles in cubic Haar graphs of class at most three
 
 ## Central commutator (class two)
 Let G be a group and let 1, x, y be three distinct elements.
@@ -31,7 +31,14 @@ Suppose G has finite odd order and nilpotency class at most three, and (1,x,y) a
 
 When one of the third commutators is nontrivial, the construction uses the alternating 32-port word `01021021201201012012102121021012` after a possible port swap. It verifies adjacency and closure directly in G using a five-coordinate group normal form. The center quotient is used only to prove that projected coordinate differences cannot collide when the second-level commutator has order greater than two in the quotient. The remaining possible collisions are separated by the one nontrivial third commutator in G. Both nontriviality and the order conditions follow from the port choice and odd group order. If both third commutators vanish, the earlier class-two result applies.
 
-The 32 bound is an upper bound only. This dossier does not assert its sharpness, the even-order class-three case, or higher nilpotency classes. The cited Cayley, girth-six, toroidal, and finite-size results do not establish this full class-three scope; the priority check is not exhaustive.
+The 32 bound is an upper bound only. This dossier does not assert its sharpness, a uniform 32 bound in even order, or higher nilpotency classes. The cited Cayley, girth-six, toroidal, and finite-size results do not establish this full class-three scope; the priority check is not exhaustive.
+
+## Finite groups with a two-primary kernel
+
+Let \(arphi:G	o H\) be a group homomorphism, where \(H\) is finite of odd order and of nilpotency class at most three. If every element of the kernel satisfies \(g^{2^m}=1\), then distinct ports \(1,x,y\) in \(G\) admit a simple cycle of length \(2^j\), with \(2\le j\le5+m\). See [`HaarTwoKernel.overall`](HaarTwoKernel.lean). In particular, for a finite group \(G\) of nilpotency class at most three, the normal Sylow 2-subgroup is such a kernel. [`HaarClassThreeFinite.finite_class_three`](HaarClassThreeFinite.lean) states the result with \(m=
+u_2(|G|)\), without an odd-order assumption on \(G\).
+
+If the three ports remain distinct in the quotient, lift its dyadic cycle and repeat the labeled cycle until its net group element returns to the identity. Distinct quotient positions and right cancellation between turns give simplicity. When two ports have the same image, alternating those two distinct upstairs ports gives a simple cycle of twice their ratio's order. The general lifting mechanism is the established [Gross–Tucker voltage-cycle principle](https://www.math.auckland.ac.nz/~dleemans/SCDO2016/Slides/Tuesday/Du.pdf); [Burkhart, Lemma 1.3](https://arxiv.org/html/2611.05060v1) uses the analogous normal-2-subgroup lift for Cayley graphs. This is a corollary of the cubic Haar result, not a novelty claim for voltage lifting.
 
 ## Scope and related work
 This is a restricted case of the [Erdős–Gyárfás conjecture](https://arxiv.org/abs/2609.28594),
@@ -51,5 +58,5 @@ no absence claim for shorter non-dyadic cycles, and no graph-order bound.
 ## Reproduction
 Use Lean 4.34.1 and mathlib commit
 `d13f23b723b8a846827a245b89c10fc7d3f11612` with its dependencies built.
-Run `bash verify.sh /path/to/mathlib4`. This builds the thirteen modules
+Run `bash verify.sh /path/to/mathlib4`. This builds the seventeen modules
 in a fresh temporary directory; no repository build target is changed.

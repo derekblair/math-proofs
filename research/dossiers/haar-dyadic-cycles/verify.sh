@@ -12,7 +12,7 @@ cp "$here/"*.lean "$scratch/"
 cd "$mathlib"
 export LEAN_PATH="$scratch"
 lake env lean --version
-for module in HaarCycle HaarOrderTwo HaarAllNoncommuting HaarBound16 HaarSharpCore HaarSharpGraph HaarAbelCore HaarAbel HaarCentral HaarClass3Table HaarClass3Collect HaarClass3Cycle HaarClass3Odd; do
+for module in HaarCycle HaarOrderTwo HaarAllNoncommuting HaarBound16 HaarSharpCore HaarSharpGraph HaarAbelCore HaarAbel HaarCentral HaarClass3Table HaarClass3Collect HaarClass3Cycle HaarClass3Odd HaarVoltage HaarVoltageLift HaarTwoKernel HaarClassThreeFinite; do
   lake env lean --root="$scratch" -o "$scratch/$module.olean" "$scratch/$module.lean"
   printf 'checked %s\n' "$module"
 done
