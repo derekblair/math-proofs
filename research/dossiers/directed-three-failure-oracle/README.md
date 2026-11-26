@@ -8,6 +8,8 @@ Lean checks the [bit isolation lemma](TagIsolation.lean), not the full reduction
 
 The [mixed-anchor extension](mixed-anchors/README.md) gives constant-time queries with subcubic preprocessing when the failed edges are covered by the fixed terminals and two further vertices. It also gives a parameterized bound for arbitrary triples on graphs with small support vertex cover. These are restricted-family bounds, not a faster unrestricted three-fault algorithm.
 
+The [offline batch extension](offline-batches/README.md) exploits the specified query set. With q supplied three-failure queries it has deterministic time Õ(n^α max(1,(q/n)^((3−α)/2)) + q), capped by O(n³+q), via adaptive shortcut-universe restarts. This does not accelerate the full cubic workload.
+
 With Lean 4.34.1 and compiled Mathlib at commit `d13f23b723b8a846827a245b89c10fc7d3f11612`, run:
 
 ```sh
