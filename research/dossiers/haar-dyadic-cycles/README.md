@@ -1,4 +1,10 @@
-# A sharp dyadic cycle bound for class-two cubic Haar graphs
+# Dyadic cycles in cubic Haar graphs of nilpotency class at most four
+
+**Main theorem.** For every finite group G of nilpotency class at most four and every three distinct ports, the corresponding cubic Haar graph contains a simple cycle whose length is a power of two, at least 4 and at most 32 times the size of a Sylow 2-subgroup of G. For odd-order G, this gives a cycle of length 4, 8, 16, or 32. The odd-order result does not require G to be a p-group. The statement with arbitrary (unnormalized) three-port input is [`HaarAnyPorts.finite_group`](HaarAnyPorts.lean). [`HaarAnyPorts.odd_order`](HaarAnyPorts.lean) gives the odd-order bound.
+
+In the class-four proof the first of two explicit 32-port words has exactly two potential collision relations after the quotient checks, and either collision implies the same group equality. If that equality fails, the first word works. If it holds, the nonidentity projected commutator has order exactly 3, regardless of other prime factors of |G|. The alternative word then closes in G, and modulo-3 detection separates all its vertices. This avoids decomposition into odd Sylow factors. The general finite statement uses the normal Sylow 2-subgroup and the existing two-primary lift. The raw normalized theorem is [`HaarClassFourAll.finite_class_four`](HaarClassFourAll.lean).
+
+## Central commutator (class two)
 Let G be a group and let 1, x, y be three distinct elements.
 Suppose xy = yxz, where the commutator z commutes with both x and y.
 The bipartite Haar graph on Bool × G, with each left g adjacent to
@@ -23,10 +29,32 @@ word with no immediate repeat. The finite word check excludes these
 words for either starting side, and Lean proves the precise link to
 injective cyclic adjacency.
 
+## Finite odd-order groups of class at most three
+
+Suppose G has finite odd order and nilpotency class at most three, and (1,x,y) are distinct. The cubic Haar graph with ports (1,x,y) has a simple cycle of length **4, 8, 16, or 32**. The exact theorem is [`HaarClass3Odd.class_three`](HaarClass3Odd.lean). The ports need not generate G, and there is no assumption of vertex transitivity, girth, or graph order beyond the finite odd-order group hypothesis. The Lean hypothesis says literally that the fourth lower-central subgroup is trivial.
+
+When one of the third commutators is nontrivial, the construction uses the alternating 32-port word `01021021201201012012102121021012` after a possible port swap. It verifies adjacency and closure directly in G using a five-coordinate group normal form. The center quotient is used only to prove that projected coordinate differences cannot collide when the second-level commutator has order greater than two in the quotient. The remaining possible collisions are separated by the one nontrivial third commutator in G. Both nontriviality and the order conditions follow from the port choice and odd group order. If both third commutators vanish, the earlier class-two result applies.
+
+The 32 bound is an upper bound only. This dossier does not assert its sharpness, a uniform 32 bound in even order. The cited Cayley, girth-six, toroidal, and finite-size results do not establish the Haar scope proved here; the priority check is not exhaustive.
+
+## Finite groups with a two-primary kernel
+
+Let φ: G → H be a group homomorphism, where H is finite of odd order and of nilpotency class at most three. If every element g of the kernel satisfies `g^(2^m) = 1`, then distinct ports 1, x, y in G admit a simple cycle of length `2^j`, with `2 ≤ j ≤ 5 + m`. See [`HaarTwoKernel.overall`](HaarTwoKernel.lean). In particular, for a finite group G of nilpotency class at most three, the normal Sylow 2-subgroup is such a kernel. [`HaarClassThreeFinite.finite_class_three`](HaarClassThreeFinite.lean) states the result with m equal to the exponent of 2 in the prime factorization of |G|, without an odd-order assumption on G.
+
+If the three ports remain distinct in the quotient, lift its dyadic cycle and repeat the labeled cycle until its net group element returns to the identity. Distinct quotient positions and right cancellation between turns give simplicity. When two ports have the same image, alternating those two distinct upstairs ports gives a simple cycle of twice their ratio's order. The general lifting mechanism is the established [Gross–Tucker voltage-cycle principle](https://www.math.auckland.ac.nz/~dleemans/SCDO2016/Slides/Tuesday/Du.pdf); [Burkhart, Lemma 1.3](https://arxiv.org/html/2611.05060v1) uses the analogous normal-2-subgroup lift for Cayley graphs. This is a corollary of the cubic Haar result, not a novelty claim for voltage lifting.
+
+## Finite odd-prime p-groups of class at most four
+
+Let G be a finite p-group for an odd prime p, with fourth nilpotency class or lower, and let 1, x, y be distinct. The associated cubic Haar graph has a simple cycle of length 4, 8, 16, or 32. See [`HaarClassFourFinite.lift_pair`](HaarClassFourFinite.lean). If the ports generate a subgroup of class exactly four, the 32-cycle is guaranteed by [`generating_pair_class_four`](HaarClassFourFinite.lean) on that subgroup. The universal length-32 bound applies to p = 3 as well as to all larger odd primes.
+
+For class exactly four, the principal 32-port word closes by weight-four collecting. Quotients by the third and fourth lower-central subgroups eliminate all but two potential collisions. At p greater than 3, those two differences are detected by a nonzero third power in a p-group. At p = 3, both collisions imply the same relation, and a second 32-port word closes if that relation holds. Every vertex pair for the second word is separated in the class-two quotient. The two tables, the group identities, the quotient cases, and the subgroup embedding are all kernel-checked.
+
+The p-group theorem is retained as a separately checked precursor. The main theorem above covers mixed odd primes and all finite groups through class four, but no uniform length-32 bound for even-order groups, higher classes, or exact sharpness at class four is claimed. No stronger statement is inferred from finite searches.
+
 ## Scope and related work
 This is a restricted case of the [Erdős–Gyárfás conjecture](https://arxiv.org/abs/2609.28594),
-not a solution of the full conjecture, or even a result for arbitrary
-Haar graphs with noncentral commutator.
+not a solution of the full conjecture or a result for arbitrary Haar graphs
+with noncentral commutator.
 [Burkhart](https://arxiv.org/html/2611.05060v1) treats Cayley graphs of
 finite nilpotent groups, with a symmetric generator set on one copy
 of the group, a different hypothesis than this Haar theorem.
@@ -41,5 +69,5 @@ no absence claim for shorter non-dyadic cycles, and no graph-order bound.
 ## Reproduction
 Use Lean 4.34.1 and mathlib commit
 `d13f23b723b8a846827a245b89c10fc7d3f11612` with its dependencies built.
-Run `bash verify.sh /path/to/mathlib4`. This builds the nine modules
+Run `bash verify.sh /path/to/mathlib4`. This builds the thirty-four modules
 in a fresh temporary directory; no repository build target is changed.
