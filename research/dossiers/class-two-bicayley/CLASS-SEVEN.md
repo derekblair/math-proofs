@@ -40,5 +40,6 @@ A separate exact C++ control in UT8(F17) uses first superdiagonals
 zero. The selected seventh residue has top-right entry 8 and the
 given 128-step word is simple. Both root rims have distinct
 nonbacktracking half endpoints up to the checked lengths 2,4,8,16.
-This rules out 4,8,16,32 in that instance, **not length 64**. It does
-not show sharpness at 128, and the matrix check is not Lean.
+This rules out 4,8,16,32 in that instance. A separate explicit
+64-step word also closes without repetitions, so the example does
+not show sharpness at 128. The matrix check is not Lean.

@@ -84,6 +84,13 @@ at 128.
 
 [RibbonP3Odd.lean](RibbonP3Odd.lean) removes the earlier exclusion
 of 3 from the class-five theorem. The [character proof](CLASS-FIVE-ORDER-THREE.md)
-selects one of two short pairs of port words. This does not remove the
-coprime-to-3 restriction on the published class-six and class-seven
-bounds.
+selects one of two short pairs of port words. The same restriction is lifted for class six below; it remains for
+the class-seven bound.
+
+
+## All odd orders through class six
+
+[Ribbon6Odd.lean](Ribbon6Odd.lean) gives the class-six 64 bound for
+every odd group order. [The order-three proof](CLASS-SIX-ORDER-THREE.md)
+uses the same class-six port words and reverses one rim direction for
+three of the nine character choices.

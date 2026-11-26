@@ -67,8 +67,8 @@ bool blocks(int h,int b) {
  hits.clear();path={key({b,one()})};
  return dfs({b,one()},-1,h,0,b);
 }
-bool word(std::string s) {
- Vert v={0,one()};std::vector<Key> seen{key(v)};
+bool word(std::string s,int r=0) {
+ Vert v={r,one()};std::vector<Key> seen{key(v)};
  for(int i=0;i<(int)s.size();i++){
    v=step(v,s[i]-'0');auto k=key(v);
    if(i==(int)s.size()-1)return k==seen[0];
@@ -95,6 +95,8 @@ int main() {
    assert(endpoints.size()==hits.size());
    std::cout<<h<<" "<<b<<" distinct short endpoints "<<endpoints.size()<<"\n";
  }
+ assert(word("1121202120202112020021121202020212120021212021202002121212020021",1));
+ std::cout<<"Also has an explicit C64\n";
  return 0;
  }
  return 2;
