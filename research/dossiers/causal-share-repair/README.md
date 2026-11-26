@@ -1,5 +1,6 @@
 # Exact entropy for public transcripts of predeclared online Shamir repairs
 **Follow-up:** [Adaptive repair targets and optimal online padding](ADAPTIVE_REPAIR.md) extends the padding theorem, not the underlying proactive secrecy theorem. It also proves a separate stationary protected-memory tradeoff. See [independent audit](ADAPTIVE-AUDIT.md).
+[Exact fixed-target refresh budget](FIXED_TARGET_SEGMENTS.md): with a known sequence of public repair targets and no other share reads, greedy segments with at most t distinct sites give the sharp additive refresh cost. The joint pad-plus-refresh optimum is t plus the number of segment boundaries. This does not extend to all state-dependent refresh maps or to adaptive underlying secrecy.
 
 
 Narrow defensive research result. This is a scalar share-repair/refresh mechanism in an ideal bounded-read model, not a KEM, decryption oracle, production holding system, or claim of active security. No real key, network or endpoint was used.
