@@ -6,6 +6,6 @@ build=$(mktemp -d)
 trap 'rm -rf "$build"' EXIT
 export LEAN_PATH="$build${LEAN_PATH:+:$LEAN_PATH}"
 cd "$mathlib"
-for m in SpanCriterion GenericVoltage PetersenDecision PetersenWalkData PetersenBaseId PetersenUniversal; do
+for m in SpanCriterion GenericVoltage PetersenDecision PetersenWalkData PetersenBaseId PetersenUniversal ShortProjection RefutationKernel PetersenSharpGraph PetersenSharpCover PetersenSharpFast PetersenSharpScan PetersenSharpWitness PetersenSharpEnd; do
   lake env lean --root="$here" -o "$build/$m.olean" "$here/$m.lean"
 done
