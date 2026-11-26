@@ -6,7 +6,8 @@
 
 The [weighted reduction](WEIGHTED-REDUCTION.md) improves the bound to **O(n^1.9991724)** with Majdoddin's explicitly stated deterministic matrix guarantee, or **O(n^1.9991653)** with a separately justified [sharper box-count bound](EXACT-BOX-TAIL.md). It changes the counting algorithm rather than only tuning its constants: the heavy matrix width drops from d^(12+δ) to d^(6+δ) by factoring the two sides of each exact rank moment. The earlier bound below and its same-backend comparator are retained for context.
 
-Independent derivation and exact 13,920 small rank-moment controls verified the factorization. Lean checks the local Cartesian-count and right-degree cost lemmas in WeightedMoment.lean. Python check_weighted_exponent.py checks all strict exponent inequalities with rational intervals. Neither the entire algorithm nor the analytical box-tail estimate is kernel-checked; this is not a priority claim or a faster randomized algorithm.
+Independent derivation and 13,920 exact small rank-moment controls verified the factorization. Lean checks the local Cartesian-count and right-degree cost lemmas in WeightedMoment.lean. Python check_weighted_exponent.py checks all strict exponent inequalities with rational intervals. Neither the entire algorithm nor the analytical box-tail estimate is kernel-checked; this is not a priority claim or a faster randomized algorithm.
+[Exact counting follow-up](EXACT-COUNTING.md): the same deterministic bound also returns the number of solutions per target, with multiplicities, using two lexicographic cuts and zeroth moments.
 
 ## Replacing the rank-moment resource bound
 
