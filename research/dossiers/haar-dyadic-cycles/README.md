@@ -1,4 +1,6 @@
-# A sharp dyadic cycle bound for class-two cubic Haar graphs
+# Dyadic cycle bounds for cubic Haar graphs at nilpotency class two and three
+
+## Central commutator (class two)
 Let G be a group and let 1, x, y be three distinct elements.
 Suppose xy = yxz, where the commutator z commutes with both x and y.
 The bipartite Haar graph on Bool × G, with each left g adjacent to
@@ -23,10 +25,18 @@ word with no immediate repeat. The finite word check excludes these
 words for either starting side, and Lean proves the precise link to
 injective cyclic adjacency.
 
+## Finite odd-order groups of class at most three
+
+Suppose G has finite odd order and nilpotency class at most three, and (1,x,y) are distinct. The cubic Haar graph with ports (1,x,y) has a simple cycle of length **4, 8, 16, or 32**. The exact theorem is [`HaarClass3Odd.class_three`](HaarClass3Odd.lean). The ports need not generate G, and there is no assumption of vertex transitivity, girth, or graph order beyond the finite odd-order group hypothesis. The Lean hypothesis says literally that the fourth lower-central subgroup is trivial.
+
+When one of the third commutators is nontrivial, the construction uses the alternating 32-port word `01021021201201012012102121021012` after a possible port swap. It verifies adjacency and closure directly in G using a five-coordinate group normal form. The center quotient is used only to prove that projected coordinate differences cannot collide when the second-level commutator has order greater than two in the quotient. The remaining possible collisions are separated by the one nontrivial third commutator in G. Both nontriviality and the order conditions follow from the port choice and odd group order. If both third commutators vanish, the earlier class-two result applies.
+
+The 32 bound is an upper bound only. This dossier does not assert its sharpness, the even-order class-three case, or higher nilpotency classes. The cited Cayley, girth-six, toroidal, and finite-size results do not establish this full class-three scope; the priority check is not exhaustive.
+
 ## Scope and related work
 This is a restricted case of the [Erdős–Gyárfás conjecture](https://arxiv.org/abs/2609.28594),
-not a solution of the full conjecture, or even a result for arbitrary
-Haar graphs with noncentral commutator.
+not a solution of the full conjecture or a result for arbitrary Haar graphs
+with noncentral commutator.
 [Burkhart](https://arxiv.org/html/2611.05060v1) treats Cayley graphs of
 finite nilpotent groups, with a symmetric generator set on one copy
 of the group, a different hypothesis than this Haar theorem.
@@ -41,5 +51,5 @@ no absence claim for shorter non-dyadic cycles, and no graph-order bound.
 ## Reproduction
 Use Lean 4.34.1 and mathlib commit
 `d13f23b723b8a846827a245b89c10fc7d3f11612` with its dependencies built.
-Run `bash verify.sh /path/to/mathlib4`. This builds the nine modules
+Run `bash verify.sh /path/to/mathlib4`. This builds the thirteen modules
 in a fresh temporary directory; no repository build target is changed.
