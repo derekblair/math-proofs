@@ -117,3 +117,13 @@ class eight, including explicit proofs for projected commutator orders
 bound with no nilpotence assumption. The group-structure reduction,
 all affine alphabet cases, and actual closing identities are Lean
 verified in [RibbonAffineFinal.lean](RibbonAffineFinal.lean).
+
+[NONNIL-SHARP.md](NONNIL-SHARP.md) strengthens the sharpness result:
+a connected example remains sharp at 32 even within the nonnilpotent
+subfamily. It projects onto the affine group of order 21. The check
+excludes C4, C8, and C16, not every shorter cycle length.
+
+The [class-five sharp example](class-five-sharp/README.md) now has a
+full Lean certificate, including the exclusion of the four smaller
+power-of-two lengths. It uses an optional longer replay separate from
+the upper-bound theorems.
