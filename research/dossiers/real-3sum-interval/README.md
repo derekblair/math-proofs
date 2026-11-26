@@ -1,0 +1,31 @@
+# Interval-sensitive deterministic exact real 3SUM
+
+**Proposed bound:** $O(n^{1.9996262})$ time for exact three-list 3SUM on arbitrary real inputs. The model uses exact real additions, subtractions and comparisons, plus $O(\log n)$-bit word arithmetic. There is no randomization. This is an incremental improvement to a deterministic exponent on a major problem, not an improvement to the faster Las Vegas exponent or to integer 3SUM.
+
+## Replacing the rank-moment resource bound
+
+Use [Chan–Itakura–Ma–Yu, §5](https://arxiv.org/html/2610.42012v1), particularly Problem 5.6 and Lemmas 5.5–5.8. Let $d$ be the block size (a power of two) and $\delta>0$ the final strip parameter. The worst moment is the second; partition its $O(n^2/d)$ requested entries by their dyadic row interval $I$, with $|I|\ge \frac12 d^{1-\delta}$. The factor $1/2$ allows the final split before stopping the strip search.
+
+The middle graph in Lemma 5.8 has six block coordinates $(k,\ell,k',\ell',k'',\ell'')$ and three ordinal dyadic interval coordinates. Restricting $k$ to $I$ changes the side-to-middle incidence bound to $\widetilde O(n|I|d^5)$. For each of the $n$ side vertices, enumerate the block coordinates and at most $O(\log^3 n)$ triples of dyadic ancestor intervals. Sort word-sized records to index the incident middle vertices. The ordinal split for each strict comparison is unique; use the standard shift by one on the right rank for weak inequalities. Rank equal differences together. The first and zeroth moments omit the unused witness pairs rather than replicate them.
+
+The entire eligible interval family contains $O(d^\delta)$ members, but its lengths sum to $O(d\log d)$, because intervals at one level are disjoint. Consequently the total incidence and construction work is $\widetilde O(nd^6)$, even if the query distribution by interval is completely uneven. All requests for a given interval use the same side incidence arrays. The requested side-to-side edges do not enter the heavy-vertex degree or either array.
+
+Use the common threshold $\Delta=\Theta(n/d^{6+\delta})$. Count contributions at light middle vertices directly by enumerating their two side neighbor lists' Cartesian product; test each request using a sorted dictionary. This costs at most $\Delta$ times the total incidence count, up to logarithms: $\widetilde O(n^2/d^\delta)$. Deduplicate endpoint requests within each interval and retain the output fanout. The heavy part for $I$ has at most $\widetilde O(d^{11+\delta}|I|)$ middle vertices. Pad the two 0/1 incidence matrices to common width $D=\widetilde\Theta(d^p)$, $p=12+\delta$; zero fill all arrays in $\widetilde O(nd^{p+\delta})$.
+
+An exact selected-entry index with preprocessing $\widetilde O(n^2D^{-\gamma})$ and query time $\widetilde O(D^q)$ gives heavy time
+$$
+\widetilde O(n^2d^{\delta-p\gamma}+n^2d^{pq-1}).
+$$
+The terms count all intervals and all requests, respectively. There is no equal-batch assumption. Surviving rank strips are scanned as in Lemma 5.5 at cost $\widetilde O(n^2/d^\delta)$. Its halving invocations and the outer rank-bracket rounds add only polylogarithmic factors. For $d=\Theta(n^\alpha)$, it suffices that $p\gamma>2\delta$, $\delta+pq<1$, and $p\alpha<R$ where $R$ is the backend width exponent. Sorting, graphs, dense fill and query output all fit the indicated bound at the constants below.
+
+Ties: sort each list by real value and stable ID, and attach lexicographic tags $i+1$ and $M(j+1)$ to (A_i,B_j), with $M>|A|$. Pair sums now have distinct tags and Fredman differences still sort by lexicographic comparison on constant-many words. Search for a successor of ((c,0)), and check the **real coordinate** for equality to $c$. All original exact matches precede every larger real value and follow ((c,0)). Block-minimum matches can be tested separately in $O(n/d)$ by a two-pointer scan of the two block-minimum lists per target; all other matching rectangles straddle the perturbed target and lie on the monotone block staircase. If one-list 3SUM requires distinct indices, partition the index identifiers into the four two-bit colors and enumerate bit-position pairs and assignments to three distinct colors. Any three distinct identifiers are separated by some pair of bit positions, so this costs only $O(\log^2 n)$ instances.
+
+## Numerical bound and verification
+
+[Majdoddin, Corollary 7.3](https://arxiv.org/html/2610.17420v1) supplies the deterministic selected-entry backend for word-sized integer incidence matrices. Use $c=11.476$, $\theta=0.0073948$, $\delta=0.06193$, $\alpha=0.0060375$. The strict margins in the three inequalities are enclosed by `check_exponent.py`; the raw exponent is $1.999626097625$, leaving slack for polylogarithmic factors in the stated bound. The quotient and floor choices in powers-of-two block and padding widths change no exponents. The width slack also permits the backend's own rounding. The dense-fill exponent is less than 1.074.
+
+`IntervalMass.lean` certifies the two incidence-budget lemmas. `ExponentBudget.lean` certifies the rational inequalities from the enclosures. `check_exponent.py` uses arbitrary-precision rational interval arithmetic and a bounded atanh-series remainder for the elementary logarithms. The end-to-end algorithm, its complexity model, and the external backend are not formalized in Lean. A second, weaker instantiation with the original Alman–Vassilevska Williams backend is in `check_avw.py`.
+
+Chan et al. Corollary 5.10 states $O(n^{1.9998})$; optimizing the unmodified reduction with the newer backend already gives a numerical comparison around $1.999628164$. The new contribution here is the small additional gain from charging incidence by interval length and sharing the interval data structure, not the entire gap to $1.9998$. Search found no earlier paper using this accounting, but it does not establish priority. See `INDEPENDENT-REVIEW.md` for an independent audit of the revised argument and source comparators.
+
+Replay with `python3 check_exponent.py`, `python3 check_avw.py`, and `lake env lean /path/to/IntervalMass.lean` and `lake env lean /path/to/ExponentBudget.lean` from a Mathlib v4.34.1 checkout, using Lean 4.34.1. Both Lean files report only standard axioms.
