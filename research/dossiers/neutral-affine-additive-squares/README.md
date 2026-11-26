@@ -1,41 +1,23 @@
-# Additive-square detection with a unit eigenvalue
-For a finite integer alphabet D, consider a prolongable substitution f whose
-iterates grow unboundedly. Suppose the length and sum of each letter image are
-obtained by applying a fixed integral 2-by-2 matrix A to (1,x), for x in D.
-The executable Boolean in [NeutralAffineExact.lean](NeutralAffineExact.lean)
-decides whether the limit word contains a pair of consecutive nonempty blocks
-of equal length and sum, when A has one eigenvalue +1 or -1 and a second
-eigenvalue of absolute value greater than one. Image lengths need not be uniform.
-The main theorem is `NeutralAffineExact.calculate_correct`. Its right-hand side
-uses an exact additive-square factor in some finite iterate. Prolongability and
-unbounded growth identify these factors with those in the infinite prefix limit.
+# Deciding additive powers at unit/expanding affine spectrum
 
-Three cuts are tracked by the letters immediately after them, their offset choices,
-and flags for strict order. Their prefix-signature second difference evolves by
-A plus a finite stamp. Integer left eigenvectors are computed from A. The expanding
-coordinate of every accepting path stays bounded by a backwards recurrence.
-For the neutral coordinate a sign bit removes the multiplication by ±1; exact
-acceptance is then a zero-total signed path in a finite indexed graph. The
-verified graph algorithm subdivides arbitrary signed weights into private chains
-and uses balanced-walk saturation. Zero-weight edges are not erased. The finite
-graph construction and both directions of the word correspondence are checked.
-A worked example with reachable rules of lengths 2, 3, and 4 is in [NeutralReachable.lean](NeutralReachable.lean).
+## Exact statement
 
-## Scope and related work
-- [Currie, Mol, Rampersad and Shallit](https://arxiv.org/html/2111.07857)
-  and [Andrade and Mol, Theorem 2.4](https://arxiv.org/html/2408.15390v2#S2.SS4)
-  give criteria with both eigenvalues of the projected affine matrix expansive.
-- [Rao and Rosenfeld](https://arxiv.org/abs/1511.05875) use a different
-  criterion on the full incidence matrix, excluding unit-modulus eigenvalues.
-- This dossier covers only the stated spectral regime and additive squares.
-  It does not settle the minimum alphabet in
-  [Shallit §8](https://arxiv.org/html/2611.24441v1#S8), handle arbitrary k,
-  claim unconditional priority, or give a practical complexity bound.
-  The Boolean is an executable reference decision procedure, not a benchmarked
-  implementation. Bounded mathematical toys and conjecture counts are not claimed.
+Let the images of a finite integer alphabet be closed in that alphabet. On the alphabet, assume that every letter's image length and sum are obtained by applying the same integer matrix \(M\) to \((1,x)\). Assume the starting letter is prolongable and its iterates have unbounded length. If one eigenvalue of \(M\) is \(+1\) or \(-1\) and the other has modulus greater than 1, there is a terminating Boolean procedure to determine whether the infinite prefix limit contains any additive \(p\)-power, for every supplied \(p\ge2\). This means \(p\) consecutive nonempty blocks with the same length and the same integer sum.
 
-## Reproduction
-Use Lean 4.34.1 and mathlib commit
-`d13f23b723b8a846827a245b89c10fc7d3f11612` with its dependencies built.
-Run `bash verify.sh /path/to/mathlib4` to check the files in a clean temporary
-module directory. No default build targets are modified.
+The exact Lean entry point is [`KNeutralExact.calculate_correct`](KNeutralExact.lean). Its natural-number argument `k` represents \(p=k+1\); its result covers occurrence at any finite position, including occurrences ending at an iterate boundary. It computes both integral eigenvectors, the finite states and edge inventory, and an explicit maximum absolute expanding stamp. Nonuniform images are allowed. [`KNeutralControl.reachable_nonuniform_cube`](KNeutralControl.lean) is a concrete cube with reachable image lengths 2, 3, and 4. The square-only procedure and examples remain available as special-case references.
+
+## Proof structure
+
+1. Trace the \(p+1\) cuts through letter-image offsets. Local order bits exclude inversion and enforce positive final lengths. The \(p-1\) consecutive second differences encode exact equality of the adjacent block vectors.
+2. Expanding coordinates on an accepting path are bounded at every prefix by their zero terminal values. A single sign bit makes the neutral coordinates additive along each edge. Both conditions are imposed simultaneously on the same indexed path.
+3. The finite path language has an effective semilinear commutative image. Edge-label addition is reduced to nonnegative integer feasibility, decided by a finite base-two carry automaton. The certificate includes exact path-language equivalence, not only soundness for finitely sampled words.
+
+## Prior work and limits
+
+[Currie–Mol–Rampersad–Shallit, Theorem 10 and Corollary 11](https://arxiv.org/html/2111.07857) and the [Andrade–Mol reformulation, Theorem 2.4](https://arxiv.org/html/2408.15390v2#S2.SS4), require both projected roots to be expansive. [Rao–Rosenfeld](https://www.lirmm.fr/~mrosenfeld/M114937.pdf) give an incidence-matrix criterion excluding unit-modulus eigenvalues; their general abelian Problem 5 is not settled here. The new case agrees with abelian powers on binary alphabets but not on general alphabets. The related [Box progressions paper](https://arxiv.org/abs/2605.20504) was checked for overlap. No earlier theorem with this entire branch was found in the sources checked; the dossier makes no absolute priority claim. The abstract graph/semilinear and digit-carry ingredients are established techniques (see [To](https://arxiv.org/abs/1002.1464) and [Boigelot–Wolper](https://orbi.uliege.be/bitstream/2268/18767/2/BW02-iclp.pdf)).
+
+No claim about other spectra, general nonaffine fixed points, the minimum alphabet for avoiding additive squares, or a practical performance bound. The implementation is an exact but potentially very expensive reference procedure. Small vector-walk evaluations and an explicit Lean cube witness are not benchmarks for running the complete algorithm on nontrivial morphisms.
+
+## Replay
+
+Run `bash verify.sh /path/to/mathlib4` with Lean 4.34.1, Mathlib at commit `d13f23b723b8a846827a245b89c10fc7d3f11612`, and its dependency artifacts built or cached. `REPLAY-ORDER.txt` gives the standalone module order. The main theorem reports only Lean's standard `propext`, `Classical.choice`, and `Quot.sound` axioms.

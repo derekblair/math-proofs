@@ -12,7 +12,7 @@ cp "$here/"*.lean "$scratch/"
 cd "$mathlib"
 export LEAN_PATH="$scratch"
 lake env lean --version
-for module in NeutralAffine BalancedExact WeightedWalk FiniteBalance UnitCodes EdgeExpansion FiniteEdges ScalarTrace IntegerTrace PhaseProduct PhaseFinite AffineAddress CutLift TripTrace CutOrder FiniteTrip FiniteTripStep NeutralTrace FiniteTripTrace NeutralDecider NeutralFixedPoint IntegerEigen NeutralAffineExact NeutralReachable; do
+while IFS= read -r module; do
   lake env lean --root="$scratch" -o "$scratch/$module.olean" "$scratch/$module.lean"
   printf 'checked %s\n' "$module"
-done
+done < "$here/REPLAY-ORDER.txt"
