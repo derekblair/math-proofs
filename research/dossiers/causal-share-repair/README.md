@@ -59,3 +59,12 @@ Classical interval reference argument used here: a view is private iff a unit ch
 [NIST ML-KEM](https://csrc.nist.gov/pubs/fips/203/final) and [NIST IR 8214C](https://csrc.nist.gov/pubs/ir/8214/c/final) are only comparators. No provisional threshold ML-KEM is offered. It would also need distributed and authenticated pad setup and refresh, secure physical share isolation, active verification and abort handling, real erasure, protected threshold decapsulation and a simulation proof for its actual output interface. The scalar repair primitive does not perform any of those. No unrestricted decapsulation or output exposure is proposed. Exact Neon XHigh was not available in this workspace; no substitute or unpublished external use.
 
 An independent source audit reviewed the proof and scope; that audit is not a full formal verification or a priority check. Synthetic finite-field controls checked 1,000 fixed target schedules plus three exact controls, including that two distinct targets with t=3 and no refresh use two pad coins under offline conditioning and three under causal conditioning. Pinned Lean checks the conditional support-fiber translation and the rank-nullity increment term; it does not prove the full entropy theorem or generic-field existence result.
+
+## Single-repair scalar privacy with precommitted availability
+
+[SCALAR_AVAILABILITY.md](SCALAR_AVAILABILITY.md) characterizes when
+one ideal repair protects the scalar secret despite fixed helper
+departures/exposures, gives sharp pair provisioning for that narrow
+goal, and separately compares full helper-input simulation.
+The additional fixed-read criterion and supporting Lean lemmas do not
+give protection over repeated repairs, active failures or deployment.
