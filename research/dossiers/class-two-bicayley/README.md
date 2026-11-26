@@ -6,6 +6,12 @@ join each g to its corresponding vertex in the other copy. This yields the
 standard simple cubic single-matching bi-Cayley graph
 BiCay(G, {a,a⁻¹}, {b,b⁻¹}, {1}). The graph is connected when a and b generate G.
 
+## Class-three extension
+
+[The class-three follow-up](CLASS-THREE.md) proves a simple C4, C8, C16 or C32 for the same cubic construction over any group of nilpotency class at most three with no elements of order two, including infinite groups. In the class-three branch a selected triple commutator whose square differs from the identity forces C32 directly. An explicit connected example has C32 and no C4/C8/C16, so 32 is sharp. This is not a proof of the full Erdős–Gyárfás conjecture.
+
+## Class-two theorem
+
 **Lean theorem.** If ab=bac and c commutes with a and b, this graph has a simple
 cycle of length 4, 8 or 16. Neither group finiteness nor odd-order assumptions
 are needed. The actual Lean hypotheses are a≠1 and b²≠1, so it also applies to
