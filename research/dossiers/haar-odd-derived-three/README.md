@@ -42,3 +42,13 @@ python3 verify.py /path/to/pinned/mathlib4 -j 2
 
 Independent exact Python controls: `python3 checks/base_search.py` and
 `python3 checks/witness128.py`. They supplement the Lean proof.
+
+## Exact-girth tower
+
+[The tower theorem](HaarDerivedTower.lean) repeats the same mod-3 construction.
+For every integer `k >= 0`, it gives a finite odd-order group of derived length
+exactly `k + 2` and a cubic Haar graph with ordinary girth exactly `22 * 3^k`.
+This is an exponential lower bound on any universal bound for power-of-two
+cycle length in terms of derived length. It does not assert a power-of-two
+cycle exists at every tower level; the explicit 128-cycle above is the
+separately checked level `k = 1` example.

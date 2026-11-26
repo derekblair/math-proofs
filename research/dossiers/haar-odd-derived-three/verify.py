@@ -25,7 +25,7 @@ for line in (here/'sha256-lean.txt').read_text().splitlines():
 deps = {k:{x for line in data.splitlines() if line.startswith(('import ','public import '))
                for x in line.split('import ',1)[1].split('--',1)[0].split() if x in src}
         for k,(_,data) in src.items()}
-targets = {'HaarDerivedThree128': 4}
+targets = {'HaarDerivedThree128': 4, 'HaarDerivedTower': 2}
 with tempfile.TemporaryDirectory(prefix='haar-meta-verify-') as tmp:
     dest = Path(tmp)
     env = dict(os.environ, LEAN_PATH=tmp)
