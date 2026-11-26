@@ -73,3 +73,12 @@ The [multi-read extension](MULTIREAD.md) gives an exact rank test for fixed
 field/site choices and a different, sharp component-size rule for privacy
 uniformly over all eligible fields and site choices. The extension is still
 single-repair and passive only.
+
+## Stale share snapshots
+
+[STALE_WINDOW.md](STALE_WINDOW.md) proves a sharp three-epoch refresh
+cost for logical snapshots that retain the previous share. It separates
+this ideal result from conditional standard KEM seed custody; no real
+threshold KEM or erasure is verified. Lean checks the transcript
+normalization. See [STALE-WINDOW-AUDIT.md](STALE-WINDOW-AUDIT.md) for the
+scope review and run `python stale_window_controls.py` for synthetic checks.
