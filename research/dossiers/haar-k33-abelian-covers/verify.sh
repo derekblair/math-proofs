@@ -18,3 +18,6 @@ export -f check
 for n in HaarCycle HaarOrderTwo HaarAllNoncommuting HaarK33Voltage HaarK33DAG HaarK33Data; do check "$n"; done
 printf '%s\n' "$scratch"/HaarK33C[0-9][0-9][0-9].lean | sed -E 's#^.*/(.*)\.lean$#\1#' | xargs -n 1 -P "${HAAR_JOBS:-1}" bash -c 'check "$1"' _
 for n in HaarK33Complete HaarK33Gauge HaarK33OddCover HaarK33Haar HaarAbelCore HaarAbel HaarK33CollapseCore HaarK33Collapse HaarK33AllPorts; do check "$n"; done
+for n in HaarC5Voltage HaarC5DAG HaarC5Gauge HaarC5Data; do check "$n"; done
+printf '%s\n' "$scratch"/HaarC5C[0-9]*.lean | sed -E 's#^.*/(.*)\.lean$#\1#' | xargs -n 1 -P "${HAAR_JOBS:-1}" bash -c 'check "$1"' _
+for n in HaarC5Complete HaarC5OddCover HaarC5HaarGeometry HaarC5Haar HaarC5AllPorts; do check "$n"; done
