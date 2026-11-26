@@ -33,6 +33,12 @@ also provides the normalized-port form `HaarMetaFullOdd.normalized`.
    of doubling. A terminal witness has no repeated vertices.
 
 ## Sharpness
+ 
+[An explicit 2,758-vertex example](HaarSharpAffine.lean#L90) shows the bound
+is sharp. Its group is the affine semidirect product of the additive field
+F₁₉₇ by C₇, with the generator acting by multiplication by 36. Lean checks
+an explicit simple 32-cycle and excludes simple cycles of lengths 4, 8,
+and 16. This is not a minimum-size claim.
 
 [The sharpness proof](HaarSharpOptimal.lean) constructs a cubic Haar graph of
 this class with a 32-cycle and no 4-, 8-, or 16-cycle. The group is
