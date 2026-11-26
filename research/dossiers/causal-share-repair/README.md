@@ -68,3 +68,8 @@ departures/exposures, gives sharp pair provisioning for that narrow
 goal, and separately compares full helper-input simulation.
 The additional fixed-read criterion and supporting Lean lemmas do not
 give protection over repeated repairs, active failures or deployment.
+
+The [multi-read extension](MULTIREAD.md) gives an exact rank test for fixed
+field/site choices and a different, sharp component-size rule for privacy
+uniformly over all eligible fields and site choices. The extension is still
+single-repair and passive only.
