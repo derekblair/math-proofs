@@ -1,0 +1,36 @@
+import RibbonD3OrbitData
+import RibbonD3PairData4
+namespace RibbonD3Finite
+set_option maxRecDepth 25000
+set_option maxHeartbeats 0
+theorem pairChecked120 : good pairCerts4[0]! ((pairLabels[120]!).1.inp 0 0) ((pairLabels[120]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked121 : good pairCerts4[1]! ((pairLabels[121]!).1.inp 0 0) ((pairLabels[121]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked122 : good pairCerts4[2]! ((pairLabels[122]!).1.inp 0 0) ((pairLabels[122]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked123 : good pairCerts4[3]! ((pairLabels[123]!).1.inp 0 0) ((pairLabels[123]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked124 : good pairCerts4[4]! ((pairLabels[124]!).1.inp 0 0) ((pairLabels[124]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked125 : good pairCerts4[5]! ((pairLabels[125]!).1.inp 0 0) ((pairLabels[125]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked126 : good pairCerts4[6]! ((pairLabels[126]!).1.inp 0 0) ((pairLabels[126]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked127 : good pairCerts4[7]! ((pairLabels[127]!).1.inp 0 0) ((pairLabels[127]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked128 : good pairCerts4[8]! ((pairLabels[128]!).1.inp 0 0) ((pairLabels[128]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked129 : good pairCerts4[9]! ((pairLabels[129]!).1.inp 0 0) ((pairLabels[129]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked130 : good pairCerts4[10]! ((pairLabels[130]!).1.inp 0 0) ((pairLabels[130]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked131 : good pairCerts4[11]! ((pairLabels[131]!).1.inp 0 0) ((pairLabels[131]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked132 : good pairCerts4[12]! ((pairLabels[132]!).1.inp 0 0) ((pairLabels[132]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked133 : good pairCerts4[13]! ((pairLabels[133]!).1.inp 0 0) ((pairLabels[133]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked134 : good pairCerts4[14]! ((pairLabels[134]!).1.inp 0 0) ((pairLabels[134]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked135 : good pairCerts4[15]! ((pairLabels[135]!).1.inp 0 0) ((pairLabels[135]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked136 : good pairCerts4[16]! ((pairLabels[136]!).1.inp 0 0) ((pairLabels[136]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked137 : good pairCerts4[17]! ((pairLabels[137]!).1.inp 0 0) ((pairLabels[137]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked138 : good pairCerts4[18]! ((pairLabels[138]!).1.inp 0 0) ((pairLabels[138]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked139 : good pairCerts4[19]! ((pairLabels[139]!).1.inp 0 0) ((pairLabels[139]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked140 : good pairCerts4[20]! ((pairLabels[140]!).1.inp 0 0) ((pairLabels[140]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked141 : good pairCerts4[21]! ((pairLabels[141]!).1.inp 0 0) ((pairLabels[141]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked142 : good pairCerts4[22]! ((pairLabels[142]!).1.inp 0 0) ((pairLabels[142]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked143 : good pairCerts4[23]! ((pairLabels[143]!).1.inp 0 0) ((pairLabels[143]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked144 : good pairCerts4[24]! ((pairLabels[144]!).1.inp 0 0) ((pairLabels[144]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked145 : good pairCerts4[25]! ((pairLabels[145]!).1.inp 0 0) ((pairLabels[145]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked146 : good pairCerts4[26]! ((pairLabels[146]!).1.inp 0 0) ((pairLabels[146]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked147 : good pairCerts4[27]! ((pairLabels[147]!).1.inp 0 0) ((pairLabels[147]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked148 : good pairCerts4[28]! ((pairLabels[148]!).1.inp 0 0) ((pairLabels[148]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+theorem pairChecked149 : good pairCerts4[29]! ((pairLabels[149]!).1.inp 0 0) ((pairLabels[149]!).2.inp 0 0) := from_stored (by decide +kernel) (by decide +kernel) (by decide +kernel)
+end RibbonD3Finite
