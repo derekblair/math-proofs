@@ -1,6 +1,12 @@
 # Interval-sensitive deterministic exact real 3SUM
 
-**Proposed bound:** $O(n^{1.9996262})$ time for exact three-list 3SUM on arbitrary real inputs. The model uses exact real additions, subtractions and comparisons, plus $O(\log n)$-bit word arithmetic. There is no randomization. This is an incremental improvement to a deterministic exponent on a major problem, not an improvement to the faster Las Vegas exponent or to integer 3SUM.
+**Initial bound (superseded by the follow-up below):** $O(n^{1.9996262})$ time for exact three-list 3SUM on arbitrary real inputs. The model uses exact real additions, subtractions and comparisons, plus $O(\log n)$-bit word arithmetic. There is no randomization. This is an incremental improvement to a deterministic exponent on a major problem, not an improvement to the faster Las Vegas exponent or to integer 3SUM.
+
+## Stronger follow-up: weighted incidence
+
+The [weighted reduction](WEIGHTED-REDUCTION.md) improves the bound to **O(n^1.9991724)** with Majdoddin's explicitly stated deterministic matrix guarantee, or **O(n^1.9991653)** with a separately justified [sharper box-count bound](EXACT-BOX-TAIL.md). It changes the counting algorithm rather than only tuning its constants: the heavy matrix width drops from d^(12+δ) to d^(6+δ) by factoring the two sides of each exact rank moment. The earlier bound below and its same-backend comparator are retained for context.
+
+Independent derivation and exact 13,920 small rank-moment controls verified the factorization. Lean checks the local Cartesian-count and right-degree cost lemmas in WeightedMoment.lean. Python check_weighted_exponent.py checks all strict exponent inequalities with rational intervals. Neither the entire algorithm nor the analytical box-tail estimate is kernel-checked; this is not a priority claim or a faster randomized algorithm.
 
 ## Replacing the rank-moment resource bound
 
