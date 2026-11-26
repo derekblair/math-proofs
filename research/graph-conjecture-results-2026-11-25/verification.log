@@ -1,0 +1,164 @@
+# Build record, 2026-11-25 (America/Los_Angeles)
+Lean 4.34.1, Mathlib d13f23b723b8a846827a245b89c10fc7d3f11612 (this repository's lean/ pin; Mathlib from lake exe cache get).
+Each module compiled with: lean --root=<dir> -j1 -o <M>.olean <M>.lean
+
+## wowii, graph-brain-421, ac3-even-hole-free: compile and leanchecker replay
+AC3_EHF exit=0 3s
+GBP421_015_018 exit=0 27s
+GBP421_019 exit=0 1s
+GBP421_029 exit=0 3s
+GBP421_035 exit=0 32s
+GBP421_045 exit=0 10s
+GBP421_047 exit=0 6s
+GBP421_062 exit=0 5s
+GBP421_064 exit=0 3s
+GBP421_070 exit=0 8s
+GBP421_080 exit=0 34s
+GBP421_084 exit=0 46s
+GBP421_085 exit=0 8s
+WOWII382c exit=0 239s
+WOWII392c exit=0 109s
+WOWII393d exit=0 39s
+WOWII394 exit=0 39s
+WOWII395a exit=0 11s
+AC3_EHF check=0 4s
+GBP421_015_018 check=0 20s
+GBP421_019 check=0 2s
+GBP421_029 check=0 3s
+GBP421_035 check=0 30s
+GBP421_045 check=0 9s
+GBP421_047 check=0 5s
+GBP421_062 check=0 5s
+GBP421_064 check=0 3s
+GBP421_070 check=0 6s
+GBP421_080 check=0 33s
+GBP421_084 check=0 41s
+GBP421_085 check=0 4s
+WOWII382c check=0 232s
+WOWII392c check=0 108s
+WOWII393d check=0 35s
+WOWII394 check=0 35s
+WOWII395a check=0 12s
+'AC3EHF.not_conjecture' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GBP421_015_018.not_conjecture15' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GBP421_015_018.not_conjecture18' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GBP421_019.conjecture19_strong' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GBP421_029.not_conjecture29' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GBP421_035.not_conjecture35' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GBP421_045.not_conjecture45' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GBP421_047.not_conjecture47' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GBP421_062.not_conjecture62' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GBP421_064.not_conjecture64' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GBP421_070.not_conjecture70' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GBP421_080.not_conjecture80' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GBP421_084.not_conjecture84' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GBP421_085.not_conjecture85' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WOWII382c.not_conjecture382c' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WOWII392c.not_conjecture392c' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WOWII393d.not_conjecture393d' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WOWII394.not_conjecture394' depends on axioms: [propext, Classical.choice, Quot.sound]
+'WOWII395a.not_conjecture395a' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+## boriboon-kittipassorn-conj4: compile only (93 modules; leanchecker replay not run)
+BK73Core exit=0 2s
+BK73Core4 exit=0 2s
+BK73LBCore exit=0 2s
+BK73Sound1 exit=0 4s
+BK73LB4Core exit=0 2s
+BK73Graph1 exit=0 8s
+BK73LB4Chunks exit=0 18s
+BK73Graph2 exit=0 2s
+BK73Graph4 exit=0 2s
+BK73Main1 exit=0 2s
+BK73LBLogic exit=0 2s
+BK73LB4Logic exit=0 2s
+BK73Main4 exit=0 2s
+BK73Chunks3 exit=0 108s
+BK73Chunks1 exit=0 122s
+BK73LBChunks exit=0 110s
+BK73C4_39 exit=0 40s
+BK73C4_10 exit=0 102s
+BK73C4_44 exit=0 72s
+BK73C4_27 exit=0 28s
+BK73C4_46 exit=0 30s
+BK73C4_30 exit=0 28s
+BK73C4_19 exit=0 62s
+BK73C4_18 exit=0 106s
+BK73C4_42 exit=0 78s
+BK73C4_21 exit=0 58s
+BK73C4_60 exit=0 30s
+BK73C4_16 exit=0 122s
+BK73C4_23 exit=0 30s
+BK73C4_32 exit=0 110s
+BK73C4_62 exit=0 14s
+BK73C4_55 exit=0 14s
+BK73C4_54 exit=0 28s
+BK73C4_04 exit=0 138s
+BK73C4_08 exit=0 122s
+BK73C4_35 exit=0 64s
+BK73C4_22 exit=0 60s
+BK73C4_25 exit=0 54s
+BK73C4_31 exit=0 12s
+BK73C4_28 exit=0 52s
+BK73C4_47 exit=0 16s
+BK73C4_34 exit=0 96s
+BK73C4_36 exit=0 100s
+BK73C4_12 exit=0 102s
+BK73C4_01 exit=0 92s
+BK73C4_37 exit=0 64s
+BK73C4_13 exit=0 68s
+BK73C4_33 exit=0 70s
+BK73Chunks4 exit=0 108s
+BK73C4_06 exit=0 112s
+BK73Chunks2 exit=0 106s
+BK73C4_58 exit=0 28s
+BK73C4_53 exit=0 36s
+BK73Chunks0 exit=0 116s
+BK73Chunks6 exit=0 100s
+BK73C4_29 exit=0 28s
+BK73C4_43 exit=0 48s
+BK73C4_38 exit=0 64s
+BK73C4_02 exit=0 146s
+BK73C4_07 exit=0 80s
+BK73C4_14 exit=0 58s
+BK73C4_52 exit=0 68s
+BK73C4_61 exit=0 14s
+BK73C4_59 exit=0 14s
+BK73Chunks5 exit=0 112s
+BK73C4_26 exit=0 46s
+BK73C4_03 exit=0 84s
+BK73C4_24 exit=0 76s
+BK73C4_15 exit=0 32s
+BK73C4_09 exit=0 80s
+BK73C4_17 exit=0 150s
+BK73Chunks7 exit=0 206s
+BK73Assemble exit=0 8s
+BK73Final exit=0 4s
+BK73FinalEq exit=0 2s
+BK73C4_49 exit=0 112s
+BK73C4_05 exit=0 176s
+BK73C4_41 exit=0 132s
+BK73C4_50 exit=0 126s
+BK73C4_56 exit=0 126s
+BK73C4_00 exit=0 262s
+BK73C4_51 exit=0 66s
+BK73C4_45 exit=0 86s
+BK73C4_20 exit=0 (finished under sched)
+BK73C4_40 exit=0 (finished under sched)
+BK73C4_11 exit=0 78s
+BK73C4_48 exit=0 93s
+BK73C4_57 exit=0 38s
+BK73C4_63 exit=0 5s
+BK73Assemble4 exit=0 6s
+BK73Final4 exit=0 1s
+BK73Statement exit=0 2s
+BK73Answer exit=0 1s
+'BK73.mnd_7_3_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BK73.conjecture4_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BK73.G0_noOrient' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BK73.mnd_7_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BK73.mnd_7_4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BK73.conjecture4_false_74' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Arxiv2508_17569.conjecture_4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Arxiv2508_17569.seven_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Arxiv2508_17569.seven_four' depends on axioms: [propext, Classical.choice, Quot.sound]
