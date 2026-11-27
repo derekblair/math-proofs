@@ -10,4 +10,4 @@ lean=${LEAN_BIN:-lean}
 out=$(mktemp -d)
 trap 'rm -rf "$out"' EXIT
 export LEAN_PATH="$out:$lib/.lake/build/lib/lean:$(find "$lib/.lake/packages" -type d -path '*/.lake/build/lib/lean' | paste -sd ':' -)"
-for n in FanoParity FanoGraph; do "$lean" -j1 -M1900 --root="$here" -o "$out/$n.olean" "$here/$n.lean"; done
+for n in FanoParity FanoGraph CriticalKernel CriticalCard CriticalCubic DetSign DetMatching CriticalPfaffian CriticalTransport CentralSquare; do "$lean" -j1 -M2850 --root="$here" -o "$out/$n.olean" "$here/$n.lean"; done
