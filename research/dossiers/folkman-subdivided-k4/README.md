@@ -58,3 +58,19 @@ disintegration and positive finite normalizer cancellation. The main
 interface is `GeometricProjectionLaw.spherical_projection_probability`.
 The varying-span nonorthogonal pushforward and the full joint spherical
 Gram law still need Lean proofs. The cap-link spectral input is unchanged.
+
+### V9: conditional Gram law with fixed anchors
+
+For any fixed independent anchor tuple the exact law of the inner products
+of an independent spherical sample with the anchors depends only on their
+Gram matrix. The proof transfers spherical probability by a linear
+isometry, projects onto the span, and changes from orthonormal coordinates
+to anchor inner products with inverse Jacobian 1/sqrt(det Gram).
+`GeometricFixedAnchors.sphere_fixed_anchor_conditional` states the resulting
+ellipsoid integral. The determinant power telescopes through the Schur
+complement. Finite iid sphere tuples are almost surely linearly independent
+up to ambient dimension, and the proof explicitly discards only null
+lower-dimensional spans.
+
+The joint Gram law still needs recursive chart bookkeeping and the
+measure-level Fubini induction. The cap-link spectral input is unchanged.
