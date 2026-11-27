@@ -155,3 +155,20 @@ random root has a cut crossing more than five eighths of its link edges
 is at most 1/82944 along arbitrarily large samples. There is no
 longer a simultaneous expansion or inverse-polynomial-tail requirement.
 The analytic bound for a random rooted link is not yet proved in Lean.
+
+### V15: explicit shell loss for the actual sphere law
+
+The three-edge Gram density now yields an explicit exponential bound
+on triangle mass discarded by trimming either of the two edges at a
+root. With density exponent m/2, root threshold t, and shell width
+A/((m/2)t), the lost triangle mass is at most 2 exp(36−A) times the
+total triangle mass for all sufficiently large m. There is no appeal to
+a limiting asymptotic. The proof uses a determinant supporting plane,
+a lower corner box, and exact elementary exponential integrals.
+
+For heights in the retained shell of width w≤t, the residual threshold
+lies between t/(1+t)−4tw and t/(1+t). An exact deterministic estimate
+transfers a 9/16-cut bound from a subgraph keeping at least 6/7 of the
+link edges to the required 5/8 bound. The count and spectrum of the
+residual spherical graph still require probabilistic analysis. The
+final Folkman theorem remains conditional.
