@@ -1,6 +1,6 @@
 # Exact short-exchange profiles for bipartite shift graphs and odd quartic grafts
 
-This extends the distance statements in [PR #109](https://github.com/derekblair/math-proofs/pull/109). It gives the full distance-by-component count through the first two cases allowing a second winding, and exact nearest-cycle counts for both distinguished Hamilton cycles in the odd quartic graft. Throughout, cycles and spanning factors are counted as undirected edge sets on labeled vertices. Rotating the graph can produce a different counted edge set.
+This extends the distance statements in [PR #109](https://github.com/derekblair/math-proofs/pull/109). It gives the full distance-by-component count through the first two cases allowing a second winding (and through two units of slack in the quartic case), and exact nearest-cycle counts for both distinguished Hamilton cycles in the odd quartic graft. Throughout, cycles and spanning factors are counted as undirected edge sets on labeled vertices. Rotating the graph can produce a different counted edge set.
 
 ## The bipartite shift graphs
 
@@ -65,4 +65,85 @@ The profile above extends to \(k(D-1)=2m\) by adding \(\binom{g}{2/w}\) to the H
 Put s=D−1. When k s=2m+1 (both s and k odd), the full profile still has its one-winding counts and gains exactly m Hamilton cycles with h=k and m with h=k−1. Any winding-two difference has exactly one increment s−1; it is a high-red cut with blue step 1, or a low-red cut with blue step 0. Since gcd(m,s)=1, a separate all-s trail would have length m>k, so the difference is a single winding-two trail. Root at the unique defect. With root A_0, its selected A sites in traversal order are x_0=0 and x_i=i s−1 mod m for 1≤i≤k−1. They are distinct: s is invertible and the unique index solving i s≡1 mod m is k, outside the range. The B sites for low defect are (i+1)s−1 mod m, all distinct. For high defect only B_0 differs (it is s, not s−1), and collision would again require i s≡1 with 1≤i<k. Thus each defect type and root gives a valid distinct factor, m possibilities per type.
 Write k=2a+1, s=2b+1, m=a s+b. The circular red order of the A cut sites in their traversal labels is [0,a+1,1,a+2,2,…,2a,a]: compare the arithmetic progressions i s−1 and j s−b−1 after reduction. This is addition of a+1 mod k. The red order of cuts is the same for either type, because the low vs high edge at an A site is immediately before vs after it on red. For all high cuts, label each surviving red segment by the cut after which it begins. In the difference trail, the blue edge from the removed B endpoint at label i to the next A endpoint has segment endpoints i and i+1−(a+1)=i−a, giving one cycle because gcd(k,a)=1. If cut 0 is low, its A endpoint is on segment 0 instead of previous segment a and its B endpoint on segment a instead of 0. The contracted graph replaces edges 0→a+1 and 2a→a by edges a–(a+1) and (2a)–0. In the single cycle with oriented step −a, the first replacement joins the two heads and the second joins the two tails of the removed edges, so the two remaining paths rejoin into one undirected cycle. This also covers k=3 where one path may be a single vertex. Therefore all 2m winding-two factors at one slack are Hamilton.
 
-The accompanying Lean file verifies four supporting arithmetic lemmas: there are only one or two windings in the stated range, equality of the capped increment sum saturates every step, the second-winding interleaving inequality holds, and the maximum-increment accumulated step is exactly minus one layer. The full graph bijections, component counts and odd-graft formulas are written arguments, not Lean theorems.
+The accompanying Lean file verifies six supporting arithmetic lemmas: the winding bound, saturation, interleaving, the boundary displacement, quartic balance, and binary-seed uniqueness. The full graph bijections, component counts and odd-graft formulas are written arguments, not Lean theorems.
+
+
+## Quartic case: two units of slack
+
+For integer \(\ell\ge2\), put \(m=3\ell-1\), \(k=2\ell\). Work in the quartic bipartite shift graph from [PR #109](https://github.com/derekblair/math-proofs/pull/109), with shifts \(0,1\) blue and \(2,3\) red. The distinguished red Hamilton cycle uses shifts \(2,3\). At exchange distance \(k\), the total winding of a nonreference spanning 2-factor is one or two, since every alternating step has positive shift advance at most three and \(3k=2m+2<3m\).
+
+There are exactly \(m(2\ell+1)\) winding-two 2-factors. Precisely \(2m\ell\) of them are Hamilton. The remaining \(m\) have exactly two components. These counts are on labeled undirected edge sets, with no quotient by graph automorphisms. Combining the new count with the one-winding word formulas above gives the total distance-\(k\) counts
+\[
+\#\{\text{Hamilton cycles}\}
+=m\binom{2\ell}{\ell-2}+2m\ell,\qquad
+\#\{\text{spanning 2-factors}\}
+=\frac{m}{2\ell}\binom{4\ell}{\ell-1}+m(2\ell+1).
+\]
+
+### A recurrence that counts edge sets directly
+
+For index \(i\) modulo \(m\), let \(H_i,L_i\) indicate removal of the high-red shift-three and low-red shift-two edges out of \(A_i\). Let \(P_i,Q_i\) indicate insertion of the blue shift-zero and shift-one edges out of \(A_i\). All four indicators are binary. Degree balance at \(A_i\) gives \(P_i=H_i+L_i-Q_i\). Balance at \(B_j\) gives \(H_{j-3}+L_{j-2}=P_j+Q_{j-1}\), so
+\[
+H_j-H_{j-3}=L_{j-2}-L_j+Q_j-Q_{j-1}.
+\]
+The total shift advance is \(3k-\sum_i(L_i+Q_i)\), independent of how the alternating incidences are paired. Hence winding two means \(\sum_i(L_i+Q_i)=2\).
+
+Use coordinate \(t\) with \(i=3t\bmod m\), which is invertible with inverse multiplier \(\ell\). A pulse of \(L\) at coordinate \(a\) gives a negative jump in \(H\) at \(a\), and a positive jump at \(a+2\ell\). This is the indicator of a cyclic interval of length \(\ell-1\) immediately preceding \(a\). A pulse of \(Q\) at \(b\) gives the indicator of the cyclic interval of length \(\ell\) starting at \(b\). The recurrence determines \(H\) up to an additive constant. Its sum is \(k-\sum L\), exactly the sum of the two interval lengths, so this constant is zero. Thus \(H\) is binary exactly when the two indicated intervals are disjoint.
+
+Extend every \(L\)-interval by its following point \(a\) to make its length \(\ell\). The constraint that \(P=H+L-Q\) stay binary gives the following full list:
+- For two \(L\) pulses or two \(Q\) pulses the two length-\(\ell\) intervals must be disjoint.
+- For an \(L\) and a \(Q\) pulse the two length-\(\ell\) intervals can be disjoint. They may also meet exactly at the extended endpoint of the \(L\) interval when the \(Q\) interval starts there, because \(L=Q=1\) at that point.
+
+These conditions are sufficient: the formulas give binary \(H,L,P,Q\) satisfying both degree constraints and the desired count. For two labeled disjoint intervals there are \(m\) first starts and \(\ell\) permissible relative starts from \(\ell\) through \(2\ell-1\). The counts in types \(LL\) and \(QQ\) are each \(m\ell/2\), because pulses of the same type are unordered. In type \(LQ\) the intervals retain their labels, giving \(m\ell\) disjoint placements plus \(m\) placements touching at the extended endpoint. No edge set is counted twice because it determines \(L,Q\) directly. The sum is \(m(2\ell+1)\).
+
+### Which factors are Hamilton
+
+Each length-\(\ell\) support corresponds to one winding-one alternating trail. Follow its selected \(A\) sites forwards by three around the circle, with one closing gap of two. For an \(L\) interval the closing step is a low-red cut followed by a shift-zero blue edge. For a \(Q\) interval the closing step is a high-red cut followed by a shift-one blue edge, arriving at its pulse. This decomposition is valid even when the two trails meet at vertices, since the recurrence has already guaranteed distinct removed and added edges.
+
+The two types of trail alternate in the cyclic order of red cuts. To see this for disjoint supports, translate the first interval to start at zero in coordinate \(t\) and let the second start at \(\ell+s\), \(0\le s\le\ell-1\). The first trail has physical indices \(3j\), \(0\le j<\ell\). The second has one index between each pair of consecutive first indices: \(3j+2\) when \(j<s\), and \(3j+1\) when \(j\ge s\). In the touching \(LQ\) case the second starts at \(\ell-1\). Its physical indices are \(1,4,\ldots,3\ell-5\), followed by the shared index \(3\ell-3\). At the shared \(A\) vertex the first cut is low and immediately precedes that \(A\) vertex on the red cycle. The second is high and immediately follows it. Thus the order alternates there as well. The remaining red segment between those two cuts consists of a single vertex.
+
+Index cuts in this cyclic red order by \(i\bmod k\), and contract each retained red segment after cut \(i\) to vertex \(i\). Let \(\lambda_i=1\) for a low cut and \(0\) for a high cut. The blue edge from the \(B\) endpoint at cut \(i\) goes to the \(A\) endpoint at cut \(i+2\), since this is the next cut of the same trail. Its two contracted endpoints are
+\[
+i-\lambda_i,\qquad i+1+\lambda_{i+2}.
+\]
+Contracting the retained paths preserves the number of components, including any parallel edges or loops created in the process.
+
+If both pulses are \(Q\), every cut is high and the contracted graph is a cycle. With \(LQ\) there is one low cut. A low cut at \(j\) replaces edges \((j-2,j-1)\) and \((j,j+1)\) with \((j-2,j)\) and \((j-1,j+1)\). This swaps the consecutive segment vertices \(j-1,j\) in the cyclic list, preserving connectivity.
+
+With \(LL\), there are two low cuts, of opposite parity in the alternating order. When the two cuts are nonadjacent, their swaps involve disjoint pairs of vertices and disjoint boundary edges. Distances of two would cause a shared boundary but are excluded by parity. Thus the resulting graph is still a cycle. When the low cuts are adjacent, rotate labels to make them 0 and 1. The endpoint formula gives two parallel edges between \(-1\) and 1, isolating that two-vertex contracted component. The other replacements create the path \(-2,0,2\), which closes along the untouched part of the original segment cycle. When \(k=4\), \(-2=2\) and the latter is a two-edge cycle as well. This gives exactly two components.
+
+In the \(LL\) case the first low cut is at physical index \(3\ell-3\) and has cut index \(2\ell-2\). If the second start is \(\ell+s\), its low cut has cut index \(2\ell-1\) for \(s=0\), and \(2s-1\) for \(s>0\). Adjacency occurs exactly for \(s=0\) or \(s=\ell-1\). There are therefore \(2m/2=m\) non-Hamilton \(LL\) factors. All other factors are Hamilton.
+
+### Exact checks and scope
+
+The replay directly enumerated all bounded-distance degree-two factors for \(\ell=2,\ldots,7\), with 855 literal winding-two factors. It also checked the three interval arrangements and component classification up to \(\ell=110\), covering 18,421 translation-normalized arrangements. The result extends the previous exact zero-slack and one-slack profiles, and handles vertex collisions without counting a factor according to its possible alternating pairings. The uniform proof is written. Existing work [counts Hamilton cycles by their own winding in quartic circulants](https://meetings.ams.org/math/jmm2025/meetingapp.cgi/Paper/46317). Here the winding is of the difference from a fixed reference, and counts are stratified by exchange distance and component number. No priority or full Sheehan claim.
+
+### Enumeration for arbitrary fixed maximum-increment deficit
+
+The same recurrence gives an exact algorithm for the degree-\(D\) bipartite shift graph, with \(s=D-1\), deleted high shift \(s\), deleted low shift \(s-1\), and added blue shifts \(0,\ldots,s-2\). Let \(Q_{b,i}\) mark additions of blue shift \(b\ge1\), \(L_i\) mark low deletions, \(H_i\) mark high deletions, and \(P_i\) mark shift-zero additions. A factor at distance \(k\) and relative winding \(w\) has deficit
+\[
+t=sk-wm=\sum_iL_i+\sum_{b=1}^{s-2}\sum_i bQ_{b,i}.
+\]
+Enumerate these defect bits of weighted sum \(t\). They determine the right-hand side of the recurrence
+\[
+H_j-H_{j-s}=L_{j-(s-1)}-L_j+\sum_{b=1}^{s-2}(Q_{b,j}-Q_{b,j-b}).
+\]
+For each of the \(\gcd(m,s)\) addition orbits choose one starting \(H\) bit, propagate, and enforce consistency and binary values. Recover \(P_i=H_i+L_i-\sum_bQ_{b,i}\) and reject any nonbinary value or wrong distance. All surviving assignments are 2-factors, since the recurrence and recovery are exactly the degree constraints. Every factor has a unique assignment, so this gives counts or enumeration by component number without multiplicity from alternating trails. Traversal of the retained degree-two graph gives its component count.
+
+A straightforward enumeration costs
+\[
+O\!\left(2^s Dm\sum_{a=0}^{t}\binom{(D-2)m}{a}\right)
+\]
+unit-cost graph and integer operations apart from any cost of storing the exact tally or emitting edge sets. The written bound uses that a configuration of deficit \(t\) has at most \(t\) nonzero bits. Thus it is polynomial in \(m\) for fixed \(D,t\), regardless of the winding size. A separate exact replay compares all factors of deficit at most three against literal degree-two enumeration, on 26 instances for degrees 3 through 6. This checks 13,909 candidate defect configurations, 2,723 surviving factors, and 101 exact distance/winding buckets.
+
+### Orbit compression for counting a fixed distance and winding
+
+The previous enumeration permits output by component count. If only the number of factors for a fixed \((k,w)\) is requested, the \(2^s\) seed search and the length-\(m\) scan per defect set are unnecessary. Let \(g=\gcd(m,s)\) and \(a=m/g\). Label each orbit of addition by \(s\) with its cyclic coordinate \(0,\ldots,a-1\), found by one pass. A defect bit changes at most two recurrence positions, and its row changes \(P_i-H_i\) at one of those positions. Outside these at most \(2t\) event positions, the recurrence has zero jump and \(P_i=H_i\). On an affected orbit, sort its events by cyclic coordinate. Starting with the bit just before coordinate zero, check consecutive constant runs by processing only the events and summing their lengths times the bit value. Require that the last bit equals the seed, and check the \(P\) condition at each event. If both seeds work, the two sequences differ everywhere by one; the binary constraint forces them to be respectively all zero and all one. Unaffected orbits also have precisely these two choices.
+
+Consequently, for each defect set the fixed choices determine a base distance \(k_0\) (including every low deletion). If there are \(f\) free orbits, the contribution at distance \(k\) is \(\binom{f}{(k-k_0)/a}\), interpreted as zero unless the lower index is an integer in range. The winding then follows from the chosen deficit. This aggregation does not assert anything about the component counts of those free choices; use the explicit enumeration above if that information is needed.
+
+For one requested deficit \(t\), at most \(M=(1+\min(t,D-3))m\) candidate sites are needed, because larger blue shifts cannot occur. Allowing \(O((t+1)m)\) preprocessing and exact integer arithmetic, the counter uses at most
+\[
+O\!\left((t+1)m+\mathrm{poly}(t+1)\sum_{j=0}^t\binom{M}{j}\right)
+\]
+operations. Binomial rows for possible \(f\) can be cached by the usual multiplicative recurrence; there are at most \(2t+1\) different free-orbit counts. The algorithm is polynomial for fixed \(t\), **even if the degree is not fixed**, without an exponential prefactor in the degree. No fixed-parameter tractability in \(t\) is claimed. The compressed replay matched literal enumeration on 39 graphs (6,661 represented profiles, 7,270 factors and 154 distance/winding buckets).

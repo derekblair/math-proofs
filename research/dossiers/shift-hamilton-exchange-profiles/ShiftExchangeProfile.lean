@@ -46,9 +46,27 @@ theorem arithmetic_boundary (g j w : ℤ) (h : j*w = 2) :
     g-j*(g*w) = g*(1-j*w) := by ring
     _ = -g := by rw [h]; ring
 
+theorem quartic_balance_iff (H Hprev L Lprev P Q Qprev : ℤ)
+    (hrow : P = H+L-Q) :
+    (Hprev+Lprev = P+Qprev) ↔ (H-Hprev = Lprev-L+Q-Qprev) := by
+  omega
+
+theorem two_seeds_force_constant {ι : Type*} (x y : ι → ℤ)
+    (hx : ∀ i, 0 ≤ x i ∧ x i ≤ 1)
+    (hy : ∀ i, 0 ≤ y i ∧ y i ≤ 1)
+    (hd : ∀ i, y i = x i+1) :
+    ∀ i, x i = 0 ∧ y i = 1 := by
+  intro i
+  have h₁ := hx i
+  have h₂ := hy i
+  have h₃ := hd i
+  omega
+
 end ShiftExchangeProfile
 
 #print axioms ShiftExchangeProfile.winding_options
 #print axioms ShiftExchangeProfile.no_slack_saturates
 #print axioms ShiftExchangeProfile.interleave_two_runs
 #print axioms ShiftExchangeProfile.arithmetic_boundary
+#print axioms ShiftExchangeProfile.quartic_balance_iff
+#print axioms ShiftExchangeProfile.two_seeds_force_constant
