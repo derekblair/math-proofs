@@ -172,3 +172,18 @@ transfers a 9/16-cut bound from a subgraph keeping at least 6/7 of the
 link edges to the required 5/8 bound. The count and spectrum of the
 residual spherical graph still require probabilistic analysis. The
 final Folkman theorem remains conditional.
+
+### V16: exact conditioning at a fixed root
+
+An orthogonal height coordinate is independent of the residual
+direction on the sphere. Given the exact set of sample labels in
+a measurable height band of positive mass, the remaining directions
+are therefore iid uniform on the tangent sphere. The split isometry
+works for any root. Edges between retained labels obey the two
+residual threshold brackets. The triangle shell-loss probability
+bound also holds for each fixed root, not just a random root.
+
+For the remaining sample concentration step, the mean of the
+cross-block matrices over uniform binary splits is exactly half the
+original zero-diagonal matrix. The random-matrix bound relating the
+tangent sphere sample to its population kernel is not yet formalized.
