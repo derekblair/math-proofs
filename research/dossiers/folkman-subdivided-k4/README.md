@@ -7,7 +7,10 @@
 - RobustFolkman.lean checks the finite preservation argument and exact charge for removing edges.
 - MixedCorners.lean checks the normalized count of monochromatic triangles from a mixed-wedge bound.
 - ParagliderCayley.lean is a separate, fully checked restriction: any group with an inverse-closed and conjugacy-invariant connection set has triangle codegree at most two if its Cayley graph avoids the subdivided K4. This does not restrict the random geometric construction.
-- The spherical spectral theorem, Gram-rate asymptotics, and the final probability and existence step are not formalized here.
+- GeometricGraphEdit.lean and GeometricAssembly.lean verify the exact graph statement from quantitative finite-distribution inputs: spectral exception mass, triangle variance, and expected deletion charge. GeometricMoment.lean proves the finite selection step with those inputs.
+- GeometricPatterns.lean checks the five pattern sizes, and GeometricWindow.lean checks the parameter inequalities under fourth-order remainder bounds.
+- GramLowOrder.lean and GramCoefficients.lean verify the determinant coefficients through cubic order for a symmetric Boolean adjacency, with arbitrary nonedge entries at quadratic scale. Those terms are 1, 0, minus the edge count, and twice the triangle count.
+- The spherical spectral theorem and the analytic estimates needed to supply the finite-distribution inputs are not formalized here.
 
 ## Reproduce
 
