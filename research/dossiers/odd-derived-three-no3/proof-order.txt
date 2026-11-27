@@ -352,6 +352,10 @@ new RibbonD3WideSlopeData17.lean
 new RibbonD3WideSlopeData18.lean
 new RibbonD3WideSlopeData19.lean
 new RibbonD3WideSlopeData20.lean
+new RibbonD3WideSlopeData21Part84.lean
+new RibbonD3WideSlopeData21Part85.lean
+new RibbonD3WideSlopeData21Part86.lean
+new RibbonD3WideSlopeData21Part87.lean
 new RibbonD3WideSlopeData21.lean
 new RibbonD3WideSlope.lean
 new RibbonD3WideInversion.lean
