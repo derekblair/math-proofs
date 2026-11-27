@@ -203,3 +203,19 @@ zero-diagonal matrix. A lower centered-quadratic bound at scale
 one tenth of the expected degree supplies both the tighter graph's
 edge-count lower bound and its required 9/16 cut bound. This does
 not yet verify the random-matrix estimate itself.
+
+### V18: population Lipschitz contraction and finite covariance
+
+Two reflections give a measure-preserving rotation between the caps at
+any two roots. Lean checks the exact planar displacement, the tangent
+second moment bound, the conditional height-squared bound, and the
+resulting dimension-explicit Lipschitz contraction of cap averaging.
+This is not yet a spectral bound on L². The abstract self-adjoint
+power argument is verified separately.
+
+The finite rank-one covariance variance bound, norm equality for the
+two empirical Gram matrices, and covariance monotonicity under column
+truncation are checked. A measurable Euclidean grid supplies the
+quantization geometry. The fixed-root shell loss has a checked
+finite-sample Markov bound. The proof connecting these ingredients to
+the required spherical sample cut estimate remains incomplete.
