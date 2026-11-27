@@ -10,6 +10,6 @@ lean=${LEAN_BIN:-lean}
 out=$(mktemp -d)
 trap 'rm -rf "$out"' EXIT
 export LEAN_PATH="$out:$lib/.lake/build/lib/lean:$(find "$lib/.lake/packages" -type d -path '*/.lake/build/lib/lean' | paste -sd ':' -)"
-for n in RobustFolkman MixedCorners ParagliderCayley GeometricGraphEdit GeometricMoment GeometricAssembly GeometricWindow GeometricPatterns GramLowOrder GramCoefficients; do
+for n in RobustFolkman MixedCorners ParagliderCayley GeometricGraphEdit GeometricMoment GeometricAssembly GeometricWindow GeometricPatterns GramLowOrder GramCoefficients GeometricGap GeometricHGram GeometricVariance GeometricTriangleOverlap GeometricConditioning GeometricChargeMoment; do
   "$lean" -j1 -M2850 --root="$here" -o "$out/$n.olean" "$here/$n.lean"
 done
