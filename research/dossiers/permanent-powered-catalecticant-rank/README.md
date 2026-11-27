@@ -1,0 +1,33 @@
+# Exact Hasse catalecticant ranks of powered permanents and affine-determinant sum bounds
+
+Let K be any field, n≥0 and q≥1 integers, and set P(X)=per(X^{∘q}) for X an independent n×n matrix. For 0≤k≤qn let C_k(P) be the coefficient matrix of P(U+V), whose row monomials have U-degree qn−k and whose column monomials have V-degree k (coefficients of U and V variables in disjoint copies). These are Hasse coefficient matrices, without factorial divisions. Define D_q(z)=Σ_{1≤s<q, binom(q,s)≠0 in K} z^s. The exact rank is
+
+$
+R_k=\sum_{a=0}^{n}\binom{n}{a}^{\!2}a!\sum_{b=0}^{n-a}\binom{n-a}{b}^{\!2}[z^{k-qb}]D_q(z)^a.
+$
+
+A coefficient with a negative exponent is zero, and D_q(z)^0=1. This rank formula holds in every characteristic, including cases when q is a pure characteristic power.
+
+## Exact rank
+
+In a term of P(U+V), partition the edges of the matching into all-U (exponent q in U), all-V (exponent q in V), and mixed edges. Ignore terms with vanishing binomial factors. Every nonzero coefficient row and column independently identifies the same mixed matching T from its edge exponents strictly between 0 and q. If |T|=a, it also identifies the same mixed V exponents s_e (from V directly or by complement from U). Thus different pairs (T,s) have disjoint row and column supports. For fixed T and s, delete T's rows and columns. There remain r=n−a rows and r columns. The number of all-V edges is forced to be b=(k−Σ_e s_e)/q. When b is an integer in [0,r], choose the b leftover row labels and b leftover column labels used by those edges. Any all-V matching among those labels and any all-U matching among their respective complements complete T to a unique whole matching. The corresponding rectangle is constant nonzero, with entry Π_e binom(q,s_e), so contributes rank one. Different label pairs give disjoint row and column supports, since the all-U monomial specifies both complement label sets and the all-V monomial specifies the label sets. The contribution is binom(r,b)^2. There are binom(n,a)^2 a! choices for T and [z^(k−qb)]D_q(z)^a choices of s after fixing b. Summing proves the derivation. Zero rows and columns are irrelevant. At q=1 recover the classical rank binom(n,k)^2. For q=p^u in characteristic p the support of D is empty, recovering the Frobenius pure-edge ranks.
+
+## Affine determinant sums without locality
+
+Suppose P(X)=Σ_{i=1}^m w_i det(A_i+L_i(X)), with arbitrary fixed affine-linear entry maps and determinant orders d_i≤M. Then for every k, R_k≤Σ_i binom(d_i,k)^2≤m binom(M,k)^2. Set the binomial factor to zero outside its natural range. Products of any number of affine determinants also fall in this model by block diagonal concatenation; d_i is the total order. No raw-row/column locality, sign or positivity assumption is required. Writing B=A_i+L_i(U) and C=L_i(V), expand det(B+C) in row slots. To have V-degree k choose k rows I from C, leaving the complementary rows from B. Laplace expansion on I and every k-set J of output columns yields a product of det C[I,J] and det B[Iᶜ,Jᶜ] times the fixed sign. Its U-degree (qn−k) component is likewise separated from V. Each feature pair (I,J) contributes rank at most one, irrespective of how densely L depends on X. There are binom(d_i,k)^2 terms per determinant. Rank subadditivity and monotonicity give the bound. The same inequalities hold at the coefficientwise/Zariski closure of the corresponding bounded-order sums, because the coefficient map is linear and rank minors vanish identically on that class (over K or its algebraic closure).
+
+## Consequences and scope
+
+If q≥2 and an interior s satisfies binom(q,s)≠0 in K, at k=sn the submatrix restricted to U_σ^(q−s) and V_τ^s is binom(q,s)^n I on full matchings. Hence m≥n!/binom(M,sn)^2 whenever the denominator is positive; otherwise representation impossible. For fixed q and M=O(n), this requires exp(n log n−O(n)) summands, with upper n! already attained by diagonal monomial matrices of order qn. Choose min(s,q−s) by symmetry. In characteristic zero choose s=1. In positive p, an interior s exists iff q is not a pure p-power (Lucas; also immediate from factorizing (1+z)^q in base p). If s=1 and m is polynomially bounded, the elementary factorial and binomial estimates give M=Ω(n^(3/2)); do not compare this to stronger results in a different single-determinant/ordinary-permanent model. For individual k the exact R_k can improve the diagonal lower value. Summing all k gives total coefficient derivative-space dimension Σ_a binom(n,a)^2 a! |S|^a binom(2(n−a),n−a), with S=support(D_q). These bounds apply to polynomial identities, hence equality on any open real input domain, but not arbitrary Boolean-only affine identities, arbitrary arithmetic circuits, a constant relative-error estimator, or a general exact permanent algorithm. The q=1 specialization yields no ordinary-permanent representation lower bound beyond these measures. Any coefficient limits are in the stated fixed m,M model. The prior sharper mask-only bounds for identical powers and certain fixed-mask families are distinct and not superseded in every parameter by this general bound.
+
+
+
+## Reproduction
+
+- `node permanent-power-catalecticant-replay.js` checks 685 full coefficient matrix ranks against explicit expansions and sparse elimination in characteristics 2, 3, 5, 7, and 101.
+- `node permanent-coloured-affine-replay.js` checks 231 signed dense affine determinants by independent coefficient extraction and separated minors.
+- Compile `PermanentPowerCatalecticantRank.lean` with `lake env lean -s 65536 /absolute/path/to/PermanentPowerCatalecticantRank.lean` under Lean 4.34.1 and Mathlib commit `d13f23b723b8a846827a245b89c10fc7d3f11612`. It proves the generic constant-block and feature-rank lemmas with standard axioms only. The Hasse coefficient construction, exact rank formula, and its determinant-sum lower bound are written proofs, not Lean theorems.
+
+## Context
+
+[Bhargava and Tengse, §4](https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.FSTTCS.2024.10) use the dimension of the determinant derivative space via minors. [Chen, Kayal, and Wigderson](https://www.math.ias.edu/~avi/PUBLICATIONS/ChenKaWi2011.pdf) survey derivative measures and other permanent complexity methods. A [rank-two permanent identity](https://arxiv.org/abs/2108.02528) and [Sheshadri's ordinary-permanent lower bounds](https://arxiv.org/abs/2610.40484) address different hypotheses and models. The separate [fixed-mask and local affine dossier](https://github.com/derekblair/math-proofs/pull/100) remains sharper in parts of its narrower scope. No priority claim is made.
