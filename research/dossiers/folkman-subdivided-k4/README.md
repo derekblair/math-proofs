@@ -10,7 +10,10 @@
 - GeometricGraphEdit.lean and GeometricAssembly.lean verify the exact graph statement from quantitative finite-distribution inputs: spectral exception mass, triangle variance, and expected deletion charge. GeometricMoment.lean proves the finite selection step with those inputs.
 - GeometricPatterns.lean checks the five pattern sizes, and GeometricWindow.lean checks the parameter inequalities under fourth-order remainder bounds.
 - GramLowOrder.lean and GramCoefficients.lean verify the determinant coefficients through cubic order for a symmetric Boolean adjacency, with arbitrary nonedge entries at quadratic scale. Those terms are 1, 0, minus the edge count, and twice the triangle count.
-- The spherical spectral theorem and the analytic estimates needed to supply the finite-distribution inputs are not formalized here.
+- GeometricVariance.lean and GeometricTriangleOverlap.lean check the variance bound for triangle-indicator events from individual and pair probabilities. For each triangle there are at most 3(n−3) distinct triples sharing two vertices. GeometricConditioning.lean checks an exact finite product-conditioning identity for constant conditional probabilities.
+- GeometricChargeMoment.lean checks the finite expectation bound from a pointwise internal and fresh certificate majorant. The random spherical certificate probabilities are a separate input.
+- GeometricGap.lean and GeometricHGram.lean check an alternative exact determinant comparison for a symmetric five-vertex Gram matrix whose seven constrained entries already equal the threshold. These lemmas do not prove that an optimizer has these properties.
+- The spherical law, its rare-event estimates, and the spectral theorem needed to supply the finite-distribution inputs are not formalized here.
 
 ## Reproduce
 
