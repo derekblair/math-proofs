@@ -7,7 +7,8 @@ this=$(cd "$(dirname "$0")" && pwd)
 lean_bin=${LEAN_BIN:-lean}
 temp=$(mktemp -d)
 trap 'rm -rf "$temp"' EXIT
-cp "$this/DirectedAnchorCounting.lean" "$temp/"
+cp "$this/DirectedAnchorCounting.lean" "$this/DirectedAnchorPreimage.lean" "$temp/"
 cd "$temp"
 export LEAN_PATH="$temp:$MATHLIB_LEAN_PATH"
 "$lean_bin" -o DirectedAnchorCounting.olean DirectedAnchorCounting.lean
+"$lean_bin" -o DirectedAnchorPreimage.olean DirectedAnchorPreimage.lean
