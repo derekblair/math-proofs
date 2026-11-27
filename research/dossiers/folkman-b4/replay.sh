@@ -17,4 +17,4 @@ if [[ ! -f "$libbuild/$hall.olean" ]]; then
   mkdir -p "$out/$(dirname "$hall")"
   "$lean" -j1 -M2450 --root="$lib" -o "$out/$hall.olean" "$lib/$hall.lean"
 fi
-for n in FanoParity FanoGraph CriticalKernel CriticalCard CriticalCubic DetSign DetMatching CriticalPfaffian CriticalTransport CentralSquare MinimalFamily FamilyCore GraphBookCore BookConclusion TightDirections RegularHall TightCard; do "$lean" -j1 -M2850 --root="$here" -o "$out/$n.olean" "$here/$n.lean"; done
+for n in FanoParity FanoGraph CriticalKernel CriticalCard CriticalCubic DetSign DetMatching CriticalPfaffian CriticalTransport CentralSquare MinimalFamily FamilyCore GraphBookCore BookConclusion TightDirections RegularHall TightCard TightContract TightLift TightShoreLift TightSquare TightParity TightSigning FanoLabels FanoTransfer FanoPointPort FanoLinePort TightOrient TightExpansion TightBrace TightMinimum TightMinContract TightDegrees TightCubicContraction BraceSquares; do "$lean" -j1 -M2850 --root="$here" -o "$out/$n.olean" "$here/$n.lean"; done
