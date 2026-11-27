@@ -245,3 +245,15 @@ by the one-coordinate density, and the operator pays its square root.
 This is a population operator, not a bound for the random sample. The
 random sample concentration and the final graph conclusion are not yet
 verified in Lean.
+
+### Sample quantization error and finite-kernel inputs
+
+`GeometricSampleQuantization.sample_cap_quantization_tail` controls
+the empirical operator error between actual and grid-quantized
+adjacency. Its sparse strip-degree estimate conditions on each sample
+row and does not assume different rows are independent.
+`GeometricGridResolution` bounds both this strip probability and the
+logarithm of the grid size. `GeometricGridRowMass` and
+`GeometricKernelBernoulli` supply explicit row and column energy bounds.
+The centered quantized sample itself still needs a concentration
+argument; these lemmas do not assert the finite graph conclusion.
