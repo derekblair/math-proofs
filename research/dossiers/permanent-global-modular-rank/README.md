@@ -51,6 +51,10 @@ Given square binary incidence M of an arbitrary bipartite graph (pad the smaller
 - `node permanent-prime-power-valuation-witness-replay.js` checks 450 dense positive matrices constructed to attain the bound.
 - Run `lake env lean -s 65536 /absolute/path/to/CorrectionRows.lean` from Lean 4.34.1 with Mathlib at `d13f23b723b8a846827a245b89c10fc7d3f11612`. Lean checks the correction-row expansion over commutative semirings. It does not check the sharp valuation, integer divisions, bit complexity, or hardness reduction. The forward-difference identities are separate from this module; see the [hierarchical permanent dossier draft](https://github.com/derekblair/math-proofs/pull/90).
 
+## Supplement: full Smith spectrum
+
+[SmithSpectrum.md](SmithSpectrum.md) proves the exact minimum permanent valuation in a prescribed integer Smith orbit, constructs an attaining representative for each prime, and computes the permanent fixed divisor without factoring. This is a written extension with a [separate exact replay](permanent-smith-valuation-replay.js), not a new Lean claim.
+
 ## Related results
 
 [Björklund, Husfeldt, and Lyckberg](https://doi.org/10.1016/j.ipl.2017.04.015) compute permanents modulo prime powers for arbitrary integer matrices without the global rank promise. Their odd-prime speedup applies when hp<n and uses exponential-space tabulation; the present bound instead uses low rank modulo p and polynomial workspace and covers the precision regime stated above. [Glynn](https://researchnow.flinders.edu.au/en/publications/the-factorization-of-the-permanent-of-a-matrix-with-minimal-rank-/) treats modular-rank vanishing and factorization at the critical rank in prime characteristic. [Anwar](https://arxiv.org/html/2611.17812v1) uses rank bounds for full external cuts and endpoint coefficient arrays in prime characteristic. The reduction here uses the bipartite k-matching hardness of [Curticapean and Marx](https://arxiv.org/abs/1407.2929), not an ETH consequence. No priority claim is made.
