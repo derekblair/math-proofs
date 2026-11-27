@@ -17,7 +17,9 @@
 - GeometricAttachment.lean proves the sharp quadratic minimum when imposing two positive correlation lower bounds in a positive semidefinite bilinear form. The matrix determinant transfer by Schur complement and the optimizer saturation argument are separate.
 - The determinant maximizer exists over the real feasible Gram set. For symmetric constraints on at most six vertices and 0 < t ≤ 1/20000, Lean verifies that every constrained off-diagonal entry equals t and every free one has magnitude below t/2. This includes compactness, the determinant lower probe, principal determinant comparison, and feasible Schur perturbations.
 - Lean verifies the exact determinant multiplier for attaching a page to a saturated edge, and that the actual constrained subdivided-K4 maximum is strictly smaller than the three-page book determinant. GeometricExactScalar.lean checks the scalar consequences. [EXACT-RATE.md](EXACT-RATE.md) integrates the determinant calculations into the written rate argument.
-- The spherical law and the spectral theorem needed to supply the finite-distribution inputs are not formalized here. The exact Lean graph-pattern-to-logarithmic-rate assembly is also not yet included.
+- Lean checks the exact log rates for all five actual Gram pattern maxima and the full strict dimension window, including the cap-rate identity.
+- The normalized Haar sphere product gives a finite probability law for the threshold graph. Lean checks that each prescribed labeled graph event is its Gram event under the corresponding iid marginal. Orthogonal reorientation preserves the spherical probability, and the two-point rooted triangle probability is independent of the fixed root.
+- The joint Gram density, its rare-event and shared-root moment bounds, and the link spectral theorem needed to supply the finite-distribution inputs remain unformalized.
 
 ## Reproduce
 
