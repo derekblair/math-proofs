@@ -42,3 +42,19 @@ approximates the log of the feasible maximum to any prescribed error beyond a
 finite cutoff. It tracks positivity and finiteness of both integrals. This
 does not identify that integral ratio with the spherical Gram distribution.
 The distribution identity and the cap link spectral input remain outside Lean.
+
+### V8: orthogonal projections of spherical samples
+
+The normalized Haar unit sphere in an orthogonal sum of a k-dimensional
+coordinate space and an (m+2)-dimensional residual space has an exact
+projection law. For any nonnegative measurable weight of the first k
+coordinates, its spherical expectation is the ratio of the corresponding
+weighted and unweighted Lebesgue integrals on the open unit ball, with
+density proportional to (sqrt(1 - sum x_i^2))^m.
+
+The proof checks the actual Fréchet derivative, the split-polar Jacobian
+and its domain bijection, Lebesgue change of variables, exact Haar polar
+disintegration and positive finite normalizer cancellation. The main
+interface is `GeometricProjectionLaw.spherical_projection_probability`.
+The varying-span nonorthogonal pushforward and the full joint spherical
+Gram law still need Lean proofs. The cap-link spectral input is unchanged.
