@@ -47,12 +47,37 @@ Choose \(m=9\), so there are 11 rows and columns per block and the factor is \(3
 
 For genuinely arbitrary complex matrices the same gadget gives local rank at most four. The four points \(0,1,i,2\) in the main projective ratio chart realize rank four even before applying filler factors. Thus the rank-three calculation is substantive. One consequence that does survive for arbitrary complex amplitudes is high-accuracy sensitivity: for any \(m\ge5\), choose \(k\le\lfloor n/(m+2)\rfloor\) with \(\varepsilon(m-1)^k<1\). The spectral norm of \(Z-T\) is at most \(\sqrt{\|Z-T\|_1\|Z-T\|_\infty}\). Each of these maximum absolute column and row sums is at most \(\varepsilon(m-1)^k\). The least singular value of \(T\) is one, so \(Z\) has full rank \(m^k\), giving \(r\ge(m/4)^k\) in that accuracy regime. This does not resolve fixed-accuracy arbitrary complex amplitudes.
 
+## Arbitrary complex amplitudes with nonnegative weights or bounded pointwise cancellation
+
+For arbitrary complex masks, the local rank is at most four even with arbitrary filler amplitudes. Indeed the modulus square of the main minor expands as two real rank-one terms and minus twice the real part of a complex rank-one term, whose real rank is at most two. The same filler arguments apply. A different use of this low rank gives a fixed-error bound for a nonnegative mixture, and a quantitative cancellation barrier for a signed mixture.
+
+For a nonzero local atom, divide by its maximum entry to obtain a real matrix \(Y\) with rank at most four, zero diagonal and entries in \([0,1]\). Put \(E=J-I-Y\ge0\) entrywise, and \(D=\sum_{ij}E_{ij}\). If \(P\) is the orthogonal projection onto \(\ker Y\), its rank \(d\) is at least \(m-4\). We have \(\operatorname{tr}(PY)=\operatorname{tr}(YP)=0\), \(\operatorname{tr}(PJ)=\|P\mathbf 1\|^2\), and \(\operatorname{tr} E=0\). Hence
+\[
+\langle I-2P,E\rangle_{\mathrm F}=2(d-\|P\mathbf 1\|^2).
+\]
+Every entry of the orthogonal reflection \(I-2P\) is at most one. The nonnegative column-deficit vector \(\delta=E^{\mathsf T}\mathbf1=(m-1)\mathbf1-Y^{\mathsf T}\mathbf1\) has coordinate sum \(D\). The projection kills \(Y^{\mathsf T}\mathbf1\), so
+\[
+ \|P\mathbf1\|^2=\frac{\|P\delta\|^2}{(m-1)^2}\le\frac{D^2}{(m-1)^2}.
+\]
+Consequently \(D+2D^2/(m-1)^2\ge2(m-4)\). For \(m=6\) this implies \(D\ge159/50\), since \(159/50+2(159/50)^2/25<4\). The average of \(Y\) over the \(30\) ordered off-diagonal entries is thus at most \(447/500\).
+
+Take \(k=\lfloor n/8\rfloor\) blocks of six symbols and normalize each determinant-square table by \(2^k\). For each atom, its mean on the positive support of the target is at most \((447/500)^k\) times its maximum there, by independence of coordinates and factorization. Put
+\[
+C=\max_{X\ \mathrm{in\ the\ positive\ test\ support}}
+  \frac{\sum_j |w_j|\,|\det(S_j\circ X)|^2}{\operatorname{per}(X)} .
+\]
+Each weighted atom's maximum there is at most \(C\). Since the approximation has mean at least \(1-\varepsilon\) on this support, we get
+\[
+ r C\ge (1-\varepsilon)(500/447)^k.
+\]
+When the weights are nonnegative, \(C\le1+\varepsilon\), so \(r\ge ((1-\varepsilon)/(1+\varepsilon))(500/447)^{\lfloor n/8\rfloor}\) for arbitrary complex masks. In the signed case this is a pointwise cancellation bound, not a bound on the bare sum \(\sum_j |w_j|\) and not a term-count bound when \(C\) is unrestricted. In particular, arbitrary complex amplitudes with unrestricted signed weights remain open here at fixed accuracy.
+
 ## Why the same rank witness does not resolve arbitrary complex masks
 
 There is an upper bound of \(O(4^k\varepsilon^{-2}k\log m)\) on the rank needed to approximate this very test tensor with relative error \(\varepsilon\). Independently hash the \(m\) symbols in each coordinate to independent fair bits. One resulting table marks pairs whose bits disagree in every coordinate. It has rank at most \(2^k\), and is identically zero off the support of \(T\). For a pair on the support its indicator is Bernoulli with parameter \(2^{-k}\). Average \(O(2^k\varepsilon^{-2}k\log m)\) independent such tables and scale by \(2^k\). Chernoff's bound and a union bound over at most \(m^{2k}\) pairs give a simultaneous relative approximation. Its rank is at most the sum of the sample ranks. Therefore a rank-only witness on this tensor cannot beat a per-atom rank of \(4^k\) by an exponential factor at fixed \(m\) and \(\varepsilon\). Other input families or additional structure remain possible.
 
 ## Verification
 
-Exact Gaussian-integer replay verified 38,940 local Boolean evaluations over 660 fixtures, including zero through three diagonal fillers and an invertible complex change of basis applied to real main vectors. It computed all local table ranks by exact integer elimination, including 142 at rank three and the unrestricted complex rank-four witness. The full theorem is a written argument. No priority or algorithmic claim.
+Exact Gaussian-integer replay verified 38,940 local Boolean evaluations over 660 fixtures, including zero through three diagonal fillers and an invertible complex change of basis applied to real main vectors. It computed all local table ranks by exact integer elimination, including 142 at rank three and the unrestricted complex rank-four witness. A separate run checked 560 arbitrary complex fixtures (38,080 Boolean evaluations) for rank at most four and the projection deficit inequality. The full theorem is a written argument. No priority or algorithmic claim.
 
-The Lean file proves the real rank-three atom expansion as an algebraic identity, the exact finite forced-product/separation identities, and the block-nine arithmetic. It does not formalize the tensor rank lower bound. For background on approximate rank see [Alon–Lee–Shraibman–Vempala](https://eccc.weizmann.ac.il/report/2012/169/). This restricted uniform mask representation also differs from [Landsberg–Ressayre’s determinantal-complexity result with symmetry](https://arxiv.org/abs/1508.05788) and from the pointwise estimator of [Karmarkar et al.](https://doi.org/10.1137/0222021).
+The Lean file proves the real rank-three atom expansion as an algebraic identity, the exact finite forced-product/separation identities, the block-nine arithmetic, and the exact six-symbol mean-deficit constants. It does not formalize the tensor rank lower bound. For background on approximate rank see [Alon–Lee–Shraibman–Vempala](https://eccc.weizmann.ac.il/report/2012/169/). This restricted uniform mask representation also differs from [Landsberg–Ressayre’s determinantal-complexity result with symmetry](https://arxiv.org/abs/1508.05788) and from the pointwise estimator of [Karmarkar et al.](https://doi.org/10.1137/0222021).

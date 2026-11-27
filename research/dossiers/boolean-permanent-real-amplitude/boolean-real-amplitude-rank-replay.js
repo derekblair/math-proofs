@@ -77,4 +77,21 @@ for(let m=2;m<=12;m++)for(let f=0;f<60;f++){
 const points=[zero,one,I,[2n,0n]];
 const rankFour=exactRank(points.map(a=>points.map(b=>norm(add(a,b.map(c=>-c))))));
 if(rankFour!==4)throw Error("expected independent complex directions");
-console.log({fixtures,evaluations,rankThree,rankFour});
+let complexFixtures=0,complexEvaluations=0;
+for(let m=5;m<=11;m++)for(let f=0;f<80;f++){
+  const S=Array.from({length:m+2},()=>Array.from({length:m+2},()=>[rand(),rand()]));
+  for(let i=0;i<Math.min(m,f%4);i++)S[i+2][i]=zero;
+  const table=Array.from({length:m},(_,u)=>Array.from({length:m},(_,v)=>{
+    const [p,value]=expand(gadget(m,u,v),S);
+    if(p!==(u===v?0:2))throw Error("unexpected Boolean permanent");
+    complexEvaluations++;return value;
+  }));
+  if(exactRank(table)>4)throw Error("complex rank above four");
+  let M=0n,Ssum=0n;
+  for(const row of table)for(const z of row){if(z>M)M=z;Ssum+=z;}
+  const D=BigInt(m*(m-1))*M-Ssum, W=BigInt((m-1)**2);
+  if(D*M*W+2n*D*D<2n*BigInt(m-4)*M*M*W)throw Error("projection deficit");
+  if(m===6&&50n*D<159n*M)throw Error("six-symbol deficit");
+  complexFixtures++;
+}
+console.log({fixtures,evaluations,rankThree,rankFour,complexFixtures,complexEvaluations});

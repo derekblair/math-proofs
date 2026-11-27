@@ -1,6 +1,7 @@
 import Mathlib.Basic.Real.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.NormNum
 
@@ -35,9 +36,20 @@ theorem separable_filler {ι : Type*} [Fintype ι] [DecidableEq ι]
 theorem block_nine_constant :
     (4 * (9-1) : ℚ) / (3*9) = 32/27 := by norm_num
 
+theorem six_symbol_deficit (d : ℝ) (h₀ : 0 ≤ d)
+    (h : 4 ≤ d + 2*d^2/25) : 159/50 ≤ d := by
+  by_contra! h'
+  have hp := mul_nonneg (sub_nonneg.mpr (le_of_lt h')) (show 0 ≤ d + 159/50 by linarith)
+  nlinarith
+
+theorem six_symbol_mean_constant :
+    (1 : ℚ) - (159/50)/(6*5) = 447/500 := by norm_num
+
 end BooleanRealAmplitudeRank
 
 #print axioms BooleanRealAmplitudeRank.real_minor_atom
 #print axioms BooleanRealAmplitudeRank.diagonal_product
 #print axioms BooleanRealAmplitudeRank.separable_filler
 #print axioms BooleanRealAmplitudeRank.block_nine_constant
+#print axioms BooleanRealAmplitudeRank.six_symbol_deficit
+#print axioms BooleanRealAmplitudeRank.six_symbol_mean_constant
