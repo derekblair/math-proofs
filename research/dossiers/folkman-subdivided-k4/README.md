@@ -136,3 +136,22 @@ link, with failure probability at most 1/2. No upper spectral gap is
 needed. The finite-product restriction identity and root-independent
 positive cap mass are kernel checked. The actual high-probability
 lower spectral estimate is still outside Lean.
+
+### V14: a typical link suffices
+
+The exact finite-measure conditioning law shows that, conditional on
+the retained indices, their labels are independent with the normalized
+cap measure. The number of retained labels has the binomial law.
+
+The weighted corner count permits exceptional links, charged by their
+edge counts rather than by their number. Rooted triangle indicator
+moments give a uniform second-moment bound at the correct scale; the
+triangle and diamond rates make the relative rooted variance tend to
+zero. The global triangle count concentrates at the same dimension.
+
+`GeometricTypicalFolkman.folkman_given_typical_root_cuts` now gives the
+final graph from just one remaining input: the chance that a uniformly
+random root has a cut crossing more than five eighths of its link edges
+is at most 1/82944 along arbitrarily large samples. There is no
+longer a simultaneous expansion or inverse-polynomial-tail requirement.
+The analytic bound for a random rooted link is not yet proved in Lean.
