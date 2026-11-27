@@ -257,3 +257,27 @@ logarithm of the grid size. `GeometricGridRowMass` and
 `GeometricKernelBernoulli` supply explicit row and column energy bounds.
 The centered quantized sample itself still needs a concentration
 argument; these lemmas do not assert the finite graph conclusion.
+
+### Finite sampling, with the optional concentration dependency
+
+The native modules verify the exact iid grid law, the squared column
+truncation estimate, and averaging over all splits without a union over
+splits. The optional `GeometricActualSampleNorm.spherical_actual_sample_tail`
+then gives an explicit probability bound for the centered adjacency
+of independently sampled points on the actual sphere, not only the grid.
+This is not the graph existence theorem: the atypical cut bound still
+requires assembling the shell probabilities and graph-level transfer.
+
+The optional proofs use the established matrix Bernstein theorem
+`RMT.matrix_bernstein_inequality_hdp_all` of
+[Yuanhe Zhang, Jason D. Lee and Fanghui Liu's SLT project](https://github.com/YuanheZ/lean-stat-learning-theory/tree/482a1a56daf792b33afe8cf7f07f127dc0af8640).
+That theorem is reused, not an original contribution. The accompanying
+compatibility patch modifies three upstream files for Mathlib 4.34.1;
+the upstream files retain their original copyright and Apache-2.0 notices.
+See `SLT-LICENSE.txt`. With a local checkout of exact upstream commit
+`482a1a56daf792b33afe8cf7f07f127dc0af8640`, set `SLT_V432_DIR` to that
+checkout directory when running `bash replay.sh`. The replay checks hashes,
+copies and patches only five specified Lean files into a temporary directory,
+and uses the pinned Lean compiler directly. It does not run an upstream
+build script or modify the caller's checkout. With the variable unset the
+ordinary native replay works without SLT.
