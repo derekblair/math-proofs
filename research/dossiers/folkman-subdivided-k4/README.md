@@ -74,3 +74,21 @@ lower-dimensional spans.
 
 The joint Gram law still needs recursive chart bookkeeping and the
 measure-level Fubini induction. The cap-link spectral input is unchanged.
+
+### V10: completed joint Gram density and actual pattern rates
+
+`GeometricJointGram.spherical_joint_gram_weighted` proves the exact joint
+off-diagonal Gram density of n independent normalized Haar sphere points
+in dimension n+m+1. It applies to every nonnegative measurable weight.
+`GeometricJointGramNormalized.spherical_joint_gram_normalized` normalizes
+the density exactly. In the positive-power case, singular positive
+semidefinite matrices contribute zero; this requires no boundary-null
+assumption.
+
+`GeometricSpherePatternRate.sphere_pattern_mass_integrals` connects the
+density to the actual prescribed threshold-pattern event, and
+`GeometricActualRate.sphere_pattern_rate_exp` proves its two-sided
+exponential rate (for n at most six and sufficiently small positive
+threshold). This closes the spherical Gram law and determinant-rate
+inputs in Lean. The cap-link spectral theorem and the final asymptotic
+probability assembly are not yet formalized.
