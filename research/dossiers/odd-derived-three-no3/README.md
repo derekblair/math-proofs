@@ -28,3 +28,25 @@ repository. The script checks the Mathlib commit and prepares a clean
 artifact directory by default. The root theorem prints its axiom list.
 
     LEAN_BIN=/path/to/lean bash replay-local.sh /path/to/compiled/mathlib4
+
+## Cumulative replay verification
+
+The pinned 528-unit build completed under the guarded replay, restarting
+after resource failures and preserving only the same-source prefix. The four
+heavy slope validity checks are split by branch and residue prime; the
+statement and listed certificates are unchanged. This was a cumulative
+kernel replay, not a single uninterrupted cold build or a repository CI run.
+The final pair cover, jet cover, and headline theorem printed only the
+standard axioms. The included source manifest identifies the exact source
+snapshot across all sibling directories.
+
+For a cold reproduction on Linux, from this directory:
+
+    sha256sum -c SOURCE-SHA256SUMS
+    chmod +x guarded-lean.sh
+    D3_LEAN_BIN=/path/to/lean LEAN_BIN="$PWD/guarded-lean.sh" \
+      bash replay-local.sh /path/to/compiled/mathlib4
+
+The heavier matching-pair and jet units request 5,900 MiB and wait for at
+least 6,700 MiB available. The other modules request 4,350 MiB. This wrapper
+does not alter any Lean checking or use native decision.
