@@ -8,3 +8,7 @@ Sixteen new modules clean-replayed under the same Lean 4.34.1 and pinned Mathlib
 - Remaining paper steps: existence of the marked cut limit, decomposition into its countably many positive complementary atoms, selecting the new balanced allocations and finishing equality/edit-stability and the finite-graph transfer. This still is not an end-to-end Lean proof of Razborov’s epsilon question.
 
 Replay with MATHLIB_LEAN_PATH and LEAN_BIN set as in the main dossier and run bash replay-graphon.sh. No cache artifacts are required in this directory.
+
+## Marked compactness extension
+
+`MarkedGraphonCompactness.lean` provides the complete marked compactness theorem on varying finite-measure spaces with total mass one. The proof constructs finite padded weak-regularity towers, extracts coherent limit tables, realizes a nested interval kernel, then aligns the original kernels and marks by explicit min-mass couplings. See `AlignedLimits.lean` for numerical transfer of triangle density and fractional-half energy. The original specialized Case 2 replay remains available; the full 54-module replay is `replay-compactness.sh`. Use the same pinned Lean and Mathlib search paths (including all package paths) indicated above.

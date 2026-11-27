@@ -7,3 +7,9 @@ Start with [RAZBOROV-EPSILON.md](RAZBOROV-EPSILON.md). The new step forces any p
 **Lean scope:** the 22 standalone modules check scalar bounds, finite weighted support/averaging steps, and the endpoint arithmetic. The [graphon extension](graphon/README.md) adds 16 clean-replayed modules, including weighted Case 2 on an arbitrary finite measure space and the cut-continuity bounds. Colored compactness, the countable profile decomposition and full classification, odd rounding, and transfer via Norin–Yepremyan's local results remain paper-only. There is no end-to-end Lean theorem for the intermediate question yet; keep this draft open.
 
 Run replay.sh with MATHLIB_LEAN_PATH set to the colon-separated Lean library paths and LEAN_BIN set to the Lean executable. Pinned inputs are Lean 4.34.1 (5045d0056413266e57c625dcd7c365b10e377c52) and Mathlib d13f23b723b8a846827a245b89c10fc7d3f11612 plus its pinned dependencies. The replay builds in a fresh temporary directory.
+
+## Marked compactness and finite stability
+
+The `graphon/` package now constructs marked cut limits from scratch and proves `SparseHalfGraphon.marked_graphon_compactness` for arbitrary sequences of probability kernels with finite measurable marks, including exact-marginal couplings and changing-mark convergence. The `stability/` package proves the finite local Petersen and C5 edit-stability lemmas and the directed-to-undirected edit count. The pinned replay covers 54 graphon and 20 stability modules in addition to the 22 previously checked finite/scalar modules.
+
+Not yet formalized as an end-to-end proof: transferring all special hypotheses to the limit, countable complementary-profile decomposition and saturated equality classification, rounding finite template assignments, and composing the final contradiction. The paper argument remains a separately audited candidate for the intermediate Razborov question, not unrestricted Erdős #128. No priority or explicit epsilon claim.
