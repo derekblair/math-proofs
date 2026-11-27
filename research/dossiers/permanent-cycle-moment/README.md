@@ -2,8 +2,8 @@
 
 Let \(A\) be a nonnegative \(n\times n\) matrix with positive permanent. For each positive-weight permutation \(\sigma\), put \(w_\sigma=\prod_i A_{i,\sigma(i)}\) and \(p_\sigma=w_\sigma/\operatorname{per}(A)\). Take \(\sigma,\tau\) independently from \(p\). Let \(C\) be the number of nontrivial cycles in \(\sigma^{-1}\tau\) and \(C_2\) the number of its transpositions. Then
 \[
-\mathbb E[2^C]\le (1.396)^n,\qquad
-\mathbb E[3^C]\le (1.699)^n.
+\mathbb E[2^C]\le (1.3112)^n,\qquad
+\mathbb E[3^C]\le (1.5451)^n.
 \]
 The constants are exact terminating decimals. These improve the respective classical \((\sqrt2)^n\) and \((\sqrt3)^n\) bounds on the normalized second moment of the cube-root and real-sign determinant-square estimators. The sharp universal rates remain unknown here. This is not a new best algorithm for approximating the permanent; the two estimators are specifically the ordinary scalar determinant estimators, not quaternionic or nonabelian variants.
 
@@ -29,27 +29,48 @@ For any \(n\) and a fixed \(2k\)-element row set \(T\), suppose all its rows are
 \[
 \mathbb E\binom{C_2}{k}\le\binom{n}{2k}2^{-k},
 \]
-and for \(\delta=47/500\),
+
+## 2. A sharp bound at any fixed pivot row
+
+Fix a row \(v\), and write \(P_\ell\) for the probability that the relative cycle through \(v\) has length \(\ell\). Partition the ordered pairs \((\sigma,\tau)\) by their nontrivial relative cycles **not** containing \(v\), recording both full restricted bijections on the union of those frozen cycles. Each part leaves the same residual row set and the same residual column set for both matchings. The frozen product of weights is a constant. Within the residual submatrix, each pair has at most one nontrivial relative cycle, and that cycle must contain \(v\). Conversely every residual pair with that property belongs to the part.
+
+On the positive-weight residual permutations, draw an edge when the two permutations differ by one transposition through \(v\) (a star transposition). The graph is triangle-free by permutation parity. Distinct vertices at graph distance two differ by a product of two different star transpositions, and hence by a three-cycle through \(v\). Distances are in this induced graph; not every three-cycle need arise.
+
+Here is the needed form of the classical [Hoffman–Pereira copositivity criterion](https://research.ibm.com/publications/on-copositive-matrices-with-1-0-1-entries). For any finite triangle-free graph and nonnegative vertex weights \(x_i\), let \(D=\sum_i x_i^2\), let \(E\) be the sum of \(x_i x_j\) over ordered adjacent pairs, and let \(D_2\) be the corresponding sum over ordered distance-two pairs. Then \(E\le D+D_2\). To see this, consider \(D+D_2-E\). If two distance-two vertices have positive weights, keep their total weight fixed and vary its allocation. Their two diagonal terms and mutual term together give the square of the total; all other couplings depend affinely on the allocation. Moving the entire mass to one end therefore does not increase the quadratic form and removes a positive coordinate. Repeat. On the final support the edge graph has maximum degree one, since two positive neighbors of any positive vertex would be at distance two. The form is now a sum of squares from isolated vertices and squared differences from edges.
+
+Apply the inequality to \(x_i\) equal to the residual matching weights. Diagonal pairs have pivot cycle length one; adjacent pairs are exactly the pivot transpositions; distance-two pairs have pivot cycle length three. Multiply by the frozen weights, sum over parts, and normalize by the square of the permanent. This gives
 \[
-\Pr\!\left(2C_2\ge(1-\delta)n\right)
-\le \sum_{j\le \delta n}\binom{n}{j}2^{-(n-j)/2}
-\le \theta^n,\qquad
-\theta=2^{-1/2}14^\delta(54/49)<1.
+P_2\le P_1+P_3 \quad\text{and in particular}\quad P_2\le\tfrac12.
 \]
-Indeed choose \(t=1/14\) and use \(t^j\ge t^{\delta n}\) in the tail sum, then use \(\sqrt2<10/7\). The exact check of \(\theta<1\) is \(14^{94}54^{1000}<2^{500}49^{1000}\).
+The one-half bound is attained by any matrix with an isolated, uniformly weighted complete \(2\times2\) block containing the pivot.
 
-## 2. Recursing on the cycle of a random row
+## 3. Randomly thin the quadratic form
 
-Choose a uniform independent pivot row. The probability \(p_2\) that its relative cycle has length two is \(\mathbb E[2C_2/n]\le 0.906+\theta^n\). Thus \(p_2\le0.907\) for every \(n\) above an absolute threshold, uniformly in \(A\).
+Within each residual part of dimension \(m\), give the pivot row label 0. Independently give every other row and column label 0 with probability \(s\) and label 1 otherwise. Retain a residual permutation only when the labels agree along every matching edge, setting its weight to zero otherwise. Write \(H=s^2+(1-s)^2\). A single permutation survives with probability \(sH^{m-1}\).
 
-Reveal the pivot and its relative cycle, including its row set \(T\), common column image \(U\), and both internal bijections. Once these are fixed, the outside restrictions are independent weighted matchings on \(A[T^c,U^c]\), by factorization of the two weights. A cycle of length \(\ell\) contributes the multiplicative factor 1 for \(\ell=1\) and \(q\) otherwise to \(q^C\). Suppose inductively the \((n-\ell)\)-dimensional bound is \(K B^{n-\ell}\). Relative to \(K B^n\), the resulting factor is \(q/B^2\) for \(\ell=2\), and at most \(q/B^3\) for every other \(\ell\), including \(\ell=1\) since \(B^2\le q\). For \((q,B)=(2,349/250)\) and \((3,1699/1000)\) the exact inequality
+If two permutations differ only on a relative cycle of length \(\ell\) through the pivot, their combined support consists of \(m-\ell\) isolated edges and one alternating cycle on \(2\ell\) vertices. The alternating cycle must have label 0 on all vertices, because it contains the pivot. Thus the joint survival probability is \(s^{2\ell-1}H^{m-\ell}=sH^{m-1}p^{\ell-1}\), with \(p=s^2/H\). Every \(p\in(0,1)\) is possible, by choosing \(s/(1-s)=\sqrt{p/(1-p)}\). Apply copositivity to the original graph with the thinned vertex weights; it is important not to recompute the distance-two relation after thinning. Taking expectations and dividing out the common positive factors gives \(E\le p^{-1}D+pD_2\). Multiply by the frozen weights and sum the parts as before:
 \[
-B^3\ge q(0.907 B+0.093)
+P_2\le p^{-1}P_1+pP_3,\qquad 0<p<1.
 \]
-holds. Therefore the average factor is at most one. Choose one finite \(K\) covering all sizes up to the uniform threshold, using the trivial \(q^{n/2}\) bound. Finally the moment is multiplicative on block diagonal matrices. Apply \(K B^n\) to a block diagonal sum of \(N\) copies of \(A\), take the \(N\)-th root, and let \(N\to\infty\) to eliminate \(K\).
 
-## 3. Estimators, prior work, and verification
+## 4. Cycle recurrence and the new exponents
 
-For the estimators, apply independent random signs or cube roots of unity to the entrywise square root of \(A\) and take the squared determinant modulus. Orthogonality gives mean \(\operatorname{per}(A)\). In the expansion of the second moment, group four permuted products by the union of two perfect matchings. In the real-sign case a nontrivial alternating cycle has six allowed assignments to the four slots, compared with two assignments in the squared mean, giving \(3^C\). For cube roots, an elementary exponent imbalance on an edge is in \(\{-2,-1,0,1,2\}\), so it must be zero to survive; this leaves four assignments per cycle, giving \(2^C\). A repeated edge contributes weight exactly once to each paired matching product, and cyclic switches contribute no net determinant sign. The identities and old upper bounds are in Karmarkar–Karp–Lipton–Lovász–Luby, [A Monte-Carlo Algorithm for Estimating the Permanent](https://doi.org/10.1137/0222021), sections 4 and 6, with the worst-case gaps and weighted extension discussed in sections 7 and 8. For different estimators using other algebras, see Chien–Rasmussen–Sinclair, [Clifford algebras and approximating the permanent](https://people.eecs.berkeley.edu/~sinclair/clifford.pdf), and Moore–Russell, [Approximating the Permanent via Nonabelian Determinants](https://doi.org/10.1137/100806709). Bucić et al., [Perfect matchings and derangements on graphs](https://arxiv.org/abs/1906.05908), proves a different fixed-reference intersection bound.
+Reveal the actual pivot cycle, recording its row set \(T\), its common column image \(U\), and both internal bijections. Conditional on that record, the outside restrictions are independent weighted matchings on \(A[T^c,U^c]\), because their weights factor. Inductively bounding the outside moment by \(B^{n-\ell}\), the contribution divided by \(B^n\) is at most \(B^{-1}\) at \(\ell=1\), and \(q B^{-\ell}\) at \(\ell\ge 2\). Set
+\[
+a=1-B^{-1},\quad d=q B^{-2}-1,\quad c=1-q B^{-3}.
+\]
+For \(B\ge1\) and \(a,c,d\ge0\), the conditional upper bound above averages to at most \(1+dP_2-aP_1-cP_3\); longer cycles only improve it. It is at most one whenever
+\[
+d/p\le a,\qquad dp\le c.
+\]
+For \(q=2\) use \(B=13112/10000\), \(p=6889/10000\). For \(q=3\) use \(B=15451/10000\), \(p=14549/20000\). The inequalities are checked by exact rational arithmetic. The base case \(n=0\) has moment one; the induction proves the advertised bounds without a multiplicative prefactor.
 
-The exact BigInt replay enumerates all Boolean supports up to order four and seeded weighted examples up to order six. It verifies the factorial inequalities and exact moment bounds via integer cross-multiplication, using 69,149 inputs (40,938 positive permanent) and 2,026,478 aggregated nonzero permutation pairs. The Lean file proves the symmetric weighted-pair inequality, the complementary-square sum inequality and the exact pivot and tail arithmetic. The hafnian-to-cycle-cover combinatorics, weighted pivot conditioning and full estimator statements are proved in writing here, not formalized by those Lean lemmas.
+The condition \(d^2\le ac\) is the limit of this pointwise certificate, not of the true moment. To see the distinction, take diagonal entries 1 and add only bidirectional star edges through \(v\), giving each transposition matching weight \(y/(m-1)\) and the identity weight 1. For the pivot, the unnormalized masses of lengths one, two and three tend respectively to \(1,2y,y^2\) as \(m\to\infty\). Thus asking \(dP_2\le aP_1+cP_3\) for every weighted input necessarily requires \(a-2dy+cy^2\ge0\) for every \(y\ge0\), hence \(d^2\le ac\) when \(a,c,d>0\). The recursive minors in this example are much easier than the worst-case bound, so this argument does not lower-bound the true optimal exponent.
+
+## 5. Estimators, prior work, and verification
+
+For the estimators, apply independent random signs or cube roots of unity to the entrywise square root of \(A\) and take the squared determinant modulus. Orthogonality gives mean \(\operatorname{per}(A)\). In the expansion of the second moment, group four permuted products by the union of two perfect matchings. In the real-sign case a nontrivial alternating cycle has six allowed assignments to the four slots, compared with two assignments in the squared mean, giving \(3^C\). For cube roots, an elementary exponent imbalance on an edge is in \(\{-2,-1,0,1,2\}\), so it must be zero to survive; this leaves four assignments per cycle, giving \(2^C\). A repeated edge contributes weight exactly once to each paired matching product, and cyclic switches contribute no net determinant sign. The identities and old upper bounds are in Karmarkar–Karp–Lipton–Lovász–Luby, [A Monte-Carlo Algorithm for Estimating the Permanent](https://doi.org/10.1137/0222021), sections 4 and 6, with the worst-case gaps and weighted extension discussed in sections 7 and 8. For different estimators using other algebras, see Chien–Rasmussen–Sinclair, [Clifford algebras and approximating the permanent](https://people.eecs.berkeley.edu/~sinclair/clifford.pdf), and Moore–Russell, [Approximating the Permanent via Nonabelian Determinants](https://doi.org/10.1137/100806709). Huber, [Exact Sampling from Perfect Matchings of Dense Regular Bipartite Graphs](https://doi.org/10.1007/s00453-005-1175-9), uses a pivot cycle in the all-ones case. The use of a frozen outside-cycle record and a thinned star-transposition inequality controls arbitrary weights here. Bucić et al., [Perfect matchings and derangements on graphs](https://arxiv.org/abs/1906.05908), proves a different fixed-reference intersection bound.
+
+For a relative-error estimate with failure probability at most \(\eta\), independent averaging and median amplification require \(O(B^n\varepsilon^{-2}\log(1/\eta))\) estimator evaluations by the second-moment bound. On Boolean supports it also follows from Cauchy–Schwarz that a real random sign mask is nonsingular with probability at least \((1.5451)^{-n}\) when a perfect matching exists. Hence a union bound gives a nonconstructive family of \(O(n^2(1.5451)^n)\) real sign masks that hits every Boolean support with a perfect matching. This does not match the known block-based lower exponent and is not a deterministic construction.
+
+The exact BigInt replay enumerates all Boolean supports up to order four and seeded weighted examples up to order six. It verifies the factorial inequalities, both fixed-pivot inequalities and both exact moment bounds on 69,149 inputs (40,938 with positive permanent), using 2,026,478 nonzero unordered permutation pairs. It also enumerates biased row/column labels for 89 relative permutations to check the thinning probabilities exactly. The Lean files prove supporting finite algebra and exact constants; the cycle grouping, random thinning and full estimator statements are proved in writing here, not formalized in Lean.
