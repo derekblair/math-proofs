@@ -106,3 +106,18 @@ bounds the total non-spectral error by 1/2 for all sufficiently large N.
 injective labeling to the finite spherical graph law. Particular indicator
 bridges for charge and triangle overlap, and the cap-link expansion input,
 remain to be assembled in Lean.
+
+### V12: complete conditional reduction
+
+All joint triangle moments and charged deletion indicators are now
+verified against the actual finite spherical graph law. Distinct
+triangles sharing at most one vertex factor exactly, and two sharing
+an edge give the diamond probability.
+
+`GeometricFolkmanReduction.folkman_given_cap_margin` derives the full
+finite graph conclusion from one explicit remaining hypothesis:
+at the chosen spherical density, the sample has a fixed positive
+monochromatic-triangle margin for every two-edge-coloring with
+probability at least 1/2 along arbitrarily large sample sizes.
+This is a parameterized theorem, not a Lean axiom or an unconditional
+verification. The cap/link spectral justification is still paper-only.
