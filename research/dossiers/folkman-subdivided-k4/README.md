@@ -92,3 +92,17 @@ exponential rate (for n at most six and sufficiently small positive
 threshold). This closes the spherical Gram law and determinant-rate
 inputs in Lean. The cap-link spectral theorem and the final asymptotic
 probability assembly are not yet formalized.
+
+### V11: common quantitative bounds
+
+The actual iid pattern probabilities have the required power-law bounds
+at a single scale d=ceil(log N/X). A common cutoff works simultaneously
+for the triangle, diamond, forbidden pattern and charged attachment.
+The four second-moment and deletion ratios decay as N^(-eta) for one
+positive eta. `GeometricQuantitativeAssembly.concrete_moment_error`
+bounds the total non-spectral error by 1/2 for all sufficiently large N.
+
+`GeometricMomentEvents.labeled_moment_probability` connects any fixed
+injective labeling to the finite spherical graph law. Particular indicator
+bridges for charge and triangle overlap, and the cap-link expansion input,
+remain to be assembled in Lean.
