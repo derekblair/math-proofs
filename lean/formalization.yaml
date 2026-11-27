@@ -279,6 +279,22 @@ status:
       declaration: VoidDefectHom.literal_product_never
       file: Mathproofs/NumberTheory/VoidDefectHom.lean
 
+    - comparator_config: ComparatorChallenges/C064CarrylessBound.json
+      declaration: C064.c064_witness
+      file: MathProofs/SeamB/C064/Solution.lean
+
+    - comparator_config: ComparatorChallenges/C064CarrylessBound.json
+      declaration: C064.c064_refutation_card
+      file: MathProofs/SeamB/C064/Solution.lean
+
+    - comparator_config: ComparatorChallenges/C064CarrylessBound.json
+      declaration: C064.c064_refutation_pointwise
+      file: MathProofs/SeamB/C064/Solution.lean
+
+    - comparator_config: ComparatorChallenges/C064CarrylessBound.json
+      declaration: C064.c064_refutation_doubling
+      file: MathProofs/SeamB/C064/Solution.lean
+
 automation:
   methods:
     - method: agent
