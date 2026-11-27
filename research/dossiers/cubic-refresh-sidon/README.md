@@ -135,3 +135,5 @@ The Lean files use Mathlib commit d13f23b723b8a846827a245b89c10fc7d3f11612.
 The [multiread extension](multiread/README.md) covers m current reads each epoch. It gives a general fixed-m lower bound and an exact construction on the growing diagonal n = 2m, where the smallest possible field suffices whenever 2m + 1 is a prime power. The fixed-m exponent gap remains for m ≥ 3.
 
 The [binary diagonal extension](binary-diagonal/README.md) gives the exact number of fresh random bits when n = 2m and m is even. Over a field of size 2^r, the minimum is ceil(m/r) whole-field draws, or max(m,r) bits if the refresh is binary-linear. It credits the classical forbidden-weight coding theorem and does not bound arbitrary nonlinear refresh.
+
+The [nonlinear sampler extension](nonlinear-diagonal/README.md) beats the binary-linear optimum: at 256 sites in GF(512), it uses 72 fresh bits rather than 128. It gives a general nonlinear entropy lower bound and shows the site-selector construction is asymptotically optimal within its own class. The minimum outside that class remains open.
