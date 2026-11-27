@@ -187,3 +187,19 @@ For the remaining sample concentration step, the mean of the
 cross-block matrices over uniform binary splits is exactly half the
 original zero-diagonal matrix. The random-matrix bound relating the
 tangent sphere sample to its population kernel is not yet formalized.
+
+### V17: residual density and cut interfaces
+
+The rank-one split gives the exact finite-dimensional height density.
+A shell of the chosen width contains a constant fraction of the
+full cap. The gap between the tighter and looser residual thresholds
+has arbitrarily small relative edge mass, with a single positive
+threshold chosen independently of sample size. The expected residual
+degree scale is polynomial in the host size, including the
+one-dimension drop from the host to the tangent sphere.
+
+The cross-partition average bounds any linear-image norm of a
+zero-diagonal matrix. A lower centered-quadratic bound at scale
+one tenth of the expected degree supplies both the tighter graph's
+edge-count lower bound and its required 9/16 cut bound. This does
+not yet verify the random-matrix estimate itself.
