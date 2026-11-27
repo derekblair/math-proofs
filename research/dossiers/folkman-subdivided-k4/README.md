@@ -121,3 +121,18 @@ monochromatic-triangle margin for every two-edge-coloring with
 probability at least 1/2 along arbitrarily large sample sizes.
 This is a parameterized theorem, not a Lean axiom or an unconditional
 verification. The cap/link spectral justification is still paper-only.
+
+### V13: exact spectral interface
+
+The actual link edge set is verified to be the induced graph on
+neighbors of the root. Its ordered adjacency sums count each link edge
+and each cut edge twice. The normalized lower spectrum, including the
+zero-degree convention, gives the link MaxCut fraction and hence the
+global coloring margin by exact corner counting.
+
+`GeometricSpectralInterface.folkman_given_bottom_link_failure` reduces
+the remaining hypothesis to a lower spectral bound of -1/4 in every
+link, with failure probability at most 1/2. No upper spectral gap is
+needed. The finite-product restriction identity and root-independent
+positive cap mass are kernel checked. The actual high-probability
+lower spectral estimate is still outside Lean.
