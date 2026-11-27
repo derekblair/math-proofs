@@ -26,3 +26,19 @@
 Use Lean 4.34.1 and built Mathlib at d13f23b723b8a846827a245b89c10fc7d3f11612.
 Run MATHLIB_DIR=/path/to/mathlib LEAN_BIN=/path/to/lean bash replay.sh.
 The checked declarations use only Lean's standard axioms.
+
+### V7: determinant-integral rates
+
+The shared-root triangle factorization is now proved for actual independent
+Haar sphere points. The correlation chart uses one real coordinate per
+unordered off-diagonal pair. The feasible set is compact in this chart; every
+strictly submaximal determinant level contains a nonempty open subset of the
+feasible region and therefore has positive Lebesgue volume. The unconditioned
+determinant maximum is exactly one.
+
+`GeometricNormalizedRate.normalized_determinant_log_rate` proves that the log
+of the normalized determinant-power integral, divided by its real power,
+approximates the log of the feasible maximum to any prescribed error beyond a
+finite cutoff. It tracks positivity and finiteness of both integrals. This
+does not identify that integral ratio with the spherical Gram distribution.
+The distribution identity and the cap link spectral input remain outside Lean.
