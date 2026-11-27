@@ -219,3 +219,18 @@ truncation are checked. A measurable Euclidean grid supplies the
 quantization geometry. The fixed-root shell loss has a checked
 finite-sample Markov bound. The proof connecting these ingredients to
 the required spherical sample cut estimate remains incomplete.
+
+### V19: population L² contraction
+
+The exact spherical cap kernel is symmetric and stationary. A
+dimension-explicit bound on the measure of a strip implies that cap
+averaging takes every bounded measurable test to a Lipschitz test.
+The self-adjoint power argument then bounds the L² norm on centered
+Lipschitz tests, and a smoothing step plus Cauchy--Schwarz removes
+the Lipschitz restriction.
+
+`GeometricPopulationL2.cap_l2_contraction_bounded` covers all
+bounded measurable centered tests, including the lifted finite-grid
+vectors. The next step is the finite-grid population matrix comparison
+and the concentration of the actual spherical sample. The graph
+conclusion remains conditional.
