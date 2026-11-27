@@ -1,5 +1,6 @@
 import Mathlib.Data.Finset.Interval
 import Mathlib.Data.Set.Card
+import Mathlib.Order.Interval.Finset.Nat
 
 /-!
 # Seam B Entry C064 (OEIS A115861 / A391736): Frozen Statement File
@@ -31,7 +32,8 @@ def rowA391736Values (n : ℕ) : Set ℕ :=
 /-- The finite set of integers `m ∈ {1, ..., n - 1}` admitting a solution
 `m * i = A048720(n, i)` with `1 ≤ i ≤ n ^ 3`. -/
 def A115861_set (n : ℕ) : Finset ℕ :=
-  (Finset.Ioo 0 n).filter (fun m => ∃ i ∈ Finset.Icc 1 (n ^ 3), m * i = clMul n i)
+  (Finset.Ioo 0 n).filter (fun m =>
+    ((Finset.Icc 1 (n ^ 3)).filter (fun i => m * i = clMul n i)).Nonempty)
 
 /-- `OEIS A115861(n)`: number of integers `m` in `1 .. n - 1` for which there exists
 `i` in `1 .. n ^ 3` such that `m * i = A048720(n, i)`. -/
