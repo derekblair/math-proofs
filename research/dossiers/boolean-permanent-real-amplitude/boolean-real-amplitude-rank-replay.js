@@ -90,8 +90,8 @@ for(let m=5;m<=11;m++)for(let f=0;f<80;f++){
   let M=0n,Ssum=0n;
   for(const row of table)for(const z of row){if(z>M)M=z;Ssum+=z;}
   const D=BigInt(m*(m-1))*M-Ssum, W=BigInt((m-1)**2);
-  if(D*M*W+2n*D*D<2n*BigInt(m-4)*M*M*W)throw Error("projection deficit");
-  if(m===6&&50n*D<159n*M)throw Error("six-symbol deficit");
+  if(D*M*W+D*D+M*M<2n*BigInt(m-4)*M*M*W)throw Error("projection deficit");
+  if(m===6&&100n*D<347n*M)throw Error("six-symbol deficit");
   complexFixtures++;
 }
 console.log({fixtures,evaluations,rankThree,rankFour,complexFixtures,complexEvaluations});

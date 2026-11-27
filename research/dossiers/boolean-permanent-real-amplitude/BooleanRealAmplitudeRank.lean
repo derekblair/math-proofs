@@ -37,13 +37,13 @@ theorem block_nine_constant :
     (4 * (9-1) : ℚ) / (3*9) = 32/27 := by norm_num
 
 theorem six_symbol_deficit (d : ℝ) (h₀ : 0 ≤ d)
-    (h : 4 ≤ d + 2*d^2/25) : 159/50 ≤ d := by
+    (h : 4 ≤ d + (d^2+1)/25) : 347/100 ≤ d := by
   by_contra! h'
-  have hp := mul_nonneg (sub_nonneg.mpr (le_of_lt h')) (show 0 ≤ d + 159/50 by linarith)
+  have hp := mul_nonneg (sub_nonneg.mpr (le_of_lt h')) (show 0 ≤ d + 347/100 by linarith)
   nlinarith
 
 theorem six_symbol_mean_constant :
-    (1 : ℚ) - (159/50)/(6*5) = 447/500 := by norm_num
+    (1 : ℚ) - (347/100)/(6*5) = 2653/3000 := by norm_num
 
 end BooleanRealAmplitudeRank
 

@@ -59,18 +59,22 @@ Every entry of the orthogonal reflection \(I-2P\) is at most one. The nonnegativ
 \[
  \|P\mathbf1\|^2=\frac{\|P\delta\|^2}{(m-1)^2}\le\frac{D^2}{(m-1)^2}.
 \]
-Consequently \(D+2D^2/(m-1)^2\ge2(m-4)\). For \(m=6\) this implies \(D\ge159/50\), since \(159/50+2(159/50)^2/25<4\). The average of \(Y\) over the \(30\) ordered off-diagonal entries is thus at most \(447/500\).
+For \(m\ge5\), the bound \(D+2D^2/(m-1)^2\ge2(m-4)\) rules out \(D<1\). Let \(R\) and \(C_0\) be the largest row and column deficits. The union of the corresponding row and column includes at most the full deficit \(D\), plus their shared entry when counted twice, so \(R+C_0\le D+1\). One of the two deficit vectors therefore has entries bounded by \(L=(D+1)/2\). Since its entries sum to \(D\) and \(D/2\le L\le D\), its squared norm is at most \(L^2+(D-L)^2=(D^2+1)/2\): move mass between any two nonsaturated positive coordinates towards an endpoint without decreasing the sum of squares. Use the argument above with \(Y\) or \(Y^{\mathsf T}\), whichever uses the smaller bound. This yields
+\[
+ D+\frac{D^2+1}{(m-1)^2}\ge 2(m-4).
+\]
+For \(m=6\) this gives \(D\ge347/100\), since \(347/100+((347/100)^2+1)/25<4\). The average of \(Y\) over the \(30\) ordered off-diagonal entries is at most \(2653/3000\).
 
-Take \(k=\lfloor n/8\rfloor\) blocks of six symbols and normalize each determinant-square table by \(2^k\). For each atom, its mean on the positive support of the target is at most \((447/500)^k\) times its maximum there, by independence of coordinates and factorization. Put
+Take \(k=\lfloor n/8\rfloor\) blocks of six symbols and normalize each determinant-square table by \(2^k\). For each atom, its mean on the positive support of the target is at most \((2653/3000)^k\) times its maximum there, by independence of coordinates and factorization. Put
 \[
 C=\max_{X\ \mathrm{in\ the\ positive\ test\ support}}
   \frac{\sum_j |w_j|\,|\det(S_j\circ X)|^2}{\operatorname{per}(X)} .
 \]
 Each weighted atom's maximum there is at most \(C\). Since the approximation has mean at least \(1-\varepsilon\) on this support, we get
 \[
- r C\ge (1-\varepsilon)(500/447)^k.
+ r C\ge (1-\varepsilon)(3000/2653)^k.
 \]
-When the weights are nonnegative, \(C\le1+\varepsilon\), so \(r\ge ((1-\varepsilon)/(1+\varepsilon))(500/447)^{\lfloor n/8\rfloor}\) for arbitrary complex masks. In the signed case this is a pointwise cancellation bound, not a bound on the bare sum \(\sum_j |w_j|\) and not a term-count bound when \(C\) is unrestricted. In particular, arbitrary complex amplitudes with unrestricted signed weights remain open here at fixed accuracy.
+When the weights are nonnegative, \(C\le1+\varepsilon\), so \(r\ge ((1-\varepsilon)/(1+\varepsilon))(3000/2653)^{\lfloor n/8\rfloor}\) for arbitrary complex masks. In the signed case this is a pointwise cancellation bound, not a bound on the bare sum \(\sum_j |w_j|\) and not a term-count bound when \(C\) is unrestricted. In particular, arbitrary complex amplitudes with unrestricted signed weights remain open here at fixed accuracy.
 
 ## Why the same rank witness does not resolve arbitrary complex masks
 
