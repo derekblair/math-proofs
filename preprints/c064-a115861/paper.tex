@@ -1,0 +1,199 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{
+  pdftitle={Refutation of the n^3 Search Bound for Carryless Binary Product Quotients (OEIS A115861 and A391736)},
+  pdfauthor={Derek Blair}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\seq}[1]{\texttt{#1}}
+\newcommand{\clmul}{\otimes}
+
+\setlength{\emergencystretch}{2em}
+
+\title{Refutation of the $n^3$ Search Bound for Carryless Binary Product Quotients\\(OEIS \seq{A115861} and \seq{A391736}):\\[2pt]
+\large An Exact Carry-Automaton Decision Procedure and Kernel-Clean Lean~4 Formalization}
+\author{Derek Blair}
+\date{26 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $a \clmul b = \seq{A048720}(a, b)$ denote carryless base-$2$ multiplication, corresponding to polynomial multiplication over $\F_2[X]$ encoded in binary. In December~2025, Antti Karttunen revised OEIS~\seq{A115861}$(n)$ to count integers $m \in \{1, \dots, n-1\}$ for which there exists $i \in \{1, \dots, n^3\}$ satisfying the cross-domain equation $m \cdot i = n \clmul i$, and simultaneously introduced the array OEIS~\seq{A391736} whose row~$n$ enumerates all quotients $m = (n \clmul i)/i$ over odd $i \ge 1$ dividing $n \clmul i$. Karttunen conjectured on \seq{A391736} that $1 + \seq{A115861}(n)$ gives the exact number of distinct values occurring on row~$n$, while asking on \seq{A115861} whether raising the search limit past $n^3$ (e.g.\ to $n^4$ or $n^5$) increases any terms and whether the unrestricted count is well defined.
+
+We resolve both questions. First, we introduce an exact LSB-to-MSB finite-state \emph{carry-automaton} on at most $m \cdot 2^{\lfloor \log_2 n \rfloor - 1} < n^2 / 2$ parity-valid states that decides $\exists i \ge 1,\; m \cdot i = n \clmul i$ over all of $\N$ in $O(n^2)$ time and reconstructs the exact minimal odd solution $i_{\min}(n, m)$. This proves that the unrestricted row quotient count $|Q(n)|$ is well defined and finitely decidable for every $n \ge 1$, with unconditional upper bound $i_{\min}(n, m) < 2^{n^2/2}$. Second, we \textbf{refute} Karttunen's $n^3$-bound conjecture on \seq{A391736} via the provably minimal counterexample across all $n \ge 1$:
+\[
+n = 239, \qquad m = 215, \qquad i_{\min} = 302{,}775{,}165 > 13{,}651{,}919 = 239^3,
+\]
+where $215 \cdot 302{,}775{,}165 = 65{,}096{,}660{,}475 = 239 \clmul 302{,}775{,}165$, while no integer $i \in [1, 2^{28})$ satisfies $215 \cdot i = 239 \clmul i$. Consequently $1 + \seq{A115861}(239) = 4 < 5 = |Q(239)|$, and as an immediate corollary the formula $\seq{A115861}(2n) = \seq{A115861}(n)$ listed under \seq{A115861} also fails under the $n^3$-truncated definition at $n = 478$, where $\seq{A115861}(478) = 3 < 4 = \seq{A115861}(956)$. Exhaustive automaton enumeration for all odd $n \le 3000$ reveals $384$ counterexample pairs across $282$ distinct odd~$n$, breaking not only $n^3$ ($n = 239$) but also $n^4$ ($n = 391$), $n^5$ ($n = 511$), $n^6$ ($n = 991$), and $n^7$ ($n = 1775$, reaching $\log_{2047} i_{\min} = 7.917$ at $n = 2047$). All headline refutation theorems, the $\F_2[X]$ convolution equivalence, and a 73-state pure-kernel non-existence certificate are formally machine-checked in Lean~4 (\texttt{v4.34.1}, Mathlib \texttt{d13f23b7}) with zero \texttt{sorry}, allowlist-only axioms, and independent \texttt{leanchecker} replay.
+\end{abstract}
+
+\section{Introduction and Primary Sources}
+
+For $a, b \in \N$, carryless base-$2$ multiplication $a \clmul b$ (OEIS~\seq{A048720}~\cite{oeis048720}) computes the polynomial product in $\F_2[X]$ of the binary expansions of $a$ and $b$, lifted back to $\N$ with coefficients in $\{0, 1\}$:
+\[
+a \clmul 0 = 0, \qquad a \clmul (2k) = 2(a \clmul k), \qquad a \clmul (2k + 1) = \bigl(2(a \clmul k)\bigr) \oplus a,
+\]
+where $\oplus$ denotes bitwise XOR. Cross-domain congruences of the form $m \cdot i = n \clmul i$ compare ordinary integer multiplication on the left with $\F_2[X]$ polynomial multiplication on the right.
+
+In February~2006, Antti Karttunen introduced OEIS~\seq{A115861}~\cite{oeis115861} to count values $m < n$ admitting a nonzero solution $i$ to $m \cdot i = n \clmul i$. On December~15--19, 2025, Karttunen clarified the definition by fixing an explicit search limit $i \le n^3$ and introduced the companion arrays \seq{A391735}~\cite{oeis391735} and \seq{A391736}~\cite{oeis391736}:
+\begin{itemize}
+\item \seq{A115861} (\texttt{\%N}, rev.~\#25, Dec~19~2025): \emph{``Number of integers $m$ in range $1 \dots n-1$, such that there exists at least one such $i$ in range $1 \dots n^3$ for which $m \cdot i = \seq{A048720}(n, i)$, where \seq{A048720} is carryless base-2 multiplication.''}
+\item \seq{A115861} (\texttt{\%C}, Dec~15~2025): \emph{``The original name was `Number of distinct $m$'s $< n$, such that there exists nonzero solutions to a cross-domain congruence $m \cdot i = n \clmul i$.', but I am not sure whether that is well defined if the range of $i$ is not restricted. Using $n^3$ as the upper search limit reproduced the original $102$ initial terms. I don't know whether using larger values, like $n^4$ or $n^5$ would increase the values of some terms.''}
+\item \seq{A115861} (\texttt{\%F}): \emph{``For all $n$, $a(2n) = a(n)$.''}
+\item \seq{A391736} (\texttt{\%C}, rev.~\#11, Dec~18~2025): \emph{``The number of distinct values that may occur on row $n$ of this array is at least $1 + \seq{A115861}(n)$, and at most $n$, because $A(n, k) \le n$. We conjecture that $1 + \seq{A115861}(n)$ gives the exact value.''}
+\end{itemize}
+
+For each $n \ge 1$, let
+\[
+Q(n) = \{ m \in \N \mid \exists i \ge 1,\; i \text{ odd},\; m \cdot i = n \clmul i \}
+\]
+denote the set of distinct values occurring on row~$n$ of \seq{A391736}, and let
+\[
+Q_{\le n^3}(n) = \{ m \in \{1, \dots, n-1\} \mid \exists i \in \{1, \dots, n^3\},\; m \cdot i = n \clmul i \}, \qquad \seq{A115861}(n) = |Q_{\le n^3}(n)|.
+\]
+Since $n \clmul 1 = n$ and $n \clmul i \le n \cdot i$ for all $n, i \ge 1$, we always have $n \in Q(n) \subseteq \{0, 1, \dots, n\}$. Moreover, for any even $i = 2^e i_0$ with $i_0$ odd, $m \cdot i = n \clmul i \iff m \cdot i_0 = n \clmul i_0$ with $i_0 \le i$; thus $Q_{\le n^3}(n) \subseteq Q(n) \setminus \{n\}$, yielding Karttunen's lower bound $|Q(n)| \ge 1 + \seq{A115861}(n)$.
+
+\section{The Carry-Automaton Decision Procedure}
+
+Fix odd integers $n \ge 1$ and $1 \le m < n$, and set $d = \lfloor \log_2 n \rfloor$ so that $2^d \le n < 2^{d+1}$. Rather than searching over $i$ numerically, we read the binary digits of $i$ from least significant bit (LSB) to most significant bit (MSB) and track the pending ordinary carry $S$ alongside the pending carryless bits $R$.
+
+\begin{lemma}[Generalized Carry Recurrence]
+\label{lem:carry-rec}
+For arbitrary $n, m, S, R, i \in \N$, consider the equation
+\begin{equation}
+\label{eq:carry}
+S + m \cdot i = R \oplus (n \clmul i).
+\end{equation}
+\begin{enumerate}
+\item For $i = 0$, \eqref{eq:carry} holds if and only if $S = R$.
+\item If $n$ and $m$ are odd, then \eqref{eq:carry} implies $S \equiv R \pmod 2$.
+\item For $i = 2j$, \eqref{eq:carry} implies $\lfloor S/2 \rfloor + m \cdot j = \lfloor R/2 \rfloor \oplus (n \clmul j)$.
+\item For $i = 2j + 1$, \eqref{eq:carry} implies $\lfloor (S + m)/2 \rfloor + m \cdot j = \lfloor (R \oplus n)/2 \rfloor \oplus (n \clmul j)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Part~(1) is immediate from $n \clmul 0 = 0$. For~(2), since $(n \clmul i) \bmod 2 = (n \bmod 2)(i \bmod 2) = i \bmod 2$, reducing \eqref{eq:carry} modulo~$2$ yields $(S + i) \equiv (R + i) \pmod 2$, so $S \equiv R \pmod 2$. For~(3), $n \clmul (2j) = 2(n \clmul j)$ and $(R \oplus 2x)/2 = \lfloor R/2 \rfloor \oplus x$. For~(4), $R \oplus ((2(n \clmul j)) \oplus n) = (R \oplus n) \oplus 2(n \clmul j)$ by associativity and commutativity of $\oplus$, and dividing both sides of $(S + m) + 2(mj) = (R \oplus n) \oplus 2(n \clmul j)$ by~$2$ gives the stated recurrence.
+\end{proof}
+
+\begin{theorem}[Finite-State Decidability and Unconditional Upper Bound]
+\label{thm:automaton}
+For odd $n \ge 1$ and odd $1 \le m < n$ with $d = \lfloor \log_2 n \rfloor$, define the finite directed graph $G_{n,m}$ on vertex set
+\[
+V_{n,m} = \{ (S, R) \in \{0, \dots, m-1\} \times \{0, \dots, 2^d - 1\} \mid S \equiv R \pmod 2 \},
+\]
+with edges from $(S, R) \in V_{n,m}$ to $T_0(S, R) = (\lfloor S/2 \rfloor, \lfloor R/2 \rfloor)$ (bit~$0$) and $T_1(S, R) = (\lfloor (S+m)/2 \rfloor, \lfloor (R \oplus n)/2 \rfloor)$ (bit~$1$) whenever the target lies in $V_{n,m}$. Then an odd integer $i = 1 + 2j$ satisfies $m \cdot i = n \clmul i$ if and only if $m \equiv n \pmod 4$ and the LSB-first binary expansion of $j$ traces a directed walk in $G_{n,m}$ from $s_{\mathrm{start}} = ((m-1)/2, (n-1)/2)$ to a diagonal state $(S, S) \in V_{n,m}$.
+
+In particular, deciding $\exists i \ge 1,\; m \cdot i = n \clmul i$ is decidable in $O(m \cdot 2^d) = O(n^2)$ time by BFS on $G_{n,m}$, and whenever a solution exists, the minimal odd solution satisfies $i_{\min}(n, m) < 2^{|V_{n,m}|} \le 2^{n^2/2}$.
+\end{theorem}
+
+\begin{proof}
+Applying Lemma~\ref{lem:carry-rec}(4) to $0 + m(2j+1) = 0 \oplus (n \clmul (2j+1))$ moves to $s_{\mathrm{start}} = ((m-1)/2, (n-1)/2)$, whose parity constraint $(m-1)/2 \equiv (n-1)/2 \pmod 2$ is equivalent to $m \equiv n \pmod 4$. Since $S < m \implies \lfloor (S+m)/2 \rfloor < m$ and $R < 2^d, n < 2^{d+1} \implies \lfloor (R \oplus n)/2 \rfloor < 2^d$, both transitions stay within $\{0, \dots, m-1\} \times \{0, \dots, 2^d - 1\}$. Inducting on the bits of $j$ shows that \eqref{eq:carry} holds at $s_{\mathrm{start}}$ for $j$ iff every intermediate state has $S \equiv R \pmod 2$ and the state after the last bit of $j$ satisfies $S = R$. A shortest path in $G_{n,m}$ visits at most $|V_{n,m}| \le m \cdot 2^{d-1} \le n^2 / 2$ vertices, bounding the bit-length of $i_{\min}(n, m)$ by $|V_{n,m}|$.
+\end{proof}
+
+Notice that every shortest path from $s_{\mathrm{start}}$ to the diagonal automatically terminates on a $b = 1$ edge (because any $0$-predecessor of $(S, S)$ in $V_{n,m}$ is itself diagonal, contradicting minimality). Walking backward layer-by-layer from accepting states at distance $t_{\min}$ while preferring $b = 0$ at each MSB-to-LSB step reconstructs the \emph{exact minimal odd integer} $i_{\min}(n, m)$ over all of $\N$.
+
+\section{Minimal Counterexample and Refutation of C064}
+
+\begin{theorem}[Main Refutation Theorem]
+\label{thm:main}
+\leavevmode
+\begin{enumerate}
+\item For $(n, m, i) = (239, 215, 302{,}775{,}165)$, we have $1 \le 215 < 239$, $i$ odd, $i > 239^3 = 13{,}651{,}919$, and
+\[
+215 \cdot 302{,}775{,}165 = 65{,}096{,}660{,}475 = 239 \clmul 302{,}775{,}165.
+\]
+\item For every integer $i$ with $1 \le i < 2^{28} = 268{,}435{,}456$, $215 \cdot i \neq 239 \clmul i$.
+\item Consequently $215 \in Q(239) \setminus (Q_{\le 239^3}(239) \cup \{239\})$, so
+\[
+1 + \seq{A115861}(239) < |Q(239)|,
+\]
+refuting Karttunen's conjecture on \seq{A391736}. (Specifically, $Q_{\le 239^3}(239) = \{91, 139, 203\}$ with minimal witnesses $i = 31, 23, 631$, so $1 + \seq{A115861}(239) = 4 < 5 = |Q(239)|$.)
+\item Under the $n^3$-truncated definition of \seq{A115861}, $\seq{A115861}(478) < \seq{A115861}(956)$ ($3 < 4$), refuting the formula \texttt{a(2*n) = a(n)} listed on \seq{A115861}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(1) is checked directly by carryless multiplication (and certified in Lean~4 by a $29$-step verified prefix chain). For Part~(2), for $(n, m) = (239, 215)$, BFS from $s_{\mathrm{start}} = (107, 119)$ in $G_{239, 215}$ reaches only $86$ vertices in total out of $27{,}520$; the entire reachable subgraph at BFS layers $0, \dots, 27$ contains exactly $73$ vertices, every one of which satisfies $S \neq R$, and the unique accepting vertex at layer~$28$ is $(121, 121)$. By strong induction on $j$ using Lemma~\ref{lem:carry-rec}, no vertex at layer $k \le 27$ admits a solution to \eqref{eq:carry} with $j < 2^{27 - k}$. Instantiating at $s_{\mathrm{start}}$ ($k = 0$) excludes all odd $i < 2^{28}$; stripping powers of~$2$ excludes all $1 \le i < 2^{28}$.
+
+Part~(3) follows immediately: since $239^3 = 13{,}651{,}919 < 2^{28}$, $215 \notin Q_{\le 239^3}(239)$, while $\mathrm{insert}(215, \mathrm{insert}(239, Q_{\le 239^3}(239))) \subseteq Q(239)$ has cardinality $2 + \seq{A115861}(239)$.
+
+For Part~(4), since $(2a) \clmul i = 2(a \clmul i)$, the map $x \mapsto 2x$ injects $Q_{\le 478^3}(478)$ into $Q_{\le 956^3}(956)$. Because $956 = 4 \cdot 239$ and $302{,}775{,}165 \le 873{,}722{,}816 = 956^3$, the integer $860 = 4 \cdot 215$ lies in $Q_{\le 956^3}(956)$. However, $860 \notin 2 \cdot Q_{\le 478^3}(478)$: otherwise $430 \in Q_{\le 478^3}(478)$ would yield $i \in [1, 478^3]$ with $430 \cdot i = 478 \clmul i$, hence $215 \cdot i = 239 \clmul i$ with $i \le 478^3 = 109{,}215{,}352 < 2^{28}$, contradicting Part~(2). Thus $\seq{A115861}(478) < \seq{A115861}(956)$.
+\end{proof}
+
+\section{Computational Landscape for $n \le 3000$}
+
+We executed three independent computational paths on a 16-core Intel Core Ultra X9~388H:
+\begin{enumerate}
+\item \textbf{Direct hardware-accelerated C scan} (\texttt{search\_c064.c}, x86-64 \texttt{PCLMULQDQ} cross-checked against scalar XOR-convolution): reproduced all $105$ live OEIS terms of \seq{A115861}$(1 \dots 105)$ with $0$ mismatches in $0.007\text{s}$; scanned $n \le 100$ to $n^4$ in $0.187\text{s}$ ($0$ witnesses); scanned $n \le 239$ to $n^4$ in $12.565\text{s}$, recovering the unique witness $(239, 215, 302{,}775{,}165)$.
+\item \textbf{Exact carry-automaton BFS} (\texttt{automaton\_c064.c}): validated $105/105$ against OEIS \seq{A115861}$(1 \dots 105)$, then exhaustively decided every odd $n \le 3000$ and every odd $m < n$ over all $i \in \N$ in $31.143\text{s}$. Because even $n = 2^k n_0$ has identical solutions~$i$ against a larger bound $(2^k n_0)^3 = 8^k n_0^3 \ge n_0^3$, this proves computationally that $n = 239$ is the \emph{global minimum counterexample} in $\N$.
+\item \textbf{Independent exact Python verifier} (\texttt{verify\_counterexample.py}): re-verified the primary witness and six secondary witnesses via two independent carryless-multiply implementations (bitwise shift-XOR and explicit $\F_2[X]$ polynomial convolution), exhaustively scanned all odd $i \in [1, 239^3]$, and replayed the automaton BFS in $2.79\text{s}$.
+\end{enumerate}
+
+Across odd $n \le 3000$, the automaton finds \textbf{$384$ counterexample pairs} across \textbf{$282$ distinct odd $n$}, demonstrating that no fixed small polynomial bound $n^3, n^4, n^5, n^6, n^7$ suffices (Table~\ref{tab:witnesses}).
+
+\begin{table}[h]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Selected exact counterexamples $(n, m, i_{\min})$ discovered by the carry-automaton for odd $n \le 3000$, including the first witnesses exceeding $n^3, n^4, n^5, n^6, n^7$ and the maximum exponent observed.}
+\label{tab:witnesses}
+\begin{tabular}{rrrrrl}
+\toprule
+$n$ & $m$ & $\mathrm{bits}$ & $i_{\min}(n, m)$ & $\log_n i_{\min}$ & Threshold exceeded \\
+\midrule
+239 & 215 & 29 & $302{,}775{,}165$ & $3.566$ & First $> n^3$ (minimal in $\N$) \\
+391 & 367 & 38 & $186{,}185{,}132{,}365$ & $4.348$ & First $> n^4$ \\
+439 & 239 & 28 & $204{,}209{,}397$ & $3.145$ & First row with $2$ missing $m$ \\
+439 & 403 & 32 & $2{,}282{,}747{,}775$ & $3.542$ & Second missing $m$ on row $439$ \\
+511 & 507 & 46 & $35{,}400{,}328{,}149{,}431$ & $5.003$ & First $> n^5$ ($n = 2^9 - 1$) \\
+991 & 807 & 63 & $5{,}439{,}165{,}481{,}431{,}352{,}125$ & $6.253$ & First $> n^6$ \\
+1775 & 751 & 78 & $261{,}340{,}756{,}356{,}961{,}818{,}838{,}785$ & $7.207$ & First $> n^7$ \\
+2047 & 1895 & 88 & $163{,}466{,}888{,}608{,}393{,}950{,}098{,}955{,}045$ & $7.917$ & Max exponent for $n \le 3000$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Lean~4 Formalization and Verification Scope}
+
+{\sloppy
+The standalone comparator challenge (\path{ComparatorChallenges/C064CarrylessBound.lean}) defines \texttt{clMul}, \texttt{rowA391736Values}, \texttt{A115861\_set}, and \texttt{A115861} from Mathlib alone, and \path{MathProofs/SeamB/C064/Solution.lean} proves all four pinned theorems (\texttt{c064\_witness}, \texttt{c064\_refutation\_card}, \texttt{c064\_refutation\_pointwise}, \texttt{c064\_refutation\_doubling}) together with \texttt{clMul\_testBit} (certifying exact $\F_2[X]$ bit-convolution equivalence), \texttt{no\_sol\_lt\_2pow28}, \texttt{rowA391736\_card\_ge}, and secondary product identities at $n = 391$ and $n = 511$.
+\par}
+
+All proofs compile in $2.47\text{s}$ under Lean~\texttt{v4.34.1} (Mathlib~\texttt{d13f23b7}) with zero \texttt{sorry}, zero warnings, zero \texttt{native\_decide} or \texttt{Lean.ofReduceBool}, allowlist-only axioms (\texttt{[propext, Classical.choice, Quot.sound]}), exact dual-environment \texttt{Expr} identity against the challenge module, and independent \texttt{leanchecker} replay (\texttt{exit=0}).
+
+\medskip\noindent\textbf{Scope limitations (what this paper does not show).}
+We do not prove an asymptotic lower bound on $\max_{m \in Q(n)} i_{\min}(n, m)$ as $n \to \infty$ (only the upper bound $2^{n^2/2}$ and empirical witnesses up to $\log_{2047} i_{\min} = 7.917$). Minimality of $n = 239$ is established computationally across all $n < 239$ rather than formalized in Lean. Finally, our refutation of $a(2n) = a(n)$ applies strictly to the $n^3$-truncated sequence \seq{A115861}; for the unrestricted row count $|Q(n)| - 1$, doubling invariance holds for every $n \ge 1$.
+
+\begin{thebibliography}{9}
+\bibitem{oeis048720}
+A.~Karttunen, \emph{OEIS A048720: Multiplication table of binary polynomials (carryless base-2 multiplication)}, On-Line Encyclopedia of Integer Sequences, \url{https://oeis.org/A048720}, retrieved 26~Nov~2026.
+
+\bibitem{oeis115861}
+A.~Karttunen, \emph{OEIS A115861: Number of integers $m$ in range $1 \dots n-1$ with $i \in [1, n^3]$ such that $m \cdot i = \text{A048720}(n, i)$}, revision \#25 (Dec~19~2025), \url{https://oeis.org/A115861}, retrieved 26~Nov~2026.
+
+\bibitem{oeis391735}
+A.~Karttunen, \emph{OEIS A391735: Square array of odd $i$ dividing $\text{A048720}(n, i)$}, revision \#7 (Dec~18~2025), \url{https://oeis.org/A391735}, retrieved 26~Nov~2026.
+
+\bibitem{oeis391736}
+A.~Karttunen, \emph{OEIS A391736: Square array of quotients $\text{A048720}(n, i)/i$ for odd $i$ dividing $\text{A048720}(n, i)$}, revision \#11 (Dec~18~2025), \url{https://oeis.org/A391736}, retrieved 26~Nov~2026.
+\end{thebibliography}
+
+\end{document}

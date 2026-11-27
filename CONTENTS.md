@@ -431,6 +431,16 @@ Thirteen modules across [`lean/Mathproofs/Topology/`](lean/Mathproofs/Topology/)
   [README / build / citation](preprints/sieve-inverse-branch-isolation-October-11-2026/README.md))
 - Lean: [`ESRefinedSieveInverse.lean`](lean/Mathproofs/NumberTheory/ESRefinedSieveInverse.lean), [`ESUBranchIsolation.lean`](lean/Mathproofs/NumberTheory/ESUBranchIsolation.lean); scope [`lean/docs/015.md`](lean/docs/015.md).
 
+### Family 016 — Carryless binary product quotient bound (C064 / OEIS A115861 & A391736)
+
+#### <a id="c064"></a>C064 — Refutation of the $n^3$ search bound for carryless binary product quotients — [PROVED]
+
+- Paper: [`preprints/c064-a115861/`](preprints/c064-a115861/)
+  ([PDF](preprints/c064-a115861/paper.pdf),
+  [source](preprints/c064-a115861/paper.tex),
+  [README / Davis package](preprints/c064-a115861/README.md))
+- Lean: [`MathProofs/SeamB/C064/Solution.lean`](lean/MathProofs/SeamB/C064/Solution.lean), comparator [`C064CarrylessBound.lean`](lean/ComparatorChallenges/C064CarrylessBound.lean); scope [`lean/docs/016.md`](lean/docs/016.md).
+
 ---
 
 ## Additional preprints (family numbers pending)
