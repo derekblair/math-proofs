@@ -15,7 +15,9 @@
 - GeometricChargeGraph.lean and GeometricChargeCount.lean use the actual forbidden copies and their attached triangles. They bound the expected loss by 3 n^5 p_H + n^6 p_J. GeometricTriangleCount.lean connects the unordered triple indicators to the actual graph triangles. GeometricPatternAssembly.lean combines these bounds into the exact graph conclusion from the point and pair probabilities, the spectral coloring margin, and one explicit inequality.
 - GeometricGap.lean and GeometricHGram.lean check an alternative exact determinant comparison for a symmetric five-vertex Gram matrix whose seven constrained entries already equal the threshold. These lemmas do not prove that an optimizer has these properties.
 - GeometricAttachment.lean proves the sharp quadratic minimum when imposing two positive correlation lower bounds in a positive semidefinite bilinear form. The matrix determinant transfer by Schur complement and the optimizer saturation argument are separate.
-- The spherical law, its rare-event estimates, and the spectral theorem needed to supply the finite-distribution inputs are not formalized here.
+- The determinant maximizer exists over the real feasible Gram set. For symmetric constraints on at most six vertices and 0 < t ≤ 1/20000, Lean verifies that every constrained off-diagonal entry equals t and every free one has magnitude below t/2. This includes compactness, the determinant lower probe, principal determinant comparison, and feasible Schur perturbations.
+- Lean verifies the exact determinant multiplier for attaching a page to a saturated edge, and that the actual constrained subdivided-K4 maximum is strictly smaller than the three-page book determinant. GeometricExactScalar.lean checks the scalar consequences. [EXACT-RATE.md](EXACT-RATE.md) integrates the determinant calculations into the written rate argument.
+- The spherical law and the spectral theorem needed to supply the finite-distribution inputs are not formalized here. The exact Lean graph-pattern-to-logarithmic-rate assembly is also not yet included.
 
 ## Reproduce
 
