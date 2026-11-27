@@ -234,3 +234,14 @@ bounded measurable centered tests, including the lifted finite-grid
 vectors. The next step is the finite-grid population matrix comparison
 and the concentration of the actual spherical sample. The graph
 conclusion remains conditional.
+
+### Finite-grid population bound
+
+`GeometricQuantizedCap.quantized_centered_cap_operator` bounds the norm
+of the centered weighted kernel on the explicit measurable coordinate
+grid. It includes cells of zero mass. A difference between the spherical
+and grid adjacency tests is supported on a strip whose mass is bounded
+by the one-coordinate density, and the operator pays its square root.
+This is a population operator, not a bound for the random sample. The
+random sample concentration and the final graph conclusion are not yet
+verified in Lean.
