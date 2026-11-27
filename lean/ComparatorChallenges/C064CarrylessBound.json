@@ -1,0 +1,22 @@
+{
+  "challenge_module": "ComparatorChallenges.C064CarrylessBound",
+  "solution_module": "MathProofs.SeamB.C064.Solution",
+  "theorem_names": [
+    "C064.c064_witness",
+    "C064.c064_refutation_card",
+    "C064.c064_refutation_pointwise",
+    "C064.c064_refutation_doubling"
+  ],
+  "definition_names": [
+    "C064.clMul",
+    "C064.rowA391736Values",
+    "C064.A115861_set",
+    "C064.A115861"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": false
+}
