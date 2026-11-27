@@ -1,0 +1,6 @@
+JohnsonClique
+JohnsonCounts
+LubellCompare
+LubellSlackThreeCounts
+LubellSlackThreeWeights
+LubellSlackThreeExact
