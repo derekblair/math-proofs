@@ -281,3 +281,15 @@ copies and patches only five specified Lean files into a temporary directory,
 and uses the pinned Lean compiler directly. It does not run an upstream
 build script or modify the caller's checkout. With the variable unset the
 ordinary native replay works without SLT.
+
+### Transfer toward the root link
+
+The optional `GeometricActualSampleCut.spherical_actual_cut_tail` applies
+the actual-sample spectral estimate to the 9/16 cut threshold in the
+tight residual graph. `GeometricSphereSampleTransfer` makes the sample
+estimate independent of the ambient coordinate choice and of the label
+type. The new native modules verify the lower tail for shell population,
+the uniform bound for the spectral failure probabilities, and the
+deterministic edge removal budget. Unlike the tight residual estimate,
+the full root-link cut estimate and final graph theorem are not yet
+verified.
