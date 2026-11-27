@@ -3,7 +3,7 @@
 const assert=require('node:assert/strict');
 const gcd=(a,b)=>b?gcd(b,a%b):a;
 
-function enumerateProfiles(m,D,T,report){
+function enumerateProfiles(m,D,T,report,rooted=false){
   const s=D-1,g=gcd(m,s),a=m/g;
   const mod=i=>((i%m)+m)%m;
   const pos=Array(m);
@@ -16,7 +16,7 @@ function enumerateProfiles(m,D,T,report){
     const [x,y]=events.get(i)||[0,0],u=x+d,v=y+p;
     if(u||v)events.set(i,[u,v]);else events.delete(i);
   }
-  function emit(t){
+  function emit(t,depth){
     let fixed=low,free=g;
     const orbitEvents=new Map();
     for(const [j,[d,p]] of events){
@@ -38,21 +38,27 @@ function enumerateProfiles(m,D,T,report){
       if(valid.length===1){free--;fixed+=valid[0];}
       else assert.deepEqual(valid,[0,a]);
     }
-    report(t,fixed,free,a);
+    report(t,fixed,free,a,depth);
   }
-  function visit(begin,t){
-    emit(t);
+  function toggle(i,b,d){
+    const jmp=mod(i+(b||s-1)),sg=(b?1:-1)*d;
+    change(i,sg,-sg);change(jmp,-sg,0);if(!b)low+=d;
+  }
+  function visit(begin,t,depth,skip){
+    if(!rooted||t===T)emit(t,depth);
     if(t===T)return;
     for(let j=begin;j<bits.length;j++){
+      if(j===skip)continue;
       const [i,b]=bits[j],cost=b||1;
       if(t+cost>T)continue;
-      const jmp=mod(i+(b||s-1)),sg=b?1:-1;
-      change(i,sg,-sg);change(jmp,-sg,0);if(!b)low++;
-      visit(j+1,t+cost);
-      if(!b)low--;change(i,-sg,sg);change(jmp,sg,0);
+      toggle(i,b,1);visit(j+1,t+cost,depth+1,skip);toggle(i,b,-1);
     }
   }
-  visit(0,0);
+  if(!rooted)visit(0,0,0,-1);
+  else if(T>0)for(let b=0;b<=B;b++){
+    const cost=b||1;if(cost>T)continue;
+    toggle(0,b,1);visit(0,cost,1,b);toggle(0,b,-1);
+  }
 }
 function choices(n,j){
   if(j<0||j>n||!Number.isInteger(j))return 0n;
@@ -64,7 +70,9 @@ function choices(n,j){
 function countExchange(m,D,k,w){
   const t=k*(D-1)-w*m;
   if(t<0||k<=0)return 0n;
+  if(t===0){const g=gcd(m,D-1);return choices(g,k/(m/g));}
   let total=0n;
+  const rootedTotals=new Map();
   const rows=new Map();
   function chooseCached(n,j){
     if(j<0||j>n||!Number.isInteger(j))return 0n;
@@ -74,9 +82,15 @@ function countExchange(m,D,k,w){
     }
     return rows.get(n)[j];
   }
-  enumerateProfiles(m,D,t,(z,fixed,free,a)=>{
-    if(z===t)total+=chooseCached(free,(k-fixed)/a);
-  });
+  enumerateProfiles(m,D,t,(z,fixed,free,a,depth)=>{
+    const cnt=chooseCached(free,(k-fixed)/a);
+    rootedTotals.set(depth,(rootedTotals.get(depth)??0n)+cnt);
+  },true);
+  for(const [depth,value] of rootedTotals){
+    const totalRooted=BigInt(m)*value;
+    assert.equal(totalRooted%BigInt(depth),0n);
+    total+=totalRooted/BigInt(depth);
+  }
   return total;
 }
 function replay(m,D,T){
@@ -103,7 +117,11 @@ function replay(m,D,T){
   }
   visit(0,0,0);
   assert.equal(actual.size,want.size);
-  for(const [key,n] of want)assert.equal(actual.get(key),n);
+  for(const [key,n] of want){
+    assert.equal(actual.get(key),n);
+    const [k,w]=key.split(':').map(Number);
+    assert.equal(countExchange(m,D,k,w),n);
+  }
   return {compressedProfiles, factors:[...actual.values()].reduce((a,b)=>a+b,0n),buckets:actual.size};
 }
 if(require.main===module){

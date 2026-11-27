@@ -147,3 +147,8 @@ For one requested deficit \(t\), at most \(M=(1+\min(t,D-3))m\) candidate sites 
 O\!\left((t+1)m+\mathrm{poly}(t+1)\sum_{j=0}^t\binom{M}{j}\right)
 \]
 operations. Binomial rows for possible \(f\) can be cached by the usual multiplicative recurrence; there are at most \(2t+1\) different free-orbit counts. The algorithm is polynomial for fixed \(t\), **even if the degree is not fixed**, without an exponential prefactor in the degree. No fixed-parameter tractability in \(t\) is claimed. The compressed replay matched literal enumeration on 39 graphs (6,661 represented profiles, 7,270 factors and 154 distance/winding buckets).
+
+
+### Remove one free position by rooting a defect
+
+For \(t>0\), group configurations by their number \(j\) of nonzero defect bits. Count completions with a distinguished defect bit at row index zero, summing over its allowed type and the remaining \(j-1\) bits. Translation by each of the \(m\) row indices bijects this rooted set onto all roots at that index, while each unrooted configuration with its completed factor has exactly \(j\) choices of distinguished bit. This gives \(m/j\) times the row-zero rooted count, with exact integer division after the aggregate. If different bits sit on the same row, they remain distinct roots by type, as required. No freeness of the translation action is needed. Thus for \(t>0\), the sum in the running-time bound can be replaced by \(\sum_{j=0}^{t-1}\binom{M}{j}\), absorbing the at most \(t+1\) root types into the polynomial factor. For \(t=0\) there is one direct binomial term \(\binom{\gcd(m,s)}{k/(m/\gcd(m,s))}\). The bundled counter uses this rooted form; the replay checks it separately in every one of the 154 nonempty distance/winding buckets.
