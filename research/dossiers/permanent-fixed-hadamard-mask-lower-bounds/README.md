@@ -10,6 +10,10 @@ For q=2 the same proof works if the identity is required only on Boolean input m
 
 In characteristic p with p dividing q, write q=p^a q' with p not dividing q'. Pass to a perfect extension, choose p^a-th roots of weights, and pull back Frobenius using its injectivity; the identity becomes its q' version. If q'≥2, factorial lower bound still applies. A pure p-power reduces instead to the ordinary same-size linear sum of masked determinants representing per(X), a different model; in characteristic two a single determinant suffices. The q=2 Boolean consequence in characteristic two similarly gives one determinant, not this lower bound.
 
+## Factorial-scale bounds for distinct factors and local affine rows
+
+The [local determinant products supplement](LocalDeterminantProducts.md) proves a stronger factorial-scale lower bound for distinct fixed Hadamard masks: at least $n!/q^{2n}$ summands for $q$ factors, and at least $n!/\binom{2n}{n}$ for two factors, including complex absolute squares with arbitrary real signed weights. It also bounds general fixed affine factors whose determinant rows depend on at most $b$ specified raw input rows or columns each: if the total determinant order in a summand is at most $M$, the denominator is $(b+1)^M\binom{qn}{n}\binom{M}{n}$. This requires factorial-scale support whenever $q$ and $b$ are fixed and $M=O(n)$. The formal polynomial and Boolean scopes are stated separately there. The original sharp $n!$ results below remain unchanged. The stronger coefficient lift is a written proof with its own exact replay, not a new Lean claim.
+
 ## Context
 
 The fixed-mask square setting is motivated by the unbiased determinant-square estimator of [Godsil and Gutman](https://onlinelibrary.wiley.com/doi/abs/10.1002/jgt.3190050203); compare [Barvinok's approximation work](https://sites.lsa.umich.edu/barvinok/wp-content/uploads/sites/1434/2025/05/permanent.pdf). These exact representation bounds do not rule out approximation or adaptive evaluation. No historical priority is claimed.
