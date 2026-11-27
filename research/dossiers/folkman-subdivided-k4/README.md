@@ -2,7 +2,47 @@
 
 [Hassan, Radziszowski and Van Overberghe, Problem 1](https://arxiv.org/html/2605.16542v1#S6) asks for a finite graph that avoids the graph obtained by subdividing one edge of K4, but has a monochromatic triangle in every two-coloring of its edges.
 
-[PROOF.md](PROOF.md) gives a written affirmative proof draft. It uses a positively correlated spherical random graph and deletes one selected edge from every forbidden copy. The sphere makes triangles plentiful enough for a uniform coloring margin but makes the forbidden configuration plus an attached triangle too rare to erase that margin. An independent mathematical review found no gap in the written argument. This is a draft, not an end-to-end Lean proof, a numerical witness, or a priority claim.
+## Result and replay
+
+The Lean theorem [`folkman_without_subdivided_k4`](GeometricFolkmanUnconditional.lean)
+answers the existence question affirmatively: a finite simple graph
+contains no copy of the once-subdivided K4, even as a non-induced
+subgraph, but every red/blue edge coloring contains a monochromatic
+triangle. This is an existence proof, not a numerical witness or a
+minimum-order determination. The theorem requires no hypotheses and its
+axiom audit lists only `propext`, `Classical.choice`, and `Quot.sound`.
+
+The formal proof uses the exact spherical graph and Gram determinant
+rates. It bounds the cut of a typical rooted link by keeping a thin band
+of neighbors and treating their residual directions as independent
+uniform points. The actual finite-sample spectral estimate bounds cuts
+in the tight graph; a first-moment edge removal bound transfers to the
+full link. A triangle-count and deletion-charge argument supplies the
+finite graph. The optional concentrated-matrix steps reuse and cite the
+existing SLT matrix Bernstein proof rather than claiming that ingredient
+as original.
+
+For a full replay, use Lean 4.34.1, built Mathlib at
+`d13f23b723b8a846827a245b89c10fc7d3f11612`, and a local checkout of SLT
+at `482a1a56daf792b33afe8cf7f07f127dc0af8640`. Run:
+
+```sh
+MATHLIB_DIR=/path/to/mathlib LEAN_BIN=/path/to/lean \
+SLT_V432_DIR=/path/to/pinned/slt bash replay.sh
+```
+
+The script checks the source manifest and compiles the verified upstream
+source subset in a temporary directory. With `SLT_V432_DIR` unset, it
+replays the native ingredients but not the final theorem. See
+[SLT-LICENSE.txt](SLT-LICENSE.txt) and the dependency note below.
+[PROOF.md](PROOF.md) is the historical written argument using a separately
+published spectral theorem; its limitation notes describe that original
+snapshot. No claim of publication priority is made.
+
+## Historical milestones
+
+The notes below record earlier milestones. Their statements about gaps
+are historical, not the status of the final theorem above.
 
 - RobustFolkman.lean checks the finite preservation argument and exact charge for removing edges.
 - MixedCorners.lean checks the normalized count of monochromatic triangles from a mixed-wedge bound.
