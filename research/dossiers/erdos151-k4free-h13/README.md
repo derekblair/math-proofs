@@ -55,3 +55,11 @@ This rules out all positive-score links in that core-degree row without
 an external Ramsey premise or SAT proof. The core-degree-9 positive
 rows still require work, and order 62 is not resolved.
 [Proof and replay](ORDER62-R10.md) · [independent audit](ORDER62-R10-REVIEW.md).
+
+## Order 64 with a checked explicit witness
+
+The [exact order-64 proof](N64FullOrder.lean#L10-L18) replaces the
+survey-listed R(3,14) ≥ 67 premise at this order with a kernel-checked
+64-vertex graph. The existing R(3,10) ≤ 41 and Hall premises remain.
+The survey corollary above continues to cover orders 65–66 conditionally.
+See [proof scope and replay](ORDER64.md).
