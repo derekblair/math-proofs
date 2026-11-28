@@ -17,3 +17,16 @@ Test whether the admitted restricted D_i[C] have disjoint fragments x_i→y_i. P
 3. Global grouping is not essential even for the extreme pair-gadget construction. Every pair conflict x↔y forms its own two-vertex SCC, involving only two labels. All other SCCs are singletons. Thus for H=K_k the global chromatic grouping k coexists with local G=2. The result is not a worst-case linear exponent guarantee: no bound of constant G or small SCCs is asserted. Adjacent SCC transitions cannot be replaced by arbitrary local shortest paths on U unless the path's original commodity restriction remains enforced.
 
 Replay `python scc_check.py`: independently compares SCC sweep plus the subset-mask fragment verifier against exhaustive original shortest-path tuples on small directed positive-integer instances, checks group counts on complete pair gadgets, and includes multi-component SCC fixtures with skip exits, local singleton fragments, and globally colliding source/target use. This does not replay the full geometric local solver, whose proof is imported unchanged from the box algorithm.
+
+## Orthogonal local solver: used shared-support vertices
+
+The [shared-visit quota solver](shared-budget/SHARED-BUDGET.md) is exact for a given
+local quota (b), with (2^{O(b)}) polynomial postprocessing per transition. An
+independent inclusion–exclusion sieve counts disjoint tuples in (2^r) times a
+polynomial using polynomial space, where (r) counts shared vertices in the
+trimmed admitted supports. This improves the old local (3^{|C|}) mask solver
+without requiring common tight potentials. The [cyclic obstruction](shared-budget/CYCLIC-TRIM-BARRIER.md)
+shows that even on YES witnesses, tight-potential grouping can be large in a
+single giant SCC although the minimum shared-visit quota is zero. The
+reverse separation is included. Neither observation establishes a uniform
+linear exponent or a runtime lower bound.
