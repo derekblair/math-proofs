@@ -63,3 +63,14 @@ all labelled exposure allocations and the two attaining examples. The
 security reduction and padding to the disclosure cap are paper
 arguments under the stated model. These are not timings and do not
 establish a new KEM or a deployment claim.
+
+## Native ciphertext under a different custody model
+
+The [native-custody comparison](native-custody/NATIVE_THRESHOLD_RAMP.md)
+keeps the 1,088-byte ML-KEM-768 ciphertext and uses 255 bytes of
+custodian responses for the stated ramp-sharing setup. This needs a trusted
+volatile combiner, which holds the reusable seed during each evaluation.
+It is not an improvement under the original combiner-snapshot model.
+Lean checks the conditional integer response bound; security and
+snapshot separation are idealized paper arguments. No new KEM,
+deployment, or measured performance.
