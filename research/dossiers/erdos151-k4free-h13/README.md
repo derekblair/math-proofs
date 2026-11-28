@@ -45,3 +45,13 @@ adds the $R(3,14)\ge67$ existence premise recorded in Radziszowski's
 published survey. The original 66-vertex witness was not retrieved or
 replayed. This premise is not needed for the separate order-63 proof.
 See [scope and evidence](ORDER66.md) and [independent audit](ORDER66-REVIEW.md).
+
+## Order 62: one positive core degree eliminated
+
+[Lean link bound](N62DegreeTwelveTenSharp.lean#L16-L27) gives at most
+15 edges in the core link of an ambient degree-12, core degree-10 vertex
+under the stated K₄-free candidate hypotheses at every order at least 62.
+This rules out all positive-score links in that core-degree row without
+an external Ramsey premise or SAT proof. The core-degree-9 positive
+rows still require work, and order 62 is not resolved.
+[Proof and replay](ORDER62-R10.md) · [independent audit](ORDER62-R10-REVIEW.md).
