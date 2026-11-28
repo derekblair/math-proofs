@@ -37,3 +37,11 @@ and a built Mathlib v4.34.1 checkout (d13f23b723b8a846827a245b89c10fc7d3f11612):
 ```sh
 LEAN_BIN=/absolute/path/to/lean MATHLIB_ROOT=/absolute/path/to/mathlib4 bash replay.sh
 ```
+
+## Orders 64–66, with an additional survey-listed Ramsey input
+
+[The all-k Lean corollary for orders 63–66](N64to66.lean#L25-L34)
+adds the $R(3,14)\ge67$ existence premise recorded in Radziszowski's
+published survey. The original 66-vertex witness was not retrieved or
+replayed. This premise is not needed for the separate order-63 proof.
+See [scope and evidence](ORDER66.md) and [independent audit](ORDER66-REVIEW.md).
