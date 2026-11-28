@@ -48,3 +48,18 @@ layout and private fixed-coordinate support game. It does not prove a
 general cryptographic lower bound. Lean checks the supporting-slope
 and probability-scaling identities, not the entire reduction or layout
 certificate. See [cluster replay](cluster/REPLAY.txt).
+
+## Two-level layout, same wire and fewer decapsulations
+
+The [nested construction and reduction](nested/TWO_LEVEL_WITNESS.md)
+uses the same 130 capsules per family and models the same 63 adaptive
+domain disclosures and six outages. The asymmetric option needs at most
+85 selected decapsulations per family instead of 88, and lowers the
+two-family proof multiplier from about 13,818 to 6,898. The symmetric
+option needs 84, with a larger multiplier of about 8,839.
+
+[Lean](nested/lean/REPLAY.md) checks the asymmetric exact-63 bound for
+all labelled exposure allocations and the two attaining examples. The
+security reduction and padding to the disclosure cap are paper
+arguments under the stated model. These are not timings and do not
+establish a new KEM or a deployment claim.
