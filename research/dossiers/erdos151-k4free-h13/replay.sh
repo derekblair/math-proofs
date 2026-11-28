@@ -20,5 +20,5 @@ while IFS= read -r m; do
   count=$((count+1))
   printf 'verified %s %s\n' "$count" "$m"
 done < "$src/proof-order.txt"
-cat H13Final64.log
+cat H13Final64.log N63Final.log H13AtLeast63Hall.log N63FullOrder.log
 printf 'verified %s source modules\n' "$count"
