@@ -20,3 +20,13 @@ The Lean file checks key projection inequalities and the tied-position
 common progress claim, not the full algorithm. [Replay output](REPLAY.txt)
 records the checked lemmas and their axiom dependencies.
 Run the same command on `BoxCore.lean` to check the finite averaging, telescoping, and face-count lemmas.
+
+## Additional Lean checks
+
+The [formal addendum](formal/README.md) verifies finite clipping, inherited
+face charging, finite cut averaging, uniform shrink depth, exact rank cuts,
+boundary-roster gluing, and the tied-leaf token invariant. This is a
+collection of verified components, not an end-to-end Lean formalization.
+An [explicit family](FACE-BARRIER.md) shows that a legal cut history can
+retain a quadratic roster. It is not a lower bound on other cut choices or
+on the problem's running time.
