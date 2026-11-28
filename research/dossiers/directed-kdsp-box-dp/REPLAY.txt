@@ -1,0 +1,26 @@
+108 {'boxes': 17768, 'nonlocal_crosses': 865, 'empty': 9822, 'polyties': 480, 'nonroot_faces_used': 23755, 'maxboundary': 5}
+integer graph cases 72 yes, leaf states, forced singleton count, token states: [31, 775, 235, 238]
+BoxProgress.lean:19:0: warning: automatically included section variable(s) unused in theorem `DirectedBoxDSP.progress_diff`:
+  [LinearOrder K]
+  [IsStrictOrderedRing K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [LinearOrder K] [IsStrictOrderedRing K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+BoxProgress.lean:61:0: warning: automatically included section variable(s) unused in theorem `DirectedBoxDSP.tied_arc_common_progress`:
+  [Fintype I]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype I] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+BoxProgress.lean:70:0: warning: automatically included section variable(s) unused in theorem `DirectedBoxDSP.pair_lipschitz_two_charges`:
+  [Fintype I]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype I] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'DirectedBoxDSP.pair_lipschitz_two_charges' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DirectedBoxDSP.packed_width' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DirectedBoxDSP.pair_lipschitz' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DirectedBoxDSP.box_progress_spread' depends on axioms: [propext, Classical.choice, Quot.sound]
+'DirectedBoxDSP.tied_arc_common_progress' depends on axioms: [propext, Classical.choice, Quot.sound]

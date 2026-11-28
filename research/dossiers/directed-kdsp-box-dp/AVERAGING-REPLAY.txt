@@ -1,0 +1,4 @@
+'BoxCore.clipped_coordinate_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BoxCore.sum_progress_intervals' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BoxCore.active_face_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BoxCore.good_subinterval' depends on axioms: [propext, Classical.choice, Quot.sound]
