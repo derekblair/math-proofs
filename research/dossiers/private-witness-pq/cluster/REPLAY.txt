@@ -1,0 +1,29 @@
+'CatalogAlteration.equal_expectation_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CatalogAlteration.slope_balance_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CatalogAlteration.equitable_normalizes' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CatalogAlteration.equitable_thinning' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CatalogAlteration.equitable_maximin' depends on axioms: [propext, Classical.choice, Quot.sound]
+1458 exact strategy allocation enumerations; 239 brute-force layout comparisons
+cap-88 certificate 43/21220 (16, 18, 18, 18, 18, 21, 21) max demand 63
+1 decaps 88 wire 94 loss 108992.63264367817 layout (94,) exact lambda 2175/8466392 iterations 1
+2 decaps 88 wire 100 loss 68037.83389286236 layout (50, 50) exact lambda 6851/16647400 iterations 2
+3 decaps 88 wire 106 loss 45815.35465824498 layout (30, 38, 38) exact lambda 22165/36267762 iterations 3
+4 decaps 88 wire 112 loss 32116.67914067914 layout (26, 26, 26, 34) exact lambda 1443/1655156 iterations 3
+5 decaps 88 wire 118 loss 23492.564127764126 layout (22, 22, 22, 22, 30) exact lambda 2035/1707406 iterations 3
+6 decaps 88 wire 124 loss 17766.325581395347 layout (19, 19, 19, 19, 24, 24) exact lambda 43/27284 iterations 3
+7 decaps 88 wire 130 loss 13817.67441860465 layout (16, 18, 18, 18, 18, 21, 21) exact lambda 43/21220 iterations 3
+8 decaps 82 wire 130 loss 20206.91891891892 layout (14, 14, 16, 16, 16, 16, 19, 19) exact lambda 37/26702 iterations 4
+9 decaps 76 wire 130 loss 31902.83870967742 layout (14, 14, 14, 14, 14, 14, 14, 15, 17) exact lambda 31/35321 iterations 3
+10 decaps 70 wire 130 loss 57009.8064516129 layout (12, 12, 12, 12, 12, 12, 12, 15, 15, 16) exact lambda 31/63118 iterations 3
+11 decaps 64 wire 130 loss 218064.0 layout (11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12) exact lambda 1/7788 iterations 2
+1 decaps 124 loss 3401.2055964588385 layout (130,) exact lambda 44957/5461000 iterations 1
+2 decaps 118 loss 4039.3730407523512 layout (65, 65) exact lambda 319/46020 iterations 3
+3 decaps 112 loss 4897.9119254259085 layout (42, 44, 44) exact lambda 3111/544193 iterations 3
+4 decaps 106 loss 6042.56020343293 layout (32, 32, 32, 34) exact lambda 7865/1697312 iterations 3
+5 decaps 100 loss 7666.666666666667 layout (26, 26, 26, 26, 26) exact lambda 21/5750 iterations 2
+6 decaps 94 loss 10068.190476190477 layout (20, 20, 20, 20, 25, 25) exact lambda 147/52858 iterations 2
+7 decaps 88 loss 13817.67441860465 layout (16, 18, 18, 18, 18, 21, 21) exact lambda 43/21220 iterations 3
+8 decaps 82 loss 20206.91891891892 layout (14, 14, 16, 16, 16, 16, 19, 19) exact lambda 37/26702 iterations 4
+9 decaps 76 loss 31902.83870967742 layout (14, 14, 14, 14, 14, 14, 14, 15, 17) exact lambda 31/35321 iterations 3
+10 decaps 70 loss 57009.8064516129 layout (12, 12, 12, 12, 12, 12, 12, 15, 15, 16) exact lambda 31/63118 iterations 3
+11 decaps 64 loss 218064.0 layout (11, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12) exact lambda 1/7788 iterations 2

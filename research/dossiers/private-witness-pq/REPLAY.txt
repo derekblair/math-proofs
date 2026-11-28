@@ -1,0 +1,11 @@
+'CatalogAlteration.missed_at_least' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CatalogAlteration.altered_cover_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CatalogAlteration.disjoint_witness_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CatalogAlteration.padded_weight_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+2208 adaptive transcript thinning controls; 45760 discrete maximizer controls
+reciprocal p: 121.47162844495851 two-family factor: 3401.2055964588385
+20 10 812 167960
+19 9 489 75582
+18 9 722 43758
+130 sites; 64 credits; 88 selected; 4678 public supports
+4000 random transversal checks, 72 exact constructions, 165 balanced-incidence controls
