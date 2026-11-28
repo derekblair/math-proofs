@@ -32,3 +32,19 @@ three small [catalogues and check](baseline/). Nothing here claims that
 baseline is optimal. Secret-guessing and artificial abort are established
 proof techniques, not claimed as new tools; see for comparison the
 [adaptive-security subset guessing in the APKE proof](https://eprint.iacr.org/2022/619.pdf).
+
+## Same ciphertext size and same decoder budget
+
+The [cluster minimax addendum](cluster/PRIVATE_CLUSTERS.md) retains
+the previous 130-site wire budget and 88 selected decapsulations per
+family. The best fixed disjoint layout under those caps gives a proof
+multiplier of about 13,818 instead of 130,984 for the explicit public
+catalogue baseline. Leaving that baseline layout itself unchanged
+gives about 14,059. The one-block 3,401 point above uses more
+decapsulations and is not the same-budget comparison.
+
+The addendum proves optimality for the specified fixed disjoint
+layout and private fixed-coordinate support game. It does not prove a
+general cryptographic lower bound. Lean checks the supporting-slope
+and probability-scaling identities, not the entire reduction or layout
+certificate. See [cluster replay](cluster/REPLAY.txt).
