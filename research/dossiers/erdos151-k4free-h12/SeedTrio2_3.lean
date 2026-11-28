@@ -1,0 +1,59 @@
+import BranchCore
+
+namespace Erdos151Ramsey.Seed53
+set_option maxHeartbeats 0
+set_option maxRecDepth 4096
+theorem trio_2_3_0 : pairKids 2 3 0 = false := by decide +kernel
+theorem trio_2_3_1 : pairKids 2 3 1 = false := by decide +kernel
+theorem trio_2_3_2 : pairKids 2 3 2 = false := by decide +kernel
+theorem trio_2_3_3 : pairKids 2 3 3 = false := by decide +kernel
+theorem trio_2_3_4 : pairKids 2 3 4 = false := by decide +kernel
+theorem trio_2_3_5 : pairKids 2 3 5 = false := by decide +kernel
+theorem trio_2_3_6 : pairKids 2 3 6 = false := by decide +kernel
+theorem trio_2_3_7 : pairKids 2 3 7 = false := by decide +kernel
+theorem trio_2_3_8 : pairKids 2 3 8 = false := by decide +kernel
+theorem trio_2_3_9 : pairKids 2 3 9 = false := by decide +kernel
+theorem trio_2_3_10 : pairKids 2 3 10 = false := by decide +kernel
+theorem trio_2_3_11 : pairKids 2 3 11 = false := by decide +kernel
+theorem trio_2_3_12 : pairKids 2 3 12 = false := by decide +kernel
+theorem trio_2_3_13 : pairKids 2 3 13 = false := by decide +kernel
+theorem trio_2_3_14 : pairKids 2 3 14 = false := by decide +kernel
+theorem trio_2_3_15 : pairKids 2 3 15 = false := by decide +kernel
+theorem trio_2_3_16 : pairKids 2 3 16 = false := by decide +kernel
+theorem trio_2_3_17 : pairKids 2 3 17 = false := by decide +kernel
+theorem trio_2_3_18 : pairKids 2 3 18 = false := by decide +kernel
+theorem trio_2_3_19 : pairKids 2 3 19 = false := by decide +kernel
+theorem trio_2_3_20 : pairKids 2 3 20 = false := by decide +kernel
+theorem trio_2_3_21 : pairKids 2 3 21 = false := by decide +kernel
+theorem trio_2_3_22 : pairKids 2 3 22 = false := by decide +kernel
+theorem trio_2_3_23 : pairKids 2 3 23 = false := by decide +kernel
+theorem trio_2_3_24 : pairKids 2 3 24 = false := by decide +kernel
+theorem trio_2_3_25 : pairKids 2 3 25 = false := by decide +kernel
+theorem trio_2_3_26 : pairKids 2 3 26 = false := by decide +kernel
+theorem trio_2_3_27 : pairKids 2 3 27 = false := by decide +kernel
+theorem trio_2_3_28 : pairKids 2 3 28 = false := by decide +kernel
+theorem trio_2_3_29 : pairKids 2 3 29 = false := by decide +kernel
+theorem trio_2_3_30 : pairKids 2 3 30 = false := by decide +kernel
+theorem trio_2_3_31 : pairKids 2 3 31 = false := by decide +kernel
+theorem trio_2_3_32 : pairKids 2 3 32 = false := by decide +kernel
+theorem trio_2_3_33 : pairKids 2 3 33 = false := by decide +kernel
+theorem trio_2_3_34 : pairKids 2 3 34 = false := by decide +kernel
+theorem trio_2_3_35 : pairKids 2 3 35 = false := by decide +kernel
+theorem trio_2_3_36 : pairKids 2 3 36 = false := by decide +kernel
+theorem trio_2_3_37 : pairKids 2 3 37 = false := by decide +kernel
+theorem trio_2_3_38 : pairKids 2 3 38 = false := by decide +kernel
+theorem trio_2_3_39 : pairKids 2 3 39 = false := by decide +kernel
+theorem trio_2_3_40 : pairKids 2 3 40 = false := by decide +kernel
+theorem trio_2_3_41 : pairKids 2 3 41 = false := by decide +kernel
+theorem trio_2_3_42 : pairKids 2 3 42 = false := by decide +kernel
+theorem trio_2_3_43 : pairKids 2 3 43 = false := by decide +kernel
+theorem trio_2_3_44 : pairKids 2 3 44 = false := by decide +kernel
+theorem trio_2_3_45 : pairKids 2 3 45 = false := by decide +kernel
+theorem trio_2_3_46 : pairKids 2 3 46 = false := by decide +kernel
+theorem trio_2_3_47 : pairKids 2 3 47 = false := by decide +kernel
+theorem trio_2_3_48 : pairKids 2 3 48 = false := by decide +kernel
+theorem trio_2_3_49 : pairKids 2 3 49 = false := by decide +kernel
+theorem trio_2_3_50 : pairKids 2 3 50 = false := by decide +kernel
+theorem trio_2_3_51 : pairKids 2 3 51 = false := by decide +kernel
+theorem pair_2_3 : rowKids 2 3=false := pair_of_kids 2 3 (fun c=>Fin.cases trio_2_3_0 ( Fin.cases trio_2_3_1 ( Fin.cases trio_2_3_2 ( Fin.cases trio_2_3_3 ( Fin.cases trio_2_3_4 ( Fin.cases trio_2_3_5 ( Fin.cases trio_2_3_6 ( Fin.cases trio_2_3_7 ( Fin.cases trio_2_3_8 ( Fin.cases trio_2_3_9 ( Fin.cases trio_2_3_10 ( Fin.cases trio_2_3_11 ( Fin.cases trio_2_3_12 ( Fin.cases trio_2_3_13 ( Fin.cases trio_2_3_14 ( Fin.cases trio_2_3_15 ( Fin.cases trio_2_3_16 ( Fin.cases trio_2_3_17 ( Fin.cases trio_2_3_18 ( Fin.cases trio_2_3_19 ( Fin.cases trio_2_3_20 ( Fin.cases trio_2_3_21 ( Fin.cases trio_2_3_22 ( Fin.cases trio_2_3_23 ( Fin.cases trio_2_3_24 ( Fin.cases trio_2_3_25 ( Fin.cases trio_2_3_26 ( Fin.cases trio_2_3_27 ( Fin.cases trio_2_3_28 ( Fin.cases trio_2_3_29 ( Fin.cases trio_2_3_30 ( Fin.cases trio_2_3_31 ( Fin.cases trio_2_3_32 ( Fin.cases trio_2_3_33 ( Fin.cases trio_2_3_34 ( Fin.cases trio_2_3_35 ( Fin.cases trio_2_3_36 ( Fin.cases trio_2_3_37 ( Fin.cases trio_2_3_38 ( Fin.cases trio_2_3_39 ( Fin.cases trio_2_3_40 ( Fin.cases trio_2_3_41 ( Fin.cases trio_2_3_42 ( Fin.cases trio_2_3_43 ( Fin.cases trio_2_3_44 ( Fin.cases trio_2_3_45 ( Fin.cases trio_2_3_46 ( Fin.cases trio_2_3_47 ( Fin.cases trio_2_3_48 ( Fin.cases trio_2_3_49 ( Fin.cases trio_2_3_50 (Fin.cases trio_2_3_51 (fun t : Fin 0=>t.elim0)))))))))))))))))))))))))))))))))))))))))))))))))))) c)
+end Erdos151Ramsey.Seed53
