@@ -1,0 +1,10 @@
+# Lean Ramsey prerequisites for the two-hub argument
+
+* `RamseySmall.lean`: any induced pool of at least six vertices in a triangle-free simple relation contains an independent triple; at least ten contains an independent quadruple. Finite wrappers are `Erdos151Ramsey.ramsey33` and `Erdos151Ramsey.ramsey34_le10`.
+* `RamseyExactNine.lean`: exact sharpened upper bound `Erdos151Ramsey.independent_four_of_nine` on any pool of nine or more vertices, and its Fin 9 form `Erdos151Ramsey.ramsey34`. Absent a four-set, every degree is exactly three, contradicting the directly proved `even_degree_sum`.
+* `PrivatePools.lean`: generic disjoint isolated-union proof, private capacity bounds for degrees 10, 9 and 8, and exact eight-vertex cap for any induced pool having neither an independent three-set nor a four-clique. All proofs kernel replayed with standard axioms.
+* The lower-bound data is not original: Geoffrey Exoo, [On Some Small Classical Ramsey Numbers](https://www.combinatorics.org/ojs/index.php/eljc/article/view/v20i1p68), EJC 20(1) (2013), #P68, Listing 1. The recovery matrix `../ramsey47/exoo-paper-46.txt` stores the binary complement convention (off-diagonal zeros are edges). `generate_exoo.py` converts this input to adjacency masks with a cleared diagonal and an untrusted certificate program. The Lean certificate checks symmetry, irreflexivity, no triangles, and no independent eleven-set. `split_exoo.py` emits the source in dependency replay order to reduce peak memory. The soundness theorem `find_complete` is already kernel checked; split exact matrix replay finished, with only standard axioms for `Erdos151Ramsey.Exoo.ramsey311_ge47`. Experimental `*Mask*` modules are not needed.
+
+The upper bounds replay via `bash replay.sh RamseySmall RamseyExactNine PrivatePools`. To build the lower bound serially use `bash replay.sh $(cat exoo-order.txt)` after `python split_exoo.py` (or simply replay the checked-in generated sources).
+
+`RamseyPullback.lean` replays independently and transports this existence result to each `Fin n` for `n ≤ 46`.
